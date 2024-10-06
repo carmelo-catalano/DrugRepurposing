@@ -2,7 +2,7 @@ library(R6)
 
 LowCountsGeneFilter <- R6Class(
   "LowCountsGeneFilter",
-  inherit = GeneFilter,
+  inherit = GeneFilterAbstract,
   public = list(
     filter = function(gene_expressions, disease_control_groups) {
       # pre-filter low count genes

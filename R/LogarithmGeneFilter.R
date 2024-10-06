@@ -2,7 +2,7 @@ library(R6)
 
 LogarithmGeneFilter <- R6Class(
   "LogarithmGeneFilter",
-  inherit = GeneFilter,
+  inherit = GeneFilterAbstract,
   public = list(
     filter = function(gene_expressions, disease_control_groups) {
       # ci potrebbero essere degli zeri in gene_expressions,

@@ -7,7 +7,7 @@ IlluminaHiSeqMapper <- R6Class(
   "IlluminaHiSeqMapper",
   public = list(
     initialize = function(geneFilter) {
-      if (!"GeneFilter" %in% class(geneFilter))
+      if (!"GeneFilterAbstract" %in% class(geneFilter))
         stop("the geneFilter instance must by of type GeneFilter")
       private$samplesGroups <- SamplesGroups$new()
       private$geneFilter <- geneFilter

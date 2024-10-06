@@ -3,6 +3,7 @@ library(edgeR)
 
 DiseaseDifferentialExpression <- R6Class(
   "DiseaseDifferentialExpression",
+  inherit = DiseaseDifferentialExpressionBstract,
   public = list(
     compute = function(gene_experiments_data) {
       disease_control_sample_map <- data.frame(
