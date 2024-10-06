@@ -1,0 +1,8 @@
+#exportPattern("^[[:alpha:]]+")
+export("dgrpLogger")
+export("dgrp_logger_types")
+export("GeneFilter")
+export("LogarithmGeneFilter")
+export("LowCountsGeneFilter")
+export("IdGeneAssociation")
+export("GeneFilterByProteinCoding")

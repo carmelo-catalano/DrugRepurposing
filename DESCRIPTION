@@ -1,0 +1,14 @@
+Package: DrugRepurposing
+Type: Package
+Title: A Hello world package
+Version: 0.99.1
+Authors@R: c(
+    person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("aut","cre")) )    
+Maintainer: some person <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: Artistic-2.0
+Encoding: UTF-8
+LazyData: true
+Depends: R6, log4r, data.table, R.utils, edgeR
+Suggests: testthat
