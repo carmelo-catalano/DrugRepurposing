@@ -6,21 +6,21 @@ library(edgeR)
 DiseaseSignature <- R6Class(
   "DiseaseSignature",
   public = list(
-    initialize = function(diseaseDifferentialExpression = NA) {
+    initialize = function(differentialExpression = NA) {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
-      if (!obj_is_na(diseaseDifferentialExpression)) {
-        if (!"DiseaseDifferentialExpressionAbstract" %in% class(diseaseDifferentialExpression))
-          stop("the diseaseDifferentialExpression instance must by of type DiseaseDifferentialExpressionAbstract")
-        private$diseaseDifferentialExpression <- diseaseDifferentialExpression
+      if (!obj_is_na(differentialExpression)) {
+        if (!"DiseaseDifferentialExpressionAbstract" %in% class(differentialExpression))
+          stop("the differentialExpression instance must by of type DiseaseDifferentialExpressionAbstract")
+        private$differentialExpression <- differentialExpression
       }else {
-        private$diseaseDifferentialExpression <- DiseaseDifferentialExpression$new()
+        private$differentialExpression <- DichotomicVoomDifferentialExpression$new()
       }
     },
     compute = function(gene_experiments_data, filter_by_proteing_coding = T) {
       if (filter_by_proteing_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filter(gene_experiments_data$gene_expressions)
       }
-      dirrerential_expression <- private$diseaseDifferentialExpression$compute(gene_experiments_data)
+      dirrerential_expression <- private$differentialExpression$compute(gene_experiments_data)
       toptable_result <- topTable(dirrerential_expression, coef = 2, number = 10^6)
       colnames(toptable_result)[1] <- "DE_log2_FC"
       toptable_result$gene <- rownames(toptable_result)
@@ -34,6 +34,6 @@ DiseaseSignature <- R6Class(
   ),
   private = list(
     geneFilterByProteinCoding = NA,
-    diseaseDifferentialExpression = NA
+    differentialExpression = NA
   )
 )

@@ -5,8 +5,8 @@ library(R6)
 # source("modules/disease_signature/filter/LowCountsGeneFilter.R")
 # source("modules/disease_signature/DiseaseSignature.R")
 
-OverallDiseaseSignature <- R6Class(
-  "OverallDiseaseSignature",
+DiseaseSignatureByIlluminaHiSeq <- R6Class(
+  "DiseaseSignatureByIlluminaHiSeq",
   public = list(
     initialize = function(geneFilter = NA) {
       private$diseaseSignature <- DiseaseSignature$new()

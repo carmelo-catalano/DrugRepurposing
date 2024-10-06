@@ -1,9 +1,9 @@
 library(R6)
 library(edgeR)
 
-DiseaseDifferentialExpression <- R6Class(
-  "DiseaseDifferentialExpression",
-  inherit = DiseaseDifferentialExpressionBstract,
+DichotomicVoomDifferentialExpression <- R6Class(
+  "DichotomicVoomDifferentialExpression",
+  inherit = DiseaseDifferentialExpressionAbstract,
   public = list(
     compute = function(gene_experiments_data) {
       disease_control_sample_map <- data.frame(

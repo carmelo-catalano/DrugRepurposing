@@ -1,6 +1,6 @@
 library(R6)
 
-GeneFilter <- R6Class(
+GeneFilterAbstract <- R6Class(
   "GeneFilterAbstract",
   public = list(
     filter = function(gene_expressions, disease_control_groups) {
