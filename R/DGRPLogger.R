@@ -6,7 +6,7 @@ DGRPLogger <- R6Class(
   "DGRPLogger",
   public = list(
     initialize = function() {
-      console_logger <- logger(threshold = "DEBUG")
+      private$console_logger <- logger(threshold = "DEBUG")
     },
     log = function(message) {
       if (!obj_is_na(private$console_logger))

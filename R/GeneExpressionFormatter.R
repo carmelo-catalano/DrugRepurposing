@@ -7,20 +7,21 @@ GeneExpressionFormatter <- R6Class(
   public = list(
     initialize = function() {
       private$idGeneAssociation <- IdGeneAssociation$new()
-      private$addGeneColumn <- AddGeneColumn$new()
+      private$addGeneSymbolColumn <- AddGeneSymbolColumn$new()
     },
     format = function(gene_expressions) {
       gene_expressions <- data.frame(gene_expressions)
-      gene_expressions$ID <- rownames(gene_expressions)
       id_gene_association <- private$idGeneAssociation$load()
-      gene_expressions <- private$addGeneColumn$add(gene_expressions, id_gene_association)
-      rownames(gene_expressions) <- gene_expressions$gene
-      gene_expressions$gene <- NULL
+      gene_expressions <- private$addGeneSymbolColumn$add(gene_expressions, id_gene_association)
+      rownames(gene_expressions) <- NULL
+      gene_expressions <- gene_expressions[, c("gene_id", "gene_symbol", "DE_log2_FC", "DE_log2_FC_SE", "t", "P.Value", "adj.P.Val")]
+      colnames(gene_expressions) <- c("gene_id", "gene_symbol", "DE_log2_FC", "std.error", "t.value", "p.value", "adj.p.value")
+      gene_expressions <- gene_expressions[order(gene_expressions$gene_id),]
       return(gene_expressions)
     }
   ),
   private = list(
     idGeneAssociation = NA,
-    addGeneColumn = NA
+    addGeneSymbolColumn = NA
   )
 )

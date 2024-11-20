@@ -1,7 +1,5 @@
 library(testthat)
 
-# source("modules/disease_signature/DiseaseSignature.R")
-
 # setup
 sut <- DiseaseSignature$new()
 
@@ -15,7 +13,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("DiseaseSignatureTest", {
+test_that("test-DiseaseSignature", {
   expect_equal(result, expected)
 }
 )

@@ -1,4 +1,4 @@
-#exportPattern("^[[:alpha:]]+")
+exportPattern("^[[:alpha:]]+")
 export("dgrpLogger")
 export("dgrp_logger_types")
 export("GeneFilterAbstract")

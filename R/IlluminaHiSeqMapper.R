@@ -1,7 +1,5 @@
 library(R6)
-
 # source("modules/disease_signature/SamplesGroups.R")
-# source("modules/disease_signature/Illumina_HiSeq_mapper/GeneExpressionFormatter.R")
 
 IlluminaHiSeqMapper <- R6Class(
   "IlluminaHiSeqMapper",
@@ -11,14 +9,12 @@ IlluminaHiSeqMapper <- R6Class(
         stop("the geneFilter instance must by of type GeneFilter")
       private$samplesGroups <- SamplesGroups$new()
       private$geneFilter <- geneFilter
-      private$geneExpressionFormatter <- GeneExpressionFormatter$new()
     },
     map = function(rna_seq_filename, samples_groups_map, disease_name) {
       gene_expressions <- as.matrix(data.table::fread(rna_seq_filename, header = T, colClasses = "integer"), rownames = "GeneID")
       samples_groups <- private$samplesGroups$groups(samples_groups_map, disease_name)
       gene_expressions <- gene_expressions[, samples_groups$sample_groups_idxes]
       gene_expressions <- private$geneFilter$filter(gene_expressions, samples_groups$disease_control_groups)
-      gene_expressions <- private$geneExpressionFormatter$format(gene_expressions)
       return(
         list(
           gene_expressions = gene_expressions,
@@ -29,7 +25,6 @@ IlluminaHiSeqMapper <- R6Class(
   ),
   private = list(
     samplesGroups = NA,
-    geneFilter = NA,
-    geneExpressionFormatter = NA
+    geneFilter = NA
   )
 )
