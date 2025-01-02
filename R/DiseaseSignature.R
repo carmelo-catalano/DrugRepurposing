@@ -17,7 +17,7 @@ DiseaseSignature <- R6Class(
       }
       private$diseaseSignatureMapper <- DiseaseSignatureMapper$new()
     },
-    compute = function(gene_experiments_data, filter_by_proteing_coding = T) {
+    compute = function(gene_experiments_data, filter_by_proteing_coding = F) {
       if (filter_by_proteing_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filter(gene_experiments_data$gene_expressions)
       }
