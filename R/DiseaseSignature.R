@@ -15,24 +15,21 @@ DiseaseSignature <- R6Class(
       }else {
         private$differentialExpression <- DichotomicVoomDifferentialExpression$new()
       }
-      private$geneExpressionFormatter <- GeneExpressionFormatter$new()
+      private$diseaseSignatureMapper <- DiseaseSignatureMapper$new()
     },
     compute = function(gene_experiments_data, filter_by_proteing_coding = T) {
       if (filter_by_proteing_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filter(gene_experiments_data$gene_expressions)
       }
-      dirrerential_expression <- private$differentialExpression$compute(gene_experiments_data)
-      toptable_result <- topTable(dirrerential_expression, coef = 2, number = 10^6)
-      colnames(toptable_result)[1] <- "DE_log2_FC"
-      toptable_result$gene <- rownames(toptable_result)
-      toptable_result$DE_log2_FC_SE <- toptable_result$DE_log2_FC / toptable_result$t
-      toptable_result <- private$geneExpressionFormatter$format(toptable_result)
-      return(toptable_result)
+      differential_expression <- private$differentialExpression$compute(gene_experiments_data)
+      differential_expression$std.error <- differential_expression$logFC / differential_expression$t
+      differential_expression <- private$diseaseSignatureMapper$map(differential_expression)
+      return(differential_expression)
     }
   ),
   private = list(
     geneFilterByProteinCoding = NA,
     differentialExpression = NA,
-    geneExpressionFormatter = NA
+    diseaseSignatureMapper = NA
   )
 )

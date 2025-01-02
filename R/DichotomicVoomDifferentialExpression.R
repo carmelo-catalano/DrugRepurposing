@@ -16,7 +16,7 @@ DichotomicVoomDifferentialExpression <- R6Class(
       voom_data <- voom(dge, design, plot = F)
       fit_voom <- lmFit(voom_data, design)
       eBayes_fit_voom <- eBayes(fit_voom)
-      return(eBayes_fit_voom)
+      return(topTable(eBayes_fit_voom, coef = 2, number = 10^6))
     }
   )
 )
