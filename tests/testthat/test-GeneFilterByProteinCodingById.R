@@ -14,10 +14,10 @@ rownames(gene_expressions) <- c("780", "653635", "7849", "19", "20", "22", "23",
 expected <- c("DDR1", "PAX8", "ABCA1", "ABCA2", "ABCB7", "ABCF1", "A2M")
 
 # when
-result <- sut$filter(gene_expressions)
+result <- sut$filterById(gene_expressions)
 
 # then
-test_that("disease_signature_test", {
+test_that("test-GeneFilterByProteinCodingById", {
   expect_identical(result, expected)
 }
 )
