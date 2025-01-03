@@ -14,7 +14,7 @@ disease_rna_seq_samples_groups_map <- "000000000000000000001111111111111111111"
 expected <- package_readRDS("test/disease_signature/DiseaseSignatureByIlluminaHiSeq_expected.Rds")
 
 # when
-result <- sut$compute(disease_rna_seq_filename, disease_rna_seq_samples_groups_map, disease_name, F)
+result <- sut$compute(disease_rna_seq_filename, disease_rna_seq_samples_groups_map, disease_name)
 result$p.value <- NULL
 result$adj.p.value <- NULL
 

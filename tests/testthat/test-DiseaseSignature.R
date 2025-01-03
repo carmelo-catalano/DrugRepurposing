@@ -8,7 +8,7 @@ gene_experiments_data <- package_readRDS("test/disease_signature/DiseaseSignatur
 expected <- package_readRDS("test/disease_signature/DiseaseSignature_expected.Rds")
 
 # when
-result <- sut$compute(gene_experiments_data, F)
+result <- sut$compute(gene_experiments_data)
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
