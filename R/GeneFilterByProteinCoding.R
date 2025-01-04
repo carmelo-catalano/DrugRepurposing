@@ -5,7 +5,7 @@ GeneFilterByProteinCoding <- R6Class(
   public = list(
     initialize = function() {
       private$protein_coding_gene <- package_readRDS(config$protein_coding_gene_filename)
-      private$protein_coding_gene <- private$protein_coding_gene[private$protein_coding_gene$proteinCoding,]
+      private$protein_coding_gene <- private$protein_coding_gene[private$protein_coding_gene$locusGroup=='protein-coding gene',]
       private$protein_coding_gene$proteinCoding <- NULL
     },
     filterById = function(gene_expressions) {
