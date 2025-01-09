@@ -10,7 +10,7 @@ LMMVoomDGE <- R6Class(
   "LMMVoomDGE",
   public = list(
     initialize = function() {
-      private$voomDifferentialExpressionMapper <- VoomDifferentialExpressionMapper$new()
+      private$voomDGEMapper <- VoomDGEMapper$new()
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula) {
       data_size <- dim(rna_seq_data)
@@ -34,10 +34,10 @@ LMMVoomDGE <- R6Class(
       disease_signature$std.error <- disease_signature$logFC / disease_signature$t
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end LMM disease signature computation, time: %s %s", totalTime, attr(totalTime, "units")))
-      return(private$voomDifferentialExpressionMapper$map(disease_signature))
+      return(private$voomDGEMapper$map(disease_signature))
     }
   ),
   private = list(
-    voomDifferentialExpressionMapper = NA
+    voomDGEMapper = NA
   )
 )

@@ -4,7 +4,7 @@ Sys.setlocale(locale = "C")
 
 # setup
 genefilter <- LogarithmGeneFilter$new()
-sut <- IlluminaDichotomicVoomDifferentialExpression$new(genefilter)
+sut <- IlluminaDichotomicVoomDGE$new(genefilter)
 
 # given
 disease_name <- "ipf"
@@ -19,7 +19,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-IlluminaDichotomicVoomDifferentialExpression", {
+test_that("test-IlluminaDichotomicVoomDGE", {
   expect_equal(result, expected)
 }
 )

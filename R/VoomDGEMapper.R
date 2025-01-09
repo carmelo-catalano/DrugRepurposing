@@ -2,8 +2,8 @@ library(R6)
 # source("modules/disease_signature/Illumina_HiSeq_mapper/IdGeneAssociation.R")
 # source("modules/disease_signature/AddGeneColumn.R")
 
-VoomDifferentialExpressionMapper <- R6Class(
-  "VoomDifferentialExpressionMapper",
+VoomDGEMapper <- R6Class(
+  "VoomDGEMapper",
   public = list(
     map = function(differential_expression) {
       differential_expression$gene_id <- rownames(differential_expression)

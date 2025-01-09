@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DichotomicVoomDifferentialExpression$new()
+sut <- DichotomicVoomDGE$new()
 
 # given
 gene_experiments_data <- package_readRDS("test/disease_signature/DiseaseSignature_gene_experiments_data.Rds")
@@ -13,7 +13,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-DichotomicVoomDifferentialExpression", {
+test_that("test-DichotomicVoomDGE", {
   expect_equal(result, expected)
 }
 )

@@ -1,11 +1,11 @@
 library(R6)
 library(edgeR)
 
-DichotomicVoomDifferentialExpression <- R6Class(
-  "DichotomicVoomDifferentialExpression",
+DichotomicVoomDGE <- R6Class(
+  "DichotomicVoomDGE",
   public = list(
     initialize = function() {
-      private$voomDifferentialExpressionMapper <- VoomDifferentialExpressionMapper$new()
+      private$voomDGEMapper <- VoomDGEMapper$new()
     },
     compute = function(gene_experiments_data) {
       disease_control_sample_map <- data.frame(
@@ -20,10 +20,10 @@ DichotomicVoomDifferentialExpression <- R6Class(
       eBayes_fit_voom <- eBayes(fit_voom)
       differential_expression <- topTable(eBayes_fit_voom, coef = 2, number = 10^6)
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
-      return(private$voomDifferentialExpressionMapper$map(differential_expression))
+      return(private$voomDGEMapper$map(differential_expression))
     }
   ),
   private = list(
-    voomDifferentialExpressionMapper = NA
+    voomDGEMapper = NA
   )
 )
