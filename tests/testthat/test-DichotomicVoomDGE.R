@@ -4,7 +4,7 @@ library(testthat)
 sut <- DichotomicVoomDGE$new()
 
 # given
-gene_experiments_data <- package_readRDS("test/disease_signature/DiseaseSignature_gene_experiments_data.Rds")
+gene_experiments_data <- package_readRDS("test/DGE/gene_experiments_data.Rds")
 expected <- package_readRDS("test/disease_signature/DiseaseSignature_expected.Rds")
 
 # when
