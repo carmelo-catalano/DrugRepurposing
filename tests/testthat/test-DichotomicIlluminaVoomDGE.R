@@ -8,10 +8,10 @@ sut <- DichotomicIlluminaVoomDGE$new(genefilter)
 
 # given
 disease_name <- "ipf"
-disease_rna_seq_filename <- absolute_package_filename("test/disease_signature/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv")
+disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv")
 disease_rna_seq_samples_groups_map <- "000000000000000000001111111111111111111"
 
-expected <- package_readRDS("test/disease_signature/DiseaseSignatureByIlluminaHiSeq_expected.Rds")
+expected <- package_readRDS("test/voom/DichotomicIlluminaVoomDGE_expected.Rds")
 
 # when
 result <- sut$compute(disease_rna_seq_filename, disease_rna_seq_samples_groups_map, disease_name)
