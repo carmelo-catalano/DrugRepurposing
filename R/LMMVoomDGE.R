@@ -7,7 +7,7 @@ LMMVoomDGE <- R6Class(
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula) {
       data_size <- dim(rna_seq_data)
-      dgrpLogger$log(sprintf("start LMM disease signature computation, data size: %s X %s", data_size[1], data_size[2]))
+      dgrpLogger$log(sprintf("start LMM Voom differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
       startTime <- Sys.time()
       dge <- DGEList(rna_seq_data, remove.zeros = TRUE)
       dge <- calcNormFactors(dge, method = 'upperquartile')
@@ -23,11 +23,11 @@ LMMVoomDGE <- R6Class(
       totalTime <- Sys.time() - partialStartTime
       dgrpLogger$log(sprintf("end dream computation, time: %s %s", totalTime, attr(totalTime, "units")))
       differential_expression <- variancePartition::eBayes(differential_expression)
-      disease_signature <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)
-      disease_signature$std.error <- disease_signature$logFC / disease_signature$t
+      differential_expression <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)
+      differential_expression$std.error <- differential_expression$logFC / differential_expression$t
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end LMM disease signature computation, time: %s %s", totalTime, attr(totalTime, "units")))
-      return(private$voomDGEMapper$map(disease_signature))
+      dgrpLogger$log(sprintf("end LMM Voom differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
+      return(private$voomDGEMapper$map(differential_expression))
     }
   ),
   private = list(
