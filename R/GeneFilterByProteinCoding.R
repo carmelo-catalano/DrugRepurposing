@@ -1,4 +1,3 @@
-library(R6)
 
 GeneFilterByProteinCoding <- R6Class(
   "GeneFilterByProteinCoding",

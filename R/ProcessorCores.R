@@ -1,5 +1,3 @@
-library(R6)
-library(doParallel)
 
 ProcessorCores <- R6Class(
   "ProcessorCores",

@@ -1,3 +1,4 @@
+
 LMMIlluminaVoomDGE <- R6Class(
   "LMMIlluminaVoomDGE",
   public = list(

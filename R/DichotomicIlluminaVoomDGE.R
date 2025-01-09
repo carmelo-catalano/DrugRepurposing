@@ -1,4 +1,3 @@
-library(R6)
 
 DichotomicIlluminaVoomDGE <- R6Class(
   "DichotomicIlluminaVoomDGE",

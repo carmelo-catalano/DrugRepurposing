@@ -1,4 +1,3 @@
-library(R6)
 
 DicotomicIlluminaRNASeqLoader <- R6Class(
   "DicotomicIlluminaRNASeqLoader",

@@ -1,5 +1,3 @@
-library(R6)
-library(edgeR)
 
 DichotomicVoomDGE <- R6Class(
   "DichotomicVoomDGE",

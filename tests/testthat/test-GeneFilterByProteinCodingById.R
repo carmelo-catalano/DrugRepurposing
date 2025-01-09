@@ -1,5 +1,4 @@
 library(testthat)
-# source("modules/disease_signature/GeneFilterByProteinCoding.R")
 
 # setup
 sut <- GeneFilterByProteinCoding$new()

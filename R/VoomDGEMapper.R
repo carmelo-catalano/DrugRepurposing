@@ -1,6 +1,3 @@
-library(R6)
-# source("modules/disease_signature/Illumina_HiSeq_mapper/IdGeneAssociation.R")
-# source("modules/disease_signature/AddGeneColumn.R")
 
 VoomDGEMapper <- R6Class(
   "VoomDGEMapper",

@@ -1,10 +1,3 @@
-library(R6)
-library(edgeR)
-library(variancePartition)
-
-#source("modules/config.R")
-#source("modules/TSRLogger.R")
-#source("modules/disease_signature/GeneFilterByProteinCoding.R")
 
 LMMVoomDGE <- R6Class(
   "LMMVoomDGE",
