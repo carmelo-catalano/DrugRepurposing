@@ -1,8 +1,8 @@
 library(R6)
 # source("modules/disease_signature/SamplesGroups.R")
 
-IlluminaHiSeqMapper <- R6Class(
-  "IlluminaHiSeqMapper",
+IlluminaRNASeqMapper <- R6Class(
+  "IlluminaRNASeqMapper",
   public = list(
     initialize = function(geneFilter) {
       if (!"GeneFilterAbstract" %in% class(geneFilter))
