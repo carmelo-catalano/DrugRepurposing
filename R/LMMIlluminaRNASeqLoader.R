@@ -5,7 +5,7 @@ LMMIlluminaRNASeqLoader <- R6Class(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {
         if (!"GeneFilterAbstract" %in% class(geneFilter))
-          stop("the geneFilter instance must by of type GeneFilterAbstract")
+          stop("the geneFilter instance must be of type GeneFilterAbstract")
         private$geneFilter <- geneFilter
       }else {
         private$geneFilter <- LowCountsGeneFilter$new()

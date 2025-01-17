@@ -12,15 +12,15 @@ DichotomicIlluminaVoomDGE <- R6Class(
     },
     compute = function(rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding = F) {
       startTime <- Sys.time()
-      dgrpLogger$log(sprintf("start %s signature computation", test_sample_name))
+      dgrpLogger$log(sprintf("start %s differential gene expression computation", test_sample_name))
       gene_experiments_data <- private$dicotomicIlluminaRNASeqLoader$load(rna_seq_filename, sample_01_map, test_sample_name)
       if (filter_by_protein_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filterById(gene_experiments_data$gene_expressions)
       }
-      signature <- private$dichotomicVoomDGE$compute(gene_experiments_data)
+      dge <- private$dichotomicVoomDGE$compute(gene_experiments_data)
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end %s signature computation, time: %s %s", test_sample_name, totalTime, attr(totalTime, "units")))
-      return(signature)
+      dgrpLogger$log(sprintf("end %s differential gene expression computation, time: %s %s", test_sample_name, totalTime, attr(totalTime, "units")))
+      return(dge)
     }
   ),
   private = list(
