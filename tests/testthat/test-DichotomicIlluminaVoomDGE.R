@@ -8,7 +8,7 @@ sut <- DichotomicIlluminaVoomDGE$new(genefilter)
 
 # given
 disease_name <- "ipf"
-disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv")
+disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
 disease_rna_seq_sample_01_map <- "000000000000000000001111111111111111111"
 
 expected <- package_readRDS("test/voom/DichotomicIlluminaVoomDGE_expected.Rds")
