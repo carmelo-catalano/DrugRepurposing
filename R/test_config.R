@@ -1,0 +1,8 @@
+test_config <- list()
+test_config$LINCS_splitted_level3_dir <- gsub("_build/","",paste0(absolute_package_filename("test/LINCS_splitted_level3"), "/"))
+test_config$LINCS_dge_dir <- gsub("_build/","",paste0(absolute_package_filename("test/LINCS_dge"), "/"))
+test_config$LINCS_dge_output_dir <- gsub("_build/","",paste0(absolute_package_filename("test/LINCS_dge_output"), "/"))
+test_config$DGEMergeByGene_expected <- gsub("_build/","",paste0(absolute_package_filename("test/DGEMergeByGene_expected"), "/"))
+test_config$DGEMergeByGene_output <- gsub("_build/","",paste0(absolute_package_filename("test/DGEMergeByGene_output"), "/"))
+test_config$LINCS_expected_dge_dir <- gsub("_build/","",paste0(absolute_package_filename("test/LINCS_expected_dge"), "/"))
+test_config$LINCS_expected_parallel_dge_dir <- paste0(test_config$LINCS_expected_dge_dir, "/parallel-computation/")

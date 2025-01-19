@@ -1,15 +1,15 @@
 Package: DrugRepurposing
 Type: Package
-Title: A Hello world package
-Version: 0.99.1
+Title: Drug Repurposing System
+Version: 1.0.0
 Authors@R: c(
     person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("aut")),
      person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("cre")))
 Description: Drug repurposing system
-License: Artistic-2.0
+License: GPLv3
 Encoding: UTF-8
 LazyData: false
-Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, doParallel
+Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel
 Suggests: testthat
 VignetteBuilder: knitr,rmarkdown
 biocViews: GeneExpression, DifferentialExpression,
