@@ -1,4 +1,4 @@
-library(R6)
+
 OverallDiseaseDrugConnectivityScore <- R6Class(
   "OverallDiseaseDrugConnectivityScore",
   public = list(
