@@ -1,4 +1,3 @@
-library(R6)
 
 DataLoaderAbstract <- R6Class(
   "DataLoaderAbstract",

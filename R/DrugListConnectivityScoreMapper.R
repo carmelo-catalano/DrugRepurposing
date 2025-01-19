@@ -1,4 +1,3 @@
-library(R6)
 
 DrugListConnectivityScoreMapper <- R6Class(
   "DrugListConnectivityScoreMapper",

@@ -1,4 +1,4 @@
-library(R6)
+
 LINCSRDSJuliaDrugDGEParallel <- R6Class(
   "LINCSRDSJuliaDrugDGEParallel",
   public = list(

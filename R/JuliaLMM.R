@@ -1,4 +1,3 @@
-library(R6)
 
 JuliaLMM <- R6Class(
   "JuliaLMM",

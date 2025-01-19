@@ -1,4 +1,3 @@
-library(R6)
 
 ConnectivityScorePValue <- R6Class(
   "ConnectivityScorePValue",

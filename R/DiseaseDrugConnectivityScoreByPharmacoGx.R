@@ -1,4 +1,3 @@
-library(R6)
 
 DiseaseDrugConnectivityScoreByPharmacoGx <- R6Class(
   "DiseaseDrugConnectivityScoreByPharmacoGx",

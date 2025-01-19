@@ -1,4 +1,3 @@
-library(R6)
 
 DiseaseDrugConnectivityScoreAbstract <- R6Class(
   "DiseaseDrugConnectivityScoreAbstract",

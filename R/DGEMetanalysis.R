@@ -1,5 +1,3 @@
-library(R6)
-library(metafor)
 
 DGEMetanalysis <- R6Class(
   "DGEMetanalysis",

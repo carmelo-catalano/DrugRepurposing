@@ -1,5 +1,3 @@
-library(R6)
-library(lme4)
 
 LINCSLmerLMMToDataFrameMapper <- R6Class(
   "LINCSLmerLMMToDataFrameMapper",

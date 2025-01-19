@@ -1,4 +1,3 @@
-library(R6)
 
 LMMToDataFrameMapperAbstract <- R6Class(
   "LMMToDataFrameMapperAbstract",

@@ -1,4 +1,3 @@
-library(R6)
 
 GeneFilterAbstract <- R6Class(
   "GeneFilterAbstract",

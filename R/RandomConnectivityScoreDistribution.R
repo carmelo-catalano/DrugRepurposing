@@ -1,4 +1,3 @@
-library(R6)
 
 RandomConnectivityScoreDistribution <- R6Class(
   "RandomConnectivityScoreDistribution",

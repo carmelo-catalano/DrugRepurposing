@@ -1,5 +1,3 @@
-library(R6)
-library(cmapR)
 
 LINCSGCTXDataRowLoader <- R6Class(
   "LINCSGCTXDataRowLoader",

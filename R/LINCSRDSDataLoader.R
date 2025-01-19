@@ -1,4 +1,3 @@
-library(R6)
 
 LINCSRDSDataLoader <- R6Class(
   "LINCSRDSDataLoader",

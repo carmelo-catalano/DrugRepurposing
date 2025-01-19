@@ -1,4 +1,3 @@
-library(R6)
 
 LMMDGEByGene <- R6Class(
   "LMMDGEByGene",

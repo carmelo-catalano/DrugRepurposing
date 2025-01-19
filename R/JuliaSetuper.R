@@ -1,5 +1,3 @@
-library(R6)
-library(JuliaCall)
 
 JuliaSetuper <- R6Class(
   "JuliaSetuper",

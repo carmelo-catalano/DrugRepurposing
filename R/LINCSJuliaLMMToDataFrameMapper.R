@@ -1,5 +1,3 @@
-library(R6)
-library(JuliaCall)
 
 LINCSJuliaLMMToDataFrameMapper <- R6Class(
   "LINCSJuliaLMMToDataFrameMapper",

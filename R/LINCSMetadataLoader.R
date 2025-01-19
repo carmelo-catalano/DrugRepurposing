@@ -1,5 +1,3 @@
-library(R6)
-library(readr)
 
 LINCSMetadataLoader <- R6Class(
   "LINCSMetadataLoader",

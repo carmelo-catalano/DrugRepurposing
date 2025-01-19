@@ -1,4 +1,3 @@
-library(R6)
 
 DiseaseSignatureEstimateMapper <- R6Class(
   "DiseaseSignatureEstimateMapper",

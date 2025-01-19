@@ -1,5 +1,3 @@
-library(R6)
-library(foreach)
 
 DrugListConnectivityScoreByBinChenParallel <- R6Class(
   "DrugListConnectivityScoreByBinChenParallel",

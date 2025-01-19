@@ -1,4 +1,3 @@
-library(R6)
 
 GeneIdSymbolConverter <- R6Class(
   "GeneIdSymbolConverter",

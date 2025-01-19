@@ -3,7 +3,6 @@
 # disease_sig_up and disease_sig_down both have 1 column, called 'GeneID'
 # drug_signature has 2 columns called 'ids' and 'rank'
 
-library(R6)
 CMapScore <- R6Class(
   "CMapScore",
   public = list(

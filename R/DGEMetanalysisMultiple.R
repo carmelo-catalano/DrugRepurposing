@@ -1,4 +1,3 @@
-library(R6)
 
 DGEMetanalysisMultiple <- R6Class(
   "DGEMetanalysisMultiple",

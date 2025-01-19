@@ -1,4 +1,3 @@
-library(R6)
 
 LMMAbstract <- R6Class(
   "LMMAbstract",

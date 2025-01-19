@@ -1,4 +1,3 @@
-library(R6)
 
 LINCSDrugDGE <- R6Class(
   "LINCSDrugDGE",

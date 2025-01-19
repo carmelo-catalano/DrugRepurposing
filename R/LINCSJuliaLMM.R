@@ -1,4 +1,3 @@
-library(R6)
 
 LINCSJuliaLMM <- R6Class(
   "LINCSJuliaLMM",

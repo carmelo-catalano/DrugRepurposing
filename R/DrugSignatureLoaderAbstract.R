@@ -1,4 +1,3 @@
-library(R6)
 
 DrugSignatureLoaderAbstract <- R6Class(
   "DrugSignatureLoaderAbstract",

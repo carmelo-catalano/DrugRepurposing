@@ -1,5 +1,3 @@
-library(R6)
-library(foreach)
 
 RandomConnectivityScoreDistributionParallel <- R6Class(
   "RandomConnectivityScoreDistributionParallel",

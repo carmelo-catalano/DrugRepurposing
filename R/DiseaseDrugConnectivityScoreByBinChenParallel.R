@@ -1,4 +1,3 @@
-library(R6)
 
 DiseaseDrugConnectivityScoreByBinChenParallel <- R6Class(
   "DiseaseDrugConnectivityScoreByBinChenParallel",

@@ -1,3 +1,4 @@
+
 FilenameBuilder <- R6Class(
   "FilenameBuilder",
   public = list(

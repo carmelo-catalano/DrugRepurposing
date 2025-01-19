@@ -1,4 +1,3 @@
-library(R6)
 
 DownregulatedGeneFilter <- R6Class(
   "DownregulatedGeneFilter",

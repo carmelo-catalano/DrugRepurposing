@@ -1,4 +1,3 @@
-library(R6)
 
 BinChenConnectivityScoreWithPValue <- R6Class(
   "BinChenConnectivityScoreWithPValue",

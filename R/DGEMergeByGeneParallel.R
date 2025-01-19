@@ -1,3 +1,4 @@
+
 DGEMergeByGeneParallel <- R6Class(
   "DGEMergeByGeneParallel",
   public = list(

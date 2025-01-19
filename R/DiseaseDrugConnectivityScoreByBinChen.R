@@ -1,4 +1,3 @@
-library(R6)
 
 DiseaseDrugConnectivityScoreByBinChen <- R6Class(
   "DiseaseDrugConnectivityScoreByBinChen",
