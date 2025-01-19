@@ -9,7 +9,7 @@ Description: Drug repurposing system
 License: GPLv3
 Encoding: UTF-8
 LazyData: false
-Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel
+Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel, metafor, JuliaCall, lme4, cmapR
 Suggests: testthat
 VignetteBuilder: knitr,rmarkdown
 biocViews: GeneExpression, DifferentialExpression,

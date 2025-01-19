@@ -21,6 +21,10 @@ absolute_package_filename <- function(filename) {
   return(system.file(filename, package = config$package_name))
 }
 
+absolute_package_directory <- function(directory) {
+  return(paste0(system.file(directory, package = config$package_name),"/"))
+}
+
 package_readRDS <- function(filename) {
   absolute_filename <- system.file(filename, package = config$package_name)
   return(readRDS(absolute_filename))
