@@ -56,3 +56,9 @@ Thumbs.db
 .Rhistory
 .RData
 .Ruserdata
+/inst/test/LMMDGE/LINCS_dge_output/*
+!/inst/test/LMMDGE/LINCS_dge_output/.gitkeep
+/inst/test/LMMDGE/DGEMergeByGene_output/*
+!/inst/test/LMMDGE/DGEMergeByGene_output/.gitkeep
+/inst/test/LMMDGE/LINCS_export/output/*
+!/inst/test/LMMDGE/LINCS_export/output/.gitkeep
