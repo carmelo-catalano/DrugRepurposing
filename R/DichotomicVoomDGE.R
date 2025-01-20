@@ -1,11 +1,16 @@
-
 DichotomicVoomDGE <- R6Class(
   "DichotomicVoomDGE",
   public = list(
-    initialize = function() {
+    initialize = function(geneFilter = NA) {
+      private$dicotomicRNASeqMapper <- DicotomicRNASeqMapper$new(geneFilter)
       private$voomDGEMapper <- VoomDGEMapper$new()
+      private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
-    compute = function(gene_experiments_data) {
+    compute = function(rna_seq, sample_01_map, test_sample_name, filter_by_protein_coding = F) {
+      gene_experiments_data <- private$dicotomicRNASeqMapper$load(rna_seq, sample_01_map, test_sample_name)
+      if (filter_by_protein_coding) {
+        gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filterById(gene_experiments_data$gene_expressions)
+      }
       samples_metadata <- data.frame(
         sample_types = gene_experiments_data$sample_types,
         sample = colnames(gene_experiments_data$gene_expressions)
@@ -22,6 +27,8 @@ DichotomicVoomDGE <- R6Class(
     }
   ),
   private = list(
+    dicotomicRNASeqMapper = NA,
+    geneFilterByProteinCoding = NA,
     voomDGEMapper = NA
   )
 )

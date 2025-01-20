@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DichotomicIlluminaDrugRepurpose$new()
+sut <- DichotomicDrugRepurpose$new()
 
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
@@ -11,11 +11,14 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-expected <- package_readRDS("test/drug_repurpose/IlluminaDrugRepurpose_expected.Rds")
+disease_rna_seq_filename<-absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
+disease_rna_seq <- as.matrix(data.table::fread(disease_rna_seq_filename, header = T, colClasses = "integer"), rownames = "GeneID")
+
+expected <- package_readRDS("test/drug_repurpose/DichotomicDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(
-  absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"),
+  disease_rna_seq,
   "000000000000000000001111111111111111111",
   "ipf",
   100,
@@ -32,7 +35,7 @@ result <- sut$compute(
 # then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-DichotomicIlluminaDrugRepurpose", {
+test_that("test-DichotomicDrugRepurpose", {
   expect_identical(result, expected)
 }
 )
