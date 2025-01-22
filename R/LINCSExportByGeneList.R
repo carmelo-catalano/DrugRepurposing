@@ -7,7 +7,7 @@ LINCSExportByGeneList <- R6Class(
     },
     export = function(gene_ids, experiments_meta_data, start_idx, end_idx, output_dir) {
       startTime <- Sys.time()
-      print(sprintf("start export gene index: %s, group size: %s, time: %s", start_idx, end_idx - start_idx + 1, startTime))
+      dgrpLogger$log(sprintf("start export gene index: %s, group size: %s, time: %s", start_idx, end_idx - start_idx + 1, startTime))
       selected_genes <- as.character(gene_ids[start_idx:end_idx])
       experiment_data_rows <- private$lincsDataRowLoader$load(selected_genes)
       experiment_data_rows <- experiment_data_rows[, experiments_meta_data$inst_id]
@@ -19,7 +19,7 @@ LINCSExportByGeneList <- R6Class(
         saveRDS(experiment_data, filename)
       }
       totalTime <- Sys.time() - startTime
-      print(sprintf("end export gene index: %s, time: %s %s", start_idx, totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end export gene index: %s, time: %s %s", start_idx, totalTime, attr(totalTime, "units")))
     }
   ),
   private = list(

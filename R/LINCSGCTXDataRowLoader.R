@@ -13,7 +13,7 @@ LINCSGCTXDataRowLoader <- R6Class(
           rid = gene_ids
         )@mat
       totalTime <- Sys.time() - startTime
-      print(sprintf("end parsing gctx: %s %s", totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end parsing gctx: %s %s", totalTime, attr(totalTime, "units")))
       return(gene_expressions)
     }
   ),

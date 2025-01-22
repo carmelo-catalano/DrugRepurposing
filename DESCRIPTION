@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R: c(
     person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("aut")),
      person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("cre")))
-Description: Drug repurposing system
+Description: Drug repurposing system based on differential expression analysis of RNA-seq expression profiles
 License: GPLv3
 Encoding: UTF-8
 LazyData: false
@@ -13,10 +13,10 @@ Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parall
 Suggests: testthat
 VignetteBuilder: knitr,rmarkdown
 biocViews: GeneExpression, DifferentialExpression,
-        Genetics, Regression,RNASeq, Transcriptomics, GeneticSignature,
+        Genetics, Regression,RNASeq, Transcriptomics, GeneSignature,
         Transcription, Sequencing, Epigenetics, Coverage, Normalization, Pathways,
         Bayesian, Clustering, DNAMethylation, ChIPSeq, SingleCell, CellBiology,
         BiomedicalInformatics, FunctionalGenomics, SystemsBiology, ImmunoOncology,
         AlternativeSplicing, DifferentialMethylation, DifferentialSplicing,
         GeneSetEnrichment, BatchEffect, MultipleComparison, QualityControl,
-        TimeCourse
+        TimeCourse, Microarray, Preprocessing, DataImport

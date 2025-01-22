@@ -18,7 +18,7 @@ LINCSGCTXDataLoader <- R6Class(
       # 7849  4.581                                 4.0124                                4.2052
 
       # usa l'unica riga ottenuta dalla chiamata parse_gctx
-      print(sprintf("start reading gctx archive by gene id: %s", gene_id))
+      dgrpLogger$log(sprintf("start reading gctx archive by gene id: %s", gene_id))
       gene_expression <-
         parse_gctx(
           fname = private$lincs_level3_filename,
@@ -26,7 +26,7 @@ LINCSGCTXDataLoader <- R6Class(
           cid = metadata$inst_id
         )@mat[1,]
       totalTime <- Sys.time() - startTime
-      print(sprintf("end reading gctx archive by gene id: %s, time: %s %s ", gene_id, totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end reading gctx archive by gene id: %s, time: %s %s ", gene_id, totalTime, attr(totalTime, "units")))
       metadata$gene_expression <- gene_expression
       return(metadata)
     }
