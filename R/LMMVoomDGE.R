@@ -1,13 +1,18 @@
-
 LMMVoomDGE <- R6Class(
   "LMMVoomDGE",
   public = list(
     initialize = function() {
+      private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
       private$voomDGEMapper <- VoomDGEMapper$new()
     },
-    compute = function(rna_seq_data, rna_seq_metadata, formula) {
+    compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
       data_size <- dim(rna_seq_data)
       dgrpLogger$log(sprintf("start LMM Voom differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
+      if (filter_by_protein_coding) {
+        rna_seq_data <- private$geneFilterByProteinCoding$filterById(rna_seq_data)
+        data_size <- dim(rna_seq_data)
+        dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
+      }
       startTime <- Sys.time()
       dge <- DGEList(rna_seq_data, remove.zeros = TRUE)
       dge <- calcNormFactors(dge, method = 'upperquartile')
@@ -31,6 +36,7 @@ LMMVoomDGE <- R6Class(
     }
   ),
   private = list(
+    geneFilterByProteinCoding = NA,
     voomDGEMapper = NA
   )
 )

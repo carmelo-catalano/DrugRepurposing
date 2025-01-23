@@ -11,7 +11,7 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-expected <- package_readRDS("test/drug_repurpose/IlluminaDrugRepurpose_expected.Rds")
+expected <- package_readRDS("test/drug_repurpose/IlluminaDichotomicDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(
