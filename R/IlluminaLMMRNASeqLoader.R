@@ -1,6 +1,6 @@
 
-LMMIlluminaRNASeqLoader <- R6Class(
-  "LMMIlluminaRNASeqLoader",
+IlluminaLMMRNASeqLoader <- R6Class(
+  "IlluminaLMMRNASeqLoader",
   public = list(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {
@@ -10,10 +10,10 @@ LMMIlluminaRNASeqLoader <- R6Class(
       }else {
         private$geneFilter <- LowCountsGeneFilter$new()
       }
-      private$lmmIlluminaRNASeqMetadataLoader <- LMMIlluminaRNASeqMetadataLoader$new()
+      private$illuminaLMMRNASeqMetadataLoader <- IlluminaLMMRNASeqMetadataLoader$new()
     },
     load = function(rna_seq_metadata_filename, rna_seq_data_filename, tissue_statuses_to_be_tested, tissue_statuses_map) {
-      rna_seq_metadata <- private$lmmIlluminaRNASeqMetadataLoader$load(rna_seq_metadata_filename, tissue_statuses_to_be_tested, tissue_statuses_map)
+      rna_seq_metadata <- private$illuminaLMMRNASeqMetadataLoader$load(rna_seq_metadata_filename, tissue_statuses_to_be_tested, tissue_statuses_map)
       rna_seq_data <- as.matrix(data.table::fread(rna_seq_data_filename, header = T, colClasses = "integer"), rownames = "GeneID")
       rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample]
       sizes <- dim(rna_seq_data)
@@ -28,7 +28,7 @@ LMMIlluminaRNASeqLoader <- R6Class(
     }
   ),
   private = list(
-    lmmIlluminaRNASeqMetadataLoader = NA,
+    illuminaLMMRNASeqMetadataLoader = NA,
     geneFilter = NA
   )
 )

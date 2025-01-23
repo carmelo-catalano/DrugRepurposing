@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DichotomicDrugRepurpose$new()
+sut <- DichotomicVoomDrugRepurpose$new()
 
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
@@ -35,7 +35,7 @@ result <- sut$compute(
 # then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-DichotomicDrugRepurpose", {
+test_that("test-DichotomicVoomDrugRepurpose", {
   expect_identical(result, expected)
 }
 )

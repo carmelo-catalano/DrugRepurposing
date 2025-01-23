@@ -1,5 +1,5 @@
-DichotomicIlluminaVoomDGE <- R6Class(
-  "DichotomicIlluminaVoomDGE",
+IlluminaDichotomicVoomDGE <- R6Class(
+  "IlluminaDichotomicVoomDGE",
   public = list(
     initialize = function(geneFilter = NA) {
       private$dichotomicVoomDGE <- DichotomicVoomDGE$new(geneFilter)

@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LMMIlluminaVoomDGE$new()
+sut <- IlluminaLMMVoomDGE$new()
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -17,7 +17,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-LMMIlluminaVoomDGE", {
+test_that("test-IlluminaLMMVoomDGE", {
   expect_equal(result, expected)
 }
 )

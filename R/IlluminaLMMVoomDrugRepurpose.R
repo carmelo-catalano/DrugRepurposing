@@ -11,7 +11,7 @@ IlluminaLMMVoomDrugRepurpose <- R6Class(
                        drug_perturbation_time = NA, parallel_computation = F,
                        filter_by_protein_coding = F
     ) {
-      illuminaLMMVoomDGE <- LMMIlluminaVoomDGE$new()
+      illuminaLMMVoomDGE <- IlluminaLMMVoomDGE$new()
       drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
       overallDiseaseDrugConnectivityScore <- OverallDiseaseDrugConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()

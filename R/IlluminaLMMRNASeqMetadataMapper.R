@@ -1,6 +1,6 @@
 
-LMMIlluminaRNASeqMetadataMapper <- R6Class(
-  "LMMIlluminaRNASeqMetadataMapper",
+IlluminaLMMRNASeqMetadataMapper <- R6Class(
+  "IlluminaLMMRNASeqMetadataMapper",
   public = list(
     map = function(rna_seq_metadata, tissue_statuses_to_be_tested, tissue_statuses_map) {
       rna_seq_metadata <- rna_seq_metadata[, c("accession", "tissue", "tissue_status")]

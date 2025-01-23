@@ -1,5 +1,5 @@
-DichotomicDrugRepurpose <- R6Class(
-  "DichotomicDrugRepurpose",
+DichotomicVoomDrugRepurpose <- R6Class(
+  "DichotomicVoomDrugRepurpose",
   public = list(
     compute = function(rna_seq, sample_01_map, disease_name,
                        n_most_significant_genes, drug_dge_dir,
