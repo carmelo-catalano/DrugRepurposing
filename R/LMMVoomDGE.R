@@ -3,7 +3,7 @@ LMMVoomDGE <- R6Class(
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
-      private$voomDGEMapper <- VoomDGEMapper$new()
+      private$dgeMapper <- DGEMapper$new()
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
       data_size <- dim(rna_seq_data)
@@ -32,11 +32,11 @@ LMMVoomDGE <- R6Class(
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end LMM Voom differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
-      return(private$voomDGEMapper$map(differential_expression))
+      return(private$dgeMapper$map(differential_expression))
     }
   ),
   private = list(
     geneFilterByProteinCoding = NA,
-    voomDGEMapper = NA
+    dgeMapper = NA
   )
 )

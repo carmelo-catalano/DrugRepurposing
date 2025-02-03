@@ -12,7 +12,7 @@ DicotomicRNASeqMapper <- R6Class(
       private$rnaSeqSampleMapBuilder <- RnaSeqSampleMapBuilder$new()
 
     },
-    load = function(rna_seq, sample_01_map, test_sample_name) {
+    map = function(rna_seq, sample_01_map, test_sample_name) {
       # rna_seq = matrix, rownames = gene_id, cols=experiment rna seq (read count)
       # Example, GSM2433098, GSM2433099, ... = colnames;  100287102, 653635, ...= rownames
       # colnames are not used so they are optional

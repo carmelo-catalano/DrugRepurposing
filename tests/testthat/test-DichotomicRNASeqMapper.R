@@ -12,7 +12,7 @@ sample_01_map <- "000000000000000000001111111111111111111"
 expected <- package_readRDS("test/voom/DichotomicRNASeqMapper_expected.Rds")
 
 # when
-result <- sut$load(rna_seq, sample_01_map, test_sample_name)
+result <- sut$map(rna_seq, sample_01_map, test_sample_name)
 
 # then
 test_that("test-DichotomicRNASeqMapper", {

@@ -1,5 +1,5 @@
-DichotomicVoomDGE <- R6Class(
-  "DichotomicVoomDGE",
+DichotomicDGE <- R6Class(
+  "DichotomicDGE",
   public = list(
     initialize = function(geneFilter = NA) {
       private$dicotomicRNASeqMapper <- DicotomicRNASeqMapper$new(geneFilter)
@@ -15,13 +15,10 @@ DichotomicVoomDGE <- R6Class(
         sample_types = gene_experiments_data$sample_types,
         sample = colnames(gene_experiments_data$gene_expressions)
       )
-      dge <- DGEList(gene_experiments_data$gene_expressions, remove.zeros = TRUE)
-      dge <- calcNormFactors(dge, method = 'upperquartile')
       design <- model.matrix(~sample_types, data = samples_metadata)
-      voom_data <- voom(dge, design, plot = F)
-      fit_voom <- lmFit(voom_data, design)
-      eBayes_fit_voom <- eBayes(fit_voom)
-      differential_expression <- topTable(eBayes_fit_voom, coef = 2, number = 10^6)
+      fit <- lmFit(gene_experiments_data$gene_expressions, design)
+      eBayes_fit <- eBayes(fit)
+      differential_expression <- topTable(eBayes_fit, coef = 2, number = 10^6)
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
       return(private$dgeMapper$map(differential_expression))
     }

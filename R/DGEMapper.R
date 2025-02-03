@@ -1,6 +1,6 @@
 
-VoomDGEMapper <- R6Class(
-  "VoomDGEMapper",
+DGEMapper <- R6Class(
+  "DGEMapper",
   public = list(
     map = function(differential_expression) {
       differential_expression$gene_id <- rownames(differential_expression)
