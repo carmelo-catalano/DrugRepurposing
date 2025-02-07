@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- IlluminaLMMVoomDGE$new()
+sut <- IlluminaLMMVoomDreamDGE$new()
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -9,7 +9,7 @@ rna_seq_data_filename <- absolute_package_filename("test/voom/GSE153960_raw_coun
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
-expected <- package_readRDS("test/voom/IlluminaLMMVoomDGE_expected.Rds")
+expected <- package_readRDS("test/voom/IlluminaLMMVoomDreamDGE_expected.Rds")
 
 # when
 result <- sut$compute(rna_seq_metadata_filename, rna_seq_data_filename, tissue_statuses_to_be_tested, tissue_statuses_map, formula, filter_by_protein_coding = F)

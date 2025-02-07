@@ -1,5 +1,5 @@
-IlluminaLMMVoomDGE <- R6Class(
-  "IlluminaLMMVoomDGE",
+IlluminaLMMVoomDreamDGE <- R6Class(
+  "IlluminaLMMVoomDreamDGE",
   public = list(
     initialize = function(geneFilter = NA) {
       private$illuminaLMMRNASeqLoader <- IlluminaLMMRNASeqLoader$new(geneFilter)
