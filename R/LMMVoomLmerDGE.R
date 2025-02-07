@@ -13,7 +13,7 @@ LMMVoomLmerDGE <- R6Class(
       partialStartTime <- Sys.time()
       rna_data <- rna_seq_metadata
       differential_expression <- data.frame()
-      char_formula <- paste(as.character(f3), collapse = "")
+      char_formula <- paste(as.character(formula), collapse = "")
       lmer_formula <- as.formula(paste0("sample_field_123___", char_formula))
       data_size <- dim(voom_data$E)
       for (i in 1:data_size[1]) {
