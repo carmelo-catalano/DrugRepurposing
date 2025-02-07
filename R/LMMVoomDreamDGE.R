@@ -2,41 +2,30 @@ LMMVoomDreamDGE <- R6Class(
   "LMMVoomDreamDGE",
   public = list(
     initialize = function() {
-      private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
+      private$lmmVoom <- LMMVoom$new()
       private$dgeMapper <- DGEMapper$new()
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
-      data_size <- dim(rna_seq_data)
-      dgrpLogger$log(sprintf("start LMM Voom differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
-      if (filter_by_protein_coding) {
-        rna_seq_data <- private$geneFilterByProteinCoding$filterById(rna_seq_data)
-        data_size <- dim(rna_seq_data)
-        dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
-      }
+      dgrpLogger$log("start LMM Voom Dream differential gene expression computation")
       startTime <- Sys.time()
-      dge_list <- DGEList(rna_seq_data, remove.zeros = TRUE)
-      dge_list <- calcNormFactors(dge_list, method = 'upperquartile')
-      parallelComputationParam <- SnowParam(processorCores$get(), "FORK", progressbar = TRUE)
-      dgrpLogger$log("start voomWithDreamWeights computation")
-      partialStartTime <- Sys.time()
-      voom_data <- voomWithDreamWeights(dge_list, formula, rna_seq_metadata, BPPARAM = parallelComputationParam)
-      totalTime <- Sys.time() - partialStartTime
-      dgrpLogger$log(sprintf("end voomWithDreamWeights computation, time: %s %s", totalTime, attr(totalTime, "units")))
       dgrpLogger$log("start dream computation")
+      voom_data <- private$lmmVoom$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
       partialStartTime <- Sys.time()
+      parallelComputationParam <- SnowParam(processorCores$get(), "FORK", progressbar = TRUE)
       differential_expression <- dream(voom_data, formula, rna_seq_metadata, BPPARAM = parallelComputationParam)
       totalTime <- Sys.time() - partialStartTime
       dgrpLogger$log(sprintf("end dream computation, time: %s %s", totalTime, attr(totalTime, "units")))
       differential_expression <- variancePartition::eBayes(differential_expression)
       differential_expression <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
+      differential_expression <- private$dgeMapper$map(differential_expression)
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end LMM Voom differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
-      return(private$dgeMapper$map(differential_expression))
+      dgrpLogger$log(sprintf("end LMM Voom Dream differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
+      return(differential_expression)
     }
   ),
   private = list(
-    geneFilterByProteinCoding = NA,
+    lmmVoom = NA,
     dgeMapper = NA
   )
 )
