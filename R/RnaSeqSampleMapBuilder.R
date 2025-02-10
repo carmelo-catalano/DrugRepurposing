@@ -3,7 +3,7 @@ RnaSeqSampleMapBuilder <- R6Class(
   "RnaSeqSampleMapBuilder",
   public = list(
     build = function(sample_01_map, test_sample_name) {
-      # sample_selection_01_map = 001100X01 => 0 = test sample, 1 = control sample, X = excluded sample
+      # sample_01_map = 001100X01 => 0 = test sample, 1 = control sample, X = excluded sample
       sample_vector_map <- strsplit(sample_01_map, split = "")[[1]]
       sample_positions <- which(sample_vector_map != "X")
       sample_vector_map <- subset(sample_vector_map, sample_vector_map != "X")
