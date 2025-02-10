@@ -1,5 +1,6 @@
 LMMVoomJuliaDGE <- R6Class(
   "LMMVoomJuliaDGE",
+  inherit = LMMVoomDGEAbstract,
   public = list(
     initialize = function() {
       private$lmmVoom <- LMMVoom$new()

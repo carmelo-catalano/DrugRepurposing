@@ -1,8 +1,6 @@
 library(testthat)
 
 # setup
-juliaSetuper <- JuliaSetuper$new()
-juliaSetuper$setup()
 sut <- LMMVoomJuliaDGE$new()
 
 # given

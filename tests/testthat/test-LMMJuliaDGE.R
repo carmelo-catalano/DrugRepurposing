@@ -10,7 +10,7 @@ formula <- sample ~ tissue_status + (1 | tissue)
 rna_seq$data <- log2(rna_seq$data + 1)
 
 # when
-result <- sut$compute(rna_seq$data, rna_seq$metadata, formula, "sample")
+result <- sut$compute(rna_seq$data, rna_seq$metadata, formula)
 result$p.value <- NULL
 result$adj.p.value <- NULL
 

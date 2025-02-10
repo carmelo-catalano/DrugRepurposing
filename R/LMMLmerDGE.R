@@ -14,10 +14,11 @@ LMMLmerDGE <- R6Class(
         dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
       }
       startTime <- Sys.time()
+      furmula_items <- as.character(formula)
       differential_expression <- data.frame()
       data <- rna_seq_metadata
       for (i in 1:data_size[1]) {
-        data$sample <- as.numeric(rna_seq_data[i,])
+        data[[furmula_items[2]]] <- as.numeric(rna_seq_data[i,])
         differential_expression <- rbind(differential_expression, private$lmerLMMToDataFrameMapper$map(lmer(formula, data = data, control = lmerControl(calc.derivs = FALSE)), rownames(rna_seq_data[i,])))
       }
       totalTime <- Sys.time() - startTime
