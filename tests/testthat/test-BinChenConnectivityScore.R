@@ -10,7 +10,7 @@ upregulatedGeneFilter <- UpregulatedGeneFilter$new()
 # given
 drug_signature <- drugSignatureLoader$load(absolute_package_filename("test/connectivity_score/drug_dge/AG-957.Rds"))
 disease_signature <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
-disease_signature <- subset(disease_signature, gene_id %in% rownames(drug_signature))
+disease_signature <- subset(disease_signature, gene_id %in% drug_signature$gene_id)
 disease_signature$abs_t.value <- abs(disease_signature$t.value)
 disease_signature <- disease_signature[order(disease_signature$abs_t.value, decreasing = T),]
 disease_signature <- disease_signature[1:150, , drop = FALSE]

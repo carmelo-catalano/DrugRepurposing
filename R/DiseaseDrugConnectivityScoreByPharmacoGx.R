@@ -31,6 +31,8 @@ DiseaseDrugConnectivityScoreByPharmacoGx <- R6Class(
       connectivity_score_matrix <- data.frame()
       for (i in 1:total_drugs) {
         drug_signature <- private$drugSignatureLoader$load(drugs$filename[i])
+        rownames(drug_signature) <- drug_signature$gene_id
+        drug_signature$gene_id <- NULL
         connectivity_score_by_drug <- PharmacoGx::connectivityScore(x = drug_signature, y = disease_signature, method = "fgsea", nperm = n_permutations)
         connectivity_score_matrix <- rbind(connectivity_score_matrix, data.frame(drugs$name[i], connectivity_score_by_drug[1], connectivity_score_by_drug[2]))
       }

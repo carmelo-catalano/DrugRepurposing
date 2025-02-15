@@ -12,7 +12,7 @@ RandomConnectivityScoreDistribution <- R6Class(
       for (i in 1:n_permutations) {
 
         drug_signature <- data.frame(
-          ids = 1:n_drug_signatures_genes,
+          gene_id = 1:n_drug_signatures_genes,
           rank = sample(1:n_drug_signatures_genes, replace = F)
         )
 
@@ -21,8 +21,8 @@ RandomConnectivityScoreDistribution <- R6Class(
         sig_down <- DEG_genes[(n_disease_up_regulated_genes + 1):length(DEG_genes)]
 
         output[i] <- private$cMapScore$compute(
-          sig_up,
           sig_down,
+          sig_up,
           drug_signature
         )
       }

@@ -1,12 +1,12 @@
 ### cmap_score_new taken from https://github.com/Bin-Chen-Lab/RGES/blob/master/core_functions.R
 # All 3 arguments are data.frames
 # disease_sig_up and disease_sig_down both have 1 column, called 'GeneID'
-# drug_signature has 2 columns called 'ids' and 'rank'
+# drug_signature has 2 columns called 'gene_id' and 'rank'
 
 CMapScore <- R6Class(
   "CMapScore",
   public = list(
-    compute = function(disease_sig_up, disease_sig_down, drug_signature) {
+    compute = function(disease_sig_down, disease_sig_up, drug_signature) {
       #the old function does not support the input list with either all up genes or all down genes, this new function attempts to addess this.
       #we also modify the original CMap approach: whenever the sign of ks_up/ks_down, we substract the two scores such that the final scores would not enrich at 0.
 
@@ -15,12 +15,9 @@ CMapScore <- R6Class(
       ks_down <- 0
       connectivity_score <- 0
 
-      # I think we are re-ranking because the GeneID mapping changed the original rank range
-      drug_signature[, "rank"] <- rank(drug_signature[, "rank"])
-
       # Merge the drug signature with the disease signature by GeneID. This becomes the V(j) from the algorithm description
-      up_tags_rank <- merge(drug_signature, disease_sig_up, by.x = "ids", by.y = 1)
-      down_tags_rank <- merge(drug_signature, disease_sig_down, by.x = "ids", by.y = 1)
+      up_tags_rank <- merge(drug_signature, disease_sig_up, by.x = "gene_id", by.y = 1)
+      down_tags_rank <- merge(drug_signature, disease_sig_down, by.x = "gene_id", by.y = 1)
 
       up_tags_position <- sort(up_tags_rank$rank)
       down_tags_position <- sort(down_tags_rank$rank)

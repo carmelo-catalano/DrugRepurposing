@@ -11,9 +11,8 @@ LINCSDrugSignatureLoaderByDrugName <- R6Class(
     },
     load = function(drug_name) {
       drug_signature <- subset(private$LINCS_drug_signature, drug %in% drug_name)
-      rownames(drug_signature) <- drug_signature$gene_id
-      drug_signature <- drug_signature[, "t.value", drop = F]
-      colnames(drug_signature) <- "estimate"
+      drug_signature <- drug_signature[, c("gene_id", "t.value"), drop = F]
+      colnames(drug_signature)[2] <- "estimate"
       return(drug_signature)
     }
   ),

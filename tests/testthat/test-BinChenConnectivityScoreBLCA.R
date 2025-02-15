@@ -11,13 +11,12 @@ upregulatedGeneFilter <- UpregulatedGeneFilter$new()
 all_drug_signatures <- package_readRDS("test/connectivity_score/6h_LINCS_drugs_dge.Rds")
 drug_signature <- subset(all_drug_signatures, drug %in% "digoxin")
 
-rownames(drug_signature) <- drug_signature$gene
-drug_signature <- drug_signature[, "t.value_6h", drop = F]
-colnames(drug_signature) <- "estimate"
+colnames(drug_signature)[1] <- "gene_id"
+drug_signature <- drug_signature[, c("gene_id","t.value_6h"), drop = F]
+colnames(drug_signature)[2] <- "estimate"
 
 disease_signature <- package_readRDS("test/connectivity_score/BLCA_dge.Rds")
-colnames(disease_signature)[1] <- "gene_id"
-disease_signature <- subset(disease_signature, gene_id %in% rownames(drug_signature))
+disease_signature <- subset(disease_signature, gene_id %in% drug_signature$gene_id)
 disease_signature$abs_t.value <- abs(disease_signature$t.value)
 disease_signature <- disease_signature[order(disease_signature$abs_t.value, decreasing = T),]
 disease_signature <- disease_signature[1:50, , drop = FALSE]
