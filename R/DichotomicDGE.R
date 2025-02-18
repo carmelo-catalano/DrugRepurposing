@@ -2,12 +2,20 @@ DichotomicDGE <- R6Class(
   "DichotomicDGE",
   public = list(
     initialize = function(geneFilter = NA) {
-      private$dicotomicRNASeqMapper <- DicotomicRNASeqMapper$new(geneFilter)
+      if (!obj_is_na(geneFilter)) {
+        if (!"GeneFilterAbstract" %in% class(geneFilter))
+          stop("the geneFilter instance must by of type GeneFilterAbstract")
+        private$geneFilter <- geneFilter
+      }else {
+        private$geneFilter <- MeanThresholdGeneFilter$new()
+      }
+      private$dichotomicRNADataMapper <- DichotomicRNADataMapper$new()
       private$dgeMapper <- DGEMapper$new()
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
-    compute = function(rna_seq, sample_01_map, test_sample_name, filter_by_protein_coding = F) {
-      gene_experiments_data <- private$dicotomicRNASeqMapper$map(rna_seq, sample_01_map, test_sample_name)
+    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = F) {
+      gene_experiments_data <- private$dichotomicRNADataMapper$map(rna_data, sample_01_map, test_sample_name)
+      gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_types)
       if (filter_by_protein_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filterById(gene_experiments_data$gene_expressions)
       }
@@ -24,7 +32,8 @@ DichotomicDGE <- R6Class(
     }
   ),
   private = list(
-    dicotomicRNASeqMapper = NA,
+    geneFilter = NA,
+    dichotomicRNADataMapper = NA,
     geneFilterByProteinCoding = NA,
     dgeMapper = NA
   )

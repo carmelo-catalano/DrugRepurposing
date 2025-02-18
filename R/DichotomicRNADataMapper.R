@@ -1,16 +1,8 @@
-DicotomicRNASeqMapper <- R6Class(
-  "DicotomicRNASeqMapper",
+DichotomicRNADataMapper <- R6Class(
+  "DichotomicRNADataMapper",
   public = list(
-    initialize = function(geneFilter = NA) {
-      if (!obj_is_na(geneFilter)) {
-        if (!"GeneFilterAbstract" %in% class(geneFilter))
-          stop("the geneFilter instance must by of type GeneFilterAbstract")
-        private$geneFilter <- geneFilter
-      }else {
-        private$geneFilter <- LowCountsGeneFilter$new()
-      }
+    initialize = function() {
       private$rnaSeqSampleMapBuilder <- RnaSeqSampleMapBuilder$new()
-
     },
     map = function(rna_seq, sample_01_map, test_sample_name) {
       # rna_seq = matrix, rownames = gene_id, cols=experiment rna seq (read count)
@@ -23,7 +15,6 @@ DicotomicRNASeqMapper <- R6Class(
       # 107985730	1			0			0			0			2
       rnaSeqSampleMap <- private$rnaSeqSampleMapBuilder$build(sample_01_map, test_sample_name)
       rna_seq <- rna_seq[, rnaSeqSampleMap$sample_positions]
-      rna_seq <- private$geneFilter$filter(rna_seq, rnaSeqSampleMap$samples)
       return(
         list(
           gene_expressions = rna_seq,
