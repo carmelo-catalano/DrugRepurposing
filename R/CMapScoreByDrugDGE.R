@@ -1,13 +1,13 @@
-BinChenConnectivityScore <- R6Class(
-  "BinChenConnectivityScore",
+CMapScoreByDrugDGE <- R6Class(
+  "CMapScoreByDrugDGE",
   public = list(
     initialize = function() {
-      private$cMapScore <- CMapScore$new()
+      private$cMapScoreByDrugRank <- CMapScoreByDrugRank$new()
     },
     compute = function(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature) {
       drug_signature$rank <- rank(-1 * drug_signature$estimate, ties.method = "random")
       connectivity_score <-
-        private$cMapScore$compute(
+        private$cMapScoreByDrugRank$compute(
           disease_signature_down_regulated_genes,
           disease_signature_up_regulated_genes,
           drug_signature[, c("gene_id", "rank")]
@@ -16,7 +16,7 @@ BinChenConnectivityScore <- R6Class(
     }
   ),
   private = list(
-    cMapScore = NA
+    cMapScoreByDrugRank = NA
   )
 )
 
