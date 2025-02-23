@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- BinChenConnectivityScoreWithPValue$new()
+sut <- CMapScoreByDrugDGEWithPValue$new()
 drugSignatureLoader <- DrugSignatureLoaderByFilename$new("t.value_6h")
 diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
 downregulatedGeneFilter <- DownregulatedGeneFilter$new()
@@ -24,7 +24,7 @@ random_connectivity_score_distribution <- package_readRDS("test/connectivity_sco
 result <- sut$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score_distribution)
 
 # then
-test_that("test-BinChenConnectivityScoreWithPValue", {
+test_that("test-CMapScoreByDrugDGEWithPValue", {
   expect_equal(result, c(0.163037760756174654463990, 0.802830000000000043591797))
 }
 )
