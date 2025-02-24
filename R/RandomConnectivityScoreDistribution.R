@@ -4,7 +4,7 @@ RandomConnectivityScoreDistribution <- R6Class(
   inherit = RandomConnectivityScoreDistributionAbstract,
   public = list(
     initialize = function() {
-      private$cMapScore <- CMapScore$new()
+      private$cMapScoreByDrugRank <- CMapScoreByDrugRank$new()
     },
     compute = function(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, n_permutations) {
       output <- numeric(n_permutations)
@@ -20,7 +20,7 @@ RandomConnectivityScoreDistribution <- R6Class(
         sig_up <- DEG_genes[1:n_disease_up_regulated_genes]
         sig_down <- DEG_genes[(n_disease_up_regulated_genes + 1):length(DEG_genes)]
 
-        output[i] <- private$cMapScore$compute(
+        output[i] <- private$cMapScoreByDrugRank$compute(
           sig_down,
           sig_up,
           drug_signature
@@ -30,6 +30,6 @@ RandomConnectivityScoreDistribution <- R6Class(
     }
   ),
   private = list(
-    cMapScore = NA
+    cMapScoreByDrugRank = NA
   )
 )

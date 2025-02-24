@@ -4,7 +4,7 @@ DiseaseSingleDrugConnectivityScore <- R6Class(
   public = list(
     initialize = function(parallel_computation = F) {
       private$diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
-      private$binChenConnectivityScore <- BinChenConnectivityScore$new()
+      private$cMapScoreByDrugDGE <- CMapScoreByDrugDGE$new()
       private$downregulatedGeneFilter <- DownregulatedGeneFilter$new()
       private$upregulatedGeneFilter <- UpregulatedGeneFilter$new()
       private$drugSignatureMapper <- DrugSignatureMapper$new()
@@ -26,7 +26,7 @@ DiseaseSingleDrugConnectivityScore <- R6Class(
       disease_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       disease_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
       connectivity_score <- private$
-        binChenConnectivityScore$
+        cMapScoreByDrugDGE$
         compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature)
       if (compute_p_value) {
         if ("RandomConnectivityScoreDistributionParallel" %in% class(private$randomConnectivityScoreDistribution)) {
@@ -52,7 +52,7 @@ DiseaseSingleDrugConnectivityScore <- R6Class(
     downregulatedGeneFilter = NA,
     upregulatedGeneFilter = NA,
     drugSignatureMapper = NA,
-    binChenConnectivityScore = NA,
+    cMapScoreByDrugDGE = NA,
     randomConnectivityScoreDistribution = NA,
     connectivityScorePValue = NA
   )
