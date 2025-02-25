@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DiseaseSingleDrugConnectivityScore$new()
+sut <- BinChenDiseaseDrugConnectivityScore$new()
 
 # given
 disease_dge <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
@@ -11,7 +11,7 @@ drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
 result <- sut$compute(disease_dge, drug_dge, 100, "t.value_6h")
 
 # then
-test_that("test-DiseaseSingleDrugConnectivityScore", {
+test_that("test-BinChenDiseaseDrugCScore", {
   expect_equal(result, -0.02456061128210001998)
 }
 )

@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- RandomConnectivityScoreDistribution$new()
+sut <- RandomConnectivityScoreDistributionSync$new()
 
 # given
 n_genes_up <- 31
@@ -13,7 +13,7 @@ n_permutations <- 20
 result <- sut$compute(n_genes_up, n_genes_down, n_genes, n_permutations)
 
 # than
-test_that("test-RandomConnectivityScoreDistribution", {
+test_that("test-RandomConnectivityScoreDistributionSync", {
   expect_equal(length(result), n_permutations)
 }
 )

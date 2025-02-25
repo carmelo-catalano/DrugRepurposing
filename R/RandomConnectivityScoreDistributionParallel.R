@@ -1,13 +1,13 @@
-
 RandomConnectivityScoreDistributionParallel <- R6Class(
   "RandomConnectivityScoreDistributionParallel",
   inherit = RandomConnectivityScoreDistributionAbstract,
   public = list(
     initialize = function() {
-      private$randomConnectivityScoreDistribution <- RandomConnectivityScoreDistribution$new()
+      private$randomConnectivityScoreDistributionSync <- RandomConnectivityScoreDistributionSync$new()
     },
     compute = function(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, n_permutations) {
       cores <- processorCores$get()
+      processorCores$initCores()
       startTime <- Sys.time()
       dgrpLogger$log("start random connectivity score computation")
       block_size <- floor(n_permutations / cores)
@@ -17,7 +17,7 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
 
       output <- foreach(i = 1:cores, .combine = c) %dopar% {
         private$
-          randomConnectivityScoreDistribution$
+          randomConnectivityScoreDistributionSync$
           compute(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, block_sizes[i])
       }
       totalTime <- Sys.time() - startTime
@@ -26,6 +26,6 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
     }
   ),
   private = list(
-    randomConnectivityScoreDistribution = NA
+    randomConnectivityScoreDistributionSync = NA
   )
 )

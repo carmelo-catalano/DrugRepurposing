@@ -3,8 +3,8 @@
 # disease_signature_up_regulated_genes and disease_signature_down_regulated_genes both have 1 column, called 'gene_id'
 # drug_signature has 2 columns called 'gene_id' and 'rank'
 
-CMapScoreByDrugRank <- R6Class(
-  "CMapScoreByDrugRank",
+BinChenCMapScoreByDrugRank <- R6Class(
+  "BinChenCMapScoreByDrugRank",
   public = list(
     compute = function(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature) {
       #the old function does not support the input list with either all up genes or all down genes, this new function attempts to addess this.

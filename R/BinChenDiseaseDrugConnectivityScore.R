@@ -1,17 +1,17 @@
 
-DiseaseSingleDrugConnectivityScore <- R6Class(
-  "DiseaseSingleDrugConnectivityScore",
+BinChenDiseaseDrugConnectivityScore <- R6Class(
+  "BinChenDiseaseDrugConnectivityScore",
   public = list(
     initialize = function(parallel_computation = F) {
       private$diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
-      private$cMapScoreByDrugDGE <- CMapScoreByDrugDGE$new()
+      private$binChenCMapScoreByDrugDGE <- BinChenCMapScoreByDrugDGE$new()
       private$downregulatedGeneFilter <- DownregulatedGeneFilter$new()
       private$upregulatedGeneFilter <- UpregulatedGeneFilter$new()
       private$drugSignatureMapper <- DrugSignatureMapper$new()
       if (parallel_computation) {
         private$randomConnectivityScoreDistribution <- RandomConnectivityScoreDistributionParallel$new()
       }else {
-        private$randomConnectivityScoreDistribution <- RandomConnectivityScoreDistribution$new()
+        private$randomConnectivityScoreDistribution <- RandomConnectivityScoreDistributionSync$new()
       }
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
@@ -26,12 +26,9 @@ DiseaseSingleDrugConnectivityScore <- R6Class(
       disease_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       disease_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
       connectivity_score <- private$
-        cMapScoreByDrugDGE$
+        binChenCMapScoreByDrugDGE$
         compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature)
       if (compute_p_value) {
-        if ("RandomConnectivityScoreDistributionParallel" %in% class(private$randomConnectivityScoreDistribution)) {
-          processorCores$initCores()
-        }
         random_connectivity_score_distribution <-
           private$
             randomConnectivityScoreDistribution$
@@ -52,7 +49,7 @@ DiseaseSingleDrugConnectivityScore <- R6Class(
     downregulatedGeneFilter = NA,
     upregulatedGeneFilter = NA,
     drugSignatureMapper = NA,
-    cMapScoreByDrugDGE = NA,
+    binChenCMapScoreByDrugDGE = NA,
     randomConnectivityScoreDistribution = NA,
     connectivityScorePValue = NA
   )

@@ -1,6 +1,6 @@
 
-DrugListConnectivityScoreMapper <- R6Class(
-  "DrugListConnectivityScoreMapper",
+DiseaseDrugListConnectivityScoreMapper <- R6Class(
+  "DiseaseDrugListConnectivityScoreMapper",
   public = list(
     map = function(connectivity_score_matrix, disease = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
       drugs_connectivity_score <- data.frame(

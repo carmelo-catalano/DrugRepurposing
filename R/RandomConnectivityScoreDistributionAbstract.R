@@ -1,4 +1,3 @@
-
 RandomConnectivityScoreDistributionAbstract <- R6Class(
   "RandomConnectivityScoreDistributionAbstract",
   public = list(

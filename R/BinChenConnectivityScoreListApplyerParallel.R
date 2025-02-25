@@ -1,6 +1,7 @@
 
-DrugListConnectivityScoreByBinChenSync <- R6Class(
-  "DrugListConnectivityScoreByBinChenSync",
+BinChenConnectivityScoreListApplyerParallel <- R6Class(
+  "BinChenConnectivityScoreListApplyerParallel",
+  inherit = BinChenConnectivityScoreListApplyerAbstract,
   public = list(
     initialize = function(drugSignatureLoader = NA) {
       if (!obj_is_na(drugSignatureLoader)) {
@@ -10,21 +11,21 @@ DrugListConnectivityScoreByBinChenSync <- R6Class(
       }else {
         private$drugSignatureLoader <- DrugSignatureLoaderByFilename$new()
       }
-      private$cMapScoreByDrugDGEWithPValue <- CMapScoreByDrugDGEWithPValue$new()
+      private$binChenCMapScoreByDrugDGEWithPValue <- BinChenCMapScoreByDrugDGEWithPValue$new()
     },
     compute = function(disease_down_regulated_genes, disease_up_regulated_genes, drugs, random_connectivity_score) {
       total_drugs <- dim(drugs)[1]
-      connectivity_score_matrix <- data.frame()
-      for (i in 1:total_drugs) {
+      processorCores$initCores()
+      connectivity_score_matrix <- foreach(i = 1:total_drugs, .combine = rbind) %dopar% {
         drug_signature <- private$drugSignatureLoader$load(drugs$filename[i])
-        connectivity_score <- private$cMapScoreByDrugDGEWithPValue$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score)
-        connectivity_score_matrix <- rbind(connectivity_score_matrix, data.frame(drugs$name[i], connectivity_score[1], connectivity_score[2]))
+        connectivity_score <- private$binChenCMapScoreByDrugDGEWithPValue$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score)
+        data.frame(drugs$name[i], connectivity_score[1], connectivity_score[2])
       }
       return(connectivity_score_matrix)
     }
   ),
   private = list(
     drugSignatureLoader = NA,
-    cMapScoreByDrugDGEWithPValue = NA
+    binChenCMapScoreByDrugDGEWithPValue = NA
   )
 )

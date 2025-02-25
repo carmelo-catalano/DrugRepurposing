@@ -1,10 +1,9 @@
-
-RandomConnectivityScoreDistribution <- R6Class(
-  "RandomConnectivityScoreDistribution",
+RandomConnectivityScoreDistributionSync <- R6Class(
+  "RandomConnectivityScoreDistributionSync",
   inherit = RandomConnectivityScoreDistributionAbstract,
   public = list(
     initialize = function() {
-      private$cMapScoreByDrugRank <- CMapScoreByDrugRank$new()
+      private$binChenCMapScoreByDrugRank <- BinChenCMapScoreByDrugRank$new()
     },
     compute = function(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, n_permutations) {
       output <- numeric(n_permutations)
@@ -20,7 +19,7 @@ RandomConnectivityScoreDistribution <- R6Class(
         sig_up <- DEG_genes[1:n_disease_up_regulated_genes]
         sig_down <- DEG_genes[(n_disease_up_regulated_genes + 1):length(DEG_genes)]
 
-        output[i] <- private$cMapScoreByDrugRank$compute(
+        output[i] <- private$binChenCMapScoreByDrugRank$compute(
           sig_down,
           sig_up,
           drug_signature
@@ -30,6 +29,6 @@ RandomConnectivityScoreDistribution <- R6Class(
     }
   ),
   private = list(
-    cMapScoreByDrugRank = NA
+    binChenCMapScoreByDrugRank = NA
   )
 )
