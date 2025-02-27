@@ -18,8 +18,8 @@ BinChenConnectivityScoreListApplyerParallel <- R6Class(
       processorCores$initCores()
       connectivity_score_matrix <- foreach(i = 1:total_drugs, .combine = rbind) %dopar% {
         drug_signature <- private$drugSignatureLoader$load(drugs$filename[i])
-        connectivity_score <- private$binChenCMapScoreByDrugDGEWithPValue$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score)
-        data.frame(drugs$name[i], connectivity_score[1], connectivity_score[2])
+        connectivity_score_with_pvalue <- private$binChenCMapScoreByDrugDGEWithPValue$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score)
+        data.frame(drugs$name[i], connectivity_score_with_pvalue[1], connectivity_score_with_pvalue[2])
       }
       return(connectivity_score_matrix)
     }
