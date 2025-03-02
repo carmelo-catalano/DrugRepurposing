@@ -5,7 +5,7 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
     initialize = function() {
       private$randomConnectivityScoreDistributionSync <- RandomConnectivityScoreDistributionSync$new()
     },
-    compute = function(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, n_permutations) {
+    compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, n_permutations) {
       cores <- processorCores$get()
       processorCores$initCores()
       startTime <- Sys.time()
@@ -18,7 +18,7 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
       output <- foreach(i = 1:cores, .combine = c) %dopar% {
         private$
           randomConnectivityScoreDistributionSync$
-          compute(n_disease_up_regulated_genes, n_disease_down_regulated_genes, n_drug_signatures_genes, block_sizes[i])
+          compute(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, block_sizes[i])
       }
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end random connectivity score computation, time: %s %s", totalTime, attr(totalTime, "units")))

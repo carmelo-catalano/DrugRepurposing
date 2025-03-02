@@ -12,12 +12,12 @@ BinChenConnectivityScoreListApplyerSync <- R6Class(
       }
       private$binChenCMapScoreByDrugDGEWithPValue <- BinChenCMapScoreByDrugDGEWithPValue$new()
     },
-    compute = function(disease_down_regulated_genes, disease_up_regulated_genes, drugs, random_connectivity_score) {
+    compute = function(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribution) {
       total_drugs <- dim(drugs)[1]
       connectivity_score_matrix <- data.frame()
       for (i in 1:total_drugs) {
         drug_signature <- private$drugSignatureLoader$load(drugs$filename[i])
-        connectivity_score_with_pvalue <- private$binChenCMapScoreByDrugDGEWithPValue$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_connectivity_score)
+        connectivity_score_with_pvalue <- private$binChenCMapScoreByDrugDGEWithPValue$compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature, random_connectivity_score_distribution)
         connectivity_score_matrix <- rbind(connectivity_score_matrix, data.frame(drugs$name[i], connectivity_score_with_pvalue[1], connectivity_score_with_pvalue[2]))
       }
       return(connectivity_score_matrix)

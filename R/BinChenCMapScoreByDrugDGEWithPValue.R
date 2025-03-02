@@ -6,9 +6,9 @@ BinChenCMapScoreByDrugDGEWithPValue <- R6Class(
       private$binChenCMapScoreByDrugDGE <- BinChenCMapScoreByDrugDGE$new()
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
-    compute = function(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature, random_cs_distribution) {
-      connectivity_score <- private$binChenCMapScoreByDrugDGE$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature)
-      return(c(connectivity_score, private$connectivityScorePValue$compute(connectivity_score, random_cs_distribution)))
+    compute = function(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature, random_connectivity_score_distribution) {
+      connectivity_score <- private$binChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature)
+      return(c(connectivity_score, private$connectivityScorePValue$compute(connectivity_score, random_connectivity_score_distribution)))
     }
   ),
   private = list(
