@@ -20,11 +20,11 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
       disease_signature <- disease_dge[1:n_most_significant_genes, , drop = FALSE]
       disease_signature <- private$diseaseSignatureEstimateMapper$map(disease_signature)
       if (parallel_computation) {
-        connectivityScore <- BinChenDiseaseDrugListConnectivityScoreParallelFacade$new(private$drugSignatureLoader)
+        diseaseSignatureDrugListCS <- BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade$new(private$drugSignatureLoader)
       }else {
-        connectivityScore <- BinChenDiseaseDrugListConnectivityScoreSyncFacade$new(private$drugSignatureLoader)
+        diseaseSignatureDrugListCS <- BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade$new(private$drugSignatureLoader)
       }
-      return(connectivityScore$compute(disease_signature, drugs, length(disease_drug_common_genes), n_permutations, disease_name, paste0(n_most_significant_genes, " MostSignificantGenes"), drug_perturbation_time))
+      return(diseaseSignatureDrugListCS$compute(disease_signature, drugs, length(disease_drug_common_genes), n_permutations, disease_name, paste0(n_most_significant_genes, " MostSignificantGenes"), drug_perturbation_time))
     }
   ),
   private = list(

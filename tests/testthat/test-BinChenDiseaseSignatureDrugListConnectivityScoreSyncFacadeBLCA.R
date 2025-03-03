@@ -24,7 +24,7 @@ LINCSDrugSignatureLoaderByDrugName <- R6Class(
 # setup
 LINCS_drug_signature <- package_readRDS("test/connectivity_score/fixed_LINCS_drugs_dge.Rds")
 drugSignatureLoader <- LINCSDrugSignatureLoaderByDrugName$new(LINCS_drug_signature)
-sut <- BinChenDiseaseDrugListConnectivityScoreParallelFacade$new(drugSignatureLoader)
+sut <- BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade$new(drugSignatureLoader)
 diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
 
 # given
@@ -46,7 +46,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-BinChenDiseaseDrugListConnectivityScoreParallelFacadeBLCA", {
+test_that("test-BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacadeBLCA", {
   expect_equal(result, expected)
 }
 )

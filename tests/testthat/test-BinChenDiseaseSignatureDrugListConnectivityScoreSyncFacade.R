@@ -3,7 +3,7 @@ library(testthat)
 # setup
 diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
 drugSignatureLoader <- DrugSignatureLoaderByDrugName$new(paste0(absolute_package_filename("test/connectivity_score/drug_dge/"), "/"), "t.value_6h")
-sut <- BinChenDiseaseDrugListConnectivityScoreSyncFacade$new(drugSignatureLoader)
+sut <- BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade$new(drugSignatureLoader)
 
 # given
 disease_signature <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
@@ -26,7 +26,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-BinChenDiseaseDrugListConnectivityScoreSyncFacade", {
+test_that("test-BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade", {
   expect_equal(result, expected)
 }
 )

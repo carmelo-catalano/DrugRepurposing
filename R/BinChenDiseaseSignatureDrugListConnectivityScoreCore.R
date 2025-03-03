@@ -1,5 +1,5 @@
-BinChenDiseaseDrugListConnectivityScoreCore <- R6Class(
-  "BinChenDiseaseDrugListConnectivityScoreCore",
+BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
+  "BinChenDiseaseSignatureDrugListConnectivityScoreCore",
   public = list(
     initialize = function(randomConnectivityScoreDistribution, binChenConnectivityScoreListApplyer) {
       if (!"RandomConnectivityScoreDistributionAbstract" %in% class(randomConnectivityScoreDistribution)) {

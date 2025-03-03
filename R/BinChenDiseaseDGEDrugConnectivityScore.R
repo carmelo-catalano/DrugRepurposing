@@ -1,6 +1,6 @@
 
-BinChenDiseaseDrugConnectivityScore <- R6Class(
-  "BinChenDiseaseDrugConnectivityScore",
+BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
+  "BinChenDiseaseDGEDrugConnectivityScore",
   public = list(
     initialize = function(parallel_computation = F) {
       private$diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
