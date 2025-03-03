@@ -1,5 +1,5 @@
-DiseaseDrugListConnectivityScoreByPharmacoGx <- R6Class(
-  "DiseaseDrugListConnectivityScoreByPharmacoGx",
+PharmacoGxDiseaseSignatureDrugListConnectivityScore <- R6Class(
+  "PharmacoGxDiseaseSignatureDrugListConnectivityScore",
   public = list(
     initialize = function(drugSignatureLoader = NA) {
       if (obj_is_na(drugSignatureLoader)) {
