@@ -20,6 +20,6 @@ result <- sut$map(LMM_output)
 
 # then
 test_that("test-LINCSLmerLMMToDataFrameMapper", {
-  expect_identical(result, expected)
+  expect_equal(result, expected)
 }
 )

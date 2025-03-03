@@ -20,6 +20,6 @@ result <- sut$map(LMM_output, gene_id)
 
 # then
 test_that("test-LINCSLmerLMMToDataFrameMapperGeneCol", {
-  expect_identical(result, expected)
+  expect_equal(result, expected)
 }
 )

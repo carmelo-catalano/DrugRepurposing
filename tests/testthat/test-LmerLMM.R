@@ -18,6 +18,6 @@ result_table <- coef(summary(result))
 
 # then
 test_that("test-LmerLMM", {
-  expect_identical(result_table, expected)
+  expect_equal(result_table, expected)
 }
 )

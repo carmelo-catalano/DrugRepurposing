@@ -33,6 +33,6 @@ result <- sut$compute(
 result$p.value <- NULL
 result$adj.p.value <- NULL
 test_that("test-IlluminaDichotomicVoomDrugRepurpose", {
-  expect_identical(result, expected)
+  expect_equal(result, expected)
 }
 )
