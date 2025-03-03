@@ -11,7 +11,7 @@ disease_rna_seq <- as.matrix(data.table::fread(disease_rna_seq_filename, header 
 disease_rna_seq_log2 <- log2(disease_rna_seq+1)
 disease_rna_seq_sample_01_map <- "000000000000000000001111111111111111111"
 
-expected <- package_readRDS("test/dge/DichotomicDGE_expected.Rds")
+expected <- package_readRDS("test/DGE/DichotomicDGE_expected.Rds")
 
 # when
 result <- sut$compute(disease_rna_seq_log2, disease_rna_seq_sample_01_map, disease_name, T)
