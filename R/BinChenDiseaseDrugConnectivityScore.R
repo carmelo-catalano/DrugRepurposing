@@ -23,18 +23,18 @@ BinChenDiseaseDrugConnectivityScore <- R6Class(
       disease_dge <- disease_dge[order(disease_dge$abs_t.value, decreasing = T),]
       disease_signature <- disease_dge[1:n_most_significant_genes, , drop = FALSE]
       disease_signature <- private$diseaseSignatureEstimateMapper$map(disease_signature)
-      disease_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
-      disease_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
+      disease_signature_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
+      disease_signature_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       connectivity_score <- private$
         binChenCMapScoreByDrugDGE$
-        compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signature)
+        compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature)
       if (compute_p_value) {
         random_connectivity_score_distribution <-
           private$
             randomConnectivityScoreDistribution$
             compute(
-            n_disease_up_regulated_genes = dim(disease_up_regulated_genes)[1],
-            n_disease_down_regulated_genes = dim(disease_down_regulated_genes)[1],
+            n_disease_signature_down_regulated_genes = dim(disease_signature_down_regulated_genes)[1],
+            n_disease_signature_up_regulated_genes = dim(disease_signature_up_regulated_genes)[1],
             n_drug_signatures_genes = dim(drug_signature)[1],
             n_permutations = n_permutations # 10^5
           )

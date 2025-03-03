@@ -24,7 +24,7 @@ drugs <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
                              "A-443644", "AG-494", "AG-957"))
 drugs$filename <- drugs$name
 random_connectivity_score_distribution <- package_readRDS("test/connectivity_score/random_connectivity_score_distribution.Rds")
-expected <- package_readRDS("test/connectivity_score/DrugListConnectivityScoreByBinChen_expected.Rds")
+expected <- package_readRDS("test/connectivity_score/BinChenConnectivityScoreListApplyer_expected.Rds")
 #when
 result <- sut$compute(disease_down_regulated_genes, disease_up_regulated_genes, drugs, random_connectivity_score_distribution)
 
