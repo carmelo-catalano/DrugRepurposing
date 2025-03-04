@@ -7,6 +7,9 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
     },
     compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, n_permutations) {
       cores <- processorCores$get()
+      if (n_permutations < cores) {
+        cores <- n_permutations
+      }
       processorCores$initCores()
       startTime <- Sys.time()
       dgrpLogger$log("start random connectivity score computation")
