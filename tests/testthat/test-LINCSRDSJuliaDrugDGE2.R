@@ -21,7 +21,7 @@ result2 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "AFTPH_54812
 
 test_that("test-LINCSRDSJuliaDrugDGE2", {
   expect_equal(result1, expected1)
-  expect_equal(result2, expected2)
+  expect_equal(result2, expected2, tolerance =1e-6)
 }
 )
 

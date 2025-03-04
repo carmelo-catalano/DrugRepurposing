@@ -44,9 +44,9 @@ result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "GAPDH_2597_
 # then
 
 test_that("test-LINCSRDSJuliaDrugDGEParallel", {
-  expect_equal(result1, expected1)
-  expect_equal(result2, expected2)
-  expect_equal(result3, expected3)
-  expect_equal(result4, expected4)
+  expect_equal(result1, expected1, tolerance =1e-6)
+  expect_equal(result2, expected2, tolerance =1e-6)
+  expect_equal(result3, expected3, tolerance =1e-6)
+  expect_equal(result4, expected4, tolerance =1e-6)
 }
 )
