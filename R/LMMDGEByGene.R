@@ -1,4 +1,3 @@
-
 LMMDGEByGene <- R6Class(
   "LMMDGEByGene",
   public = list(
@@ -11,7 +10,13 @@ LMMDGEByGene <- R6Class(
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
     compute = function(rna_data, gene_symbol = NA) {
-      dgrpLogger$log(sprintf("start differential gene expression computation %s", gene_symbol))
+      if (obj_is_na(gene_symbol)) {
+        gene_symbol_prn <- ""
+      }else {
+        gene_symbol_prn <- paste0(" ", gene_symbol)
+      }
+
+      dgrpLogger$log(sprintf("start differential gene expression computation%s", gene_symbol_prn))
       startTime <- Sys.time()
       # calcola il modello lineare misto:
       # vadiabile dipendente: "expr", espressione genica
@@ -27,7 +32,7 @@ LMMDGEByGene <- R6Class(
       # tyrphostin-AG-1296  PAX8  -0.032810809  0.12512476  -0.26222474
       # tyrphostin-AG-1478  PAX8  0.115920192   0.12512476  0.92643686
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end gene differential expression computation %s, time: %s %s", gene_symbol, totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end gene differential expression computation%s, time: %s %s", gene_symbol_prn, totalTime, attr(totalTime, "units")))
       # force garbage collection to prevent out of memory
       gc()
       return(differentialExpression)
