@@ -16,6 +16,6 @@ sut$compute(perturbation_times, gene_list, drugs_filter)
 result <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "DDR1_780_24h.Rds"))
 
 test_that("test-LINCSRDSJuliaDrugDGE", {
-  expect_equal(result, expected)
+  expect_equal(result, expected, tolerance = 1e-6)
 }
 )

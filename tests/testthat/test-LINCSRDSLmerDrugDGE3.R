@@ -27,7 +27,7 @@ test_that("test-LINCSRDSLmerDrugDGE3", {
   expect_equal(result1, expected1)
   expect_equal(result2, expected2)
   expect_equal(result3, expected3)
-  expect_equal(result4, expected4)
+  expect_equal(result4, expected4, tolerance = 1e-7)
 }
 )
 

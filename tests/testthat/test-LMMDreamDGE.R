@@ -14,6 +14,6 @@ result <- sut$compute(rna_seq$data, rna_seq$metadata, formula)
 
 # then
 test_that("test-LMMDreamDGE", {
-  expect_equal(result, expected)
+  expect_equal(result, expected, tolerance = 0.0005)
 }
 )

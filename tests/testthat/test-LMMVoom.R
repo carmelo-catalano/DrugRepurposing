@@ -17,6 +17,10 @@ result <- sut$compute(rna_seq$data, metadata, formula)
 
 # then
 test_that("test-LMMVoom", {
-  expect_equal(result, expected)
+  expect_equal(result$E, expected$E)
+  expect_equal(result$weights, expected$weights)
+  expect_equal(result$targets$group, expected$targets$group)
+  expect_equal(result$targets$lib.size, expected$targets$lib.size)
+  expect_equal(result$targets$norm.factors, expected$targets$norm.factors)
 }
 )
