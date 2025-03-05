@@ -15,7 +15,7 @@ BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
       }
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
-    compute = function(disease_dge, drug_dge, disease_n_most_significant_genes, drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5, compute_p_value = F) {
+    compute = function(disease_dge, drug_dge, disease_n_most_significant_genes, drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5, compute_p_value = T) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drug_dge$gene_id)
       drug_signature <- subset(drug_dge, drug_dge$gene_id %in% disease_dge$gene_id)
       drug_signature <- private$drugSignatureMapper$map(drug_signature, drug_dge_t_value_column_name)

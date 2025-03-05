@@ -8,7 +8,7 @@ disease_dge <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
 drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
 
 # when
-result <- sut$compute(disease_dge, drug_dge, 100, "t.value_6h")
+result <- sut$compute(disease_dge, drug_dge, 100, "t.value_6h", compute_p_value = F)
 
 # then
 test_that("test-BinChenDiseaseDGEDrugConnectivityScore", {
