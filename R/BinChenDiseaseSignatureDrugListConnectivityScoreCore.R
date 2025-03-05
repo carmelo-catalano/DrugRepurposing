@@ -14,7 +14,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       private$binChenConnectivityScoreListApplyer <- binChenConnectivityScoreListApplyer
       private$diseaseDrugListConnectivityScoreMapper <- DiseaseDrugListConnectivityScoreMapper$new()
     },
-    compute = function(disease_signature, drugs, n_drug_signatures_genes, n_permutations = 10^5, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
+    compute = function(disease_signature, drugs, n_drug_signatures_genes, random_distribution_size = 10^5, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
       # disease_signature example:
       #         estimate
       # 780     -13,1465
@@ -38,7 +38,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
           n_disease_signature_down_regulated_genes = dim(disease_signature_down_regulated_genes)[1],
           n_disease_signature_up_regulated_genes = dim(disease_signature_up_regulated_genes)[1],
           n_drug_signatures_genes = n_drug_signatures_genes,
-          n_permutations = n_permutations # 10^5
+          random_distribution_size = random_distribution_size # 10^5
         )
       connectivity_score_matrix <- private$
         binChenConnectivityScoreListApplyer$

@@ -18,7 +18,7 @@ expected$gene_selection_strategy <- "150 MostSignificantGenes"
 expected$drug_perturbation_time <- "6h"
 
 # when
-result <- sut$compute(disease_signature, drugs, LINCS_bing, 150, n_permutations = 10, disease_name = "IPF", drug_perturbation_time = "6h")
+result <- sut$compute(disease_signature, drugs, LINCS_bing, 150, random_distribution_size = 10, disease_name = "IPF", drug_perturbation_time = "6h")
 
 result$p.value <- NULL
 result$adj.p.value <- NULL

@@ -5,16 +5,16 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
     initialize = function() {
       private$randomConnectivityScoreDistributionSync <- RandomConnectivityScoreDistributionSync$new()
     },
-    compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, n_permutations) {
+    compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, random_distribution_size) {
       cores <- processorCores$get()
-      if (n_permutations < cores) {
-        cores <- n_permutations
+      if (random_distribution_size < cores) {
+        cores <- random_distribution_size
       }
       processorCores$initCores()
       startTime <- Sys.time()
       dgrpLogger$log("start random connectivity score computation")
-      block_size <- floor(n_permutations / cores)
-      first_block_size <- n_permutations - block_size * (cores - 1)
+      block_size <- floor(random_distribution_size / cores)
+      first_block_size <- random_distribution_size - block_size * (cores - 1)
       block_sizes <- rep(block_size, cores)
       block_sizes[1] <- first_block_size
 

@@ -4,7 +4,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade <- R6Class(
     initialize = function(drugSignatureLoader = NA) {
       private$binChenDiseaseSignatureDrugListConnectivityScoreCore <- BinChenDiseaseSignatureDrugListConnectivityScoreCore$new(RandomConnectivityScoreDistributionParallel$new(), BinChenConnectivityScoreListApplyerParallel$new(drugSignatureLoader))
     },
-    compute = function(disease_signature, drugs, n_drug_signatures_genes, n_permutations = 10^5, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
+    compute = function(disease_signature, drugs, n_drug_signatures_genes, random_distribution_size = 10^5, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
       # disease_signature example:
       #         estimate
       # 780     -13,1465
@@ -20,7 +20,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade <- R6Class(
 
       return(private$
                binChenDiseaseSignatureDrugListConnectivityScoreCore$
-               compute(disease_signature, drugs, n_drug_signatures_genes, n_permutations, disease_name, gene_selection_strategy, drug_perturbation_time))
+               compute(disease_signature, drugs, n_drug_signatures_genes, random_distribution_size, disease_name, gene_selection_strategy, drug_perturbation_time))
     }
   ),
   private = list(

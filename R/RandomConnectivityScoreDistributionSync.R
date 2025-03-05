@@ -5,10 +5,10 @@ RandomConnectivityScoreDistributionSync <- R6Class(
     initialize = function() {
       private$binChenCMapScoreByDrugRank <- BinChenCMapScoreByDrugRank$new()
     },
-    compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, n_permutations) {
-      output <- numeric(n_permutations)
+    compute = function(n_disease_signature_down_regulated_genes, n_disease_signature_up_regulated_genes, n_drug_signatures_genes, random_distribution_size) {
+      output <- numeric(random_distribution_size)
 
-      for (i in 1:n_permutations) {
+      for (i in 1:random_distribution_size) {
 
         drug_signature <- data.frame(
           gene_id = 1:n_drug_signatures_genes,

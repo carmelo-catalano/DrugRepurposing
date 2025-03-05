@@ -11,7 +11,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
         private$drugSignatureLoader <- DrugSignatureLoaderByFilename$new()
       }
     },
-    compute = function(disease_dge, drugs, drugs_genes, n_most_significant_genes, n_permutations = 10^5, disease_name = NA, drug_perturbation_time = NA, parallel_computation = F) {
+    compute = function(disease_dge, drugs, drugs_genes, n_most_significant_genes, random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA, parallel_computation = F) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drugs_genes)
       disease_drug_common_genes <- drugs_genes[drugs_genes %in% disease_dge$gene_id]
       private$drugSignatureLoader$init(disease_drug_common_genes)
@@ -24,7 +24,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
       }else {
         diseaseSignatureDrugListCS <- BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade$new(private$drugSignatureLoader)
       }
-      return(diseaseSignatureDrugListCS$compute(disease_signature, drugs, length(disease_drug_common_genes), n_permutations, disease_name, paste0(n_most_significant_genes, " MostSignificantGenes"), drug_perturbation_time))
+      return(diseaseSignatureDrugListCS$compute(disease_signature, drugs, length(disease_drug_common_genes), random_distribution_size, disease_name, paste0(n_most_significant_genes, " MostSignificantGenes"), drug_perturbation_time))
     }
   ),
   private = list(

@@ -41,7 +41,7 @@ disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 expected <- package_readRDS("test/connectivity_score/DiseaseDrugConnectivityScoreByBinChenBLCA_expected.Rds")
 
 # when
-result <- sut$compute(disease_signature, drugs, length(LINCS_lm), n_permutations = 10, disease_name = "BLCA")
+result <- sut$compute(disease_signature, drugs, length(LINCS_lm), random_distribution_size = 10, disease_name = "BLCA")
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
