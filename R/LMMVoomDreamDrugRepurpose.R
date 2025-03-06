@@ -4,7 +4,7 @@ LMMVoomDreamDrugRepurpose <- R6Class(
 
     compute = function(rna_seq_data, rna_seq_metadata,
                        formula, disease_name,
-                       n_most_significant_genes, drug_dge_dir,
+                       disease_n_most_significant_genes, drug_dge_dir,
                        drugs, drugs_genes, drug_gde_t_value_column_name = "t.value",
                        random_distribution_size = 10^5,
                        drug_perturbation_time = NA, parallel_computation = F,
@@ -17,7 +17,7 @@ LMMVoomDreamDrugRepurpose <- R6Class(
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- lmmVoomDGE$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
       connectivity_score <- binChenDiseaseDGEDrugListConnectivityScore$compute(
-        disease_dge, drugs, drugs_genes, n_most_significant_genes, random_distribution_size, disease_name, drug_perturbation_time, parallel_computation)
+        disease_dge, drugs, drugs_genes, disease_n_most_significant_genes, random_distribution_size, disease_name, drug_perturbation_time, parallel_computation)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end drug repurposing computation, time: %s %s", totalTime, attr(totalTime, "units")))
       return(connectivity_score)
