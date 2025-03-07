@@ -1,7 +1,7 @@
 
 LINCSRDSDataLoader <- R6Class(
   "LINCSRDSDataLoader",
-  inherit = DataLoaderAbstract,
+  inherit = LMMFormatDataLoaderAbstract,
   public = list(
     initialize = function(lincs_splitted_level3_dir) {
       private$lincs_splitted_level3_dir <- lincs_splitted_level3_dir

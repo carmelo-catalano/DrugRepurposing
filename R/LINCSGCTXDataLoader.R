@@ -1,7 +1,6 @@
-
 LINCSGCTXDataLoader <- R6Class(
   "LINCSGCTXDataLoader",
-  inherit = DataLoaderAbstract,
+  inherit = LMMFormatDataLoaderAbstract,
   public = list(
     initialize = function(lincs_level3_filename) {
       private$lincs_level3_filename <- lincs_level3_filename
