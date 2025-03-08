@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DGEMetanalysis$new()
+sut <- DGEMetanalysisByRow$new()
 
 # given
 drug_by_gene_dge_6h <- package_readRDS("test/LMMDGE/metanalysis/drug_dge_6h.Rds")
@@ -15,7 +15,7 @@ expected <- package_readRDS("test/LMMDGE/metanalysis/DGEMetanalysis_expected.Rds
 result <- sut$compute(drug_by_gene_dge_6h_24h[1,])
 
 # then
-test_that("test-DGEMetanalysis", {
+test_that("test-DGEMetanalysisByRow", {
   expect_equal(result, expected)
 }
 )

@@ -1,18 +1,17 @@
-
-DGEMetanalysisMultiple <- R6Class(
-  "DGEMetanalysisMultiple",
+DGEMetanalysisByMatrix <- R6Class(
+  "DGEMetanalysisByMatrix",
   public = list(
     initialize = function() {
-      private$dgeMetanalysis <- DGEMetanalysis$new()
+      private$dgeMetanalysisByRow <- DGEMetanalysisByRow$new()
     },
-    compute = function(drug_by_gene_DGE_A, drug_by_gene_DGE_B) {
+    compute = function(dge_A, dge_B) {
       startTime <- Sys.time()
       dgrpLogger$log("start meta analysis")
       ### Combine 6h and 24h using meta-analysis: ###
 
       # calcola l'intersezione dei nomi dei farmaci tra gli insieme drugs_6h e drugs_24h.
       # merge fa la natural join
-      drug_by_gene_DGE_A_B <- merge(x = drug_by_gene_DGE_A, y = drug_by_gene_DGE_B, by = c("gene_id", "drug"))
+      drug_by_gene_DGE_A_B <- merge(x = dge_A, y = dge_B, by = c("gene_id", "drug"))
       # assegna i nomi alle colonne
       colnames(drug_by_gene_DGE_A_B)[3:12] <- c("DE_log2_FC_A", "std.error_A", "t.value_A", "p.value_A", "adj.p.value_A")
       colnames(drug_by_gene_DGE_A_B)[8:12] <- c("DE_log2_FC_B", "std.error_B", "t.value_B", "p.value_B", "adj.p.value_B")
@@ -22,7 +21,7 @@ DGEMetanalysisMultiple <- R6Class(
       metalalysis_A_B <- data.frame(matrix(NA, nrow = total_drug_by_gene_dges, ncol = 17))
       dgrpLogger$log(sprintf("dge common drugs: %s", total_drug_by_gene_dges))
       for (i in 1:total_drug_by_gene_dges) {
-        metalalysis_A_B[i,] <- private$dgeMetanalysis$compute(drug_by_gene_DGE_A_B[i,])
+        metalalysis_A_B[i,] <- private$dgeMetanalysisByRow$compute(drug_by_gene_DGE_A_B[i,])
       }
       colnames(metalalysis_A_B) <- c(colnames(drug_by_gene_DGE_A_B), c("DE_log2_FC_A_B", "std.error_A_B", "t.value_A_B", "p.value_A_B","adj.p.value_A_B"))
       # drug_by_gene_DGE_6h_24h_ma
@@ -35,6 +34,6 @@ DGEMetanalysisMultiple <- R6Class(
     }
   ),
   private = list(
-    dgeMetanalysis = NA
+    dgeMetanalysisByRow = NA
   )
 )
