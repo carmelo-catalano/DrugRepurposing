@@ -3,13 +3,13 @@ IlluminaDichotomicVoomDrugRepurpose <- R6Class(
   public = list(
     compute = function(rna_seq_filename, sample_01_map, disease_name,
                        disease_n_most_significant_genes, drug_dge_dir,
-                       drugs, drugs_genes, drug_gde_t_value_column_name = "t.value",
+                       drugs, drugs_genes, drug_dge_t_value_column_name = "t.value",
                        random_distribution_size = 10^5,
                        drug_perturbation_time = NA, parallel_computation = F,
                        filter_by_protein_coding = F
     ) {
       illuminaDichotomicVoomDGE <- IlluminaDichotomicVoomDGE$new()
-      drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
+      drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")

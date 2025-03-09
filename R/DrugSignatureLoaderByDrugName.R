@@ -1,4 +1,3 @@
-
 DrugSignatureLoaderByDrugName <- R6Class(
   "DrugSignatureLoaderByDrugName",
   inherit = DrugSignatureLoaderAbstract,

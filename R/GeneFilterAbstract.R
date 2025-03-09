@@ -1,4 +1,3 @@
-
 GeneFilterAbstract <- R6Class(
   "GeneFilterAbstract",
   public = list(

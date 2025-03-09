@@ -1,4 +1,3 @@
-
 DrugSignatureLoaderAbstract <- R6Class(
   "DrugSignatureLoaderAbstract",
   public = list(

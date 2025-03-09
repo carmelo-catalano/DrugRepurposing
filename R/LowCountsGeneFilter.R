@@ -5,10 +5,11 @@ LowCountsGeneFilter <- R6Class(
     initialize = function(threshold = 10) {
       private$threshold <- threshold
     },
-    filter = function(gene_expressions, samples) {
+    filter = function(gene_expressions, sample_types) {
+      # sample_types: Control, Control, Test_sample, Comtol, Test_sample, ...
       # pre-filter low count genes
       # keep genes with at least N counts > private$threshold, where N = size of smallest group
-      keep <- rowSums(gene_expressions >= private$threshold) >= min(table(samples))
+      keep <- rowSums(gene_expressions >= private$threshold) >= min(table(sample_types))
       gene_expressions <- gene_expressions[keep,]
       return(gene_expressions)
     }
