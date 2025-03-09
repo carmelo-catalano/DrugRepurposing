@@ -17,15 +17,21 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
+tissue_status_field_name <- "tissue_status"
+accession_field_name <- "accession"
+additional_fields <- "tissue"
 expected <- package_readRDS("test/drug_repurpose/IlluminaLMMVoomDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(
-  rna_seq_data_filename,
   rna_seq_metadata_filename,
+  rna_seq_data_filename,
+  formula,
+  tissue_status_field_name,
   tissue_statuses_to_be_tested,
   tissue_statuses_map,
-  formula,
+  accession_field_name,
+  additional_fields,
   "ipf",
   4,
   absolute_package_directory("test/connectivity_score/drug_dge/"),

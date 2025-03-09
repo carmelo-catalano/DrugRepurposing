@@ -1,4 +1,3 @@
-
 IlluminaLMMRNASeqLoader <- R6Class(
   "IlluminaLMMRNASeqLoader",
   public = list(
@@ -12,8 +11,8 @@ IlluminaLMMRNASeqLoader <- R6Class(
       }
       private$illuminaLMMRNASeqMetadataLoader <- IlluminaLMMRNASeqMetadataLoader$new()
     },
-    load = function(rna_seq_metadata_filename, rna_seq_data_filename, tissue_statuses_to_be_tested, tissue_statuses_map) {
-      rna_seq_metadata <- private$illuminaLMMRNASeqMetadataLoader$load(rna_seq_metadata_filename, tissue_statuses_to_be_tested, tissue_statuses_map)
+    load = function(rna_seq_metadata_filename, rna_seq_data_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, accession_field_name = "accession", additional_fields = FA) {
+      rna_seq_metadata <- private$illuminaLMMRNASeqMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, accession_field_name, additional_fields)
       rna_seq_data <- as.matrix(data.table::fread(rna_seq_data_filename, header = T, colClasses = "integer"), rownames = "GeneID")
       rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample]
       sizes <- dim(rna_seq_data)

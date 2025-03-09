@@ -1,11 +1,11 @@
 IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
   "IlluminaLMMVoomDreamDrugRepurpose",
   public = list(
-
-    compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
+    compute = function(rna_seq_metadata_filename,rna_seq_data_filename,
+                       formula, tissue_status_field_name,
                        tissue_statuses_to_be_tested, tissue_statuses_map,
-                       formula, disease_name,
-                       disease_n_most_significant_genes, drug_dge_dir,
+                       accession_field_name = "accession", additional_fields = FA,
+                       disease_name, disease_n_most_significant_genes, drug_dge_dir,
                        drugs, drugs_genes, drug_gde_t_value_column_name = "t.value",
                        random_distribution_size = 10^5,
                        drug_perturbation_time = NA, parallel_computation = F,
@@ -16,7 +16,16 @@ IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
-      disease_dge <- illuminaLMMVoomDGE$compute(rna_seq_metadata_filename, rna_seq_data_filename, tissue_statuses_to_be_tested, tissue_statuses_map, formula, filter_by_protein_coding)
+      disease_dge <- illuminaLMMVoomDGE$compute(
+        rna_seq_metadata_filename,
+        rna_seq_data_filename,
+        formula,
+        tissue_status_field_name,
+        tissue_statuses_to_be_tested,
+        tissue_statuses_map,
+        accession_field_name,
+        additional_fields,
+        filter_by_protein_coding)
       connectivity_score <- binChenDiseaseDGEDrugListConnectivityScore$compute(
         disease_dge, drugs, drugs_genes, disease_n_most_significant_genes, random_distribution_size, disease_name, drug_perturbation_time, parallel_computation)
       totalTime <- Sys.time() - startTime

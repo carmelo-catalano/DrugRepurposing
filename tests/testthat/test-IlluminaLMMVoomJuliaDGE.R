@@ -9,10 +9,23 @@ rna_seq_data_filename <- absolute_package_filename("test/voom/GSE153960_raw_coun
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
+tissue_status_field_name <- "tissue_status"
+accession_field_name <- "accession"
+additional_fields <- "tissue"
 expected <- package_readRDS("test/voom/IlluminaLMMVoomJuliaDGE_expected.Rds")
 
 # when
-result <- sut$compute(rna_seq_metadata_filename, rna_seq_data_filename, tissue_statuses_to_be_tested, tissue_statuses_map, formula, filter_by_protein_coding = F)
+result <- sut$compute(
+  rna_seq_metadata_filename,
+  rna_seq_data_filename,
+  formula,
+  tissue_status_field_name,
+  tissue_statuses_to_be_tested,
+  tissue_statuses_map,
+  accession_field_name,
+  additional_fields,
+  filter_by_protein_coding = F
+)
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
