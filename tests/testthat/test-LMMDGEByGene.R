@@ -13,11 +13,11 @@ sut <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
 gene_id <- "780" # symbol "DDR1"
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide", "aminopurvalanol-a")
 metadata <- lincsMetadataSetuper$setup("6", drugs_filter)
-rna_data <- lincsRDSDataLoader$load(gene_id, metadata)
+rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 expected <- package_readRDS("test/LMMDGE/LMMDGEByGene_expected.Rds")
 
 # when
-result <- sut$compute(rna_data)
+result <- sut$compute(rna_data_metadata)
 
 # then
 test_that("test-LMMDGEByGene", {

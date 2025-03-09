@@ -11,11 +11,11 @@ sut <- JuliaLMM$new(config$LINCSLMMFormula)
 gene_id <- "2101" # symbol "ESRRA"
 metadata <- lincsMetadataSetuper$setup("24")
 metadata <- metadata[3:50,]
-rna_data <- lincsRDSDataLoader$load(gene_id, metadata)
+rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 expected <- package_readRDS("test/LMMDGE/JuliaLMMExpected.Rds")
 
 # when
-result <- sut$compute(rna_data)
+result <- sut$compute(rna_data_metadata)
 result_table <- julia_call("coeftable", result)
 result_table <- JuliaCall::field(result_table, "cols")
 

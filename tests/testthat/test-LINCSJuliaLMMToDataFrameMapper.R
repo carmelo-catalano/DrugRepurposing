@@ -10,10 +10,10 @@ sut <- LINCSJuliaLMMToDataFrameMapper$new()
 gene_id <- "2101" # symbol "ESRRA"
 metadata <- lincsMetadataSetuper$setup("24")
 metadata <- metadata[3:50,]
-rna_data <- lincsRDSDataLoader$load(gene_id, metadata)
+rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 
 julia_library("MixedModels")
-LMM_output <- julia_call("fit", julia_eval("LinearMixedModel"), gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate), rna_data, show_value = F)
+LMM_output <- julia_call("fit", julia_eval("LinearMixedModel"), gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate), rna_data_metadata, show_value = F)
 expected <- package_readRDS("test/LMMDGE/LINCSJuliaLMMToDataFrameMapperExpected.Rds")
 
 # when

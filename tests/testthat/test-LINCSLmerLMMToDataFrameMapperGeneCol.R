@@ -11,8 +11,8 @@ gene_id <- 2101 # "ESRRA"
 computation_number <- 1
 experiments_metadata <- lincsMetadataSetuper$setup("24")
 experiments_metadata <- experiments_metadata[3:50,]
-rna_data <- lincsRDSDataLoader$load(gene_id, experiments_metadata)
-LMM_output <- lmer(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate), data = rna_data, control = lmerControl(calc.derivs = FALSE))
+rna_data_metadata <- lincsRDSDataLoader$load(gene_id, experiments_metadata)
+LMM_output <- lmer(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate), data = rna_data_metadata, control = lmerControl(calc.derivs = FALSE))
 expected <- package_readRDS("test/LMMDGE/LINCSLmerMMToDataFrameMapperGeneColExpected.Rds")
 
 # when

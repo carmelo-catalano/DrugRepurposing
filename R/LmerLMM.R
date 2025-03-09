@@ -1,4 +1,3 @@
-
 LmerLMM <- R6Class(
   "LmerLMM",
   inherit = LMMAbstract,
@@ -6,9 +5,9 @@ LmerLMM <- R6Class(
     initialize = function(formula) {
       private$formula <- formula
     },
-    compute = function(rna_data) {
+    compute = function(rna_data_metadata) {
       return(
-        lmer(private$formula, data = rna_data, control = lmerControl(calc.derivs = FALSE))
+        lmer(private$formula, data = rna_data_metadata, control = lmerControl(calc.derivs = FALSE))
       )
     }
   ),

@@ -1,4 +1,3 @@
-
 LINCSRDSLmerDrugDGE <- R6Class(
   "LINCSRDSLmerDrugDGE",
   public = list(

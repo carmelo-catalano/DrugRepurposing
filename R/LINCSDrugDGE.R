@@ -1,4 +1,3 @@
-
 LINCSDrugDGE <- R6Class(
   "LINCSDrugDGE",
   public = list(
@@ -24,8 +23,8 @@ LINCSDrugDGE <- R6Class(
             dgrpLogger$log(sprintf("skipping gene %s, purtubation time hours: %s, number: %s", gene_symbol, pert_time_hours, computation_number))
             return(NA)
           }
-          rna_data <- private$geneRNADataLoader$load(gene_list[i], metadata)
-          dge <- private$drugDGE$compute(rna_data, gene_symbol)
+          rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
+          dge <- private$drugDGE$compute(rna_data_metadata, gene_symbol)
           saveRDS(dge, file = filename)
         }
         dgrpLogger$log(sprintf("end computation by perturbation time: %sh", perturbation_times[t]))

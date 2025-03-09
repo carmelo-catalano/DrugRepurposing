@@ -10,12 +10,12 @@ gene_id <- "2101"
 gene_symbol <- "ESRRA"
 metadata <- lincsMetadataSetuper$setup("24")
 metadata <- metadata[3:50,]
-rna_data <- lincsRDSDataLoader$load(gene_id, metadata)
+rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 expected <- package_readRDS("test/LMMDGE/LINCSJuliaDrugDGEFactory_expected.Rds")
 
 # when
 drugDGE <- sut$create(4)
-result <- drugDGE$compute(rna_data, gene_symbol)
+result <- drugDGE$compute(rna_data_metadata, gene_symbol)
 
 # then
 test_that("test-LINCSJuliaDrugDGEFactory", {

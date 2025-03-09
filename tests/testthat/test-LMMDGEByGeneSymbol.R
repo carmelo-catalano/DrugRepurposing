@@ -14,11 +14,11 @@ gene_id <- "780"
 gene_symbol <- "DDR1"
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide", "aminopurvalanol-a")
 metadata <- lincsMetadataSetuper$setup("6", drugs_filter)
-rna_data <-  lincsRDSDataLoader$load(gene_id, metadata)
+rna_data_metadata <-  lincsRDSDataLoader$load(gene_id, metadata)
 expected <- package_readRDS("test/LMMDGE/LMMDGEByGeneSymbol_expected.Rds")
 
 # when
-result <- sut$compute(rna_data, gene_symbol)
+result <- sut$compute(rna_data_metadata, gene_symbol)
 
 # then
 test_that("test-LMMDGEByGeneSymbol", {

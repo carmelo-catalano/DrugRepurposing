@@ -9,7 +9,7 @@ LMMDGEByGene <- R6Class(
       private$lmm <- lmm
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
-    compute = function(rna_data, gene_symbol = NA) {
+    compute = function(rna_data_metadata, gene_symbol = NA) {
       if (obj_is_na(gene_symbol)) {
         gene_symbol_prn <- ""
       }else {
@@ -24,7 +24,7 @@ LMMDGEByGene <- R6Class(
       # effetti random: cell_id, rna_plate
       # LMM_output <- lmer(gene_expressions ~ pert_iname + (1 | cell_id) + (1 | rna_plate), data = experiments_metadata, control = lmerControl(calc.derivs = FALSE))
 
-      differentialExpression <- private$lmm$compute(rna_data)
+      differentialExpression <- private$lmm$compute(rna_data_metadata)
 
       differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol)
       # risultato finale:
