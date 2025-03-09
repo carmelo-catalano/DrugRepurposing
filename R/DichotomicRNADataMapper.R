@@ -18,7 +18,7 @@ DichotomicRNADataMapper <- R6Class(
       return(
         list(
           gene_expressions = rna_seq,
-          sample_types = rnaSeqSampleMap$samples
+          sample_types = rnaSeqSampleMap$sample_types
         )
       )
     }

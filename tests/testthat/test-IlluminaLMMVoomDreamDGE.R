@@ -10,7 +10,7 @@ tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND"
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
 tissue_status_field_name <- "tissue_status"
-accession_field_name <- "accession"
+sample_id_field_name <- "accession"
 additional_fields <- "tissue"
 expected <- package_readRDS("test/voom/IlluminaLMMVoomDreamDGE_expected.Rds")
 
@@ -22,7 +22,7 @@ result <- sut$compute(
   tissue_status_field_name,
   tissue_statuses_to_be_tested,
   tissue_statuses_map,
-  accession_field_name,
+  sample_id_field_name,
   additional_fields,
   filter_by_protein_coding = F
 )
