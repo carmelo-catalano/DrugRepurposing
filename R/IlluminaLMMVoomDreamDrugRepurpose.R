@@ -1,7 +1,7 @@
 IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
   "IlluminaLMMVoomDreamDrugRepurpose",
   public = list(
-    compute = function(rna_seq_metadata_filename,rna_seq_data_filename,
+    compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
                        formula, tissue_status_field_name,
                        tissue_statuses_to_be_tested, tissue_statuses_map,
                        sample_id_field_name = "accession", additional_fields = FA,
@@ -17,8 +17,8 @@ IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- illuminaLMMVoomDGE$compute(
-        rna_seq_metadata_filename,
         rna_seq_data_filename,
+        rna_seq_metadata_filename,
         formula,
         tissue_status_field_name,
         tissue_statuses_to_be_tested,
