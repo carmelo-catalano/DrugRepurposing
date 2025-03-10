@@ -1,4 +1,3 @@
-
 LINCSJuliaDrugDGEFactory <- R6Class(
   "LINCSJuliaDrugDGEFactory",
   public = list(
@@ -8,7 +7,7 @@ LINCSJuliaDrugDGEFactory <- R6Class(
     create = function(BLAS_num_threads = NA) {
       private$juliaSetuper$setup(BLAS_num_threads)
       juliaLMM <- JuliaLMM$new(config$LINCSLMMFormula)
-      juliaLMMToDataFrameMapper <- LINCSJuliaLMMToDataFrameMapper$new()
+      juliaLMMToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
       drugDGE <- LMMDGEByGene$new(juliaLMM, juliaLMMToDataFrameMapper)
       return(drugDGE)
     }

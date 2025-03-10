@@ -2,7 +2,7 @@ JuliaLMMToDataFrameMapper <- R6Class(
   "JuliaLMMToDataFrameMapper",
   inherit = LMMToDataFrameMapperAbstract,
   public = list(
-    map = function(LMM_output, gene_id) {
+    map = function(LMM_output, gene_id = NA, sample_type_field_name = NA, sample_type_field_name_mapped = "sample_type") {
       LMM_table <- julia_call("coeftable", LMM_output)
       LMM_table <- JuliaCall::field(LMM_table, "cols")
       DE_log2_FC <- LMM_table[[1]][-1]
@@ -10,12 +10,21 @@ JuliaLMMToDataFrameMapper <- R6Class(
       t.value <- DE_log2_FC / std.error
       p.value <- LMM_table[[4]][-1]
       dge <- data.frame(
-        gene_id = gene_id,
         DE_log2_FC = DE_log2_FC,
         std.error = std.error,
         t.value = t.value,
         p.value = p.value
       )
+      if (!obj_is_na(gene_id)) {
+        dge <- add_column(dge, gene_id = gene_id, .before = 1)
+      }
+      if (!obj_is_na(sample_type_field_name)) {
+        sample_types <- julia_call("coefnames", LMM_output)[-1]
+        sammple_types <- substr(sample_types, nchar(sample_type_field_name) + 3, nchar(sample_types))
+        dge <- add_column(dge, sample_type = sammple_types, .before = 1)
+        colnames(dge)[1] <- sample_type_field_name_mapped
+        dge$adj.p.value <- p.adjust(p.value, method = "BH")
+      }
       return(dge)
     }
   )

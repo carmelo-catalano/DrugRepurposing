@@ -1,4 +1,3 @@
-
 JuliaLMM <- R6Class(
   "JuliaLMM",
   inherit = LMMAbstract,
@@ -10,6 +9,9 @@ JuliaLMM <- R6Class(
       return(
         julia_call("fit", julia_eval("LinearMixedModel"), private$formula, rna_data_metadata, REML = T)
       )
+    },
+    getFormula = function() {
+      return(private$formula)
     }
   ),
   private = list(

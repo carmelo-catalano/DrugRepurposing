@@ -6,6 +6,9 @@ LINCSJuliaLMM <- R6Class(
       return(
         julia_call("fit", julia_eval("LinearMixedModel"), config$LINCSLMMFormula, rna_data_metadata, REML = T)
       )
+    },
+    getFormula = function() {
+      return(config$LINCSLMMFormula)
     }
   )
 )

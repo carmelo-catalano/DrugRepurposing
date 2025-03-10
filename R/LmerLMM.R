@@ -9,6 +9,9 @@ LmerLMM <- R6Class(
       return(
         lmer(private$formula, data = rna_data_metadata, control = lmerControl(calc.derivs = FALSE))
       )
+    },
+    getFormula = function() {
+      return(private$formula)
     }
   ),
   private = list(

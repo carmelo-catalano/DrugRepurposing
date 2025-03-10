@@ -7,6 +7,7 @@ LMMDGEByGene <- R6Class(
       if (!"LMMToDataFrameMapperAbstract" %in% class(lmmToDataFrameMapper))
         stop("the lmmToDataFrameMapper instance must by of type LMMToDataFrameMapperAbstract")
       private$lmm <- lmm
+      private$fixed_effect <- as.character(terms(lmm$getFormula())[1][[3]])
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
     compute = function(rna_data_metadata, gene_symbol = NA) {
@@ -26,7 +27,8 @@ LMMDGEByGene <- R6Class(
 
       differentialExpression <- private$lmm$compute(rna_data_metadata)
 
-      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol)
+      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol, private$fixed_effect, "drug")
+
       # risultato finale:
       # drug                gene  Estimate      Std. Error  t value
       # tyrphostin-AG-1296  PAX8  -0.032810809  0.12512476  -0.26222474
@@ -40,6 +42,7 @@ LMMDGEByGene <- R6Class(
   ),
   private = list(
     lmm = NA,
+    fixed_effect = NA,
     lmmToDataFrameMapper = NA
   )
 )

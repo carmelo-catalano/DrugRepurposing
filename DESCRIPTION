@@ -9,7 +9,7 @@ Description: Drug repurposing system based on differential expression analysis o
 License: GPLv3
 Encoding: UTF-8
 LazyData: false
-Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel, metafor, JuliaCall, lme4, cmapR, PharmacoGx
+Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel, metafor, JuliaCall, lme4, cmapR, PharmacoGx, tibble
 Suggests: testthat
 VignetteBuilder: knitr,rmarkdown
 biocViews: GeneExpression, DifferentialExpression,

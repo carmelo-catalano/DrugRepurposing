@@ -6,6 +6,9 @@ LINCSLmerLMM <- R6Class(
       return(
         lmer(config$LINCSLMMFormula, data = rna_data_metadata, control = lmerControl(calc.derivs = FALSE))
       )
+    },
+    getFormula = function() {
+      return(config$LINCSLMMFormula)
     }
   )
 )

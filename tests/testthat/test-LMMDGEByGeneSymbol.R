@@ -6,7 +6,7 @@ lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
 
 lmm <- LINCSLmerLMM$new()
-lmmToDataFrameMapper <- LINCSLmerLMMToDataFrameMapper$new()
+lmmToDataFrameMapper <- LmerLMMToDataFrameMapper$new()
 sut <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
 
 # given

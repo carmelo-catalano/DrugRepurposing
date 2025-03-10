@@ -1,4 +1,3 @@
-
 LINCSRDSJuliaDrugDGE <- R6Class(
   "LINCSRDSJuliaDrugDGE",
   public = list(

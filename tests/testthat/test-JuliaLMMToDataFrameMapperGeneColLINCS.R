@@ -4,7 +4,7 @@ library(JuliaCall)
 #setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
-sut <- LINCSJuliaLMMToDataFrameMapper$new()
+sut <- JuliaLMMToDataFrameMapper$new()
 
 # given
 gene_id <- 2101 # "ESRRA"
@@ -17,10 +17,10 @@ LMM_output <- julia_call("fit", julia_eval("LinearMixedModel"), gene_expression 
 expected <- package_readRDS("test/LMMDGE/LINCSJuliaLMMToDataFrameMapperGeneColExpected.Rds")
 
 # when
-result <- sut$map(LMM_output, gene_id)
+result <- sut$map(LMM_output, gene_id, "pert_iname", "drug")
 
 # then
-test_that("test-LINCSJuliaLMMToDataFrameMapperGeneCol", {
+test_that("test-JuliaLMMToDataFrameMapperGeneColLINCS", {
   expect_equal(result, expected)
 }
 )
