@@ -1,12 +1,12 @@
 LINCSDrugDGE <- R6Class(
   "LINCSDrugDGE",
   public = list(
-    initialize = function(metadataSetuper, geneRNADataLoader, drugDGE, output_DGE_dir, skip_already_computed_genes = F) {
+    initialize = function(metadataSetuper, geneRNADataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes = F) {
       private$metadataSetuper <- metadataSetuper
       private$geneRNADataLoader <- geneRNADataLoader
       private$output_DGE_dir <- output_DGE_dir
       private$geneIdToSymbolConverter <- GeneIdSymbolConverter$new()
-      private$drugDGE <- drugDGE
+      private$lmmDGEByGene <- lmmDGEByGene
       private$skip_already_computed_genes <- skip_already_computed_genes
     },
 
@@ -24,7 +24,7 @@ LINCSDrugDGE <- R6Class(
             return(NA)
           }
           rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
-          dge <- private$drugDGE$compute(rna_data_metadata, gene_symbol)
+          dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol)
           saveRDS(dge, file = filename)
         }
         dgrpLogger$log(sprintf("end computation by perturbation time: %sh", perturbation_times[t]))
@@ -35,7 +35,7 @@ LINCSDrugDGE <- R6Class(
   private = list(
     metadataSetuper = NA,
     geneRNADataLoader = NA,
-    drugDGE = NA,
+    lmmDGEByGene = NA,
     geneIdToSymbolConverter = NA,
     output_DGE_dir = NA,
     skip_already_computed_genes = NA
