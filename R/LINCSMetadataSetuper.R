@@ -1,4 +1,3 @@
-
 LINCSMetadataSetuper <- R6Class(
   "LINCSMetadataSetuper",
   inherit = LINCSMetadataSetuperAbstract,

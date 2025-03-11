@@ -1,4 +1,3 @@
-
 LINCSMetadataLoader <- R6Class(
   "LINCSMetadataLoader",
   public = list(

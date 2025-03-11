@@ -1,8 +1,7 @@
-
 LINCSExport <- R6Class(
   "LINCSExport",
   public = list(
-    initialize = function(experiments_data_filename, lincsMetadataSetuper = NA) {
+    initialize = function(gctx_archive_filename, lincsMetadataSetuper = NA) {
       if (obj_is_na(lincsMetadataSetuper)){
         private$lincsMetadataSetuper <- LINCSMetadataSetuper$new()
       }else {
@@ -10,22 +9,22 @@ LINCSExport <- R6Class(
           stop("the lincsExperimentMetaDataSetuper instance must be of type LINCSMetadataSetuperAbstract")
         private$lincsMetadataSetuper <- lincsMetadataSetuper
       }
-      lincsSGCTXDataRowLoader <- LINCSGCTXDataRowLoader$new(experiments_data_filename)
+      lincsSGCTXDataRowLoader <- LINCSGCTXDataRowLoader$new(gctx_archive_filename)
       private$lincsExportByGeneList <- LINCSExportByGeneList$new(lincsSGCTXDataRowLoader)
     },
-    export = function(gene_ids,
+    export = function(gene_list,
                       perturbation_times,
                       output_dir,
-                      block_size = 200,
+                      gene_number_batch_size = 200,
                       drugs_filter = NA
     ) {
       experiments_meta_data <- private$lincsMetadataSetuper$setup(perturbation_times, drugs_filter)
       gene_index <- 1
-      tot_genes <- length(gene_ids)
+      tot_genes <- length(gene_list)
       while (gene_index <= tot_genes) {
-        ext_sup <- min(gene_index + block_size - 1, tot_genes)
-        private$lincsExportByGeneList$export(gene_ids, experiments_meta_data, gene_index, ext_sup, output_dir)
-        gene_index <- gene_index + block_size
+        ext_sup <- min(gene_index + gene_number_batch_size - 1, tot_genes)
+        private$lincsExportByGeneList$export(gene_list, experiments_meta_data, gene_index, ext_sup, output_dir)
+        gene_index <- gene_index + gene_number_batch_size
       }
     }
   ),

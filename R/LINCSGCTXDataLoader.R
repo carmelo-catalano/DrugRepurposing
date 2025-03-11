@@ -1,9 +1,8 @@
 LINCSGCTXDataLoader <- R6Class(
   "LINCSGCTXDataLoader",
-  inherit = LMMFormatDataLoaderAbstract,
   public = list(
-    initialize = function(lincs_level3_filename) {
-      private$lincs_level3_filename <- lincs_level3_filename
+    initialize = function(gctx_archive_filename) {
+      private$gctx_archive_filename <- gctx_archive_filename
     },
 
     load = function(gene_id, metadata) {
@@ -20,7 +19,7 @@ LINCSGCTXDataLoader <- R6Class(
       dgrpLogger$log(sprintf("start reading gctx archive by gene id: %s", gene_id))
       gene_expression <-
         parse_gctx(
-          fname = private$lincs_level3_filename,
+          fname = private$gctx_archive_filename,
           rid = gene_id,
           cid = metadata$inst_id
         )@mat[1,]
@@ -31,6 +30,6 @@ LINCSGCTXDataLoader <- R6Class(
     }
   ),
   private = list(
-    lincs_level3_filename = NA
+    gctx_archive_filename = NA
   )
 )

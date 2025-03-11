@@ -1,4 +1,3 @@
-
 LINCSExportByGeneList <- R6Class(
   "LINCSExportByGeneList",
   public = list(

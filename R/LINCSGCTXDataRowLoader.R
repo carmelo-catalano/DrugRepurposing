@@ -1,4 +1,3 @@
-
 LINCSGCTXDataRowLoader <- R6Class(
   "LINCSGCTXDataRowLoader",
   public = list(

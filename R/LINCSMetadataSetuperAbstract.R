@@ -1,4 +1,3 @@
-
 LINCSMetadataSetuperAbstract <- R6Class(
   "LINCSMetadataSetuperAbstract",
   public = list(
