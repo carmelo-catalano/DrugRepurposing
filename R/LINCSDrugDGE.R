@@ -24,7 +24,7 @@ LINCSDrugDGE <- R6Class(
             return(NA)
           }
           rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
-          dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol)
+          dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol, "drug")
           saveRDS(dge, file = filename)
         }
         dgrpLogger$log(sprintf("end computation by perturbation time: %sh", perturbation_times[t]))

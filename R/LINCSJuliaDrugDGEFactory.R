@@ -8,8 +8,8 @@ LINCSJuliaDrugDGEFactory <- R6Class(
       private$juliaSetuper$setup(BLAS_num_threads)
       juliaLMM <- JuliaLMM$new(config$LINCSLMMFormula)
       juliaLMMToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
-      drugDGE <- LMMDGEByGene$new(juliaLMM, juliaLMMToDataFrameMapper)
-      return(drugDGE)
+      lmmDGEByGene <- LMMDGEByGene$new(juliaLMM, juliaLMMToDataFrameMapper)
+      return(lmmDGEByGene)
     }
   ),
   private = list(

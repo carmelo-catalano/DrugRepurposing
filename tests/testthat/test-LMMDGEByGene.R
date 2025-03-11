@@ -17,7 +17,7 @@ rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 expected <- package_readRDS("test/LMMDGE/LMMDGEByGene_expected.Rds")
 
 # when
-result <- sut$compute(rna_data_metadata)
+result <- sut$compute(rna_data_metadata, NA, "drug")
 
 # then
 test_that("test-LMMDGEByGene", {

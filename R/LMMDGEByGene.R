@@ -10,7 +10,7 @@ LMMDGEByGene <- R6Class(
       private$fixed_effect <- as.character(terms(lmm$getFormula())[1][[3]])
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
-    compute = function(rna_data_metadata, gene_symbol = NA) {
+    compute = function(rna_data_metadata, gene_symbol = NA, sample_type_column_name = "sample_type") {
       if (obj_is_na(gene_symbol)) {
         gene_symbol_prn <- ""
       }else {
@@ -27,7 +27,7 @@ LMMDGEByGene <- R6Class(
 
       differentialExpression <- private$lmm$compute(rna_data_metadata)
 
-      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol, private$fixed_effect, "drug")
+      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol, private$fixed_effect, sample_type_column_name)
 
       # risultato finale:
       # drug                gene  Estimate      Std. Error  t value
