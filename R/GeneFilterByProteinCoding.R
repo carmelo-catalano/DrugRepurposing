@@ -9,6 +9,14 @@ GeneFilterByProteinCoding <- R6Class(
     filterById = function(gene_expressions) {
       return(gene_expressions[rownames(gene_expressions) %in% private$protein_coding_gene$id,])
     },
+    filterByIdOnCondition = function(gene_expressions, filter_by_protein_coding) {
+      if (filter_by_protein_coding) {
+        gene_expressions <- self$filterById(gene_expressions)
+        data_size <- dim(gene_expressions)
+        dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
+      }
+      return(gene_expressions)
+    },
     filterBySymbol = function(gene_expressions) {
       return(gene_expressions[rownames(gene_expressions) %in% private$protein_coding_gene$symbol,])
     },

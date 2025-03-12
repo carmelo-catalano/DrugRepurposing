@@ -6,12 +6,16 @@ LMMVoomJuliaDGE <- R6Class(
       private$lmmVoom <- LMMVoom$new()
       private$juliaLMMToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
       private$juliaSetuper <- JuliaSetuper$new()
+      private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
       private$juliaSetuper$setup()
       dgrpLogger$log("start LMM Voom Julia differential gene expression computation")
       startTime <- Sys.time()
-      voom_data <- private$lmmVoom$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
+      rna_seq_data <- private$
+        geneFilterByProteinCoding$
+        filterByIdOnCondition(rna_seq_data, filter_by_protein_coding)
+      voom_data <- private$lmmVoom$compute(rna_seq_data, rna_seq_metadata, formula)
       dgrpLogger$log("start Julia fit computation")
       partialStartTime <- Sys.time()
       rna_data <- rna_seq_metadata
@@ -35,6 +39,7 @@ LMMVoomJuliaDGE <- R6Class(
   ),
   private = list(
     juliaSetuper = NA,
+    geneFilterByProteinCoding = NA,
     lmmVoom = NA,
     juliaLMMToDataFrameMapper = NA
   )
