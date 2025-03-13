@@ -24,7 +24,6 @@ LMMVoomLmerDGE <- R6Class(
       for (i in 1:data_size[1]) {
         rna_data$sample_field_123___ <- as.numeric(voom_data$E[i,])
         dge <- lmer(lmer_formula, rna_data, weights = voom_data$weights[i,], control = lmerControl(calc.derivs = FALSE))
-        a <- private$lmerLMMToDataFrameMapper$map(dge, rownames(voom_data$E)[i])
         differential_expression <- rbind(differential_expression, private$lmerLMMToDataFrameMapper$map(dge, rownames(voom_data$E)[i]))
       }
       totalTime <- Sys.time() - partialStartTime

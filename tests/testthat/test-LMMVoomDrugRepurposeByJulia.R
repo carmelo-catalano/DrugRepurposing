@@ -1,7 +1,11 @@
 library(testthat)
 
 # setup
-sut <- LMMVoomDreamDrugRepurpose$new()
+drug_dge_dir <- absolute_package_directory("test/connectivity_score/drug_dge/")
+drug_gde_t_value_column_name <- "t.value_6h"
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
+lmmVoomJuliaDGE <- LMMVoomJuliaDGE$new()
+sut <- LMMVoomDrugRepurpose$new(lmmVoomDGE = lmmVoomJuliaDGE, drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -32,10 +36,8 @@ result <- sut$compute(
   formula,
   "ipf",
   5,
-  absolute_package_directory("test/connectivity_score/drug_dge/"),
   drugs,
   drug_genes,
-  "t.value_6h",
   10,
   "6h",
   F,
@@ -45,7 +47,7 @@ result <- sut$compute(
 # then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-LMMVoomDreamDrugRepurpose", {
+test_that("test-LMMVoomDrugRepurposeByJulia", {
   expect_equal(result, expected)
 }
 )
