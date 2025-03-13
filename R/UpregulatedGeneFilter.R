@@ -1,4 +1,3 @@
-
 UpregulatedGeneFilter <- R6Class(
   "UpregulatedGeneFilter",
   public = list(

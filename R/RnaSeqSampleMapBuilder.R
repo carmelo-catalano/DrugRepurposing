@@ -1,4 +1,3 @@
-
 RnaSeqSampleMapBuilder <- R6Class(
   "RnaSeqSampleMapBuilder",
   public = list(

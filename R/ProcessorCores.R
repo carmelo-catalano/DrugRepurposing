@@ -1,4 +1,3 @@
-
 ProcessorCores <- R6Class(
   "ProcessorCores",
   public = list(

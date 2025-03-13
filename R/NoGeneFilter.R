@@ -1,4 +1,3 @@
-
 NoGeneFilter <- R6Class(
   "NoGeneFilter",
   inherit = GeneFilterAbstract,
