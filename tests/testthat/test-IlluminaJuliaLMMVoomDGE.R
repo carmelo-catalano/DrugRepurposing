@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- IlluminaLMMVoomJuliaDGE$new()
+sut <- IlluminaJuliaLMMVoomDGE$new()
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -12,7 +12,7 @@ formula <- ~tissue_status + (1 | tissue)
 tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
-expected <- package_readRDS("test/voom/IlluminaLMMVoomJuliaDGE_expected.Rds")
+expected <- package_readRDS("test/voom/IlluminaJuliaLMMVoomDGE_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -30,7 +30,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-IlluminaLMMVoomJuliaDGE", {
+test_that("test-IlluminaJuliaLMMVoomDGE", {
   expect_equal(result, expected)
 }
 )

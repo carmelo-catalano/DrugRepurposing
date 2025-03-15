@@ -1,11 +1,11 @@
 library(testthat)
 
 # setup
-sut <- LMMVoomDreamDGE$new()
+sut <- DreamLMMVoomDGE$new()
 
 # given
 rna_seq <- package_readRDS("test/voom/als_NYGC_rna_seq.Rds")
-expected <- package_readRDS("test/voom/LMMVoomDreamDGE_expected.Rds")
+expected <- package_readRDS("test/voom/DreamLMMVoomDGE_expected.Rds")
 formula <- ~tissue_status + (1 | tissue)
 
 # when
@@ -14,7 +14,7 @@ result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-LMMVoomDreamDGE", {
+test_that("test-DreamLMMVoomDGE", {
   expect_equal(result, expected, tolerance = 0.00008)
 }
 )

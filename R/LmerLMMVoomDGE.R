@@ -1,5 +1,5 @@
-LMMVoomLmerDGE <- R6Class(
-  "LMMVoomLmerDGE",
+LmerLMMVoomDGE <- R6Class(
+  "LmerLMMVoomDGE",
   inherit = LMMVoomDGEAbstract,
   public = list(
     initialize = function() {

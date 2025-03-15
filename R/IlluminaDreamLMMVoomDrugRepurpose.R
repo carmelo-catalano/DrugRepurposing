@@ -1,5 +1,5 @@
-IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
-  "IlluminaLMMVoomDreamDrugRepurpose",
+IlluminaDreamLMMVoomDrugRepurpose <- R6Class(
+  "IlluminaDreamLMMVoomDrugRepurpose",
   public = list(
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
                        formula, tissue_status_field_name,
@@ -11,7 +11,7 @@ IlluminaLMMVoomDreamDrugRepurpose <- R6Class(
                        drug_perturbation_time = NA, parallel_computation = F,
                        filter_by_protein_coding = F
     ) {
-      illuminaLMMVoomDGE <- IlluminaLMMVoomDreamDGE$new()
+      illuminaLMMVoomDGE <- IlluminaDreamLMMVoomDGE$new()
       drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()

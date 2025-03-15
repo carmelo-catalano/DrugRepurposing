@@ -7,7 +7,7 @@ LMMVoomDrugRepurpose <- R6Class(
           stop("the lmmVoomDGE instance must by of type LMMVoomDGEAbstract")
         private$lmmVoomDGE <- lmmVoomDGE
       }else {
-        private$lmmVoomDGE <- LMMVoomDreamDGE$new()
+        private$lmmVoomDGE <- DreamLMMVoomDGE$new()
       }
       if (!obj_is_na(drugSignatureLoader)) {
         if (!"DrugSignatureLoaderAbstract" %in% class(drugSignatureLoader))

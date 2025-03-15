@@ -1,8 +1,8 @@
 library(testthat)
 
 # setup
-lmmVoomDreamDGE <- LMMVoomDreamDGE$new()
-sut <- IlluminaLMMVoomDGE$new(lmmVoomDreamDGE)
+dreamLMMVoomDGE <- DreamLMMVoomDGE$new()
+sut <- IlluminaLMMVoomDGE$new(dreamLMMVoomDGE)
 
 # given
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND", "Other")
