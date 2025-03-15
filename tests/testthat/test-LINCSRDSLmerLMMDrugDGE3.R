@@ -2,7 +2,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-sut <- LINCSRDSLmerDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir))
+sut <- LINCSRDSLmerLMMDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir))
 
 # given
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide")
@@ -23,7 +23,7 @@ result2 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "ESRRA_2101_
 result3 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "GAPDH_2597_6h.Rds"))
 result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "GAPDH_2597_24h.Rds"))
 
-test_that("test-LINCSRDSLmerDrugDGE3", {
+test_that("test-LINCSRDSLmerLMMDrugDGE3", {
   expect_equal(result1, expected1)
   expect_equal(result2, expected2)
   expect_equal(result3, expected3)

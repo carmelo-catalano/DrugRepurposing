@@ -3,7 +3,7 @@ library(testthat)
 # setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
-sut <- LINCSJuliaDrugDGEFactory$new()
+sut <- LINCSJuliaLMMDrugDGEFactory$new()
 
 # given
 gene_id <- "2101"
@@ -18,7 +18,7 @@ drugDGE <- sut$create(4)
 result <- drugDGE$compute(rna_data_metadata, gene_symbol, "drug")
 
 # then
-test_that("test-LINCSJuliaDrugDGEFactory", {
+test_that("test-LINCSJuliaLMMDrugDGEFactory", {
   expect_equal(result, expected)
 }
 )

@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSJuliaDrugDGEParallel$new(
+sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
   "",
   ""
 )
@@ -56,7 +56,7 @@ result5 <- tryCatch({
 })
 
 # then
-test_that("test-LINCSRDSJuliaDrugDGEParallelValidChunk", {
+test_that("test-LINCSRDSJuliaLMMDrugDGEParallelValidChunk", {
   expect_equal(result1, "error")
   expect_identical(result2, "error")
   expect_identical(result3, "error")

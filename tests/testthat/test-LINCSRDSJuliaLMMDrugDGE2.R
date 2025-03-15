@@ -2,7 +2,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-sut <- LINCSRDSJuliaDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir), 4)
+sut <- LINCSRDSJuliaLMMDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir), 4)
 
 # given
 drugs_filter <- c("AM-251", "AM-404", "AM-580")
@@ -19,7 +19,7 @@ sut$compute("24", gene_list, drugs_filter)
 result1 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "ADORA3_140_24h.Rds"))
 result2 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "AFTPH_54812_24h.Rds"))
 
-test_that("test-LINCSRDSJuliaDrugDGE2", {
+test_that("test-LINCSRDSJuliaLMMDrugDGE2", {
   expect_equal(result1, expected1)
   expect_equal(result2, expected2, tolerance =1e-6)
 }

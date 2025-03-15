@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSJuliaDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir), 4)
+sut <- LINCSRDSJuliaLMMDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir), 4)
 
 # given
 gene_list <- "780" # symbol "DDR1"
@@ -15,7 +15,7 @@ sut$compute(perturbation_times, gene_list, drugs_filter)
 # then
 result <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "DDR1_780_24h.Rds"))
 
-test_that("test-LINCSRDSJuliaDrugDGE", {
+test_that("test-LINCSRDSJuliaLMMDrugDGE", {
   expect_equal(result, expected, tolerance = 1e-6)
 }
 )

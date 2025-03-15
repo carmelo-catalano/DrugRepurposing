@@ -2,7 +2,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-sut <- LINCSRDSLmerDrugDGE$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir))
+sut <- LINCSGCTXLmerLMMDrugDGE$new("/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx", absolute_package_directory(test_config$LINCS_dge_output_dir))
 
 # given
 gene_list <- "780" # symbol "DDR1"
@@ -17,7 +17,7 @@ sut$compute(perturbation_times, gene_list, drugs_filter)
 # then
 result <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "DDR1_780_6h.Rds"))
 
-test_that("test-LINCSRDSLmerDrugDGE", {
+test_that("test-LINCSGCTXLmerLMMDrugDGE", {
   expect_equal(result, expected)
 }
 )

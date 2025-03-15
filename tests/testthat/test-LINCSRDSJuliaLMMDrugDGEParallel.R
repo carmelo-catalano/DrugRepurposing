@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSJuliaDrugDGEParallel$new(
+sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
   absolute_package_directory(test_config$LINCS_splitted_level3_dir),
   absolute_package_directory(test_config$LINCS_dge_output_dir),
   15,
@@ -43,7 +43,7 @@ result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "GAPDH_2597_
 
 # then
 
-test_that("test-LINCSRDSJuliaDrugDGEParallel", {
+test_that("test-LINCSRDSJuliaLMMDrugDGEParallel", {
   expect_equal(result1, expected1, tolerance =1e-6)
   expect_equal(result2, expected2, tolerance =1e-6)
   expect_equal(result3, expected3, tolerance =1e-6)

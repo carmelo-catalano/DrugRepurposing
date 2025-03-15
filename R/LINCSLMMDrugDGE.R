@@ -1,5 +1,5 @@
-LINCSDrugDGE <- R6Class(
-  "LINCSDrugDGE",
+LINCSLMMDrugDGE <- R6Class(
+  "LINCSLMMDrugDGE",
   public = list(
     initialize = function(metadataSetuper, geneRNADataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes = F) {
       private$metadataSetuper <- metadataSetuper

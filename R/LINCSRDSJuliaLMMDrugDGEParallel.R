@@ -1,5 +1,5 @@
-LINCSRDSJuliaDrugDGEParallel <- R6Class(
-  "LINCSRDSJuliaDrugDGEParallel",
+LINCSRDSJuliaLMMDrugDGEParallel <- R6Class(
+  "LINCSRDSJuliaLMMDrugDGEParallel",
   public = list(
     initialize = function(lincs_splitted_level3_dir, output_DGE_dir, delay_start_clusters = 40, BLAS_num_threads = 4, skip_already_computed_genes = F) {
       private$validate_cunostructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, delay_start_clusters, BLAS_num_threads, skip_already_computed_genes)
@@ -35,10 +35,10 @@ LINCSRDSJuliaDrugDGEParallel <- R6Class(
         BLAS_num_threads <- chunk$BLAS_num_threads
       }
       dgrpLogger$log(sprintf("chunk number %s compuation setup...", chunk$number))
-      lincsRDSJuliaDrugDGE <- LINCSRDSJuliaDrugDGE$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, BLAS_num_threads, private$skip_already_computed_genes)
+      lincsRDSJuliaLMMDrugDGE <- LINCSRDSJuliaLMMDrugDGE$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, BLAS_num_threads, private$skip_already_computed_genes)
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start chunk number %s computation ", chunk$number))
-      lincsRDSJuliaDrugDGE$compute(chunk$perturbation_times, chunk$gene_list, chunk$drugs_filter)
+      lincsRDSJuliaLMMDrugDGE$compute(chunk$perturbation_times, chunk$gene_list, chunk$drugs_filter)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end chunk number %s computation, time: %s %s", chunk$number, totalTime, attr(totalTime, "units")))
       return(NA)

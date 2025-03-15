@@ -2,7 +2,7 @@ library(testthat)
 
 # when
 result1 <- tryCatch({
-  sut <- LINCSRDSJuliaDrugDGEParallel$new(
+  sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
     NA,  "",  0
   )
 }, error = function(e) {
@@ -10,7 +10,7 @@ result1 <- tryCatch({
 })
 
 result2 <- tryCatch({
-  sut <- LINCSRDSJuliaDrugDGEParallel$new(
+  sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
     "",  NULL,  0
   )
 }, error = function(e) {
@@ -18,7 +18,7 @@ result2 <- tryCatch({
 })
 
 result3 <- tryCatch({
-  sut <- LINCSRDSJuliaDrugDGEParallel$new(
+  sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
     "",  "",  -1
   )
 }, error = function(e) {
@@ -26,7 +26,7 @@ result3 <- tryCatch({
 })
 
 result4 <- tryCatch({
-  sut <- LINCSRDSJuliaDrugDGEParallel$new(
+  sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
     "",  "",  1,  0
   )
 }, error = function(e) {
@@ -34,7 +34,7 @@ result4 <- tryCatch({
 })
 
 result5 <- tryCatch({
-  sut <- LINCSRDSJuliaDrugDGEParallel$new(
+  sut <- LINCSRDSJuliaLMMDrugDGEParallel$new(
     "",  "",  0,  1,  "regerg"
   )
 }, error = function(e) {
@@ -42,7 +42,7 @@ result5 <- tryCatch({
 })
 
 # then
-test_that("test-LINCSRDSJuliaDrugDGEParallelInvalidConstructorParameters", {
+test_that("test-LINCSRDSJuliaLMMDrugDGEParallelInvalidConstructorParameters", {
   expect_identical(result1, "error")
   expect_identical(result2, "error")
   expect_identical(result3, "error")
