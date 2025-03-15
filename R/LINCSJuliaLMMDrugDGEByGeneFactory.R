@@ -1,5 +1,5 @@
-LINCSJuliaLMMDrugDGEFactory <- R6Class(
-  "LINCSJuliaLMMDrugDGEFactory",
+LINCSJuliaLMMDrugDGEByGeneFactory <- R6Class(
+  "LINCSJuliaLMMDrugDGEByGeneFactory",
   public = list(
     initialize = function() {
       private$juliaSetuper <- JuliaSetuper$new()

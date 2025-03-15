@@ -1,13 +1,15 @@
-LMMLmerDGE <- R6Class(
-  "LMMLmerDGE",
+JuliaLMMDGE <- R6Class(
+  "JuliaLMMDGE",
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
-      private$lmerLMMToDataFrameMapper <- LmerLMMToDataFrameMapper$new()
+      private$juliaLMMToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
+      private$juliaSetuper <- JuliaSetuper$new()
     },
     compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = F) {
+      private$juliaSetuper$setup()
       data_size <- dim(rna_data)
-      dgrpLogger$log(sprintf("start LMM lmer differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
+      dgrpLogger$log(sprintf("start LMM Julia differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
       if (filter_by_protein_coding) {
         rna_data <- private$geneFilterByProteinCoding$filterById(rna_data)
         data_size <- dim(rna_data)
@@ -19,17 +21,19 @@ LMMLmerDGE <- R6Class(
       data <- rna_metadata
       for (i in 1:data_size[1]) {
         data[[furmula_items[2]]] <- as.numeric(rna_data[i,])
-        differential_expression <- rbind(differential_expression, private$lmerLMMToDataFrameMapper$map(lmer(formula, data = data, control = lmerControl(calc.derivs = FALSE)), rownames(rna_data[i,])))
+        dge <- julia_call("fit", julia_eval("LinearMixedModel"), formula, data, REML = T)
+        differential_expression <- rbind(differential_expression, private$juliaLMMToDataFrameMapper$map(dge, rownames(rna_data[i,])))
       }
       totalTime <- Sys.time() - startTime
-      colnames(differential_expression) <- c("gene_id", "DE_log2_FC", "std.error", "t.value")
       differential_expression <- differential_expression[order(differential_expression$gene_id),]
-      dgrpLogger$log(sprintf("end LMM lmer differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
+      differential_expression$adj.p.value <- p.adjust(differential_expression$p.value, method = "BH")
+      dgrpLogger$log(sprintf("end LMM Julia differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
       return(differential_expression)
     }
   ),
   private = list(
+    juliaSetuper = NA,
     geneFilterByProteinCoding = NA,
-    lmerLMMToDataFrameMapper = NA
+    juliaLMMToDataFrameMapper = NA
   )
 )

@@ -1,5 +1,5 @@
-LMMDreamDGE <- R6Class(
-  "LMMDreamDGE",
+DreamLMMDGE <- R6Class(
+  "DreamLMMDGE",
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
