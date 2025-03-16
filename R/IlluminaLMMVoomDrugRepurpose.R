@@ -1,6 +1,13 @@
-IlluminaDreamLMMVoomDrugRepurpose <- R6Class(
-  "IlluminaDreamLMMVoomDrugRepurpose",
+IlluminaLMMVoomDrugRepurpose <- R6Class(
+  "IlluminaLMMVoomDrugRepurpose",
   public = list(
+    initialize = function(illuminaLMMVoomDGE = NA) {
+      if (obj_is_na(illuminaLMMVoomDGE)) {
+        private$illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()
+      }else {
+        private$illuminaLMMVoomDGE <- illuminaLMMVoomDGE
+      }
+    },
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
                        formula, tissue_status_field_name,
                        tissue_statuses_to_be_tested, tissue_statuses_map,
@@ -11,12 +18,11 @@ IlluminaDreamLMMVoomDrugRepurpose <- R6Class(
                        drug_perturbation_time = NA, parallel_computation = F,
                        filter_by_protein_coding = F
     ) {
-      illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()
       drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
-      disease_dge <- illuminaLMMVoomDGE$compute(
+      disease_dge <- private$illuminaLMMVoomDGE$compute(
         rna_seq_data_filename,
         rna_seq_metadata_filename,
         formula,
@@ -32,5 +38,7 @@ IlluminaDreamLMMVoomDrugRepurpose <- R6Class(
       dgrpLogger$log(sprintf("end drug repurposing computation, time: %s %s", totalTime, attr(totalTime, "units")))
       return(connectivity_score)
     }
+  ), private = list(
+    illuminaLMMVoomDGE = NA
   )
 )

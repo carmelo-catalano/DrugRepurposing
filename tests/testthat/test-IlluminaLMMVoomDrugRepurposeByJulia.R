@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- IlluminaDreamLMMVoomDrugRepurpose$new()
+sut <- IlluminaLMMVoomDrugRepurpose$new(IlluminaLMMVoomDGEJulia$new())
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -47,7 +47,7 @@ result <- sut$compute(
 # then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-IlluminaDreamLMMVoomDrugRepurpose", {
+test_that("test-IlluminaLMMVoomDrugRepurposeByLmer", {
   expect_equal(result, expected)
 }
 )
