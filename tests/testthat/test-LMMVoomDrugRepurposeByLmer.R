@@ -4,8 +4,8 @@ library(testthat)
 drug_dge_dir <- absolute_package_directory("test/connectivity_score/drug_dge/")
 drug_gde_t_value_column_name <- "t.value_6h"
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
-lmerLMMVoomDGE <- LmerLMMVoomDGE$new()
-sut <- LMMVoomDrugRepurpose$new(lmmVoomDGE = lmerLMMVoomDGE, drugSignatureLoader = drugSignatureLoaderByDrugName)
+lmmVoomDGELmer <- LMMVoomDGELmer$new()
+sut <- LMMVoomDrugRepurpose$new(lmmVoomDGE = lmmVoomDGELmer, drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")

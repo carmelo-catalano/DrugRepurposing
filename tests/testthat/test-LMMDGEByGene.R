@@ -5,8 +5,8 @@ library(R6)
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
 
-lmm <- LmerLMM$new(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate))
-lmmToDataFrameMapper <- LmerLMMToDataFrameMapper$new()
+lmm <- LMMLmer$new(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate))
+lmmToDataFrameMapper <- LMMLmerToDataFrameMapper$new()
 sut <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
 
 # given
