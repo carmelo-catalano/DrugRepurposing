@@ -7,15 +7,13 @@ LINCSMetadataSetuper <- R6Class(
       # experiment = instance
       raw_metadata <- package_readRDS(config$LINCS_metadata_RDS_filename)[, c("inst_id", "rna_plate", "pert_id", "pert_iname", "pert_type", "pert_dose", "pert_time", "cell_id")]
 
-      # la condizione pert_dose_unit != "-666" è superflua perchè non ci sono esperimenti
-      # per cui vale pert_dose='10' and pert_dose_unit='-666'
       metadata <- subset(raw_metadata,
                          pert_type == "trt_cp" &
                            pert_dose == 10 &
                            pert_time %in% perturbation_times
       )
 
-      # calcola la frequenza di linee cellulari per farmaco
+      # calculate the frequency of cell lines per drug
       cell_lines_per_drug_freq <- as.data.frame(table(unique(metadata[, c("cell_id", "pert_iname")])$pert_iname), stringsAsFactors = FALSE)
       # elimina le linee cellulari che appaiono con una frequenza minore di 5
       cell_lines_per_drug_freq <- cell_lines_per_drug_freq[cell_lines_per_drug_freq$Freq >= 5,]
