@@ -1,5 +1,5 @@
-IlluminaLMMRNASeqMetadataMapper <- R6Class(
-  "IlluminaLMMRNASeqMetadataMapper",
+GEORNASeqLMMMetadataMapper <- R6Class(
+  "GEORNASeqLMMMetadataMapper",
   public = list(
     map = function(rna_seq_metadata, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA) {
       if (obj_is_na(additional_fields)) {

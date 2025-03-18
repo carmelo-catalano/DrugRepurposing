@@ -1,5 +1,5 @@
-IlluminaLMMRNASeqLoader <- R6Class(
-  "IlluminaLMMRNASeqLoader",
+GEORNASeqLMMLoader <- R6Class(
+  "GEORNASeqLMMLoader",
   public = list(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {
@@ -9,10 +9,10 @@ IlluminaLMMRNASeqLoader <- R6Class(
       }else {
         private$geneFilter <- LowCountsGeneFilter$new()
       }
-      private$illuminaLMMRNASeqMetadataLoader <- IlluminaLMMRNASeqMetadataLoader$new()
+      private$geoRNASeqLMMMetadataLoader <- GEORNASeqLMMMetadataLoader$new()
     },
     load = function(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA) {
-      rna_seq_metadata <- private$illuminaLMMRNASeqMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
+      rna_seq_metadata <- private$geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
       rna_seq_data <- as.matrix(data.table::fread(rna_seq_data_filename, header = T, colClasses = "integer"), rownames = "GeneID")
       rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
       sizes <- dim(rna_seq_data)
@@ -27,7 +27,7 @@ IlluminaLMMRNASeqLoader <- R6Class(
     }
   ),
   private = list(
-    illuminaLMMRNASeqMetadataLoader = NA,
+    geoRNASeqLMMMetadataLoader = NA,
     geneFilter = NA
   )
 )

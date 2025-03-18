@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- IlluminaLMMVoomDrugRepurpose$new(IlluminaLMMVoomDGELmer$new())
+sut <- GEORNASeqLMMVoomDrugRepurpose$new()
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -20,7 +20,7 @@ drug_genes <- drug_genes$gene_id
 tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
-expected <- package_readRDS("test/drug_repurpose/IlluminaLMMVoomDrugRepurpose_expected.Rds")
+expected <- package_readRDS("test/drug_repurpose/GEORNASeqLMMVoomDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -47,7 +47,7 @@ result <- sut$compute(
 # then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-IlluminaLMMVoomDrugRepurposeByLmer", {
+test_that("test-GEORNASeqLMMVoomDrugRepurposeByDream", {
   expect_equal(result, expected)
 }
 )

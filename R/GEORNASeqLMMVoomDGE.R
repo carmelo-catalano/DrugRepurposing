@@ -1,11 +1,11 @@
-IlluminaLMMVoomDGE <- R6Class(
-  "IlluminaLMMVoomDGE",
+GEORNASeqLMMVoomDGE <- R6Class(
+  "GEORNASeqLMMVoomDGE",
   public = list(
     initialize = function(lmmVoomDGE, geneFilter = NA) {
       if (!"LMMVoomDGEAbstract" %in% class(lmmVoomDGE))
         stop("incompatible parameter type: the class type of lmmVoomDGE must be a subclass of LMMVoomDGEAbstract")
       private$lmmVoomDGE <- lmmVoomDGE
-      private$illuminaLMMRNASeqLoader <- IlluminaLMMRNASeqLoader$new(geneFilter)
+      private$geoRNASeqLMMLoader <- GEORNASeqLMMLoader$new(geneFilter)
     },
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename, formula, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA, filter_by_protein_coding = F) {
       if (length(tissue_statuses_to_be_tested) != 2) {
@@ -16,7 +16,7 @@ IlluminaLMMVoomDGE <- R6Class(
       }
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start differential gene expression computation"))
-      rna_seq <- private$illuminaLMMRNASeqLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
+      rna_seq <- private$geoRNASeqLMMLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
       dge <- private$lmmVoomDGE$compute(rna_seq$data, rna_seq$metadata, formula, filter_by_protein_coding)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
@@ -25,6 +25,6 @@ IlluminaLMMVoomDGE <- R6Class(
   ),
   private = list(
     lmmVoomDGE = NA,
-    illuminaLMMRNASeqLoader = NA
+    geoRNASeqLMMLoader = NA
   )
 )

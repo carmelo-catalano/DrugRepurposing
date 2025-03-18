@@ -16,8 +16,8 @@ tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
 
-illuminaLMMRNASeqLoader <- IlluminaLMMRNASeqLoader$new()
-rna_seq <- illuminaLMMRNASeqLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
+geoRNASeqLMMLoader <- GEORNASeqLMMLoader$new()
+rna_seq <- geoRNASeqLMMLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
 rna_seq$data <- log2(rna_seq$data + 1)
 
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",

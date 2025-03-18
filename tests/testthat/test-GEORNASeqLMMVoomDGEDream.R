@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- IlluminaLMMVoomDrugRepurpose$new(IlluminaLMMVoomDGEJulia$new())
+sut <- GEORNASeqLMMVoomDGEDream$new()
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -9,18 +9,10 @@ rna_seq_data_filename <- absolute_package_filename("test/voom/GSE153960_raw_coun
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
-
-drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
-                  "AG-957", "AKT-inhibitor-1-2", "AM-404")
-drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
-
-drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
-drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
-drug_genes <- drug_genes$gene_id
 tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
-expected <- package_readRDS("test/drug_repurpose/IlluminaLMMVoomDrugRepurpose_expected.Rds")
+expected <- package_readRDS("test/voom/GEORNASeqLMMVoomDGEDream_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -32,22 +24,13 @@ result <- sut$compute(
   tissue_statuses_map,
   sample_id_field_name,
   additional_fields,
-  "ipf",
-  4,
-  absolute_package_directory("test/connectivity_score/drug_dge/"),
-  drugs,
-  drug_genes,
-  "t.value_6h",
-  10,
-  "6h",
-  F,
-  T
+  filter_by_protein_coding = F
 )
-
-# then
 result$p.value <- NULL
 result$adj.p.value <- NULL
-test_that("test-IlluminaLMMVoomDrugRepurposeByLmer", {
-  expect_equal(result, expected)
+
+# then
+test_that("test-GEORNASeqLMMVoomDGEDream", {
+  expect_equal(result, expected, tolerance = 0.0005)
 }
 )

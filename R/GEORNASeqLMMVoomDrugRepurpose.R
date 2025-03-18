@@ -1,13 +1,13 @@
-IlluminaLMMVoomDrugRepurpose <- R6Class(
-  "IlluminaLMMVoomDrugRepurpose",
+GEORNASeqLMMVoomDrugRepurpose <- R6Class(
+  "GEORNASeqLMMVoomDrugRepurpose",
   public = list(
-    initialize = function(illuminaLMMVoomDGE = NA) {
-      if (!obj_is_na(illuminaLMMVoomDGE)) {
-        if (!"IlluminaLMMVoomDGEAbstract" %in% class(illuminaLMMVoomDGE))
-          stop("incompatible parameter type: the class type of illuminaLMMVoomDGE must be a subclass of IlluminaLMMVoomDGEAbstract")
-        private$illuminaLMMVoomDGE <- illuminaLMMVoomDGE
+    initialize = function(geoRNASeqLMMVoomDGE = NA) {
+      if (!obj_is_na(geoRNASeqLMMVoomDGE)) {
+        if (!"GEORNASeqLMMVoomDGEAbstract" %in% class(geoRNASeqLMMVoomDGE))
+          stop("incompatible parameter type: the class type of geoRNASeqLMMVoomDGE must be a subclass of GEORNASeqLMMVoomDGEAbstract")
+        private$geoRNASeqLMMVoomDGE <- geoRNASeqLMMVoomDGE
       }else {
-        private$illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()
+        private$geoRNASeqLMMVoomDGE <- GEORNASeqLMMVoomDGEDream$new()
       }
     },
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
@@ -24,7 +24,7 @@ IlluminaLMMVoomDrugRepurpose <- R6Class(
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
-      disease_dge <- private$illuminaLMMVoomDGE$compute(
+      disease_dge <- private$geoRNASeqLMMVoomDGE$compute(
         rna_seq_data_filename,
         rna_seq_metadata_filename,
         formula,
@@ -41,6 +41,6 @@ IlluminaLMMVoomDrugRepurpose <- R6Class(
       return(connectivity_score)
     }
   ), private = list(
-    illuminaLMMVoomDGE = NA
+    geoRNASeqLMMVoomDGE = NA
   )
 )

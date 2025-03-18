@@ -2,11 +2,10 @@ library(testthat)
 
 # setup
 lmmVoomDGEDream <- LMMVoomDGEDream$new()
-sut <- IlluminaLMMVoomDGE$new(lmmVoomDGEDream)
+sut <- GEORNASeqLMMVoomDGE$new(lmmVoomDGEDream)
 
 # given
-tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
-tissue_statuses_map <- c("Control", "als", "other")
+tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND", "Other")
 
 # when
 result <- tryCatch({
@@ -16,7 +15,7 @@ result <- tryCatch({
     formula = NA,
     tissue_status_field_name = NA,
     tissue_statuses_to_be_tested = tissue_statuses_to_be_tested,
-    tissue_statuses_map = tissue_statuses_map,
+    tissue_statuses_map = NA,
     sample_id_field_name = NA,
     additional_fields = NA,
     filter_by_protein_coding = F
@@ -26,7 +25,7 @@ result <- tryCatch({
 })
 
 # then
-test_that("test-IlluminaLMMVoomDGEBadInput2", {
+test_that("test-GEORNASeqLMMVoomDGEBadInput", {
   expect_identical(result, "error")
 }
 )
