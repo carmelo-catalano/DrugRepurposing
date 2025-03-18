@@ -3,7 +3,7 @@ IlluminaLMMVoomDGE <- R6Class(
   public = list(
     initialize = function(lmmVoomDGE, geneFilter = NA) {
       if (!"LMMVoomDGEAbstract" %in% class(lmmVoomDGE))
-        stop("the lmmVoomDGE instance must by of type LMMVoomDGEAbstract")
+        stop("incompatible parameter type: the class type of lmmVoomDGE must be a subclass of LMMVoomDGEAbstract")
       private$lmmVoomDGE <- lmmVoomDGE
       private$illuminaLMMRNASeqLoader <- IlluminaLMMRNASeqLoader$new(geneFilter)
     },

@@ -5,7 +5,7 @@ BinChenConnectivityScoreListApplyerSync <- R6Class(
     initialize = function(drugSignatureLoader = NA) {
       if (!obj_is_na(drugSignatureLoader)) {
         if (!"DrugSignatureLoaderAbstract" %in% class(drugSignatureLoader))
-          stop("the drugSignatureLoader instance must by of type DrugSignatureLoaderAbstract")
+          stop("incompatible parameter type: the class type of drugSignatureLoader must be a subclass of DrugSignatureLoaderAbstract")
         private$drugSignatureLoader <- drugSignatureLoader
       }else {
         private$drugSignatureLoader <- DrugSignatureLoaderByFilename$new()

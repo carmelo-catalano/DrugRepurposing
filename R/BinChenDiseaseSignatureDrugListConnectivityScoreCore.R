@@ -3,10 +3,10 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
   public = list(
     initialize = function(randomConnectivityScoreDistribution, binChenConnectivityScoreListApplyer) {
       if (!"RandomConnectivityScoreDistributionAbstract" %in% class(randomConnectivityScoreDistribution)) {
-        stop("the randomConnectivityScoreDistribution instance must by of type RandomConnectivityScoreDistributionAbstract")
+        stop("incompatible parameter type: the class type of randomConnectivityScoreDistribution must be a subclass of RandomConnectivityScoreDistributionAbstract")
       }
       if (!"BinChenConnectivityScoreListApplyerAbstract" %in% class(binChenConnectivityScoreListApplyer)) {
-        stop("the binChenConnectivityScoreListApplyer instance must by of type BinChenConnectivityScoreListApplyerAbstract")
+        stop("incompatible parameter type: the class type of binChenConnectivityScoreListApplyer must be a subclass of BinChenConnectivityScoreListApplyerAbstract")
       }
       private$downregulatedGeneFilter <- DownregulatedGeneFilter$new()
       private$upregulatedGeneFilter <- UpregulatedGeneFilter$new()
@@ -28,13 +28,15 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       # ethoprop     drugs/ethoprop.Rds
       # ethotoin     drugs/ethotoin.Rds
 
-      # genera la distribuzione random necessaria per il cacloclo del p-value
+      # generates the random distribution needed for the p-value caclocation
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start connectivity score computation by Bin Chen Algorithm"))
       disease_signature_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
       disease_signature_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       random_connectivity_score_distribution <-
-        private$randomConnectivityScoreDistribution$compute(
+        private$
+          randomConnectivityScoreDistribution$
+          compute(
           n_disease_signature_down_regulated_genes = dim(disease_signature_down_regulated_genes)[1],
           n_disease_signature_up_regulated_genes = dim(disease_signature_up_regulated_genes)[1],
           n_drug_signatures_genes = n_drug_signatures_genes,
@@ -43,7 +45,9 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       connectivity_score_matrix <- private$
         binChenConnectivityScoreListApplyer$
         compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribution)
-      connectivity_scores <- private$diseaseDrugListConnectivityScoreMapper$map(connectivity_score_matrix, disease_name, gene_selection_strategy, drug_perturbation_time)
+      connectivity_scores <- private$
+        diseaseDrugListConnectivityScoreMapper$
+        map(connectivity_score_matrix, disease_name, gene_selection_strategy, drug_perturbation_time)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end connectivity score computation by Bin Chen Algorithm: time: %s %s", totalTime, attr(totalTime, "units")))
       return(connectivity_scores)

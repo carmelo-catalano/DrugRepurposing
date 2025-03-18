@@ -4,7 +4,7 @@ DichotomicDGE <- R6Class(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {
         if (!"GeneFilterAbstract" %in% class(geneFilter))
-          stop("the geneFilter instance must by of type GeneFilterAbstract")
+          stop("incompatible parameter type: the class type of geneFilter must be a subclass of GeneFilterAbstract")
         private$geneFilter <- geneFilter
       }else {
         private$geneFilter <- MeanThresholdGeneFilter$new()

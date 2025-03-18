@@ -3,9 +3,9 @@ LMMDGEByGene <- R6Class(
   public = list(
     initialize = function(lmm, lmmToDataFrameMapper) {
       if (!"LMMAbstract" %in% class(lmm))
-        stop("the lmm instance must by of type LMMAbstract")
+        stop("incompatible parameter type: the class type of lmm must be a subclass of LMMAbstract")
       if (!"LMMToDataFrameMapperAbstract" %in% class(lmmToDataFrameMapper))
-        stop("the lmmToDataFrameMapper instance must by of type LMMToDataFrameMapperAbstract")
+        stop("incompatible parameter type: the class type of lmmToDataFrameMapper must be a subclass of LMMToDataFrameMapperAbstract")
       private$lmm <- lmm
       private$fixed_effect <- as.character(terms(lmm$getFormula())[1][[3]])
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper

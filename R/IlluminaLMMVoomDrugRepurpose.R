@@ -4,7 +4,7 @@ IlluminaLMMVoomDrugRepurpose <- R6Class(
     initialize = function(illuminaLMMVoomDGE = NA) {
       if (!obj_is_na(illuminaLMMVoomDGE)) {
         if (!"IlluminaLMMVoomDGEAbstract" %in% class(illuminaLMMVoomDGE))
-          stop("the illuminaLMMVoomDGE instance must by of type IlluminaLMMVoomDGEAbstract")
+          stop("incompatible parameter type: the class type of illuminaLMMVoomDGE must be a subclass of IlluminaLMMVoomDGEAbstract")
         private$illuminaLMMVoomDGE <- illuminaLMMVoomDGE
       }else {
         private$illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()

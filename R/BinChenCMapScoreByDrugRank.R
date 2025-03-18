@@ -7,7 +7,7 @@ BinChenCMapScoreByDrugRank <- R6Class(
   "BinChenCMapScoreByDrugRank",
   public = list(
     compute = function(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature) {
-      #the old function does not support the input list with either all up genes or all down genes, this new function attempts to addess this.
+      #the old function does not support the input list with either all up genes or all down genes, this new function attempts to address this.
       #we also modify the original CMap approach: whenever the sign of ks_up/ks_down, we substract the two scores such that the final scores would not enrich at 0.
 
       num_genes <- nrow(drug_signature)

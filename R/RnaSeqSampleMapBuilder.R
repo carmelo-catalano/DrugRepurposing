@@ -11,7 +11,7 @@ RnaSeqSampleMapBuilder <- R6Class(
       sample_types <- factor(sample_vector_map, levels = c("Control", test_sample_name))
       return(
         list(
-          sample_types = sample_types, # example: Control, Control, Test_sample, Comtol, ...
+          sample_types = sample_types, # example: Control, Control, Test_sample, Control, ...
           sample_positions = sample_positions # 1, 3, 4, 8
         )
       )

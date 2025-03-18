@@ -20,7 +20,7 @@ LINCSLMMDrugDGE <- R6Class(
           gene_symbol <- private$geneIdToSymbolConverter$idToSymbol(gene_list[i])
           filename <- paste0(private$output_DGE_dir, gene_symbol, "_", gene_list[i], "_", perturbation_times[t], "h.Rds")
           if (private$skip_already_computed_genes & file.exists(filename)) {
-            dgrpLogger$log(sprintf("skipping gene %s, purtubation time hours: %s, number: %s", gene_symbol, pert_time_hours, computation_number))
+            dgrpLogger$log(sprintf("skipping gene %s, perturbation time hours: %s, number: %s", gene_symbol, pert_time_hours, computation_number))
             return(NA)
           }
           rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)

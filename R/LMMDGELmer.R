@@ -17,7 +17,7 @@ LMMDGELmer <- R6Class(
       startTime <- Sys.time()
       differential_expression <- data.frame()
       data <- rna_metadata
-      dependent_variable_name <- "dependet_variable_random_name_a1b"
+      dependent_variable_name <- "dependent_variable_random_name_a1b"
       lmer_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
         data[[dependent_variable_name]] <- as.numeric(rna_data[i,])

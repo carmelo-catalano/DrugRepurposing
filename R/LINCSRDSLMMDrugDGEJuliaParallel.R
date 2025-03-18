@@ -27,14 +27,14 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
       library("DrugRepurposing")
       private$validate_input_chunk(chunk)
       delay <- (chunk$number - 1) * private$delay_start_clusters
-      dgrpLogger$log(sprintf("chunk number %s computation, deleay before start: %s", chunk$number, delay))
+      dgrpLogger$log(sprintf("chunk number %s computation, delay before start: %s", chunk$number, delay))
       Sys.sleep(delay)
       if (obj_is_na_or_NULL(chunk$BLAS_num_threads)) {
         BLAS_num_threads <- private$BLAS_num_threads
       }else {
         BLAS_num_threads <- chunk$BLAS_num_threads
       }
-      dgrpLogger$log(sprintf("chunk number %s compuation setup...", chunk$number))
+      dgrpLogger$log(sprintf("chunk number %s computation setup...", chunk$number))
       lincsRDSLMMDrugDGEJulia <- LINCSRDSLMMDrugDGEJulia$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, BLAS_num_threads, private$skip_already_computed_genes)
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start chunk number %s computation ", chunk$number))
