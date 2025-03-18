@@ -1,5 +1,5 @@
-DichotomicCustomTypeDrugRepurpose <- R6Class(
-  "DichotomicCustomTypeDrugRepurpose",
+DichotomicDrugRepurposeCore <- R6Class(
+  "DichotomicDrugRepurposeCore",
   public = list(
     initialize = function(dichotomicCustomTypeDGE) {
       private$dichotomicCustomTypeDGE <- dichotomicCustomTypeDGE

@@ -2,7 +2,7 @@ DichotomicVoomDrugRepurpose <- R6Class(
   "DichotomicVoomDrugRepurpose",
   public = list(
     initialize = function(geneFilter = NA) {
-      private$dichotomicVoomDrugRepurpose <- DichotomicCustomTypeDrugRepurpose$new(DichotomicVoomDGE$new(geneFilter))
+      private$dichotomicVoomDrugRepurpose <- DichotomicDrugRepurposeCore$new(DichotomicVoomDGE$new(geneFilter))
     },
     compute = function(rna_seq, sample_01_map, disease_name,
                        disease_n_most_significant_genes, drug_dge_dir,
