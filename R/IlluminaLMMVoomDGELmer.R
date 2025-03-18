@@ -1,5 +1,6 @@
 IlluminaLMMVoomDGELmer <- R6Class(
   "IlluminaLMMVoomDGELmer",
+  inherit = IlluminaLMMVoomDGEAbstract,
   public = list(
     initialize = function(geneFilter = NA) {
       private$lmmVoomDGE <- IlluminaLMMVoomDGE$new(LMMVoomDGELmer$new(), geneFilter)

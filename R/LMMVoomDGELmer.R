@@ -13,16 +13,17 @@ LMMVoomDGELmer <- R6Class(
       rna_seq_data <- private$
         geneFilterByProteinCoding$
         filterByIdOnCondition(rna_seq_data, filter_by_protein_coding)
+
       voom_data <- private$lmmVoom$compute(rna_seq_data, rna_seq_metadata, formula)
       dgrpLogger$log("start Lmer computation")
       partialStartTime <- Sys.time()
       rna_data <- rna_seq_metadata
       differential_expression <- data.frame()
-      char_formula <- paste(as.character(formula), collapse = "")
-      lmer_formula <- as.formula(paste0("sample_field_123___", char_formula))
       data_size <- dim(voom_data$E)
+      dependet_variable_name <- "dependet_variable_random_name_a1b"
+      lmer_formula <- set_dependent_variable(formula, dependet_variable_name)
       for (i in 1:data_size[1]) {
-        rna_data$sample_field_123___ <- as.numeric(voom_data$E[i,])
+        rna_data[[dependet_variable_name]] <- as.numeric(voom_data$E[i,])
         dge <- lmer(lmer_formula, rna_data, weights = voom_data$weights[i,], control = lmerControl(calc.derivs = FALSE))
         differential_expression <- rbind(differential_expression, private$lmmLMerToDataFrameMapper$map(dge, rownames(voom_data$E)[i]))
       }

@@ -1,5 +1,6 @@
 LMMDGEDream <- R6Class(
   "LMMDGEDream",
+  inherit = LMMDGEAbstract,
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()

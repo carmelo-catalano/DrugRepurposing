@@ -22,10 +22,16 @@ absolute_package_filename <- function(filename) {
 }
 
 absolute_package_directory <- function(directory) {
-  return(paste0(system.file(directory, package = config$package_name),"/"))
+  return(paste0(system.file(directory, package = config$package_name), "/"))
 }
 
 package_readRDS <- function(filename) {
   absolute_filename <- system.file(filename, package = config$package_name)
   return(readRDS(absolute_filename))
+}
+
+set_dependent_variable <- function(formula, dependent_variable_name) {
+  formula_blocks <- strsplit(format(formula), split = "~")
+  str_formula_with_dependent_variable <- paste0(dependent_variable_name, " ~ ", formula_blocks[[1]][2])
+  return(as.formula(str_formula_with_dependent_variable, env = parent.frame()))
 }

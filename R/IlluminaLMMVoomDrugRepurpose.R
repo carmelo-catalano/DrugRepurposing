@@ -2,10 +2,12 @@ IlluminaLMMVoomDrugRepurpose <- R6Class(
   "IlluminaLMMVoomDrugRepurpose",
   public = list(
     initialize = function(illuminaLMMVoomDGE = NA) {
-      if (obj_is_na(illuminaLMMVoomDGE)) {
-        private$illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()
-      }else {
+      if (!obj_is_na(illuminaLMMVoomDGE)) {
+        if (!"IlluminaLMMVoomDGEAbstract" %in% class(illuminaLMMVoomDGE))
+          stop("the illuminaLMMVoomDGE instance must by of type IlluminaLMMVoomDGEAbstract")
         private$illuminaLMMVoomDGE <- illuminaLMMVoomDGE
+      }else {
+        private$illuminaLMMVoomDGE <- IlluminaLMMVoomDGEDream$new()
       }
     },
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename,

@@ -1,5 +1,6 @@
 LMMDGELmer <- R6Class(
   "LMMDGELmer",
+  inherit = LMMDGEAbstract,
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
@@ -14,12 +15,13 @@ LMMDGELmer <- R6Class(
         dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
       }
       startTime <- Sys.time()
-      furmula_items <- as.character(formula)
       differential_expression <- data.frame()
       data <- rna_metadata
+      dependet_variable_name <- "dependet_variable_random_name_a1b"
+      lmer_formula <- set_dependent_variable(formula, dependet_variable_name)
       for (i in 1:data_size[1]) {
-        data[[furmula_items[2]]] <- as.numeric(rna_data[i,])
-        differential_expression <- rbind(differential_expression, private$lmmLmerToDataFrameMapper$map(lmer(formula, data = data, control = lmerControl(calc.derivs = FALSE)), rownames(rna_data[i,])))
+        data[[dependet_variable_name]] <- as.numeric(rna_data[i,])
+        differential_expression <- rbind(differential_expression, private$lmmLmerToDataFrameMapper$map(lmer(lmer_formula, data = data, control = lmerControl(calc.derivs = FALSE)), rownames(rna_data)[i]))
       }
       totalTime <- Sys.time() - startTime
       colnames(differential_expression) <- c("gene_id", "DE_log2_FC", "std.error", "t.value")

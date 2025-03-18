@@ -1,5 +1,6 @@
 LMMDGEJulia <- R6Class(
   "LMMDGEJulia",
+  inherit = LMMDGEAbstract,
   public = list(
     initialize = function() {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
@@ -16,13 +17,14 @@ LMMDGEJulia <- R6Class(
         dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
       }
       startTime <- Sys.time()
-      furmula_items <- as.character(formula)
       differential_expression <- data.frame()
       data <- rna_metadata
+      dependet_variable_name <- "dependet_variable_random_name_a1b"
+      julia_formula <- set_dependent_variable(formula, dependet_variable_name)
       for (i in 1:data_size[1]) {
-        data[[furmula_items[2]]] <- as.numeric(rna_data[i,])
-        dge <- julia_call("fit", julia_eval("LinearMixedModel"), formula, data, REML = T)
-        differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(rna_data[i,])))
+        data[[dependet_variable_name]] <- as.numeric(rna_data[i,])
+        dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, data, REML = T)
+        differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(rna_data)[i]))
       }
       totalTime <- Sys.time() - startTime
       differential_expression <- differential_expression[order(differential_expression$gene_id),]

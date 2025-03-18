@@ -1,13 +1,13 @@
-LMMVoomDrugRepurpose <- R6Class(
-  "LMMVoomDrugRepurpose",
+LMMDrugRepurpose <- R6Class(
+  "LMMDrugRepurpose",
   public = list(
-    initialize = function(lmmVoomDGE = NA, drugSignatureLoader = NA) {
-      if (!obj_is_na(lmmVoomDGE)) {
-        if (!"LMMVoomDGEAbstract" %in% class(lmmVoomDGE))
-          stop("incompatible parameter type: the class type of lmmVoomDGE must be a subclass of LMMVoomDGEAbstract")
-        private$lmmVoomDGE <- lmmVoomDGE
+    initialize = function(lmmDGE = NA, drugSignatureLoader = NA) {
+      if (!obj_is_na(lmmDGE)) {
+        if (!"LMMDGEAbstract" %in% class(lmmDGE))
+          stop("incompatible parameter type: the class type of lmmDGE must be a subclass of LMMDGEAbstract")
+        private$lmmDGE <- lmmDGE
       }else {
-        private$lmmVoomDGE <- LMMVoomDGEDream$new()
+        private$lmmDGE <- LMMDGEDream$new()
       }
       if (!obj_is_na(drugSignatureLoader)) {
         if (!"DrugSignatureLoaderAbstract" %in% class(drugSignatureLoader))
@@ -25,7 +25,7 @@ LMMVoomDrugRepurpose <- R6Class(
     ) {
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
-      disease_dge <- private$lmmVoomDGE$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
+      disease_dge <- private$lmmDGE$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
       connectivity_score <- private$
         binChenDiseaseDGEDrugListConnectivityScore$
         compute(disease_dge, drugs, drugs_genes, disease_n_most_significant_genes,
@@ -37,7 +37,7 @@ LMMVoomDrugRepurpose <- R6Class(
     }
   ),
   private = list(
-    lmmVoomDGE = NA,
+    lmmDGE = NA,
     binChenDiseaseDGEDrugListConnectivityScore = NA
   )
 )
