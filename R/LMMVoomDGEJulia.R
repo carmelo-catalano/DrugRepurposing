@@ -21,10 +21,10 @@ LMMVoomDGEJulia <- R6Class(
       rna_data <- rna_seq_metadata
       differential_expression <- data.frame()
       data_size <- dim(voom_data$E)
-      dependet_variable_name <- "dependet_variable_random_name_a1b"
-      julia_formula <- set_dependent_variable(formula, dependet_variable_name)
+      dependent_variable_name <- "dependet_variable_random_name_a1b"
+      julia_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
-        rna_data[[dependet_variable_name]] <- as.numeric(voom_data$E[i,])
+        rna_data[[dependent_variable_name]] <- as.numeric(voom_data$E[i,])
         dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, rna_data, REML = T, wts = voom_data$weights[i,])
         differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(voom_data$E)[i]))
       }

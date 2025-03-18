@@ -19,10 +19,10 @@ LMMDGEJulia <- R6Class(
       startTime <- Sys.time()
       differential_expression <- data.frame()
       data <- rna_metadata
-      dependet_variable_name <- "dependet_variable_random_name_a1b"
-      julia_formula <- set_dependent_variable(formula, dependet_variable_name)
+      dependent_variable_name <- "dependet_variable_random_name_a1b"
+      julia_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
-        data[[dependet_variable_name]] <- as.numeric(rna_data[i,])
+        data[[dependent_variable_name]] <- as.numeric(rna_data[i,])
         dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, data, REML = T)
         differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(rna_data)[i]))
       }

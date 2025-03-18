@@ -17,10 +17,10 @@ LMMDGELmer <- R6Class(
       startTime <- Sys.time()
       differential_expression <- data.frame()
       data <- rna_metadata
-      dependet_variable_name <- "dependet_variable_random_name_a1b"
-      lmer_formula <- set_dependent_variable(formula, dependet_variable_name)
+      dependent_variable_name <- "dependet_variable_random_name_a1b"
+      lmer_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
-        data[[dependet_variable_name]] <- as.numeric(rna_data[i,])
+        data[[dependent_variable_name]] <- as.numeric(rna_data[i,])
         differential_expression <- rbind(differential_expression, private$lmmLmerToDataFrameMapper$map(lmer(lmer_formula, data = data, control = lmerControl(calc.derivs = FALSE)), rownames(rna_data)[i]))
       }
       totalTime <- Sys.time() - startTime
