@@ -2,7 +2,7 @@ library(testthat)
 
 # setup
 lmmVoomDGEDream <- LMMVoomDGEDream$new()
-sut <- GEORNASeqLMMVoomDGE$new(lmmVoomDGEDream)
+sut <- GEORNASeqLMMVoomDGECore$new(lmmVoomDGEDream)
 
 # given
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND", "Other")

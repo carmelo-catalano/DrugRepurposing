@@ -1,5 +1,6 @@
-GEORNASeqLMMVoomDGE <- R6Class(
-  "GEORNASeqLMMVoomDGE",
+GEORNASeqLMMVoomDGECore <- R6Class(
+  "GEORNASeqLMMVoomDGECore",
+  inherit = GEORNASeqLMMVoomDGEAbstract,
   public = list(
     initialize = function(lmmVoomDGE, geneFilter = NA) {
       if (!"LMMVoomDGEAbstract" %in% class(lmmVoomDGE))
