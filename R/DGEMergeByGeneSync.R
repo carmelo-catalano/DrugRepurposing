@@ -9,7 +9,6 @@ DGEMergeByGeneSync <- R6Class(
         stop("dge_filename_pattern should contain \"#id\" patten")
       }
       dgrpLogger$log("starting differential gene expressions reading")
-      processorCores$initCores()
       total_genes <- length(gene_list)
       merged_dges <- data.frame()
       for (i in 1:total_genes) {

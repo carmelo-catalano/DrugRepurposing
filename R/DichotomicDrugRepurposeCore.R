@@ -2,6 +2,9 @@ DichotomicDrugRepurposeCore <- R6Class(
   "DichotomicDrugRepurposeCore",
   public = list(
     initialize = function(dichotomicCustomTypeDGE) {
+      if (!"DichotomicDGEAbstract" %in% class(dichotomicCustomTypeDGE)) {
+        stop("incompatible parameter type: the class type of dichotomicCustomTypeDGE must be a subclass of DichotomicDGEAbstract")
+      }
       private$dichotomicCustomTypeDGE <- dichotomicCustomTypeDGE
     },
     compute = function(rna_data, sample_01_map, disease_name,

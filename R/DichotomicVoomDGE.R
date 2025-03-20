@@ -1,5 +1,6 @@
 DichotomicVoomDGE <- R6Class(
   "DichotomicVoomDGE",
+  inherit = DichotomicDGEAbstract,
   public = list(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {
