@@ -1,11 +1,11 @@
 LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
   "LINCSRDSLMMDrugDGEJuliaParallel",
   public = list(
-    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, delay_start_clusters = 40, BLAS_num_threads = 4, skip_already_computed_genes = F) {
-      private$validate_cunostructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, delay_start_clusters, BLAS_num_threads, skip_already_computed_genes)
+    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, BLAS_num_threads = 4, skip_already_computed_genes = F) {
+      private$validate_cunostructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
       private$lincs_splitted_level3_dir <- lincs_splitted_level3_dir
       private$output_DGE_dir <- output_DGE_dir
-      private$delay_start_clusters <- delay_start_clusters
+      private$cluster_start_delay <- cluster_start_delay
       private$BLAS_num_threads <- BLAS_num_threads
       private$skip_already_computed_genes <- skip_already_computed_genes
     },
@@ -19,14 +19,14 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
   private = list(
     lincs_splitted_level3_dir = NA,
     output_DGE_dir = NA,
-    delay_start_clusters = NA,
+    cluster_start_delay = NA,
     BLAS_num_threads = NA,
     skip_already_computed_genes = NA,
 
     process_chunk = function(chunk) {
       library("DrugRepurposing")
       private$validate_input_chunk(chunk)
-      delay <- (chunk$number - 1) * private$delay_start_clusters
+      delay <- (chunk$number - 1) * private$cluster_start_delay
       dgrpLogger$log(sprintf("chunk number %s computation, delay before start: %s", chunk$number, delay))
       Sys.sleep(delay)
       if (obj_is_na_or_NULL(chunk$BLAS_num_threads)) {
@@ -43,15 +43,15 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
       dgrpLogger$log(sprintf("end chunk number %s computation, time: %s %s", chunk$number, totalTime, attr(totalTime, "units")))
       return(NA)
     },
-    validate_cunostructor_parameters = function(lincs_splitted_level3_dir, output_DGE_dir, delay_start_clusters, BLAS_num_threads, skip_already_computed_genes) {
+    validate_cunostructor_parameters = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes) {
       if (obj_is_na_or_NULL(lincs_splitted_level3_dir)) {
         stop("lincs_splitted_level3_dir must be specified")
       }
       if (obj_is_na_or_NULL(output_DGE_dir)) {
         stop("output_DGE_dir must be specified")
       }
-      if (!is.numeric(delay_start_clusters) || delay_start_clusters < 0) {
-        stop("delay_start_clusters must be an integer greater than 0")
+      if (!is.numeric(cluster_start_delay) || cluster_start_delay < 0) {
+        stop("cluster_start_delay must be an integer greater than 0")
       }
       if (!is.numeric(BLAS_num_threads) || BLAS_num_threads <= 0) {
         stop("BLAS_num_threads must be a positive integer")

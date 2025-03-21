@@ -10,14 +10,14 @@ LMMDGEByGene <- R6Class(
       private$fixed_effect <- as.character(terms(lmm$getFormula())[1][[3]])
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
-    compute = function(rna_data_metadata, gene_symbol = NA, sample_type_column_name = "sample_type") {
-      if (obj_is_na(gene_symbol)) {
-        gene_symbol_prn <- ""
+    compute = function(rna_data_metadata, gene_id = NA, sample_type_column_name = "sample_type") {
+      if (obj_is_na(gene_id)) {
+        gene_id_prn <- ""
       }else {
-        gene_symbol_prn <- paste0(" ", gene_symbol)
+        gene_id_prn <- paste0(" ", gene_id)
       }
 
-      dgrpLogger$log(sprintf("start differential gene expression computation%s", gene_symbol_prn))
+      dgrpLogger$log(sprintf("start differential gene expression computation%s", gene_id_prn))
       startTime <- Sys.time()
       # calcola il modello lineare misto:
       # vadiabile dipendente: "expr", espressione genica
@@ -27,14 +27,14 @@ LMMDGEByGene <- R6Class(
 
       differentialExpression <- private$lmm$compute(rna_data_metadata)
 
-      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_symbol, private$fixed_effect, sample_type_column_name)
+      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_id, private$fixed_effect, sample_type_column_name)
 
       # risultato finale:
       # drug                gene  Estimate      Std. Error  t value
       # tyrphostin-AG-1296  PAX8  -0.032810809  0.12512476  -0.26222474
       # tyrphostin-AG-1478  PAX8  0.115920192   0.12512476  0.92643686
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end gene differential expression computation%s, time: %s %s", gene_symbol_prn, totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end gene differential expression computation%s, time: %s %s", gene_id_prn, totalTime, attr(totalTime, "units")))
       # force garbage collection to prevent out of memory
       gc()
       return(differentialExpression)
