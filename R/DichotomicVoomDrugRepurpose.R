@@ -2,7 +2,7 @@ DichotomicVoomDrugRepurpose <- R6Class(
   "DichotomicVoomDrugRepurpose",
   public = list(
     initialize = function(geneFilter = NA) {
-      private$dichotomicVoomDrugRepurpose <- DichotomicDrugRepurposeCore$new(DichotomicVoomDGE$new(geneFilter))
+      private$dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(DichotomicVoomDGE$new(geneFilter))
     },
     compute = function(rna_seq, sample_01_map, disease_name,
                        disease_n_most_significant_genes, drug_dge_dir,
@@ -12,7 +12,7 @@ DichotomicVoomDrugRepurpose <- R6Class(
                        parallel_computation = F
     ) {
       return(
-        private$dichotomicVoomDrugRepurpose$compute(
+        private$dichotomicDrugRepurposeCore$compute(
           rna_seq, sample_01_map, disease_name,
           disease_n_most_significant_genes, drug_dge_dir,
           drugs, drugs_genes, drug_dge_t_value_column_name,
@@ -24,6 +24,6 @@ DichotomicVoomDrugRepurpose <- R6Class(
     }
   ),
   private = list(
-    dichotomicVoomDrugRepurpose = NA
+    dichotomicDrugRepurposeCore = NA
   )
 )
