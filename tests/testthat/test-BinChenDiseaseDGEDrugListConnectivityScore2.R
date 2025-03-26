@@ -2,7 +2,8 @@ library(testthat)
 
 # setup
 drugSignatureLoader <- DrugSignatureLoaderByDrugName$new(paste0(absolute_package_filename("test/connectivity_score/drug_dge/"), "/"), "t.value_6h")
-sut <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoader)
+dgeToSignatureMapper <- ADJPValueAndFCThresholdSignatureMapper$new(0.005, 3)
+sut <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoader, dgeToSignatureMapper)
 
 # given
 disease_dge <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
@@ -13,7 +14,7 @@ drugs <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
                              "A-443644", "AG-494", "AG-957"))
 drugs$filename <- drugs$name
 
-expected <- package_readRDS("test/connectivity_score/BinChenDiseaseDGEDrugListConnectivityScore_expected.Rds")
+expected <- package_readRDS("test/connectivity_score/BinChenDiseaseDGEDrugListConnectivityScore2_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -22,15 +23,14 @@ result <- sut$compute(
   drugs_genes = LINCS_bing,
   disease_name = "IPF",
   random_distribution_size = 10,
-  drug_perturbation_time = "6h",
-  signature_mapper_paramter = 150
+  drug_perturbation_time = "6h"
 )
 
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-BinChenDiseaseDGEDrugListConnectivityScore", {
+test_that("test-BinChenDiseaseDGEDrugListConnectivityScore2", {
   expect_equal(result, expected)
 }
 )

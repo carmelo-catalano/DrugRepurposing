@@ -9,11 +9,12 @@ drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
 
 # when
 result <- sut$compute(
-  disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value_6h", compute_p_value = F
+  disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value_6h", compute_p_value = F,
+  signature_mapper_paramter = 50
 )
 
 # then
-test_that("test-BinChenDiseaseDGEDrugConnectivityScore", {
-  expect_equal(result, -0.02456061128210001998)
+test_that("test-BinChenDiseaseDGEDrugConnectivityScore4", {
+  expect_equal(result, -0.108725476533346)
 }
 )

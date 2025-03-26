@@ -1,9 +1,14 @@
-
 BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
   "BinChenDiseaseDGEDrugConnectivityScore",
   public = list(
-    initialize = function(parallel_computation = F) {
-      private$diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
+    initialize = function(dgeToSignatureMapper = NA, parallel_computation = F) {
+      if (!obj_is_na(dgeToSignatureMapper)) {
+        if (!"DGEToSignatureMapperAbstract" %in% class(dgeToSignatureMapper))
+          stop("incompatible parameter type: the class type of dgeToSignatureMapper must be a subclass of DGEToSignatureMapperAbstract")
+        private$dgeToSignatureMapper <- dgeToSignatureMapper
+      }else {
+        private$dgeToSignatureMapper <- MostSignificantGenesSignatureMapper$new()
+      }
       private$binChenCMapScoreByDrugDGE <- BinChenCMapScoreByDrugDGE$new()
       private$downregulatedGeneFilter <- DownregulatedGeneFilter$new()
       private$upregulatedGeneFilter <- UpregulatedGeneFilter$new()
@@ -15,14 +20,13 @@ BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
       }
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
-    compute = function(disease_dge, drug_dge, disease_n_most_significant_genes, drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5, compute_p_value = T) {
+    compute = function(disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value",
+                       random_distribution_size = 10^5, compute_p_value = T, signature_mapper_paramter = NA
+    ) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drug_dge$gene_id)
       drug_signature <- subset(drug_dge, drug_dge$gene_id %in% disease_dge$gene_id)
       drug_signature <- private$drugSignatureMapper$map(drug_signature, drug_dge_t_value_column_name)
-      disease_dge$abs_t.value <- abs(disease_dge$t.value)
-      disease_dge <- disease_dge[order(disease_dge$abs_t.value, decreasing = T),]
-      disease_signature <- disease_dge[1:disease_n_most_significant_genes, , drop = FALSE]
-      disease_signature <- private$diseaseSignatureEstimateMapper$map(disease_signature)
+      disease_signature <- private$dgeToSignatureMapper$map(disease_dge, signature_mapper_paramter)
       disease_signature_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
       disease_signature_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       connectivity_score <- private$
@@ -45,7 +49,7 @@ BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
     }
   ),
   private = list(
-    diseaseSignatureEstimateMapper = NA,
+    dgeToSignatureMapper = NA,
     downregulatedGeneFilter = NA,
     upregulatedGeneFilter = NA,
     drugSignatureMapper = NA,

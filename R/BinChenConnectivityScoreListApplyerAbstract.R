@@ -1,4 +1,3 @@
-
 BinChenConnectivityScoreListApplyerAbstract <- R6Class(
   "BinChenConnectivityScoreListApplyerAbstract",
   public = list(
