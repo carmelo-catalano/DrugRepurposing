@@ -15,8 +15,11 @@ MostSignificantGenesSignatureMapper <- R6Class(
       disease_signature <- dge[1:n_most_significant_genes, , drop = FALSE]
       return(private$diseaseSignatureEstimateMapper$map(disease_signature))
     },
-    getSignatureType = function() {
-      return("MostSignificantGenes")
+    getSignatureType = function(n_most_significant_genes = NA) {
+      if (obj_is_na(n_most_significant_genes)) {
+        n_most_significant_genes <- private$n_most_significant_genes
+      }
+      return(paste0(n_most_significant_genes, " MostSignificantGenes"))
     }
   ),
   private = list(

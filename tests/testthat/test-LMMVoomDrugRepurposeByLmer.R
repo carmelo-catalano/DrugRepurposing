@@ -34,14 +34,14 @@ result <- sut$compute(
   rna_seq$data,
   rna_seq$metadata,
   formula,
-  "ipf",
-  5,
   drugs,
   drug_genes,
   10,
+  "ipf",
   "6h",
   F,
-  F
+  F,
+  5
 )
 
 # then

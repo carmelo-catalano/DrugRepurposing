@@ -11,7 +11,7 @@ ADJPValueAndFCThresholdSignatureMapper <- R6Class(
       disease_signature <- subset(dge, dge$adj.p.value <= private$adj.p.value_threshold & abs(dge$DE_log2_FC) >= private$DE_log2_FC_threshold)
       return(private$diseaseSignatureEstimateMapper$map(disease_signature))
     },
-    getSignatureType = function() {
+    getSignatureType = function(unused = NA) {
       return("Adj.P.Value_And_FC_Threshold")
     }
   ),

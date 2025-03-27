@@ -20,16 +20,16 @@ expected <- package_readRDS("test/drug_repurpose/DichotomicDrugRepurpose_expecte
 result <- sut$compute(
   disease_rna_seq,
   "000000000000000000001111111111111111111",
-  "ipf",
-  100,
   absolute_package_directory("test/connectivity_score/drug_dge/"),
   drugs,
   drug_genes,
   "t.value_6h",
   10,
+  "ipf",
   "6h",
   F,
-  F
+  F,
+  100
 )
 
 # then

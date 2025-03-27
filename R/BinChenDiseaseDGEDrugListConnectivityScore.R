@@ -17,14 +17,14 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
         private$dgeToSignatureMapper <- MostSignificantGenesSignatureMapper$new()
       }
     },
-    compute = function(disease_dge, drugs, drugs_genes, disease_name = NA,
-                       random_distribution_size = 10^5, drug_perturbation_time = NA,
-                       parallel_computation = F, signature_mapper_paramter = NA
+    compute = function(disease_dge, drugs, drugs_genes, random_distribution_size = 10^5,
+                       disease_name = NA, drug_perturbation_time = NA,
+                       parallel_computation = F, signature_mapper_parameter = NA
     ) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drugs_genes)
       disease_drug_common_genes <- drugs_genes[drugs_genes %in% disease_dge$gene_id]
       private$drugSignatureLoader$init(disease_drug_common_genes)
-      disease_signature <- private$dgeToSignatureMapper$map(disease_dge, signature_mapper_paramter)
+      disease_signature <- private$dgeToSignatureMapper$map(disease_dge, signature_mapper_parameter)
       if (parallel_computation) {
         binChenDiseaseSignatureDrugListConnectivityScore <- BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade$new(private$drugSignatureLoader)
       }else {
@@ -33,7 +33,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
       return(
         binChenDiseaseSignatureDrugListConnectivityScore$compute(
           disease_signature, drugs, length(disease_drug_common_genes), random_distribution_size,
-          disease_name, private$dgeToSignatureMapper$getSignatureType(), drug_perturbation_time
+          disease_name, private$dgeToSignatureMapper$getSignatureType(signature_mapper_parameter), drug_perturbation_time
         )
       )
     }

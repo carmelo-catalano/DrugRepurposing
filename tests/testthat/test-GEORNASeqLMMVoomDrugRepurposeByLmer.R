@@ -32,16 +32,16 @@ result <- sut$compute(
   tissue_statuses_map,
   sample_id_field_name,
   additional_fields,
-  "ipf",
-  4,
   absolute_package_directory("test/connectivity_score/drug_dge/"),
   drugs,
   drug_genes,
   "t.value_6h",
   10,
+  "ipf",
   "6h",
   F,
-  T
+  T,
+  4
 )
 
 # then

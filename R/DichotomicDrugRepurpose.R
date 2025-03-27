@@ -1,24 +1,19 @@
 DichotomicDrugRepurpose <- R6Class(
   "DichotomicDrugRepurpose",
   public = list(
-    initialize = function(geneFilter = NA) {
-      private$dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(DichotomicDGE$new(geneFilter))
+    initialize = function(geneFilter = NA, dgeToSignatureMapper = NA) {
+      private$dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(DichotomicDGE$new(geneFilter), dgeToSignatureMapper)
     },
-    compute = function(rna_data, sample_01_map, disease_name,
-                       disease_n_most_significant_genes, drug_dge_dir,
-                       drugs, drugs_genes, drug_dge_t_value_column_name = "t.value",
-                       random_distribution_size = 10^5,
-                       drug_perturbation_time = NA, filter_by_protein_coding = F,
-                       parallel_computation = F
+    compute = function(rna_data, sample_01_map, drug_dge_dir, drugs,
+                       drugs_genes, drug_dge_t_value_column_name = "t.value",
+                       random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
+                       filter_by_protein_coding = F, parallel_computation = F, signature_mapper_parameter = NA
     ) {
       return(
         private$dichotomicDrugRepurposeCore$compute(
-          rna_data, sample_01_map, disease_name,
-          disease_n_most_significant_genes, drug_dge_dir,
-          drugs, drugs_genes, drug_dge_t_value_column_name,
-          random_distribution_size,
-          drug_perturbation_time, filter_by_protein_coding,
-          parallel_computation
+          rna_data, sample_01_map, drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
+          random_distribution_size, disease_name, drug_perturbation_time, filter_by_protein_coding,
+          parallel_computation, signature_mapper_parameter
         )
       )
     }

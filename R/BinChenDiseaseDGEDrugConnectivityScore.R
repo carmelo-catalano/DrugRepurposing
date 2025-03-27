@@ -21,12 +21,13 @@ BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
     compute = function(disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value",
-                       random_distribution_size = 10^5, compute_p_value = T, signature_mapper_paramter = NA
+                       random_distribution_size = 10^5, compute_p_value = T,
+                       signature_mapper_parameter = NA
     ) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drug_dge$gene_id)
       drug_signature <- subset(drug_dge, drug_dge$gene_id %in% disease_dge$gene_id)
       drug_signature <- private$drugSignatureMapper$map(drug_signature, drug_dge_t_value_column_name)
-      disease_signature <- private$dgeToSignatureMapper$map(disease_dge, signature_mapper_paramter)
+      disease_signature <- private$dgeToSignatureMapper$map(disease_dge, signature_mapper_parameter)
       disease_signature_down_regulated_genes <- private$downregulatedGeneFilter$filter(disease_signature)
       disease_signature_up_regulated_genes <- private$upregulatedGeneFilter$filter(disease_signature)
       connectivity_score <- private$

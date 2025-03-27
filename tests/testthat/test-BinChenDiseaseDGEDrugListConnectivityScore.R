@@ -20,10 +20,10 @@ result <- sut$compute(
   disease_dge = disease_dge,
   drugs = drugs,
   drugs_genes = LINCS_bing,
-  disease_name = "IPF",
   random_distribution_size = 10,
+  disease_name = "IPF",
   drug_perturbation_time = "6h",
-  signature_mapper_paramter = 150
+  signature_mapper_parameter = 150
 )
 
 result$p.value <- NULL

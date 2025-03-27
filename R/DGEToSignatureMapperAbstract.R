@@ -4,7 +4,7 @@ DGEToSignatureMapperAbstract <- R6Class(
     map = function(dge, paramter) {
       stop("I'm an abstract method, please implement me")
     },
-    getSignatureType = function() {
+    getSignatureType = function(paramter) {
       stop("I'm an abstract method, please implement me")
     }
   )

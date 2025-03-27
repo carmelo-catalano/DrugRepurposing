@@ -18,7 +18,7 @@ drugs <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
                              "A-443644", "AG-494", "AG-957"))
 drugs$filename <- drugs$name
 disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
-expected <- package_readRDS("test/connectivity_score/DiseaseDrugConnectivityScoreByPharmacoGx_expected.RDS")
+expected <- package_readRDS("test/connectivity_score/DiseaseDrugConnectivityScoreByPharmacoGx_expected.Rds")
 
 # when
 result <- sut$compute(disease_signature, drugs, n_permutations = 100, disease_name = "IPF", gene_selection_strategy = "150 MostSignificantGenes", drug_perturbation_time = "6h")

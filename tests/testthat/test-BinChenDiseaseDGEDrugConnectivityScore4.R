@@ -10,7 +10,7 @@ drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
 # when
 result <- sut$compute(
   disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value_6h", compute_p_value = F,
-  signature_mapper_paramter = 50
+  signature_mapper_parameter = 50
 )
 
 # then

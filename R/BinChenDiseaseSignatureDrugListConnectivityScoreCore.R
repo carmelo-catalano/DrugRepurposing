@@ -14,7 +14,10 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       private$binChenConnectivityScoreListApplyer <- binChenConnectivityScoreListApplyer
       private$diseaseDrugListConnectivityScoreMapper <- DiseaseDrugListConnectivityScoreMapper$new()
     },
-    compute = function(disease_signature, drugs, n_drug_signatures_genes, random_distribution_size = 10^5, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
+    compute = function(disease_signature, drugs, n_drug_signatures_genes,
+                       random_distribution_size = 10^5, disease_name = NA,
+                       disease_signature_type = NA, drug_perturbation_time = NA
+    ) {
       # disease_signature example:
       #         estimate
       # 780     -13,1465
@@ -47,7 +50,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
         compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribution)
       connectivity_scores <- private$
         diseaseDrugListConnectivityScoreMapper$
-        map(connectivity_score_matrix, disease_name, gene_selection_strategy, drug_perturbation_time)
+        map(connectivity_score_matrix, disease_name, disease_signature_type, drug_perturbation_time)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end connectivity score computation by Bin Chen Algorithm: time: %s %s", totalTime, attr(totalTime, "units")))
       return(connectivity_scores)
