@@ -2,7 +2,9 @@
 \alias{BinChenConnectivityScoreListApplyerSync}
 \title{Synchronous Implementation of the Connectivity Score Computation}
 \description{
-Implementation of the abstract class \code{BinChenConnectivityScoreListApplyerAbstract} for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}. This class computes the connectivity score for all input drugs using synchronous computation.
+Implementation of the abstract class \code{BinChenConnectivityScoreListApplyerAbstract} for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}. \cr
+This class computes the connectivity score for all input drugs using synchronous computation.
+It is identical to \code{BinChenConnectivityScoreListApplyerSync}, except for the synchronous computation.
 }
 \usage{
 BinChenConnectivityScoreListApplyerSync$new()
@@ -22,7 +24,7 @@ disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribut
   }
 }
 \value{
-A \code{data.frame} with columns: \code{drug name}, \code{connectivity score}, \code{p.value}.
+Data frame. Columns: \code{drug name}, \code{connectivity score}, \code{p.value}.
 }
 \examples{
 binChenConnectivityScoreListApplyerSync <- BinChenConnectivityScoreListApplyerSync$new()

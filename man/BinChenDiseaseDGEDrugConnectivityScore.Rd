@@ -1,90 +1,90 @@
 \name{BinChenDiseaseDGEDrugConnectivityScore}
 \alias{BinChenDiseaseDGEDrugConnectivityScore}
-\title{Calculate Connectivity Score Between Disease and Drug DGE}
+\title{Compute the connectivity score between a disease and a drug DGE}
 \description{
-Given a disease Differential Gene Expression (DGE) and a drug DGE, computes the connectivity score between them.
-}
-\usage{
-BinChenDiseaseDGEDrugConnectivityScore$new()
-BinChenDiseaseDGEDrugConnectivityScore$compute(disease_dge, drug_dge,
-drug_dge_t_value_column_name, random_distribution_size, compute_p_value,
-signature_mapper_parameter)
+Given a disease DGE and a drug DGE, computes the connectivity score between them.
 }
 \arguments{
   \item{disease_dge}{
     A table containing a subset of the disease's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
     \itemize{
-      \item Type: \code{data.frame}
-      \item Columns: \code{gene_id}, \code{t.value}
+      \item Type: \code{data.frame}.
+      \item Columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{drug_dge}{
     A table containing a subset of the drug's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
     \itemize{
-      \item Type: \code{data.frame}
-      \item Columns: \code{gene_id}, \code{t.value}
+      \item Type: \code{data.frame}.
+      \item Columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{drug_dge_t_value_column_name}{
-    Specifies the column name of the t-value in the drug DGE table.
+    The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the column name of the t-value in the DGE table.
     \itemize{
-      \item Type: \code{string}
-      \item Default value: \code{"t.value"}
+      \item Type: \code{string}.
+      \item Default value: “t.value”.
     }
   }
   \item{random_distribution_size}{
     Size of the random connectivity score distribution. Higher values provide more precise p-values.
     \itemize{
-      \item Type: \code{integer}
-      \item Default value: \code{10^5}
+      \item Type: \code{integer}.
+      \item Default value: 10^5.
     }
   }
   \item{compute_p_value}{
-    Indicates whether the p-value of the connectivity score should be computed.
+    If true, the function computes the connectivity score p-value.
     \itemize{
-      \item Type: \code{boolean}
-      \item Default value: \code{FALSE}
+      \item Type: \code{boolean}.
+      \item Default value: F.
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping. If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}.
+    Parameter used by the constructor argument \code{dgeToSignatureMapper (constructor argument)}. The mapper may use this parameter for mapping. If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
-  \item{dgeToSignatureMapper}{
+  \item{dgeToSignatureMapper (constructor argument)}{
     Mapper for transforming \code{disease_dge} into a disease signature.
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}
-      \item Default value: \code{NA}
+      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
+      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
     }
   }
-  \item{parallel_computation}{
-    Enables parallel computation (Unix-like systems only).
+  \item{parallel_computation (constructor argument)}{
+    If true, enables parallel computation (Unix-like systems only).
     \itemize{
-      \item Type: \code{boolean}
-      \item Default value: \code{FALSE}
+      \item Type: \code{boolean}.
+      \item Default value: F.
     }
   }
 }
 \value{
-A two-element vector: connectivity score, p-value.
+Two-element vector: connectivity score, p-value.
 }
 \examples{
-disease_dge <- data.frame(gene_id = c(1, 2, 3, 9, 11, 15),
-                          t.value = c(-9.26, -10.37, 8.17, 5.60, -8.44, 7.13))
-drug_dge <- data.frame(gene_id = c(1, 2, 3, 1, 11, 13),
-                       t.value = c(-2.26, 1.37, 3.17, -4.60, -2.19, 4.20))
+disease_dge <- data.frame(
+  gene_id = c(1, 2, 3, 9, 11, 15),
+  t.value = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
+)
+
+drug_dge <- data.frame(
+  gene_id = c(1, 2, 3, 1, 11, 13),
+  t.value = c(-2.26559, 1.369012, 3.173466, -4.60136, -2.191482, 4.2035724)
+)
+
 drug_dge_t_value_column_name <- "t.value_6h"
 random_distribution_size <- 1e4
 compute_p_value <- TRUE
 signature_mapper_parameter <- 150
 
 binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
-result <- binChenDiseaseDGEDrugConnectivityScore$compute(disease_dge, drug_dge,
-                                                         drug_dge_t_value_column_name,
-                                                         random_distribution_size,
-                                                         compute_p_value,
-                                                         signature_mapper_parameter)
-print(result)
+binChenDiseaseDGEDrugConnectivityScore$compute(
+  disease_dge, drug_dge, drug_dge_t_value_column_name,
+  random_distribution_size, compute_p_value, signature_mapper_parameter
+)
+# output
+# c(0.57892, 0.00123)
 }
