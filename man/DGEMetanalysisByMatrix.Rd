@@ -1,57 +1,58 @@
 \name{DGEMetanalysisByMatrix}
 \alias{DGEMetanalysisByMatrix}
-\title{Perform Meta-Analysis on Two DGE Matrices}
+\title{Perform meta-analysis on two DGEs using RMA function}
 \description{
-Given two matrices containing Differential Gene Expression (DGE) datasets, this class performs a meta-analysis using the RMA (Random-Effects Model) function.
+Given two matrices containing two DGEs, this class performs meta-analysis using the RMA function.
 }
 \usage{
-DGEMetanalysisByMatrix$new()
-DGEMetanalysisByMatrix$compute(dge_A, dge_B)
+dgeMetanalysisByMatrix <- DGEMetanalysisByMatrix$new()
+dgeMetanalysisByMatrix$compute(dge_A, dge_B)
 }
 \arguments{
   \item{dge_A}{
     First DGE matrix.
     \itemize{
-      \item Type: \code{data.frame}
-      \item Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}
+      \item Type: \code{data.frame}.
+      \item Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
     }
   }
   \item{dge_B}{
     Second DGE matrix.
     \itemize{
-      \item Type: \code{data.frame}
-      \item Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}
+      \item Type: \code{data.frame}.
+      \item Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
     }
   }
 }
 \value{
-A matrix containing the columns of the first matrix, the columns of the second matrix, and the meta-analysis results. Columns include:
-\itemize{
-  \item \code{gene_id}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{p.value_A}, \code{adj.p.value_A}
-  \item \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}, \code{p.value_B}, \code{adj.p.value_B}
-  \item \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}
-}
+Matrix containing the columns of the first matrix, the columns of the second matrix, and the meta-analysis results. Columns: \code{gene_id}, \code{drug}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{p.value_A}, \code{adj.p.value_A}, \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}, \code{p.value_B}, \code{adj.p.value_B}, \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}.
 }
 \examples{
 dge_A <- data.frame(
-  gene_id = c(1, 2, 3),
-  DE_log2_FC = c(0.18, -0.07, 0.19),
-  std.error = c(0.22, 0.15, 0.22),
-  t.value = c(0.84, -0.49, 0.87),
-  p.value = c(0.39, 0.62, 0.38),
-  adj.p.value = c(0.74, 0.88, 0.73)
+  drug = c("AG-370", "AG-490", "AG-494"),
+  gene_id = c(2, 2, 2),
+  DE_log2_FC = c(0.187625359, -0.076460164, 0.192958666),
+  std.error = c(0.22148139, 0.15385726, 0.22152442),
+  t.value = c(0.847138262, -0.496955204, 0.871049189),
+  p.value = c(0.3969181, 0.6192206, 0.3837273),
+  adj.p.value = c(0.7443946, 0.8846641, 0.7345071)
 )
 
 dge_B <- data.frame(
-  gene_id = c(1, 2, 3),
-  DE_log2_FC = c(0.28, -0.17, 0.34),
-  std.error = c(0.42, 0.08, 0.31),
-  t.value = c(0.96, -0.54, 1.52),
-  p.value = c(0.37, 0.74, 0.29),
-  adj.p.value = c(0.81, 0.95, 0.55)
+  drug = c("AG-370", "AG-490", "AG-494"),
+  gene_id = c(2, 2, 2),
+  DE_log2_FC = c(0.287785359, -0.176458164, 0.345647771),
+  std.error = c(0.42148139, 0.07899726, 0.31657524),
+  t.value = c(0.963461382, -0.545652041, 1.523518934),
+  p.value = c(0.3789181, 0.7474812, 0.2903727),
+  adj.p.value = c(0.8113946, 0.9533641, 0.5572071)
 )
 
 dgeMetanalysisByMatrix <- DGEMetanalysisByMatrix$new()
-result <- dgeMetanalysisByMatrix$compute(dge_A, dge_B)
-print(result)
+dgeMetanalysisByMatrix$compute(dge_A, dge_B)
+# output
+# gene_id   drug    DE_log2_FC_A   std.error_A   t.value_A      p.value_A   adj.p.value_A   DE_log2_FC_B   std.error_B   t.value_B      p.value_B   adj.p.value_B   DE_log2_FC_A_B   std.error_A_B   t.value_A_B   p.value_A_B   adj.p.value_A_B
+# 2         AG-370  0.187625359    0.22148139    0.847138262    0.3969181   0.7443946       0.287785359    0.42148139    0.963461382    0.3789181   0.8113946       0.067178223      0.22620093      0.296984731   0.7664782     0.7664782
+# 2         AG-490  -0.076460164   0.15385726    -0.496955204   0.6192206   0.8846641       -0.176458164   0.07899726    -0.545652041   0.7474812   0.9533641       -0.018701297     0.15764428      -0.11862972   0.9055687     0.9055687
+# 2         AG-494  0.192958666    0.22152442    0.871049189    0.3837273   0.7345071       0.345647771    0.31657524    1.523518934    0.2903727   0.5572071       0.067178223      0.22620093      0.296984731   0.7664782     0.7664782
 }

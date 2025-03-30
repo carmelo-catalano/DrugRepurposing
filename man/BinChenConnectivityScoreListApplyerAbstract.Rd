@@ -5,12 +5,20 @@
 Base class for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}.\cr
 This class computes the connectivity score for all input drugs.\cr
 The package includes two implementations: \code{BinChenConnectivityScoreListApplyerParallel} and \code{BinChenConnectivityScoreListApplyerSync}.
-
 }
 \usage{
-BinChenConnectivityScoreListApplyerAbstract$new()
-BinChenConnectivityScoreListApplyerAbstract$compute(disease_signature_down_regulated_genes,
-disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribution)
+BinChenConnectivityScoreListApplyerImpl <- R6Class(
+  "BinChenConnectivityScoreListApplyerImpl",
+  inherit = BinChenConnectivityScoreListApplyerAbstract,
+  public = list(
+    compute = function(disease_signature_down_regulated_genes,
+                       disease_signature_up_regulated_genes,
+                       drugs,
+                       random_connectivity_score_distribution) {
+      # do something
+    }
+  )
+)
 }
 \arguments{
   \item{disease_signature_down_regulated_genes}{
@@ -45,20 +53,5 @@ disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribut
 }
 \value{
 \code{data.frame}. \code{drug name}, \code{connectivity score}, \code{p.value}.\cr
-See example in \code{BinChenConnectivityScoreListApplyerParallel} “Usage section”.
-}
-\examples{
-BinChenConnectivityScoreListApplyerImpl <- R6Class(
-  "BinChenConnectivityScoreListApplyerImpl",
-  inherit = BinChenConnectivityScoreListApplyerAbstract,
-  public = list(
-    compute = function(disease_signature_down_regulated_genes,
-                       disease_signature_up_regulated_genes,
-                       drugs,
-                       random_connectivity_score_distribution) {
-      # Example implementation for connectivity score computation
-      do something
-    }
-  )
-)
+See example in \code{BinChenConnectivityScoreListApplyerParallel}.
 }

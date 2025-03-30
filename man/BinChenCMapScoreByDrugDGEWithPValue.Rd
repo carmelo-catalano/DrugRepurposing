@@ -53,9 +53,9 @@ drug_signature <- data.frame(gene_id = c(1, 2, 3, 9, 10, 17, 18),
 random_connectivity_score_distribution <- c(0.123, -0.56789, 0.8912763, 0.1357, -0.4754)
 
 binChenCMapScoreByDrugDGEWithPValue <- BinChenCMapScoreByDrugDGEWithPValue$new()
-result <- binChenCMapScoreByDrugDGEWithPValue$compute(disease_signature_down_regulated_genes,
+binChenCMapScoreByDrugDGEWithPValue$compute(disease_signature_down_regulated_genes,
                                                       disease_signature_up_regulated_genes,
                                                       drug_signature,
                                                       random_connectivity_score_distribution)
-print(result)  # Output: c(-0.5123520, 0.00134124)
+# Output: c(-0.5123520, 0.00134124)
 }

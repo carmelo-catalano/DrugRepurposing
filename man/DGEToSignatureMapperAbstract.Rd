@@ -1,45 +1,38 @@
 \name{DGEToSignatureMapperAbstract}
 \alias{DGEToSignatureMapperAbstract}
-\title{Abstract Class for Mapping Differential Gene Expression (DGE) to Signature}
+\title{Base class for mapping DGE to a gene signature}
 \description{
-Base class for the \code{dgeToSignatureMapper} constructor parameter in the classes \code{BinChenDiseaseDGEDrugConnectivityScore} and \code{BinChenDiseaseDGEDrugListConnectivityScore}.
-Maps the Differential Gene Expression (DGE) data to a gene signature.
+Base class for constructor parameter \code{dgeToSignatureMapper} of many classes such as \code{BinChenDiseaseDGEDrugConnectivityScore}, and \code{BinChenDiseaseDGEDrugListConnectivityScore}.
+Maps the DGE to a gene signature.
+The \code{map} method calculates the signature. The \code{getSignatureType} method returns the mapping strategy type name.
+This package provides two implementations: \code{MostSignificantGenesSignatureMapper} and \code{PValueAndFCThresholdSignatureMapper}.
 }
 \usage{
-DGEToSignatureMapperAbstract$new()
-DGEToSignatureMapperAbstract$map(dge, parameter)
-DGEToSignatureMapperAbstract$getSignatureType(parameter)
-}
-\arguments{
-  \item{dge}{
-    Differential Gene Expression (DGE) data to be mapped.
-    \itemize{
-      \item Type: \code{data.frame}
-    }
-  }
-  \item{parameter}{
-    Optional parameter for signature mapping computation.
-    \itemize{
-      \item Type: \code{Any}
-    }
-  }
-}
-\value{
-\code{map}: A \code{data.frame} containing the gene signature. Columns: \code{estimate} (usually the t-value column of the DGE). Row names contain the gene IDs.
-
-\code{getSignatureType}: A \code{string} representing the mapping strategy type name.
-}
-\examples{
-DGEToSignatureMapperImpl <- R6Class(
+dgeToSignatureMapperImpl <- R6Class(
   "DGEToSignatureMapperImpl",
   inherit = DGEToSignatureMapperAbstract,
   public = list(
     map = function(dge, parameter) {
-      # perform mapping operation
+      # do something
     },
     getSignatureType = function(parameter) {
-      # return the type of signature mapping
+      # do something
     }
   )
 )
 }
+\arguments{
+  \item{dge}{
+    A table containing a DGE.
+    \itemize{
+      \item Type: \code{data.frame}.
+    }
+  }
+  \item{parameter}{
+    An optional parameter for mapping computation.
+  }
+}
+\value{
+Data frame. Columns: \code{estimate} (usually the t-value column of the DGE). Row names contain the gene IDs.
+}
+

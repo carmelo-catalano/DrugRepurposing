@@ -1,28 +1,42 @@
 \name{GEORNASeqDichotomicVoomDGE}
 \alias{GEORNASeqDichotomicVoomDGE}
-\title{Compute differential gene expression analysis for RNA-Seq data}
+\title{Computes the differential gene expression analysis using Voom transformation}
 \description{
-Compute the differential gene expression analysis for two groups of RNA-Seq data under different conditions (e.g., control vs. altered state). RNA data must follow a negative binomial distribution and be sourced from NCBI RNA-Seq datasets.
+Computes the differential gene expression analysis. The input consists of two groups of RNA-Seq data from tissues under different conditions, for example, a disease-affected group and a control group. RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+\cr
+For RNA data following a normal distribution, such as microarray data, see \code{DichotomicDGE}.
+\cr
+The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
 }
 \usage{
-geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
-geoRNASeqDichotomicVoomDGE$compute(rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding)
+geoDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
+geoDichotomicVoomDGE$compute(
+  rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
+)
 }
 \arguments{
   \item{rna_seq_filename}{
-    Path to the RNA-Seq data file. The file must be in TSV format (or compressed as \code{*.gz}).
+    Filename of the RNA seq file. The file must be in TSV (tab-separated values) format and comply with the GEO NCBI specification.
+    \cr
+    The file may also be compressed in gz format.
+    \cr
+    The file contains a table of RNA data. Each column represents an RNA-Seq sample, and each row represents a gene.
+    \cr
+    Row names are gene IDs, and column names are experiment identifiers.
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{string}.
     }
   }
   \item{sample_01_map}{
-    A mapping of RNA-Seq sample groups in the file: \code{0} = test sample, \code{1} = control sample, \code{X} = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_seq_filename} table.
+    Each character represents the type of the corresponding column in the \code{rna_seq_filename} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
     \itemize{
       \item Type: \code{string}.
     }
   }
   \item{test_sample_name}{
-    Name of the test sample.
+    Test sample name.
     \itemize{
       \item Type: \code{string}.
     }
@@ -34,33 +48,47 @@ geoRNASeqDichotomicVoomDGE$compute(rna_seq_filename, sample_01_map, test_sample_
       \item Default value: \code{FALSE}.
     }
   }
-}
-\section{Constructor arguments}{
-  \item{\code{geneFilter}}{
-    Instance for filtering non-significant genes.
+  \item{geneFilter (constructor argument)}{
+    Instance of a class for filtering non-significant genes.
     \itemize{
       \item Type: Derived class of \code{GeneFilterAbstract}.
-      \item Default value: \code{LowCountsGeneFilter}.
+      \item Default value: Instance of class \code{LowCountsGeneFilter}.
     }
   }
 }
 \value{
-A data frame with columns:
-\itemize{
-  \item \code{DE_log2_FC}
-  \item \code{std.error}
-  \item \code{t.value}
-  \item \code{p.value}
-  \item \code{adj.p.value}
-}
+Table. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}. \code{DE_log2_FC} represents differential expression = log2 fold change.
 }
 \examples{
-rna_seq_filename <- "/path/to/rna_seq_data.tsv"
+rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
+# File content:
+# GeneID   GSM1    GSM2    GSM3    GSM4
+# 1        262     116     111     162
+# 2        281897  337026  111736  219471
+# 3        463     261     193     281
+# 9        12301   3277    862     5990
+# 10       284     132     88      280
+# 11       2966    2006    1371    2241
+# 12       4842    3699    2536    4527
+# 13       9966    12406   1531    12941
+
 sample_01_map <- "0X10"
 test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
-geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
-result <- geoRNASeqDichotomicVoomDGE$compute(rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding)
-print(result)
+geoDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
+geoDichotomicVoomDGE$compute(
+  rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
+)
+
+# Output:
+# gene_id  DE_log2_FC  std.error  t.value    p.value      adj.p.value
+# 1        -1.741698   0.1880556 -9.261609  1.64e-11     1.49e-09
+# 2        -2.068486   0.1994708 -10.36986  6.49e-13     1.48e-10
+# 3         3.150816   0.3855128  8.173051  4.52e-10     1.91e-08
+# 9         1.574593   0.2808184  5.607159  1.67e-06     1.54e-05
+# 10       -1.162480   0.4794700 -11.98620  6.29e-12     1.28e-11
+# 11       -1.578634   0.1869485 -8.444215  1.95e-10     9.84e-09
+# 12       -2.231698   0.3184555 -10.22609  1.44e-12     1.40e-10
+# 13        2.401361   0.3368167  7.129577  1.22e-08     2.70e-07
 }

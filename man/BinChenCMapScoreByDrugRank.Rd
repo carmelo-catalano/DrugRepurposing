@@ -8,8 +8,8 @@ A positive value indicates that the drug behaves similarly the disease. A negati
 indicates that the drug behaves conversely to the disease. A higher positive score implies
 stronger correlation, while a higher negative score indicates greater anticorrelation.
 \cr
-This function has been developed by Bin Chen et al. in their paper: “Reversal of cancer
-gene expression correlates with drug efficacy and reveals therapeutic targets” (2017).
+This function has been developed by Bin Chen et al. in their paper: "Reversal of cancer
+gene expression correlates with drug efficacy and reveals therapeutic targets" (2017).
 
 }
 \usage{
@@ -52,8 +52,8 @@ drug_signature <- data.frame(gene_id = c(1, 2, 3, 9, 10, 17, 18),
                               rank = c(1, 4, 6, 2, 7, 3, 5))
 
 binChenCMapScoreByDrugRank <- BinChenCMapScoreByDrugRank$new()
-result <- binChenCMapScoreByDrugRank$compute(disease_signature_down_regulated_genes,
+binChenCMapScoreByDrugRank$compute(disease_signature_down_regulated_genes,
                                              disease_signature_up_regulated_genes,
                                              drug_signature)
-print(result)  # Output: 0.1414551
+# Output: 0.1414551
 }

@@ -4,6 +4,13 @@
 \description{
 Given a disease DGE and a drug DGE, computes the connectivity score between them.
 }
+\usage{
+binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
+binChenDiseaseDGEDrugConnectivityScore$compute(
+  disease_dge, drug_dge, drug_dge_t_value_column_name,
+  random_distribution_size, compute_p_value, signature_mapper_parameter
+)
+}
 \arguments{
   \item{disease_dge}{
     A table containing a subset of the disease's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
@@ -23,7 +30,7 @@ Given a disease DGE and a drug DGE, computes the connectivity score between them
     The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the column name of the t-value in the DGE table.
     \itemize{
       \item Type: \code{string}.
-      \item Default value: “t.value”.
+      \item Default value: "t.value".
     }
   }
   \item{random_distribution_size}{

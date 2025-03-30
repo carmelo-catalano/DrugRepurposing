@@ -59,4 +59,12 @@
   pValueAndFCThresholdSignatureMapper <- PValueAndFCThresholdSignatureMapper$new(adj.p.value_threshold, DE_log2_FC_threshold)
   pValueAndFCThresholdSignatureMapper$map(dge)
   pValueAndFCThresholdSignatureMapper$getSignatureType()
+
+  # output
+  #	        estimate
+  # 1	      2.621613414
+  # 10000	  -1.082000871
+  # 10001	  -2.097975261
+  # 10003	  -6.571687173
+  # 10004	  -1.430383326
 }

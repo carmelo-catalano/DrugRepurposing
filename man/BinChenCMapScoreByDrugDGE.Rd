@@ -45,6 +45,6 @@ disease_signature_up_regulated_genes <- data.frame(gene_id = c(3, 17))
 drug_signature <- data.frame(gene_id = c(1, 2, 3, 9, 10, 17, 18),
                               estimate = c(1.13360404, 0.41307894, -1.08978928, 0.93707215, -1.22276393, 0.79162811, -0.59307306))
 binChenCMapScoreByDrugDGE <- BinChenCMapScoreByDrugDGE$new()
-result <- binChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature)
-print(result)  # Output: 0.5719302
+binChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature)
+# Output: 0.5719302
 }

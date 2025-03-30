@@ -2,7 +2,7 @@
 \alias{ConnectivityScorePValue}
 \title{Compute Connectivity Score P-Value}
 \description{
-Computes the connectivity score p-value. The p-value is calculated by comparing the connectivity score with the random connectivity score distribution:
+Computes the connectivity score p-value. The p-value is calculated by comparing the connectivity score with each element in \code{random_connectivity_score_distribution}:
 \deqn{\frac{\sum (\text{random connectivity score distribution} < \text{connectivity score})}{\text{length(random connectivity score distribution)}}}
 }
 \usage{
@@ -24,13 +24,13 @@ ConnectivityScorePValue$compute(connectivity_score, random_connectivity_score_di
   }
 }
 \value{
-A \code{numeric value} ranging from 0 to 1.
+A float number ranging from 0 to 1.
 }
 \examples{
 connectivity_score <- 0.5
 random_connectivity_score_distribution <- c(0.123, -0.56789, 0.8912763, 0.1357, -0.4754)
 
 connectivityScorePValue <- ConnectivityScorePValue$new()
-result <- connectivityScorePValue$compute(connectivity_score, random_connectivity_score_distribution)
-print(result)  # Output: 0.134229
+connectivityScorePValue$compute(connectivity_score, random_connectivity_score_distribution)
+# Output: 0.134229
 }
