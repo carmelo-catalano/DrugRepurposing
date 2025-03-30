@@ -9,8 +9,8 @@ For RNA data following a normal distribution, such as microarray data, see \code
 The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
 }
 \usage{
-geoDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
-geoDichotomicVoomDGE$compute(
+geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
+geoRNASeqDichotomicVoomDGE$compute(
   rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
 )
 }
@@ -57,7 +57,9 @@ geoDichotomicVoomDGE$compute(
   }
 }
 \value{
-Table. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}. \code{DE_log2_FC} represents differential expression = log2 fold change.
+Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+\cr
+\code{DE_log2_FC} = differential gene expression = log2 fold change.
 }
 \examples{
 rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
@@ -73,11 +75,22 @@ rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
 # 13       9966    12406   1531    12941
 
 sample_01_map <- "0X10"
+
+sample_01_map <- "0X10"
+# How the map is applied:
+#           0      X      1      0
+# GeneID   GSM1   GSM2   GSM3   GSM4
+# 1        262    116    111    162
+# ...
+#
+#
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
+
 test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
-geoDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
-geoDichotomicVoomDGE$compute(
+geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
+geoRNASeqDichotomicVoomDGE$compute(
   rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
 )
 
