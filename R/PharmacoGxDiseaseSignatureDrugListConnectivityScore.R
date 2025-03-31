@@ -9,7 +9,7 @@ PharmacoGxDiseaseSignatureDrugListConnectivityScore <- R6Class(
       }
       private$diseaseDrugListConnectivityScoreMapper <- DiseaseDrugListConnectivityScoreMapper$new()
     },
-    compute = function(disease_signature, drugs, n_permutations = 10^4, disease_name = NA, gene_selection_strategy = NA, drug_perturbation_time = NA) {
+    compute = function(disease_signature, drugs, n_permutations = 10^4, disease_name = NA, disease_signature_type = NA, drug_perturbation_time = NA) {
       # disease_signature example:
       #         estimate
       # 780     -13,1465
@@ -34,7 +34,7 @@ PharmacoGxDiseaseSignatureDrugListConnectivityScore <- R6Class(
         connectivity_score_by_drug <- PharmacoGx::connectivityScore(x = drug_signature, y = disease_signature, method = "fgsea", nperm = n_permutations)
         connectivity_score_matrix <- rbind(connectivity_score_matrix, data.frame(drugs$name[i], connectivity_score_by_drug[1], connectivity_score_by_drug[2]))
       }
-      connectivity_scores <- private$diseaseDrugListConnectivityScoreMapper$map(connectivity_score_matrix, disease_name, gene_selection_strategy, drug_perturbation_time)
+      connectivity_scores <- private$diseaseDrugListConnectivityScoreMapper$map(connectivity_score_matrix, disease_name, disease_signature_type, drug_perturbation_time)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end connectivity score computation by PharmacoGx Algorithm: time: %s %s", totalTime, attr(totalTime, "units")))
       return(connectivity_scores)
