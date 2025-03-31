@@ -53,7 +53,7 @@ dichotomicVoomDrugRepurpose$compute(
     The drug DGE parameter used for connectivity score computation is the t-value. This field contains the column name of the t-value in the DGE table.
     \itemize{
       \item Type: \code{string}.
-      \item Default value: “t.value”.
+      \item Default value: "t.value".
     }
   }
   \item{random_distribution_size}{

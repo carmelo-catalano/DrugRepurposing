@@ -19,7 +19,7 @@ dichotomicVoomDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_p
 \arguments{
   \item{rna_data}{
     Table of RNA-Seq data. Each column represents an RNA analysis sample, and each row represents a gene.
-    Row names are gene IDs; column names are experiment IDs. See example in the “Usage section.”
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{data frame}.
       \item Columns: first column = gene ID; other columns: RNA-Seq sample data. Typically, the first column name is \code{GeneID}. The remaining column names correspond to the RNA-Seq sample identifiers.

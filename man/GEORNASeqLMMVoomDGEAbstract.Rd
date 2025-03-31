@@ -38,7 +38,7 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
     }
   }
   \item{rna_seq_metadata_filename}{
-    Filename of the RNA-seq metadata file. The file is in csv format and uses the “;” separator.
+    Filename of the RNA-seq metadata file. The file is in csv format and uses the ";" separator.
     \cr
     For each RNA-seq analysis column in the \code{rna_seq_data} table, there is a row in the \code{rna_seq_metadata} table.
     \cr

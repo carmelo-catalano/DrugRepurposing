@@ -13,13 +13,13 @@ The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.
 }
 \usage{
 geoRNASeqDichotomicVoomDrugRepurpose <- GEORNASeqDichotomicVoomDrugRepurpose$new()
-geoRNASeqDichotomicVoomDrugRepurpose$compute(
-  rna_seq_filename, sample_01_map, disease_n_most_significant_genes,
-  drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
-  random_distribution_size, disease_name, drug_perturbation_time,
-  parallel_computation, filter_by_protein_coding, signature_mapper_parameter
+geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
+        rna_seq_filename, sample_01_map, drug_dge_dir, drugs,
+        drugs_genes, drug_dge_t_value_column_name,
+        random_distribution_size, disease_name,
+        drug_perturbation_time, parallel_computation,
+        filter_by_protein_coding, signature_mapper_parameter
 )
-
 }
 \arguments{
   \item{rna_seq_filename}{
@@ -36,12 +36,6 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(
     The map has the same length as the number of columns in the \code{rna_seq_filename} table. Each character represents the type of the corresponding column in \code{rna_seq_filename} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
     \itemize{
       \item Type: \code{string}.
-    }
-  }
-  \item{disease_n_most_significant_genes}{
-    The connectivity score computation is based on the disease signature. The disease's n most significant genes represent the signature. A typical n value ranges from 50 to 300.
-    \itemize{
-      \item Type: \code{integer}.
     }
   }
   \item{drug_dge_dir}{
@@ -148,7 +142,6 @@ sample_01_map <- "0X10"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
 
-disease_n_most_significant_genes <- 150
 drug_dge_dir <- "/drug_dges/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
@@ -164,11 +157,12 @@ filter_by_protein_coding <- FALSE
 signature_mapper_parameter <- 150
 
 geoRNASeqDichotomicVoomDrugRepurpose <- GEORNASeqDichotomicVoomDrugRepurpose$new()
-geoRNASeqDichotomicVoomDrugRepurpose$compute(
-  rna_seq_filename, sample_01_map, disease_n_most_significant_genes,
-  drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
-  random_distribution_size, disease_name, drug_perturbation_time,
-  parallel_computation, filter_by_protein_coding, signature_mapper_parameter
+geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
+        rna_seq_filename, sample_01_map, drug_dge_dir, drugs,
+        drugs_genes, drug_dge_t_value_column_name,
+        random_distribution_size, disease_name,
+        drug_perturbation_time, parallel_computation,
+        filter_by_protein_coding, signature_mapper_parameter
 )
 
 # Output:

@@ -10,13 +10,13 @@ This class composes the classes \code{DichotomicDGE} and \code{BinChenDiseaseDGE
 the \code{dichotomicCustomTypeDGE} parameter.
 }
 \usage{
-dichotomicDGE <- DichotomicDGE$new()
-dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(dichotomicDGE)
-dichotomicDrugRepurposeCore$compute(
-  rna_data, sample_01_map, disease_n_most_significant_genes,
-  drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
-  random_distribution_size, disease_name, drug_perturbation_time,
-  filter_by_protein_coding, parallel_computation, signature_mapper_parameter
+dichotomicVoomDGE <- DichotomicVoomDGE$new()
+dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(dichotomicVoomDGE)
+dichotomicDrugRepurposeCore$compute(rna_data, sample_01_map,
+        drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
+        random_distribution_size, disease_name, drug_perturbation_time,
+        filter_by_protein_coding, parallel_computation,
+        signature_mapper_parameter
 )
 }
 \arguments{
@@ -32,12 +32,6 @@ dichotomicDrugRepurposeCore$compute(
     The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data}: 0 = test sample, 1 = control sample, X = excluded sample.
     \itemize{
       \item Type: \code{string}.
-    }
-  }
-  \item{disease_n_most_significant_genes}{
-    The connectivity score computation works on a disease signature. The disease’s n most significant genes represent the signature. Typical values range from 50 to 300.
-    \itemize{
-      \item Type: \code{integer}.
     }
   }
   \item{drug_dge_dir}{
@@ -135,7 +129,16 @@ rna_data <- data.frame(
 )
 
 sample_01_map <- "0X10"
-disease_n_most_significant_genes <- 150
+
+# How the map is applied:
+#           0      X      1      0
+# GeneID   GSM1   GSM2   GSM3   GSM4
+# 1        262    116    111    162
+# ...
+#
+#
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
+
 drug_dge_dir <- "/drugs_dge/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
@@ -150,14 +153,15 @@ filter_by_protein_coding <- FALSE
 parallel_computation <- TRUE
 signature_mapper_parameter <- 150
 
-dichotomicDGE <- DichotomicDGE$new()
-dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(dichotomicDGE)
-dichotomicDrugRepurposeCore$compute(
-  rna_data, sample_01_map, disease_n_most_significant_genes,
-  drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
-  random_distribution_size, disease_name, drug_perturbation_time,
-  filter_by_protein_coding, parallel_computation, signature_mapper_parameter
+dichotomicVoomDGE <- DichotomicVoomDGE$new()
+dichotomicDrugRepurposeCore <- DichotomicDrugRepurposeCore$new(dichotomicVoomDGE)
+dichotomicDrugRepurposeCore$compute(rna_data, sample_01_map,
+        drug_dge_dir, drugs, drugs_genes, drug_dge_t_value_column_name,
+        random_distribution_size, disease_name, drug_perturbation_time,
+        filter_by_protein_coding, parallel_computation,
+        signature_mapper_parameter
 )
+
 # Output:
 # drug        connectivity_score   disease  disease_signature_type  drug_perturbation_time
 # A-23187     0.0006964073         ipf      100 MostSignificantGenes  6h
