@@ -28,7 +28,7 @@ Data frame containing configured LINCS metadata. Columns: \code{inst_id},
 \code{rna_plate}, \code{pert_id}, \code{pert_iname}, \code{pert_time}, \code{and cell_id}.
 }
 \examples{
-perturbation_times <- 6"
+perturbation_times <- "6"
 drugs_filter = c("AM-251", "AM-404", "AM-580")
 
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()

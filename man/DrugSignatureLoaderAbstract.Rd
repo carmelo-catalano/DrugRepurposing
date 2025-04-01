@@ -18,6 +18,7 @@ DrugSignatureLoaderImpl <- R6Class(
     }
   )
 )
+}
 \arguments{
   \item{drug_name}{
     Name of the drug DGE to be loaded. It may also refer to the filename.
