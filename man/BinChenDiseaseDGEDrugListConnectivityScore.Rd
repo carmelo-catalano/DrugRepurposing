@@ -96,12 +96,12 @@ drugs <- data.frame(
   filename = c("A-23187.rds", "A-443644.rds", "AG-490.rds", "AG-494.rds", "AG-957.rds", "AM-404.rds")
 )
 
-drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
+drugs_genes <- c(1, 2, 3, 9, 11, 15, 826, 11224, 6158)
 random_distribution_size <- 1e4
 disease_name <- "IPF"
 drug_perturbation_time <- "6h"
 parallel_computation <- TRUE
-signature_mapper_parameter <- 150
+signature_mapper_parameter <- 6
 
 binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new()
 binChenDiseaseDGEDrugListConnectivityScore$compute(

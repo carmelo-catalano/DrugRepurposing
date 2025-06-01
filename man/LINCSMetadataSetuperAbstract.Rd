@@ -39,3 +39,14 @@ LINCSMetadataSetuperImpl <- R6Class(
 Data frame containing configured LINCS metadata. Columns: \code{inst_id},
 \code{rna_plate}, \code{pert_id}, \code{pert_iname}, \code{pert_time}, \code{and cell_id}.
 }
+\examples{
+LINCSMetadataSetuperImpl <- R6Class(
+  "LINCSMetadataSetuperImpl",
+  inherit = LINCSMetadataSetuperAbstract,
+  public = list(
+    setup = function(perturbation_times, rna_plates, cell_types, drugs) {
+      # do something
+    }
+  )
+)
+}

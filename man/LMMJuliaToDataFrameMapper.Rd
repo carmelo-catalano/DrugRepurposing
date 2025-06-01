@@ -45,15 +45,17 @@ lmmJuliaToDataFrameMapper$map(LMM_output, gene_id, sample_type_field_name, sampl
 Data frame. Columns: \code{sample_type_field_name_mapped} (optional), \code{gene_id} (optional), \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
 }
 \examples{
-LMM_output <- new.env()
+# For a complete example see LMMJulia
+
+LMM_output <- new.env() # R environment
 gene_id <- "DDR1"
 sample_type_field_name <- "pert_iname"
 sample_type_field_name_mapped <- "drug"
 lmmJuliaToDataFrameMapper <- LMMJuliaToDataFrameMapper$new()
 lmmJuliaToDataFrameMapper$map(LMM_output, gene_id, sample_type_field_name, sample_type_field_name_mapped)
 # Output example:
-# drug            gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value
-# AM-251          DDR1      -0.047038    0.073635    -0.639    0.523     0.653
-# AM-404          DDR1      -0.199576    0.071673    -2.785    0.00536   0.0268
-# AM-580          DDR1       0.051221    0.055126     0.929    0.353     0.588
+# drug            gene_id   DE_log2_FC   std.error   t.value      p.value     adj.p.value
+# AM-251          DDR1      -0.600250    0.7667697   -0.7828296   0.4337272   0.9114472
+# AM-404          DDR1      -0.290125    0.7667697   -0.3783731   0.7051535   0.9114472
+# AM-580          DDR1      -0.085275    0.7667697   -0.1112133   0.9114472   0.9114472
 }

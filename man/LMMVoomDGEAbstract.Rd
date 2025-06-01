@@ -56,3 +56,14 @@ Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{
 \cr
 The \code{lmer} implementation does not return \code{p.value} and \code{adj.p.value}.
 }
+\examples{
+LMMVoomDGEImpl <- R6Class(
+  "LMMVoomDGEImpl",
+  inherit = LMMVoomDGEAbstract,
+  public = list(
+    filter = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding) {
+      # do something
+    }
+  )
+)
+}

@@ -55,5 +55,5 @@ binChenCMapScoreByDrugRank <- BinChenCMapScoreByDrugRank$new()
 binChenCMapScoreByDrugRank$compute(disease_signature_down_regulated_genes,
                                              disease_signature_up_regulated_genes,
                                              drug_signature)
-# Output: 0.1414551
+# Output: -0.7142857
 }

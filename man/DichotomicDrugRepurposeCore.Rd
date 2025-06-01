@@ -121,12 +121,19 @@ Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{disease}, \co
 The column \code{drug_perturbation_time} is optional.
 }
 \examples{
-rna_data <- data.frame(
-  GeneID = c(1, 2, 3, 9, 10, 11, 12, 13),
-  GSM1 = c(262, 281897, 463, 12301, 284, 2966, 4842, 9966),
-  GSM2 = c(116, 337026, 261, 3277, 132, 2006, 3699, 12406),
-  GSM3 = c(111, 111736, 193, 862, 88, 1371, 2536, 1531),
-  GSM4 = c(162, 219471, 281, 5990, 280, 2241, 4527, 12941)
+rna_data <- matrix(
+  c(
+    6.930737, 6.643856, 5.247928, 7.169925, 7.303781, 6.375039, 6.108524, 7.055282,
+    6.554589, 6.741467, 7.721099, 6.247928, 7.139551, 6.569856, 5.554589, 6.392317,
+    6.643856, 5.392317, 7.348728, 7.491853, 6.044394, 5.700440, 6.169925, 5.247928,
+    5.954196, 6.672425, 6.614710, 5.169925, 6.988685, 7.357552, 6.954196, 6.285402
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
 )
 
 sample_01_map <- "0X10"
@@ -138,7 +145,7 @@ sample_01_map <- "0X10"
 # ...
 #
 #
-# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
 drug_dge_dir <- "/drugs_dge/"
 drugs <- data.frame(

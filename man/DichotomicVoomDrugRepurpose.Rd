@@ -20,8 +20,7 @@ dichotomicVoomDrugRepurpose$compute(
   \item{rna_seq}{
     Table of RNA-Seq data. Each column represents an RNA-Seq sample, and each row represents a gene.
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: First column = gene ID; other columns: RNA-Seq sample data. Typically, the first column name is \code{GeneID}, and the remaining column names correspond to the RNA-Seq sample identifiers.
+      \item Type: \code{matrix}.
     }
   }
   \item{sample_01_map}{
@@ -115,12 +114,19 @@ dichotomicVoomDrugRepurpose$compute(
 Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{disease}, \code{disease_signature_type}, \code{drug_perturbation_time}. The column \code{drug_perturbation_time} is optional.
 }
 \examples{
-rna_seq <- data.frame(
-  GeneID = c(1, 2, 3, 9, 10, 11, 12, 13),
-  GSM1 = c(262, 116, 111, 162, 284, 2966, 4842, 9966),
-  GSM2 = c(281897, 337026, 261, 3277, 132, 2006, 3699, 12406),
-  GSM3 = c(111736, 193, 88, 862, 88, 1371, 2536, 1531),
-  GSM4 = c(219471, 281, 193, 5990, 280, 2241, 4527, 12941)
+rna_seq <- matrix(
+  c(
+    262, 281897, 463, 12301, 284, 2966, 4842, 9966,
+    116, 337026, 261, 3277, 132, 2006, 3699, 12406,
+    111, 111736, 193, 862, 88, 1371, 2536, 1531,
+    162, 219471, 281, 5990, 280, 2241, 4527, 12941
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
 )
 
 sample_01_map <- "0X10"
@@ -129,14 +135,14 @@ drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
   filename = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404")
 )
-drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
+drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
 drug_dge_t_value_column_name <- "t.value_6h"
 random_distribution_size <- 10^5
 disease_name <- "IPF"
 drug_perturbation_time <- "6h"
 filter_by_protein_coding <- FALSE
 parallel_computation <- FALSE
-signature_mapper_parameter <- 150
+signature_mapper_parameter <- 8
 
 dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new()
 dichotomicVoomDrugRepurpose$compute(

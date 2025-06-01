@@ -2,17 +2,17 @@
 \alias{ADJPValueAndFCThresholdSignatureMapper}
 \title{Extract the most significant genes based on adjusted p-value and differential gene expression}
 \description{
-  Extract the most significant genes from the input DGE table.
-  Significance is determined based on the adjusted p-value and the differential gene expression.
-  The DGE table’s rows with adjusted p-value greater than a given threshold and differential gene expression less than a given threshold are removed.
-  The output will contain only one column, named \code{estimate}, which holds the t-values.
+  Extract the most significant genes from the input DGE table.\cr
+  Significance is determined based on the adjusted p-value and the differential gene expression.\cr
+  The DGE table’s rows with adjusted p-value greater than a given threshold and differential gene expression less than a given threshold are removed.\cr
+  The output will contain only one column, named \code{estimate}, which holds the t-values.\cr
   Row names contain the gene IDs.
 }
 
 \usage{
-  pValueAndFCThresholdSignatureMapper <- PValueAndFCThresholdSignatureMapper$new(p.value_threshold, DE_log2_FC_threshold)
-  pValueAndFCThresholdSignatureMapper$map(dge)
-  pValueAndFCThresholdSignatureMapper$getSignatureType()
+  adjPValueAndFCThresholdSignatureMapper <- ADJPValueAndFCThresholdSignatureMapper$new(p.value_threshold, DE_log2_FC_threshold)
+  adjPValueAndFCThresholdSignatureMapper$map(dge)
+  adjPValueAndFCThresholdSignatureMapper$getSignatureType()
 }
 
 \arguments{
@@ -56,12 +56,12 @@
   adj.p.value_threshold <- 0.05
   DE_log2_FC_threshold <- 1.7
 
-  pValueAndFCThresholdSignatureMapper <- PValueAndFCThresholdSignatureMapper$new(adj.p.value_threshold, DE_log2_FC_threshold)
-  pValueAndFCThresholdSignatureMapper$map(dge)
-  pValueAndFCThresholdSignatureMapper$getSignatureType()
+  adjPValueAndFCThresholdSignatureMapper <- ADJPValueAndFCThresholdSignatureMapper$new(adj.p.value_threshold, DE_log2_FC_threshold)
+  adjPValueAndFCThresholdSignatureMapper$map(dge)
+  adjPValueAndFCThresholdSignatureMapper$getSignatureType()
 
   # output
-  #	        estimate
+  #	          estimate
   # 1	      2.621613414
   # 10000	  -1.082000871
   # 10001	  -2.097975261

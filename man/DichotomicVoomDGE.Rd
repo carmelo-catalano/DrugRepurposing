@@ -17,12 +17,11 @@ dichotomicVoomDGE <- DichotomicVoomDGE$new()
 dichotomicVoomDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding)
 }
 \arguments{
-  \item{rna_data}{
+  \item{rna_seq}{
     Table of RNA-Seq data. Each column represents an RNA analysis sample, and each row represents a gene.
     Row names are gene IDs; column names are experiment IDs.
     \itemize{
-      \item Type: \code{data frame}.
-      \item Columns: first column = gene ID; other columns: RNA-Seq sample data. Typically, the first column name is \code{GeneID}. The remaining column names correspond to the RNA-Seq sample identifiers.
+      \item Type: \code{matrix}.
     }
   }
   \item{sample_01_map}{
@@ -58,12 +57,19 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 \code{DE_log2_FC} = differential expression = log2 fold change.
 }
 \examples{
-rna_seq <- data.frame(
-  GeneID = c(1, 2, 3, 9, 10, 11, 12, 13),
-  GSM1 = c(262, 281897, 463, 12301, 284, 2966, 4842, 9966),
-  GSM2 = c(116, 337026, 261, 3277, 132, 2006, 3699, 12406),
-  GSM3 = c(111, 111736, 193, 862, 88, 1371, 2536, 1531),
-  GSM4 = c(162, 219471, 281, 5990, 280, 2241, 4527, 12941)
+rna_seq <- matrix(
+  c(
+    262, 281897, 463, 12301, 284, 2966, 4842, 9966,
+    116, 337026, 261, 3277, 132, 2006, 3699, 12406,
+    111, 111736, 193, 862, 88, 1371, 2536, 1531,
+    162, 219471, 281, 5990, 280, 2241, 4527, 12941
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
 )
 
 sample_01_map <- "0X10"
@@ -74,18 +80,22 @@ sample_01_map <- "0X10"
 # ...
 #
 #
-# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
 test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
 dichotomicVoomDGE <- DichotomicVoomDGE$new()
-dichotomicVoomDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding)
+dichotomicVoomDGE$compute(rna_seq, sample_01_map, test_sample_name, filter_by_protein_coding)
 
 # Output:
-# gene_id  DE_log2_FC    std.error   t.value   p.value   adj.p.value
-# Gene_1   -1.5782345   0.2234567   -7.06543  3.21e-05  2.14e-04
-# Gene_2   2.4732156    0.4567891   5.41862   7.89e-06  4.67e-05
-# Gene_3   -0.9487123   0.1892764   -5.01134  1.12e-04  7.89e-04
-# Gene_4   1.2875643    0.3231345   3.98543   4.53e-03  2.18e-02
+# gene_id  DE_log2_FC    std.error     t.value       p.value     adj.p.value
+# 1        -14.468.569   0.26210106    -5.520.225    5,60E+02    1,12E+03
+# 10       -0.6876448    0.25642630    -2.681.647    2,79E+04    3,18E+04
+# 11       -14.106.530   0.06931947    -20.350.026   3,55E-02    2,84E-01
+# 12       -13.780.645   0.29686726    -4.642.022    1,66E+03    2,66E+03
+# 13       0.4928160     0.31559626    1.561.539     1,57E+05    1,57E+05
+# 2        -11.863.750   0.11560740    -10.262.103   6,99E+00    2,80E+01
+# 3        -14.128.238   0.24532569    -5.758.972    4,25E+02    1,12E+03
+# 9        10.124.515    0.36336856    2.786.294     2,37E+04    3,16E+04
 }

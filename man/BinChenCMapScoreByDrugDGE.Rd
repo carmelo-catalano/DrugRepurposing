@@ -3,9 +3,9 @@
 \title{Compute Connectivity Score Between Disease and Drug}
 \description{
 Computes the connectivity score between a disease and a drug. The connectivity score represents the correlation
-between the disease and the drug. The score ranges from -1 to +1.
-A positive value indicates that the drug behaves similarly to the disease.
-A negative value indicates that the drug behaves conversely to the disease.
+between the disease and the drug. The score ranges from -1 to +1.\cr
+A positive value indicates that the drug behaves similarly to the disease.\cr
+A negative value indicates that the drug behaves conversely to the disease.\cr
 A higher positive score implies stronger correlation, while a higher negative score
 indicates greater anticorrelation.
 }
@@ -46,5 +46,5 @@ drug_signature <- data.frame(gene_id = c(1, 2, 3, 9, 10, 17, 18),
                               estimate = c(1.13360404, 0.41307894, -1.08978928, 0.93707215, -1.22276393, 0.79162811, -0.59307306))
 binChenCMapScoreByDrugDGE <- BinChenCMapScoreByDrugDGE$new()
 binChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signature)
-# Output: 0.5719302
+# Output: -0.7142857
 }

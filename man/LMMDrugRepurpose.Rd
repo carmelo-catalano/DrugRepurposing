@@ -117,44 +117,77 @@ lmmDrugRepurpose$compute(
 \code{Data frame}. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \code{adj.p.value}, \code{disease}, \code{disease_signature_type}, \code{drug_perturbation_time}. The field \code{drug_perturbation_time} is optional.
 }
 \examples{
-rna_data =
+rna_data <- matrix(
+  c(
+    6.930737, 6.643856, 5.247928, 7.169925, 7.303781, 6.375039, 6.108524, 7.055282,
+    6.554589, 6.741467, 7.721099, 6.247928, 7.139551, 6.569856, 5.554589, 6.392317,
+    6.643856, 5.392317, 7.348728, 7.491853, 6.044394, 5.700440, 6.169925, 5.247928,
+    5.954196, 6.672425, 6.614710, 5.169925, 6.988685, 7.357552, 6.954196, 6.285402,
+    6.539159, 6.727920, 6.845490, 7.592457, 6.491853, 6.554589, 5.426265, 6.475733,
+    5.426265, 6.870365, 5.857981, 4.857981, 7.098032, 7.189825, 6.539159, 6.614710,
+    13.230020, 12.707359, 12.294334, 15.276742, 13.226412, 12.772933, 11.352043, 14.134266
+  ),
+  nrow = 8,
+  ncol = 7,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7")
+  )
+)
 
-GeneID   GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
-1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
-2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
-3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
-9        7.169925    6.247928    7.491853    5.169925    7.592457    4.857981    15.276742
-10       7.303781    7.139551    6.044394    6.988685    6.491853    7.098032    13.226412
-11       6.375039    6.569856    5.700440    7.357552    6.554589    7.189825    12.772933
-12       6.108524    5.554589    6.169925    6.954196    5.426265    6.539159    11.352043
-13       7.055282    6.392317    5.247928    6.285402    6.475733    6.614710    14.134266
+# rna_data =
+#          GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
+# 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
+# 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
+# 9        7.169925    6.247928    7.491853    5.169925    7.592457    4.857981    15.276742
+# 10       7.303781    7.139551    6.044394    6.988685    6.491853    7.098032    13.226412
+# 11       6.375039    6.569856    5.700440    7.357552    6.554589    7.189825    12.772933
+# 12       6.108524    5.554589    6.169925    6.954196    5.426265    6.539159    11.352043
+# 13       7.055282    6.392317    5.247928    6.285402    6.475733    6.614710    14.134266
 
-rna_metadata =
-accession   tissue                  tissue_status
-GSM1        Spinal Cord Lumbar      ALS Spectrum MND
-GSM2        Spinal Cord Lumbar      ALS Spectrum MND
-GSM3        Spinal Cord Lumbar      ALS Spectrum MND
-GSM4        Spinal Cord Lumbar      Non-Neurological Control
-GSM5        Cerebellum              ALS Spectrum MND
-GSM6        Cerebellum              ALS Spectrum MND
-GSM7        Cerebellum              Non-Neurological Control
+# the first column represents the row names (gene IDs)
 
-formula <- ~ tissue_status + (1 | tissue)
+tissue_status <- c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND", "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND", "Non-Neurological Control")
+tissue_status_factor <- factor(tissue_status, levels = c("Non-Neurological Control", "ALS Spectrum MND"))
+rna_metadata <- data.frame(
+  accession = c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7"),
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum", "Cerebellum"),
+  tissue_status = tissue_status_factor
+)
 
-drugs =
-name         filename
-A-23187      A-23187
-A-443644     A-443644
-AG-490       AG-490
-AG-494       AG-494
+# rna_metadata =
+# accession   tissue                  tissue_status
+# GSM1        Spinal Cord Lumbar      ALS Spectrum MND
+# GSM2        Spinal Cord Lumbar      ALS Spectrum MND
+# GSM3        Spinal Cord Lumbar      ALS Spectrum MND
+# GSM4        Spinal Cord Lumbar      Non-Neurological Control
+# GSM5        Cerebellum              ALS Spectrum MND
+# GSM6        Cerebellum              ALS Spectrum MND
+# GSM7        Cerebellum              Non-Neurological Control
 
-drugs_genes <- c(780, 7849, 2049, 2101)
+
+formula <- ~tissue_status + (1 | tissue)
+
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494"),
+  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+)
+
+# drugs =
+# name         filename
+# A-23187      A-23187
+# A-443644     A-443644
+# AG-490       AG-490
+# AG-494       AG-494
+
+drugs_genes <- c(1, 2, 3, 9, 10, 11, 780, 7849, 2049, 2101)
 random_distribution_size <- 10^4
 disease_name <- "ALS"
 drug_perturbation_time <- "6h"
 parallel_computation <- TRUE
 filter_by_protein_coding <- FALSE
-signature_mapper_parameter <- 150
+signature_mapper_parameter <- 6
 
 lmmDGE <- LMMDGEJulia$new()
 lmmDrugRepurpose <- LMMDrugRepurpose$new(lmmDGE)
@@ -164,12 +197,10 @@ lmmDrugRepurpose$compute(
   parallel_computation, filter_by_protein_coding, signature_mapper_parameter
 )
 
-output =
-drug        connectivity_score   p.value      adj.p.value   disease   disease_signature_type   drug_perturbation_time
-A-23187     0.334653            0.1880556   0.2883341     ALS       10 MostSignificantGenes  6h
-A-443644    0.4163465           0.1994708   0.2791108     ALS       10 MostSignificantGenes  6h
-AG-490      0.4176343           0.38551284  0.45781284    ALS       10 MostSignificantGenes  6h
-AG-494     -0.253463            0.28081845  0.39761845    ALS       10 MostSignificantGenes  6h
-AG-957      0.5536333           0.479470    0.553470      ALS       10 MostSignificantGenes  6h
-AM-404     -0.524245            0.18694856  0.20896345    ALS       10 MostSignificantGenes  6h
+# output =
+# drug        connectivity_score   p.value      adj.p.value   disease   disease_signature_type   drug_perturbation_time
+# A-23187     0.334653             0.1880556    0.2883341     ALS       6 MostSignificantGenes   6h
+# A-443644    0.4163465            0.1994708    0.2791108     ALS       6 MostSignificantGenes   6h
+# AG-490      0.4176343            0.38551284   0.45781284    ALS       6 MostSignificantGenes   6h
+# AG-494      -0.253463            0.28081845   0.39761845    ALS       6 MostSignificantGenes   6h
 }

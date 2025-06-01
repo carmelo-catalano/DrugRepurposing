@@ -54,3 +54,15 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 \cr
 \code{DE_log2_FC} represents differential expression = log2 fold change.
 }
+\examples{
+DichotomicDGEImpl <- R6Class(
+  "DichotomicDGEImpl",
+  inherit = DichotomicDGEAbstract,
+  public = list(
+    compute = function(rna_data, sample_01_map, test_sample_name,
+                       filter_by_protein_coding = F) {
+      # do something
+    }
+  )
+)
+}

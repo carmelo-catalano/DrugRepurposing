@@ -90,7 +90,7 @@ Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \co
 \examples{
 disease_signature <- data.frame(
   gene_id = c(1, 2, 3, 9, 11, 15),
-  t.value = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
+  estimate = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
 )
 
 drugs <- data.frame(
@@ -104,11 +104,14 @@ disease_name <- "IPF"
 disease_signature_type <- "MostSignificantGenes"
 drug_perturbation_time <- "6h"
 
-binChenDiseaseSignatureDrugListConnectivityScoreCore <- BinChenDiseaseSignatureDrugListConnectivityScoreCore$new()
+randomConnectivityScoreDistributionSync <- RandomConnectivityScoreDistributionSync$new()
+binChenConnectivityScoreListApplyerSync <- BinChenConnectivityScoreListApplyerSync$new()
+binChenDiseaseSignatureDrugListConnectivityScoreCore <- BinChenDiseaseSignatureDrugListConnectivityScoreCore$new(randomConnectivityScoreDistributionSync, binChenConnectivityScoreListApplyerSync)
 binChenDiseaseSignatureDrugListConnectivityScoreCore$compute(
   disease_signature, drugs, n_drug_signatures_genes, random_distribution_size,
   disease_name, disease_signature_type, drug_perturbation_time
 )
+
 # output
 #
 # drug          connectivity_score   p.value               adj.p.value           disease    disease_signature_type    drug_perturbation_time

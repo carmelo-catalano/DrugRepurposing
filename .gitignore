@@ -62,3 +62,4 @@ Thumbs.db
 !/inst/test/LMMDGE/DGEMergeByGene_output/.gitkeep
 /inst/test/LMMDGE/LINCS_export/output/*
 !/inst/test/LMMDGE/LINCS_export/output/.gitkeep
+inst/doc

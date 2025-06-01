@@ -20,10 +20,16 @@ lincsLMMLmer$compute(rna_data_metadata)
   }
 }
 \examples{
+drug_names <- c("DMSO", "AM-251", "AM-251", "AM-404", "AM-404", "AM-580", "DMSO", "AM-580")
+
+uniques_drug_names <- unique(drug_names)
+uniques_drug_names <- c("DMSO", uniques_drug_names[uniques_drug_names != "DMSO"])
+
+drug_names_factor <- factor(drug_names, levels = uniques_drug_names)
 rna_data_metadata <- data.frame(
   inst_id = c("AML001", "AML002", "AML003", "AML004", "AML005", "AML006", "AML007", "AML008"),
   rna_plate = c("XA34", "XA34", "XA34", "XA34", "XA35", "XA35", "XA35", "XA35"),
-  pert_iname = c("DMSO", "AM-251", "AM-251", "AM-404", "AM-404", "AM-580", "DMSO", "AM-580"),
+  pert_iname = drug_names_factor,
   cell_id = c("CD33", "CD33", "CD33", "CD35", "CD35", "CD34", "CD34", "CD34"),
   gene_expression = c(8.308500, 8.333750, 7.146400, 7.538700, 8.561700, 7.506200, 8.372150, 9.003900)
 )

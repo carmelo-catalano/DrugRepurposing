@@ -32,5 +32,5 @@ random_connectivity_score_distribution <- c(0.123, -0.56789, 0.8912763, 0.1357, 
 
 connectivityScorePValue <- ConnectivityScorePValue$new()
 connectivityScorePValue$compute(connectivity_score, random_connectivity_score_distribution)
-# Output: 0.134229
+# Output: 0.8
 }

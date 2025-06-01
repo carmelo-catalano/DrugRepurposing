@@ -106,3 +106,18 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 \cr
 \code{Lmer} does not return p-value fields. Therefore, when LMM is computed using \code{lmer}, the fields \code{p.value} and \code{adj.p.value} are not included.
 }
+\examples{
+GEORNASeqLMMVoomDGEImpl <- R6Class(
+  "GEORNASeqLMMVoomDGEImpl",
+  inherit = GEORNASeqLMMVoomDGEAbstract,
+  public = list(
+    compute = function(rna_seq_data_filename, rna_seq_metadata_filename,
+                  formula, tissue_status_field_name,
+                  tissue_statuses_to_be_tested, tissue_statuses_map,
+                  sample_id_field_name, additional_fields,
+                  filter_by_protein_coding) {
+      # do something
+    }
+  )
+)
+}

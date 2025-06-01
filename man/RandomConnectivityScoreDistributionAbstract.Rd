@@ -25,7 +25,6 @@ RandomConnectivityScoreDistributionImpl <- R6Class(
   )
 )
 }
-
 \arguments{
   \item{n_disease_signature_down_regulated_genes}{
     Number of down-regulated genes in the disease signature.
@@ -54,4 +53,20 @@ RandomConnectivityScoreDistributionImpl <- R6Class(
 }
 \value{
 A float vector of size \code{random_distribution_size}.
+}
+\examples{
+RandomConnectivityScoreDistributionImpl <- R6Class(
+  "RandomConnectivityScoreDistributionImpl",
+  inherit = RandomConnectivityScoreDistributionAbstract,
+  public = list(
+    compute = function(
+      n_disease_signature_down_regulated_genes,
+      n_disease_signature_up_regulated_genes,
+      n_drug_signatures_genes,
+      random_distribution_size
+    ) {
+      # Generate random distribution
+    }
+  )
+)
 }

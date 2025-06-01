@@ -55,3 +55,14 @@ LMMDGEImpl <- R6Class(
 Data frame containing DGE results. Each row represents a gene, and columns include \code{log2_FC},
 \code{t.value}, and \code{p.value}.
 }
+\examples{
+LMMDGEImpl <- R6Class(
+  "LMMDGEImpl",
+  inherit = LMMDGEAbstract,
+  public = list(
+    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = F) {
+      # do something
+    }
+  )
+)
+}

@@ -76,7 +76,7 @@ Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \co
 \examples{
 disease_signature <- data.frame(
   gene_id = c(1, 2, 3, 9, 11, 15),
-  t.value = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
+  estimate = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
 )
 
 drugs <- data.frame(

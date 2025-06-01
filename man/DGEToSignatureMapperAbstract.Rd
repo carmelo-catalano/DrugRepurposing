@@ -35,4 +35,17 @@ dgeToSignatureMapperImpl <- R6Class(
 \value{
 Data frame. Columns: \code{estimate} (usually the t-value column of the DGE). Row names contain the gene IDs.
 }
-
+\examples{
+dgeToSignatureMapperImpl <- R6Class(
+  "DGEToSignatureMapperImpl",
+  inherit = DGEToSignatureMapperAbstract,
+  public = list(
+    map = function(dge, parameter) {
+      # do something
+    },
+    getSignatureType = function(parameter) {
+      # do something
+    }
+  )
+)
+}

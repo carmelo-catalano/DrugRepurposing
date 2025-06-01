@@ -1,16 +1,24 @@
+---
 title: "Compute drug repurposing with DrugRepurposing"
+output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
-abstract: >
-  A tool to compute drug repurposing by getic data from diseases and drugs
-  DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
-output:
-  rmarkdown::html_document:
-    highlight: pygments
-    toc: true
-    fig_width: 5
 vignette: >
-  %\VignetteIndexEntry{Compute drug repurposing with DrugRepurposing}
-  %\VignetteEngine{knitr,rmarkdown}
+  %\VignetteIndexEntry{example}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\usepackage[utf8]{inputenc}
+abstract: >
+  A tool to compute drug repurposing by getting data from diseases and drugs
+  DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(DrugRepurposing)
+```

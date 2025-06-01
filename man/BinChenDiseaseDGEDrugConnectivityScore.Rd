@@ -78,20 +78,20 @@ disease_dge <- data.frame(
 )
 
 drug_dge <- data.frame(
-  gene_id = c(1, 2, 3, 1, 11, 13),
+  gene_id = c(1, 2, 3, 10, 11, 13),
   t.value = c(-2.26559, 1.369012, 3.173466, -4.60136, -2.191482, 4.2035724)
 )
 
-drug_dge_t_value_column_name <- "t.value_6h"
+drug_dge_t_value_column_name <- "t.value"
 random_distribution_size <- 1e4
 compute_p_value <- TRUE
-signature_mapper_parameter <- 150
+signature_mapper_parameter <- 4
 
 binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
-binChenDiseaseDGEDrugConnectivityScore$compute(
+result<-binChenDiseaseDGEDrugConnectivityScore$compute(
   disease_dge, drug_dge, drug_dge_t_value_column_name,
   random_distribution_size, compute_p_value, signature_mapper_parameter
 )
 # output
-# c(0.57892, 0.00123)
+# c(0.5000, 0.7566)
 }

@@ -17,21 +17,21 @@ lmmVoomDrugRepurpose$compute(
 }
 \arguments{
   \item{rna_seq_data}{
-    RNA-seq data. The first column contains the gene id; the other columns contain the RNA-Seq analysis.
-    The first column name is \code{"GeneID"}. The rest of the columns are titled according to the RNA analysis identifier (sample id).
+    Table of RNA-seq data. Each column represents an RNA analysis, and each row represents a gene.
+    Row names are gene IDs, and column names are experiment IDs.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{matrix}.
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata. For each RNA-seq analysis column in the \code{rna_seq_data} table, there is a row in the \code{rna_seq_metadata} table.
+    For each RNA-seq data analysis column in \code{rna_data}, there is a row in \code{rna_metadata}.
     The metadata contains the status control/altered state of the tissue and the additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{data frame}.
     }
   }
   \item{formula (constructor argument)}{
@@ -121,28 +121,36 @@ Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{disease}, \co
 }
 \examples{
 rna_seq_data <- data.frame(
-  GeneID = c(1, 2, 3, 9, 10, 11, 12, 13),
   GSM1 = c(262, 281897, 463, 12301, 284, 2966, 4842, 9966),
   GSM2 = c(116, 337026, 261, 3277, 132, 2006, 3699, 12406),
   GSM3 = c(111, 111736, 193, 862, 88, 1371, 2536, 1531),
-  GSM4 = c(162, 219471, 281, 5990, 280, 2241, 4527, 12941)
+  GSM4 = c(162, 219471, 281, 5990, 280, 2241, 4527, 12941),
+  GSM5 = c(82, 471, 981, 590, 380, 241, 427, 941),
+  GSM6 = c(92, 9471, 201, 1990, 80, 41, 1527, 2941),
+  GSM7 = c(192, 2191, 181, 3990, 480, 1241, 7527, 1941)
 )
+rownames(rna_seq_data) <- c(1, 2, 3, 9, 10, 11, 12, 13) # gene id
 
 # rna_seq_data =
-# GeneID   GSM1        GSM2        GSM3        GSM4
-# 1        262         116         111         162
-# 2        281897      337026      111736      219471
-# 3        463         261         193         281
-# 9        12301       3277        862         5990
-# 10       284         132         88          280
-# 11       2966        2006        1371        2241
-# 12       4842        3699        2536        4527
-# 13       9966        12406       1531        12941
+#      GSM1     GSM2      GSM3     GSM4     GSM5   GSM6   GSM7
+# 2    262      116       111      162      82     92     192
+# 2    281897   337026    111736   219471   471    9471   2191
+# 3    463      261       193      281      981    201    181
+# 9    12301    3277      862      5990     590    1990   3990
+# 10   284      132       88       280      380    80     480
+# 11   2966     2006      1371     2241     241    41     1241
+# 12   4842     3699      2536     4527     427    1527   7527
+# 13   9966     12406     1531     12941    941    2941   1941
 
 rna_seq_metadata <- data.frame(
-  accession = c("GSM1", "GSM2", "GSM3", "GSM4"),
-  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar"),
-  tissue_status = c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND", "Non-Neurological Control")
+  accession = c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7"),
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum"),
+  subject_id = c("NEUEL133AK6", "NEUYV496XLP", "NEUZU200WEQ", "NEUEC006FND",
+                 "NEUKM699KKH", "NEUJZ255ZC5", "NEUJZ233ZL3"),
+  tissue_status = c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control")
 )
 
 # rna_seq_metadata =
@@ -151,6 +159,9 @@ rna_seq_metadata <- data.frame(
 # GSM2        Spinal Cord Lumbar      NEUYV496XLP    ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      NEUZU200WEQ    ALS Spectrum MND
 # GSM4        Spinal Cord Lumbar      NEUEC006FND    Non-Neurological Control
+# GSM5        Spinal Cord Lumbar      NEUKM699KKH    ALS Spectrum MND
+# GSM6        Cerebellum              NEUJZ255ZC5    ALS Spectrum MND
+# GSM7        Cerebellum              NEUJZ233ZL3    Non-Neurological Control
 
 formula <- ~ tissue_status + (1 | tissue)
 drugs <- data.frame(
@@ -183,6 +194,7 @@ lmmVoomDrugRepurpose$compute(
   random_distribution_size, disease_name, drug_perturbation_time,
   parallel_computation, filter_by_protein_coding, signature_mapper_parameter
 )
+
 # output
 # drug        connectivity_score   p.value     adj.p.value    disease   disease_signature_type       drug_perturbation_time
 # A-23187     -0.00684643          1.44E-16    1.49E-12       ALS       150 MostSignificantGenes    6h

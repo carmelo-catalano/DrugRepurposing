@@ -30,4 +30,14 @@ DrugSignatureLoaderImpl <- R6Class(
 \value{
 Data frame. Columns: \code{gene_id}, \code{estimate} = log2 Fold Change.
 }
-
+\examples{
+DrugSignatureLoaderImpl <- R6Class(
+  "DrugSignatureLoaderImpl",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    load = function(drug_name) {
+      # do something
+    }
+  )
+)
+}

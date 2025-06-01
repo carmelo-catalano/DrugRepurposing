@@ -157,7 +157,7 @@ sample_01_map <- "0X10"
 # ...
 #
 #
-# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
 drug_dge_dir <- "/drugs_dge/"
 drugs <- data.frame(

@@ -57,5 +57,5 @@ binChenCMapScoreByDrugDGEWithPValue$compute(disease_signature_down_regulated_gen
                                                       disease_signature_up_regulated_genes,
                                                       drug_signature,
                                                       random_connectivity_score_distribution)
-# Output: c(-0.5123520, 0.00134124)
+# Output: c(-0.7142857, 0.000000)
 }

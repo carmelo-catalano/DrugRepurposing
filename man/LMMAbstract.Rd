@@ -27,4 +27,18 @@ LMMImpl <- R6Class(
     }
   }
 }
+\examples{
+LMMImpl <- R6Class(
+  "LMMImpl",
+  inherit = LMMAbstract,
+  public = list(
+    compute = function(rna_data_metadata) {
+      # do something
+    },
+    getFormula = function() {
+      # do something
+    }
+  )
+)
+}
 

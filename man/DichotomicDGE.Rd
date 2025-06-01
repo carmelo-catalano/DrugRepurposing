@@ -49,20 +49,21 @@ dichotomicDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_prote
 Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}. \code{DE_log2_FC} = differential expression = log2 Fold Change.
 }
 \examples{
-rna_seq_matrix <- matrix(c(
-1,  3.000, 2.322, 2.807, 3.000,
-2,  9.676, 8.910, 9.006, 8.960,
-3,  4.954, 4.248, 3.907, 4.392,
-9,  1.000, 0.000, 0.000, 0.000,
-10, 0.000, 0.000, 0.000, 0.000,
-11, 1.000, 1.000, 1.585, 1.000,
-12, 0.000, 0.000, 0.000, 0.000,
-13, 5.883, 6.170, 6.459, 6.781
+rna_data <- matrix(c(
+3.000, 2.322, 2.807, 3.000,
+9.676, 8.910, 9.006, 8.960,
+4.954, 4.248, 3.907, 4.392,
+1.000, 0.000, 0.000, 0.000,
+0.000, 0.000, 0.000, 0.000,
+1.000, 1.000, 1.585, 1.000,
+0.000, 0.000, 0.000, 0.000,
+5.883, 6.170, 6.459, 6.781
 ), nrow = 8, byrow = TRUE)
+colnames(rna_data) <- c('GSM1', 'GSM2', 'GSM3', 'GSM4') # experiment name
+rownames(rna_data) <- c(1, 2, 3, 9, 10, 11, 12, 13) # gene id
 
-rna_seq <- data.frame(rna_seq_matrix)
 
-# GeneID   GSM1    GSM2    GSM3    GSM4
+# Gene id  GSM1    GSM2    GSM3    GSM4
 # 1        3.000   2.322   2.807   3.000
 # 2        9.676   8.910   9.006   8.960
 # 3        4.954   4.248   3.907   4.392
@@ -72,6 +73,8 @@ rna_seq <- data.frame(rna_seq_matrix)
 # 12       0.000   0.000   0.000   0.000
 # 13       5.883   6.170   6.459   6.781
 
+# the first column represents the gene id not the table's first column
+
 sample_01_map <- "0X10"
 # How the map is applied:
 #          0	   X	   1	   0
@@ -80,20 +83,21 @@ sample_01_map <- "0X10"
 # ...
 #
 #
-# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = exluded
-
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
 test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
-dichotomicDGE <- DichotomicDGE$new()
+logarithmGeneFilter <- LogarithmGeneFilter$new(1)
+dichotomicDGE <- DichotomicDGE$new(logarithmGeneFilter)
 dichotomicDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding)
+
 # Output:
-# gene_id  DE_log2_FC   std.error    t.value     p.value    adj.p.value
-# 1        -1.741698    0.1880556   -9.261609    1.64e-11   1.49e-09
-# 2        -2.0684862   0.1994708   -10.36986    6.49e-13   1.48e-10
-# 3         3.15081634  0.38551284   8.17305166  4.52e-10   1.91e-08
-# 9         1.57459378  0.28081845   5.60715925  1.67e-06   1.54e-05
-# 11       -1.578634    0.18694856  -8.444215    1.95e-10   9.84e-09
-# 13        2.40136101  0.33681676   7.12957687  1.22e-08   2.70e-07
+# gene_id    DE_log2_FC   std.error      t.value         p.value        adj.p.value
+# 1          0.193        0.005257356    36.7104702      0.005835270    0.014588174
+# 11         -0.585       0.005257356    -111.2726688    0.001337216    0.006686082
+# 13         -0.127       0.674621761    -0.1882536      0.875312240    0.875312240
+# 2          0.312        0.537903769    0.5800294       0.644737671    0.805922089
+# 3          0.766        0.422221949    1.8142117       0.270563280    0.450938800
+
 }

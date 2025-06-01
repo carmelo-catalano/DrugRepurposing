@@ -50,4 +50,14 @@ LMMToDataFrameMapperImpl <- R6Class(
 \value{
 \code{Data frame}. Columns: \code{sample_type_field_name_mapped} (optional), \code{gene_id} (optional), \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
 }
-
+\examples{
+LMMToDataFrameMapperImpl <- R6Class(
+  "LMMToDataFrameMapperImpl",
+  inherit = LMMToDataFrameMapperAbstract,
+  public = list(
+    map = function(LMM_output, gene_symbol = NA, sample_type_field_name, sample_type_field_name_mapped) {
+      # do something
+    }
+  )
+)
+}

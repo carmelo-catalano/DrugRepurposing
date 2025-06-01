@@ -35,4 +35,15 @@ GeneFilterImpl <- R6Class(
 \value{
 Filtered \code{gene_expressions} without non-significant genes.
 }
+\examples{
+GeneFilterImpl <- R6Class(
+  "GeneFilterImpl",
+  inherit = GeneFilterAbstract,
+  public = list(
+    filter = function(gene_expressions, sample_types) {
+      # do something
+    }
+  )
+)
+}
 

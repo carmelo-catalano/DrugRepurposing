@@ -154,14 +154,14 @@ tissue_statuses_to_be_tested = c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map = c("Control", "als")
 sample_id_field_name = "accession"
 additional_fields = "tissue"
-drug_dge_dir = /drug_dges/
+drug_dge_dir = "/drug_dges/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
   filename = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404")
 )
-drugs_genes = c(780, 7849, 2049, 2101, 8717, 10594, 826 11224, 6158)
+drugs_genes = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
 drug_gde_t_value_column_name = "t.value"
-random_distribution_size = 10^5,
+random_distribution_size = 10^5
 disease_name = "ALS"
 drug_perturbation_time = "6h"
 parallel_computation = F

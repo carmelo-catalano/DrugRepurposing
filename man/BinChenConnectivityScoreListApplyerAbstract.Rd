@@ -55,3 +55,17 @@ BinChenConnectivityScoreListApplyerImpl <- R6Class(
 \code{data.frame}. \code{drug name}, \code{connectivity score}, \code{p.value}.\cr
 See example in \code{BinChenConnectivityScoreListApplyerParallel}.
 }
+\examples{
+BinChenConnectivityScoreListApplyerImpl <- R6Class(
+  "BinChenConnectivityScoreListApplyerImpl",
+  inherit = BinChenConnectivityScoreListApplyerAbstract,
+  public = list(
+    compute = function(disease_signature_down_regulated_genes,
+                       disease_signature_up_regulated_genes,
+                       drugs,
+                       random_connectivity_score_distribution) {
+      # do something
+    }
+  )
+)
+}
