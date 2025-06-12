@@ -43,6 +43,47 @@ Bash
 This command sets the JULIA_HOME environment variable for your current shell session.  
 You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
 
+## Algorithmic Overview
+The implemented repurposing pipeline consists of four principal stages:
+1.	**Disease DGE Generation**. DGE is computed between diseased and healthy tissues using either a dichotomic or linear mixed model (LMM)-based method, depending on study design and available metadata.
+
+
+2.	**Drug DGE Generation**. DGE is computed for tissues exposed to drugs versus vehicle-treated controls. This step is repeated for each compound under evaluation.
+
+
+3.	**Signature Generation**. The most differential expressed genes are selected using either:
+* the top n genes ranked by absolute t-value (typically 50–150), or  
+
+
+* genes with adjusted p-value < 0.001 and absolute log fold change above a specified threshold (e.g., 1.5).
+4.	Connectivity Score Computation. A connectivity score is calculated to quantify the degree of inversion between the disease and drug signatures. A negative score suggests potential therapeutic relevance, indicating that the drug may reverse the disease gene expression pattern.
+
+
+### Differential Expression Models
+The package provides two classes of DGE methods:
+* Dichotomic Models for pairwise comparisons (e.g., disease vs. control).
+* Linear Mixed Models (LMM) for analyses involving additional factors such as tissue origin.
+
+Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-seq data requiring a preprocessing step via the voom transformation.
+
+
+### Connectivity Score Calculation
+The connectivity score algorithm is based on the model proposed by Lamb et al. [3] and refined by Chen et al. [2], the latter being the recommended implementation due to its robustness and specificity.  
+Scores range from -1 (perfect inverse correlation) to +1 (direct correlation). Drugs with strongly negative scores are prioritized as repurposing candidates.
+
+### Software Architecture
+The package is entirely developed following the OOP paradigm through the use of the R6 library. It provides a modular and extensible architecture. Over 80 classes are available, supporting:
+* DGE calculation
+* Connectivity Score analysis
+* LINCS Level 3 data exploration
+
+Custom behaviors can be introduced through the strategy design pattern, allowing experienced users to adapt components for specific research needs.
+The package includes a comprehensive suite of unit tests that serve as usage examples and facilitate reproducibility.
+
+### Integration with LINCS
+The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
+This package provides many classes to analyse the level 3 of LINCS dataset. 
+
 ## Main classes
 
 ### Drug repurposing
