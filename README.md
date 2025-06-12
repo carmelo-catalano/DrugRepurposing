@@ -84,6 +84,14 @@ The package includes a comprehensive suite of unit tests that serve as usage exa
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
 This package provides many classes to analyse the level 3 of LINCS dataset. 
 
+
+## Performance and Scalability
+DrugRepurposing generalizes and extends the mathematical model proposed by Koudijs et al. [1], with major improvements in computational efficiency. Through concurrent programming and algorithmic optimizations, performance is increased by 60–70× relative to the original implementation.
+
+## Disease Modeling under different conditions (using LMM)
+The software is particularly suitable for RNA-seq analysis under different conditions, for example multi-tissue RNA-seq studies of complex diseases such as amyotrophic lateral sclerosis (ALS). ALS data often include samples from diverse anatomical regions (e.g., cerebellum, cervical and lumbar spinal cord, sensory cortex), enabling comprehensive transcriptomic modeling across tissues.
+
+
 ## Main classes
 
 ### Drug repurposing
@@ -134,3 +142,9 @@ DGEMetanalysisByMatrix
 ```
 LINCSExport
 ```
+
+## References
+1.	Koudijs K.K.M. et al. Validation of transcriptome signature reversion for drug repurposing in oncology. Briefings in Bioinformatics, 2022.
+2.	Chen B. et al. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets. Nature Communications, 2017; 8:16022.
+3.	Lamb J. et al. The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease. Science, 2006; 313(5795):1929–1935.
+4.	Keenan A.B. et al. The Library of Integrated Network-Based Cellular Signatures NIH Program: System-Level Cataloging of Human Cells Response to Perturbations. Cell Systems, 2018; 6.
