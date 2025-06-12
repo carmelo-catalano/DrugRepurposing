@@ -43,7 +43,7 @@ Bash
 This command sets the JULIA_HOME environment variable for your current shell session.  
 You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
 
-## Algorithmic Overview
+### Algorithmic Overview
 The implemented repurposing pipeline consists of four principal stages:
 1.	**Disease DGE Generation**. DGE is computed between diseased and healthy tissues using either a dichotomic or linear mixed model (LMM)-based method, depending on study design and available metadata.
 
