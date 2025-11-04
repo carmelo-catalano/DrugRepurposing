@@ -4,7 +4,7 @@ LINCSLMMDrugDGE <- R6Class(
     initialize = function(metadataSetuper, geneRNADataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes = F) {
       private$metadataSetuper <- metadataSetuper
       private$geneRNADataLoader <- geneRNADataLoader
-      private$output_DGE_dir <- output_DGE_dir
+      private$output_DGE_dir <- add_slash_to_directory_path(output_DGE_dir)
       private$geneIdToSymbolConverter <- GeneIdSymbolConverter$new()
       private$lmmDGEByGene <- lmmDGEByGene
       private$skip_already_computed_genes <- skip_already_computed_genes
@@ -20,12 +20,12 @@ LINCSLMMDrugDGE <- R6Class(
           gene_symbol <- private$geneIdToSymbolConverter$idToSymbol(gene_list[i])
           filename <- paste0(private$output_DGE_dir, gene_symbol, "_", gene_list[i], "_", perturbation_times[t], "h.Rds")
           if (private$skip_already_computed_genes & file.exists(filename)) {
-            dgrpLogger$log(sprintf("skipping gene %s, perturbation time hours: %s, number: %s", gene_symbol, pert_time_hours, computation_number))
-            return(NA)
+            dgrpLogger$log(sprintf("skipping gene %s, perturbation time hours: %s", gene_symbol, perturbation_times[t]))
+          }else {
+            rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
+            dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol, "drug")
+            saveRDS(dge, file = filename)
           }
-          rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
-          dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol, "drug")
-          saveRDS(dge, file = filename)
         }
         dgrpLogger$log(sprintf("end computation by perturbation time: %sh", perturbation_times[t]))
       }
