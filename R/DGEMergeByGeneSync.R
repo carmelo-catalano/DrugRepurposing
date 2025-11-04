@@ -8,6 +8,8 @@ DGEMergeByGeneSync <- R6Class(
       if (!private$filenameBuilder$valid_filename_pattern(dge_filename_pattern)) {
         stop("dge_filename_pattern should contain \"#id\" patten")
       }
+      input_dge_dir <- add_slash_to_directory_path(input_dge_dir)
+      output_drugs_dge_dir <- add_slash_to_directory_path(output_drugs_dge_dir)
       dgrpLogger$log("starting differential gene expressions reading")
       total_genes <- length(gene_list)
       merged_dges <- data.frame()

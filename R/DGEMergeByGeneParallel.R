@@ -8,6 +8,8 @@ DGEMergeByGeneParallel <- R6Class(
       if (!private$filenameBuilder$valid_filename_pattern(gene_dge_filename_pattern)) {
         stop("gene_dge_filename_pattern should contain \"#id\" patten")
       }
+      input_dge_dir <- add_slash_to_directory_path(input_dge_dir)
+      output_drugs_dge_dir <- add_slash_to_directory_path(output_drugs_dge_dir)
       dgrpLogger$log("starting differential gene expressions reading")
       processorCores$initCores()
       total_genes <- length(gene_list)

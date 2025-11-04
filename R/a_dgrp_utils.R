@@ -35,3 +35,10 @@ set_dependent_variable <- function(formula, dependent_variable_name) {
   str_formula_with_dependent_variable <- paste0(dependent_variable_name, " ~ ", formula_blocks[[1]][2])
   return(as.formula(str_formula_with_dependent_variable, env = parent.frame()))
 }
+
+add_slash_to_directory_path <- function(path) {
+  if (substring(path, nchar(path)) != "/") {
+    path <- paste0(path, "/")
+  }
+  return(path)
+}

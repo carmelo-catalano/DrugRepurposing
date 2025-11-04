@@ -2,7 +2,7 @@ LINCSRDSDataLoader <- R6Class(
   "LINCSRDSDataLoader",
   public = list(
     initialize = function(lincs_splitted_level3_dir) {
-      private$lincs_splitted_level3_dir <- lincs_splitted_level3_dir
+      private$lincs_splitted_level3_dir <- add_slash_to_directory_path(lincs_splitted_level3_dir)
     },
     load = function(gene_id, metadata) {
       # legge l'epsressione genica del gene "gene_id" ottenuta mediante gli esperimenti

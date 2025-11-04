@@ -3,8 +3,8 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
   public = list(
     initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, BLAS_num_threads = 4, skip_already_computed_genes = F) {
       private$validate_cunostructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
-      private$lincs_splitted_level3_dir <- lincs_splitted_level3_dir
-      private$output_DGE_dir <- output_DGE_dir
+      private$lincs_splitted_level3_dir <- add_slash_to_directory_path(lincs_splitted_level3_dir)
+      private$output_DGE_dir <- add_slash_to_directory_path(output_DGE_dir)
       private$cluster_start_delay <- cluster_start_delay
       private$BLAS_num_threads <- BLAS_num_threads
       private$skip_already_computed_genes <- skip_already_computed_genes

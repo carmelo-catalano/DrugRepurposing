@@ -17,7 +17,7 @@ LMMDGEByGene <- R6Class(
         gene_id_prn <- paste0(" ", gene_id)
       }
 
-      dgrpLogger$log(sprintf("start differential gene expression computation%s", gene_id_prn))
+      dgrpLogger$log(sprintf("start differential gene expression computation for gene: %s", gene_id_prn))
       startTime <- Sys.time()
       # calcola il modello lineare misto:
       # vadiabile dipendente: "expr", espressione genica
