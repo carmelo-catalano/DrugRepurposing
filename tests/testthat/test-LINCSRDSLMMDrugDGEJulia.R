@@ -7,13 +7,13 @@ sut <- LINCSRDSLMMDrugDGEJulia$new(absolute_package_directory(test_config$LINCS_
 gene_list <- "780" # symbol "DDR1"
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide", "aminopurvalanol-a")
 perturbation_times <- "24"
-expected <- package_readRDS(paste0(test_config$LINCS_expected_dge_dir, "DDR1_780_24h-expected.Rds"))
+expected <- package_readRDS(paste0(test_config$LINCS_expected_dge_dir, "780_24h-expected.Rds"))
 
 # when
 sut$compute(perturbation_times, gene_list, drugs_filter)
 
 # then
-result <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "DDR1_780_24h.Rds"))
+result <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "780_24h.Rds"))
 
 test_that("test-LINCSRDSLMMDrugDGEJulia", {
   expect_equal(result, expected, tolerance = 1e-6)

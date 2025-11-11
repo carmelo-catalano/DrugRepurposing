@@ -28,18 +28,18 @@ chunks <- list()
 chunks[[1]] <- chunk1
 chunks[[2]] <- chunk2
 
-expected1 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "ADORA3_140_6h-expected.Rds"))
-expected2 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "ADORA3_140_24h-expected.Rds"))
-expected3 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "DDR1_780_6h-expected.Rds"))
-expected4 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "GAPDH_2597_24h-expected.Rds"))
+expected1 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "140_6h-expected.Rds"))
+expected2 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "140_24h-expected.Rds"))
+expected3 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "780_6h-expected.Rds"))
+expected4 <- package_readRDS(paste0(test_config$LINCS_expected_parallel_dge_dir, "2597_24h-expected.Rds"))
 
 # when
 sut$process(chunks)
 
-result1 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "ADORA3_140_6h.Rds"))
-result2 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "ADORA3_140_24h.Rds"))
-result3 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "DDR1_780_6h.Rds"))
-result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "GAPDH_2597_24h.Rds"))
+result1 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "140_6h.Rds"))
+result2 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "140_24h.Rds"))
+result3 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "780_6h.Rds"))
+result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "2597_24h.Rds"))
 
 # then
 

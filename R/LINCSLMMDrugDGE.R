@@ -17,13 +17,12 @@ LINCSLMMDrugDGE <- R6Class(
         dgrpLogger$log(sprintf("start computation by perturbation time: %sh", perturbation_times[t]))
         metadata <- private$metadataSetuper$setup(perturbation_times[t], drugs_filter)
         for (i in 1:tot_genes) {
-          gene_symbol <- private$geneIdToSymbolConverter$idToSymbol(gene_list[i])
-          filename <- paste0(private$output_DGE_dir, gene_symbol, "_", gene_list[i], "_", perturbation_times[t], "h.Rds")
+          filename <- paste0(private$output_DGE_dir, gene_list[i], "_", perturbation_times[t], "h.Rds")
           if (private$skip_already_computed_genes & file.exists(filename)) {
-            dgrpLogger$log(sprintf("skipping gene %s, perturbation time hours: %s", gene_symbol, perturbation_times[t]))
+            dgrpLogger$log(sprintf("skipping gene %s, perturbation time hours: %s", gene_list[i], perturbation_times[t]))
           }else {
             rna_data_metadata <- private$geneRNADataLoader$load(gene_list[i], metadata)
-            dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_symbol, "drug")
+            dge <- private$lmmDGEByGene$compute(rna_data_metadata, gene_list[i], "drug")
             saveRDS(dge, file = filename)
           }
         }
