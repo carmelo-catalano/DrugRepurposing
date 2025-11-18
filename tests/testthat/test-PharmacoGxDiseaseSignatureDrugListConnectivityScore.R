@@ -21,7 +21,7 @@ disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 expected <- package_readRDS("test/connectivity_score/DiseaseDrugConnectivityScoreByPharmacoGx_expected.Rds")
 
 # when
-result <- sut$compute(disease_signature, drugs, n_permutations = 100, disease_name = "IPF", gene_selection_strategy = "150 MostSignificantGenes", drug_perturbation_time = "6h")
+result <- sut$compute(disease_signature, drugs, n_permutations = 100, disease_name = "IPF", drug_perturbation_time = "6h")
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
