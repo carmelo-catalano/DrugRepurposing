@@ -15,7 +15,7 @@ LMMDGEDream <- R6Class(
         dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
       }
       startTime <- Sys.time()
-      parallelComputationParam <- SnowParam(processorCores$get(), "FORK", progressbar = TRUE)
+      parallelComputationParam <- SnowParam(processorCores$getBPPARAMCores(), "FORK", progressbar = TRUE)
       differential_expression <- dream(rna_data, formula, rna_metadata, BPPARAM = parallelComputationParam)
       differential_expression <- variancePartition::eBayes(differential_expression)
       differential_expression <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)

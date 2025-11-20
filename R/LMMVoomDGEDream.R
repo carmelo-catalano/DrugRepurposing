@@ -16,7 +16,7 @@ LMMVoomDGEDream <- R6Class(
         filterByIdOnCondition(rna_seq_data, filter_by_protein_coding)
       voom_data <- private$lmmVoom$compute(rna_seq_data, rna_seq_metadata, formula)
       partialStartTime <- Sys.time()
-      parallelComputationParam <- SnowParam(processorCores$get(), "FORK", progressbar = TRUE)
+      parallelComputationParam <- SnowParam(processorCores$getBPPARAMCores(), "FORK", progressbar = TRUE)
       differential_expression <- dream(voom_data, formula, rna_seq_metadata, BPPARAM = parallelComputationParam)
       totalTime <- Sys.time() - partialStartTime
       dgrpLogger$log(sprintf("end dream computation, time: %s %s", totalTime, attr(totalTime, "units")))

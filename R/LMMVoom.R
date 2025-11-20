@@ -7,7 +7,7 @@ LMMVoom <- R6Class(
       startTime <- Sys.time()
       dge_list <- DGEList(rna_seq_data, remove.zeros = TRUE)
       dge_list <- calcNormFactors(dge_list, method = 'upperquartile')
-      parallelComputationParam <- SnowParam(processorCores$get(), "FORK", progressbar = TRUE)
+      parallelComputationParam <- SnowParam(processorCores$getBPPARAMCores(), "FORK", progressbar = TRUE)
       dgrpLogger$log("start voomWithDreamWeights computation")
       voom_data <- voomWithDreamWeights(dge_list, formula, rna_seq_metadata, BPPARAM = parallelComputationParam)
       totalTime <- Sys.time() - startTime

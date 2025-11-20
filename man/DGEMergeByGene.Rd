@@ -1,6 +1,6 @@
-\name{DGEMergeByGeneParallel}
-\alias{DGEMergeByGeneParallel}
-\title{Reorganize gene-wise DGEs into drug-wise DGEs using parallel computation}
+\name{DGEMergeByGene}
+\alias{DGEMergeByGene}
+\title{Reorganize gene-wise DGEs into drug-wise DGEs}
 \description{
 Differential gene expression (DGE) analysis using linear mixed models (LMM) is sometimes performed gene-by-gene across different conditions.
 In this case, a function like \code{LMMDGEByGene$compute} returns the DGE analysis for a single gene across different conditions, meaning the output is grouped by gene.
@@ -9,13 +9,11 @@ When analyzing the LINCS database, DGE is not calculated from the entire sequenc
 \cr
 To calculate the connectivity score, the DGE for each gene relative to the drug is required.
 \cr
-\code{DGEMergeByGeneParallel} reorganizes the gene-wise DGEs into drug-wise DGEs.
-\cr
-This class works only on Unix-like systems.
+\code{DGEMergeByGene} reorganizes the gene-wise DGEs into drug-wise DGEs.
 }
 \usage{
-dgeMergeByGeneParallel <- DGEMergeByGeneParallel$new()
-dgeMergeByGeneParallel$compute(
+dgeMergeByGene <- DGEMergeByGene$new()
+dgeMergeByGene$compute(
   gene_list, drug_list, input_dge_dir, output_drugs_dge_dir, drug_field_name, gene_dge_filename_pattern
 )
 }
@@ -71,8 +69,8 @@ output_drugs_dge_dir <- "/home/user/drug_dges"
 drug_field_name <- "drug"
 gene_dge_filename_pattern <- "#id.Rds"
 
-dgeMergeByGeneParallel <- DGEMergeByGeneParallel$new()
-dgeMergeByGeneParallel$compute(
+dgeMergeByGene <- DGEMergeByGene$new()
+dgeMergeByGene$compute(
   gene_list, drug_list, input_dge_dir, output_drugs_dge_dir, drug_field_name, gene_dge_filename_pattern
 )
 # output
