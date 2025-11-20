@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- DGEMergeByGeneSync$new()
+sut <- DGEMergeByGene$new()
 
 # given
 gene_list <- c(140, 780, 2101, 2597, 54812)
@@ -17,7 +17,7 @@ result2 <- package_readRDS(paste0(test_config$DGEMergeByGene_output, "AG-592.Rds
 result3 <- package_readRDS(paste0(test_config$DGEMergeByGene_output, "AG-957.Rds"))
 
 # then
-test_that("test-DGEMergeByGeneSync", {
+test_that("test-DGEMergeByGene", {
   expect_identical(result1, expected1)
   expect_identical(result2, expected2)
   expect_identical(result3, expected3)
