@@ -27,14 +27,6 @@ result3 <- tryCatch({
 
 result4 <- tryCatch({
   sut <- LINCSRDSLMMDrugDGEJuliaParallel$new(
-    "",  "",  1,  0
-  )
-}, error = function(e) {
-  "error"
-})
-
-result5 <- tryCatch({
-  sut <- LINCSRDSLMMDrugDGEJuliaParallel$new(
     "",  "",  0,  1,  "regerg"
   )
 }, error = function(e) {
@@ -47,6 +39,5 @@ test_that("test-LINCSRDSLMMDrugDGEJuliaParallelInvalidConstructorParameters", {
   expect_identical(result2, "error")
   expect_identical(result3, "error")
   expect_identical(result4, "error")
-  expect_identical(result5, "error")
 }
 )

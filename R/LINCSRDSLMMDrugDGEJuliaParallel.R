@@ -1,12 +1,11 @@
 LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
   "LINCSRDSLMMDrugDGEJuliaParallel",
   public = list(
-    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, BLAS_num_threads = 4, skip_already_computed_genes = F) {
-      private$validate_cunostructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
+    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, skip_already_computed_genes = F) {
+      private$validate_cunstructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, skip_already_computed_genes)
       private$lincs_splitted_level3_dir <- add_slash_to_directory_path(lincs_splitted_level3_dir)
       private$output_DGE_dir <- add_slash_to_directory_path(output_DGE_dir)
       private$cluster_start_delay <- cluster_start_delay
-      private$BLAS_num_threads <- BLAS_num_threads
       private$skip_already_computed_genes <- skip_already_computed_genes
     },
     process = function(chunks) {
@@ -20,7 +19,6 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
     lincs_splitted_level3_dir = NA,
     output_DGE_dir = NA,
     cluster_start_delay = NA,
-    BLAS_num_threads = NA,
     skip_already_computed_genes = NA,
 
     process_chunk = function(chunk) {
@@ -29,13 +27,8 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
       delay <- (chunk$number - 1) * private$cluster_start_delay
       dgrpLogger$log(sprintf("chunk number %s computation, delay before start: %s", chunk$number, delay))
       Sys.sleep(delay)
-      if (obj_is_na_or_NULL(chunk$BLAS_num_threads)) {
-        BLAS_num_threads <- private$BLAS_num_threads
-      }else {
-        BLAS_num_threads <- chunk$BLAS_num_threads
-      }
       dgrpLogger$log(sprintf("chunk number %s computation setup...", chunk$number))
-      lincsRDSLMMDrugDGEJulia <- LINCSRDSLMMDrugDGEJulia$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, BLAS_num_threads, private$skip_already_computed_genes)
+      lincsRDSLMMDrugDGEJulia <- LINCSRDSLMMDrugDGEJulia$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, chunk$BLAS_num_threads, private$skip_already_computed_genes)
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start chunk number %s computation ", chunk$number))
       lincsRDSLMMDrugDGEJulia$compute(chunk$perturbation_times, chunk$gene_list, chunk$drugs_filter)
@@ -43,7 +36,7 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
       dgrpLogger$log(sprintf("end chunk number %s computation, time: %s %s", chunk$number, totalTime, attr(totalTime, "units")))
       return(NA)
     },
-    validate_cunostructor_parameters = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes) {
+    validate_cunstructor_parameters = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, skip_already_computed_genes) {
       if (obj_is_na_or_NULL(lincs_splitted_level3_dir)) {
         stop("lincs_splitted_level3_dir must be specified")
       }
@@ -52,9 +45,6 @@ LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
       }
       if (!is.numeric(cluster_start_delay) || cluster_start_delay < 0) {
         stop("cluster_start_delay must be an integer greater than 0")
-      }
-      if (!is.numeric(BLAS_num_threads) || BLAS_num_threads <= 0) {
-        stop("BLAS_num_threads must be a positive integer")
       }
       if (!is.boolean(skip_already_computed_genes)) {
         stop("skip_already_computed_genes must be a boolean")
