@@ -1,5 +1,5 @@
-LINCSRDSLMMDrugDGEJuliaParallel <- R6Class(
-  "LINCSRDSLMMDrugDGEJuliaParallel",
+LINCSRDSLMMDrugDGEJuliaClusters <- R6Class(
+  "LINCSRDSLMMDrugDGEJuliaClusters",
   public = list(
     initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, skip_already_computed_genes = F) {
       private$validate_cunstructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, skip_already_computed_genes)

@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSLMMDrugDGEJuliaParallel$new(
+sut <- LINCSRDSLMMDrugDGEJuliaClusters$new(
   "",
   ""
 )
@@ -56,7 +56,7 @@ result5 <- tryCatch({
 })
 
 # then
-test_that("test-LINCSRDSLMMDrugDGEJuliaParallelValidChunk", {
+test_that("test-LINCSRDSLMMDrugDGEJuliaClustersValidChunk", {
   expect_equal(result1, "error")
   expect_identical(result2, "error")
   expect_identical(result3, "error")

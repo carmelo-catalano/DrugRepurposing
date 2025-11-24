@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSLMMDrugDGEJuliaParallel$new(
+sut <- LINCSRDSLMMDrugDGEJuliaClusters$new(
   absolute_package_directory(test_config$LINCS_splitted_level3_dir),
   absolute_package_directory(test_config$LINCS_dge_output_dir),
   15
@@ -44,7 +44,7 @@ result4 <- package_readRDS(paste0(test_config$LINCS_dge_output_dir, "2597_24h.Rd
 
 # then
 
-test_that("test-LINCSRDSLMMDrugDGEJuliaParallel", {
+test_that("test-LINCSRDSLMMDrugDGEJuliaClusters", {
   expect_equal(result1, expected1, tolerance = 1e-6)
   expect_equal(result2, expected2, tolerance = 1e-6)
   expect_equal(result3, expected3, tolerance = 1e-6)
