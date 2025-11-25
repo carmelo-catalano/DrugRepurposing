@@ -42,6 +42,17 @@
   \cr
   These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the lmmVoomDGE parameter of the constructor of the GEORNASeqLMMVoomDGE class.
 }
+\section{Suggestion}{
+  For better use of this package, it is recommended to consult the code at:
+  \cr
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/R}{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/R}
+  \cr
+  and to use the tests at:
+  \cr
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/tests/testthat}
+  \cr
+  as guidelines for developing software based on DrugRepurposing.
+}
 \section{Basic Libraries}{
   Statistical analyses are performed using the following libraries: limma, lme4, dream, and the Julia programming language.
 }
