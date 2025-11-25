@@ -1,5 +1,5 @@
-\name{LINCSRDSLMMDrugDGEJuliaParallel}
-\alias{LINCSRDSLMMDrugDGEJuliaParallel}
+\name{LINCSRDSLMMDrugDGEJuliaClusters}
+\alias{LINCSRDSLMMDrugDGEJuliaClusters}
 \title{Calculate the differential gene expression (DGE) for a gene list and drug list from the \code{LINCS} database}
 \description{
 Calculate the differential gene expression (DGE) for a gene list and drug list from the \code{LINCS} database. The linear mixed model (LMM) is computed using the \code{Julia} environment.
@@ -8,8 +8,8 @@ The computation for each chunk is performed by \code{LINCSRDSJuliaDrugDGE}.
 To use this function, the \code{Julia} environment must be installed on the system.
 }
 \usage{
-lincsRDSLMMDrugDGEJuliaParallel <- INCSRDSLMMDrugDGEJuliaParallel$new(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
-lincsRDSLMMDrugDGEJuliaParallel$compute(chunks)
+lincsRDSLMMDrugDGEJuliaClusters <- LINCSRDSLMMDrugDGEJuliaClusters$new(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
+lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
 }
 \arguments{
   \item{chunks}{
@@ -88,8 +88,8 @@ output_DGE_dir <- "/home/user/dge"
 cluster_start_delay <- 15
 BLAS_num_threads <- 5
 skip_already_computed_genes <- T
-lincsRDSLMMDrugDGEJuliaParallel <- INCSRDSLMMDrugDGEJuliaParallel$new(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
-lincsRDSLMMDrugDGEJuliaParallel$compute(chunks)
+lincsRDSLMMDrugDGEJuliaClusters <- LINCSRDSLMMDrugDGEJuliaClusters$new(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, BLAS_num_threads, skip_already_computed_genes)
+lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
 
 # Output example:
 # drug               gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value

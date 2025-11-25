@@ -102,7 +102,7 @@ GEORNASeqLMMVoomDreamDGE\cr
 GEORNASeqLMMVoomJuliaDGE\cr
 GEORNASeqLMMVoomLmerDGE\cr
 LINCSRDSLMMDrugDGEJulia\cr
-LINCSRDSLMMDrugDGEJuliaParallel\cr
+LINCSRDSLMMDrugDGEJuliaClusters\cr
 LINCSRDSLMMDrugDGELmer\cr
 \cr
 \strong{Metanalysis}\cr
