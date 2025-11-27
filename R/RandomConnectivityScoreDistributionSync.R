@@ -12,10 +12,10 @@ RandomConnectivityScoreDistributionSync <- R6Class(
 
         drug_signature <- data.frame(
           gene_id = 1:n_drug_signatures_genes,
-          rank = sample(1:n_drug_signatures_genes, replace = F)
+          rank = sample(1:n_drug_signatures_genes, replace = FALSE)
         )
 
-        DEG_genes <- sample(1:(n_disease_signature_up_regulated_genes + n_disease_signature_down_regulated_genes), replace = F)
+        DEG_genes <- sample(1:(n_disease_signature_up_regulated_genes + n_disease_signature_down_regulated_genes), replace = FALSE)
         sig_up <- DEG_genes[1:n_disease_signature_up_regulated_genes]
         sig_down <- DEG_genes[(n_disease_signature_up_regulated_genes + 1):length(DEG_genes)]
 

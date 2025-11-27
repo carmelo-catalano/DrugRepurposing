@@ -6,8 +6,8 @@ DichotomicVoomDrugRepurpose <- R6Class(
     },
     compute = function(rna_seq, sample_01_map, drug_dge_dir, drugs, drugs_genes,
                        drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5,
-                       disease_name = NA, drug_perturbation_time = NA, filter_by_protein_coding = F,
-                       parallel_computation = F, signature_mapper_parameter = NA
+                       disease_name = NA, drug_perturbation_time = NA, filter_by_protein_coding = FALSE,
+                       parallel_computation = FALSE, signature_mapper_parameter = NA
     ) {
       return(
         private$dichotomicDrugRepurposeCore$compute(

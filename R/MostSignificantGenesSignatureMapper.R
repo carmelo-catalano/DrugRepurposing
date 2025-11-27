@@ -11,7 +11,7 @@ MostSignificantGenesSignatureMapper <- R6Class(
         n_most_significant_genes <- private$n_most_significant_genes
       }
       dge$abs_t.value <- abs(dge$t.value)
-      dge <- dge[order(dge$abs_t.value, decreasing = T),]
+      dge <- dge[order(dge$abs_t.value, decreasing = TRUE),]
       disease_signature <- dge[1:n_most_significant_genes, , drop = FALSE]
       return(private$diseaseSignatureEstimateMapper$map(disease_signature))
     },

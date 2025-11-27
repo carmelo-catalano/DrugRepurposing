@@ -11,8 +11,7 @@ DichotomicDGEImpl <- R6Class(
   "DichotomicDGEImpl",
   inherit = DichotomicDGEAbstract,
   public = list(
-    compute = function(rna_data, sample_01_map, test_sample_name,
-                       filter_by_protein_coding = F) {
+    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = FALSE) {
       # do something
     }
   )
@@ -45,7 +44,7 @@ DichotomicDGEImpl <- R6Class(
     If true, removes non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: F.
+      \item Default value: FALSE.
     }
   }
 }
@@ -59,8 +58,7 @@ DichotomicDGEImpl <- R6Class(
   "DichotomicDGEImpl",
   inherit = DichotomicDGEAbstract,
   public = list(
-    compute = function(rna_data, sample_01_map, test_sample_name,
-                       filter_by_protein_coding = F) {
+    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = FALSE) {
       # do something
     }
   )

@@ -14,7 +14,7 @@ DichotomicDGE <- R6Class(
       private$dgeMapper <- DGEMapper$new()
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
-    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = F) {
+    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = FALSE) {
       gene_experiments_data <- private$dichotomicRNADataMapper$map(rna_data, sample_01_map, test_sample_name)
       gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_types)
       if (filter_by_protein_coding) {

@@ -8,7 +8,7 @@ GEORNASeqLMMVoomDGECore <- R6Class(
       private$lmmVoomDGE <- lmmVoomDGE
       private$geoRNASeqLMMLoader <- GEORNASeqLMMLoader$new(geneFilter)
     },
-    compute = function(rna_seq_data_filename, rna_seq_metadata_filename, formula, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA, filter_by_protein_coding = F) {
+    compute = function(rna_seq_data_filename, rna_seq_metadata_filename, formula, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA, filter_by_protein_coding = FALSE) {
       if (length(tissue_statuses_to_be_tested) != 2) {
         stop("Error: LMM voom computation requires exactly two tissue statuses")
       }

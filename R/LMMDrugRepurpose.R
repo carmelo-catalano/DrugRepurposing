@@ -12,7 +12,7 @@ LMMDrugRepurpose <- R6Class(
     },
     compute = function(rna_data, rna_metadata, formula, drugs, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
-                       parallel_computation = F, filter_by_protein_coding = F,
+                       parallel_computation = FALSE, filter_by_protein_coding = FALSE,
                        signature_mapper_parameter = NA
     ) {
       return(

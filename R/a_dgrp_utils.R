@@ -14,7 +14,7 @@ is.boolean <- function(x) {
   return(is.atomic(x) &&
            !is.na(x) &&
            !is.null(x) &&
-           (x == T || x == F))
+           (x == TRUE || x == FALSE))
 }
 
 absolute_package_filename <- function(filename) {

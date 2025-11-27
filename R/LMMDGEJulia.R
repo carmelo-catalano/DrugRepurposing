@@ -7,7 +7,7 @@ LMMDGEJulia <- R6Class(
       private$lmmJuliaToDataFrameMapper <- LMMJuliaToDataFrameMapper$new()
       private$juliaSetuper <- JuliaSetuper$new()
     },
-    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = F) {
+    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = FALSE) {
       private$juliaSetuper$setup()
       data_size <- dim(rna_data)
       dgrpLogger$log(sprintf("start LMM Julia differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
@@ -23,7 +23,7 @@ LMMDGEJulia <- R6Class(
       julia_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
         data[[dependent_variable_name]] <- as.numeric(rna_data[i,])
-        dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, data, REML = T)
+        dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, data, REML = TRUE)
         differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(rna_data)[i]))
       }
       totalTime <- Sys.time() - startTime

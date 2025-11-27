@@ -1,7 +1,7 @@
 BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
   "BinChenDiseaseDGEDrugConnectivityScore",
   public = list(
-    initialize = function(dgeToSignatureMapper = NA, parallel_computation = F) {
+    initialize = function(dgeToSignatureMapper = NA, parallel_computation = FALSE) {
       if (!obj_is_na(dgeToSignatureMapper)) {
         if (!"DGEToSignatureMapperAbstract" %in% class(dgeToSignatureMapper))
           stop("incompatible parameter type: the class type of dgeToSignatureMapper must be a subclass of DGEToSignatureMapperAbstract")
@@ -21,7 +21,7 @@ BinChenDiseaseDGEDrugConnectivityScore <- R6Class(
       private$connectivityScorePValue <- ConnectivityScorePValue$new()
     },
     compute = function(disease_dge, drug_dge, drug_dge_t_value_column_name = "t.value",
-                       random_distribution_size = 10^5, compute_p_value = T,
+                       random_distribution_size = 10^5, compute_p_value = TRUE,
                        signature_mapper_parameter = NA
     ) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drug_dge$gene_id)

@@ -1,7 +1,7 @@
 LINCSRDSLMMDrugDGEJulia <- R6Class(
   "LINCSRDSLMMDrugDGEJulia",
   public = list(
-    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, BLAS_num_threads = NA, skip_already_computed_genes = F) {
+    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, BLAS_num_threads = NA, skip_already_computed_genes = FALSE) {
       lincsMetadataSetuper <- LINCSMetadataSetuper$new()
       lincsRDSDataLoader <- LINCSRDSDataLoader$new(lincs_splitted_level3_dir)
       lmmDGEByGene <- LINCSLMMDrugDGEByGeneJuliaFactory$new()$create(BLAS_num_threads)

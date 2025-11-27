@@ -19,7 +19,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
     },
     compute = function(disease_dge, drugs, drugs_genes, random_distribution_size = 10^5,
                        disease_name = NA, drug_perturbation_time = NA,
-                       parallel_computation = F, signature_mapper_parameter = NA
+                       parallel_computation = FALSE, signature_mapper_parameter = NA
     ) {
       disease_dge <- subset(disease_dge, disease_dge$gene_id %in% drugs_genes)
       disease_drug_common_genes <- drugs_genes[drugs_genes %in% disease_dge$gene_id]

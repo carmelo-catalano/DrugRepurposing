@@ -13,7 +13,7 @@ GEORNASeqLMMLoader <- R6Class(
     },
     load = function(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = NA) {
       rna_seq_metadata <- private$geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
-      rna_seq_data <- as.matrix(data.table::fread(rna_seq_data_filename, header = T, colClasses = "integer"), rownames = "GeneID")
+      rna_seq_data <- as.matrix(data.table::fread(rna_seq_data_filename, header = TRUE, colClasses = "integer"), rownames = "GeneID")
       rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
       sizes <- dim(rna_seq_data)
       dgrpLogger$log(sprintf("RNA Seq data loaded, size: %s X %s", sizes[1], sizes[2]))

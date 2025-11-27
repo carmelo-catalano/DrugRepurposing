@@ -6,8 +6,8 @@ GEORNASeqDichotomicVoomDrugRepurpose <- R6Class(
     },
     compute = function(rna_seq_filename, sample_01_map, drug_dge_dir, drugs, drugs_genes,
                        drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5,
-                       disease_name = NA, drug_perturbation_time = NA, parallel_computation = F,
-                       filter_by_protein_coding = F, signature_mapper_parameter = NA
+                       disease_name = NA, drug_perturbation_time = NA, parallel_computation = FALSE,
+                       filter_by_protein_coding = FALSE, signature_mapper_parameter = NA
     ) {
       geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
       drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)

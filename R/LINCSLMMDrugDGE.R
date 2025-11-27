@@ -1,7 +1,7 @@
 LINCSLMMDrugDGE <- R6Class(
   "LINCSLMMDrugDGE",
   public = list(
-    initialize = function(metadataSetuper, geneRNADataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes = F) {
+    initialize = function(metadataSetuper, geneRNADataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes = FALSE) {
       private$metadataSetuper <- metadataSetuper
       private$geneRNADataLoader <- geneRNADataLoader
       private$output_DGE_dir <- add_slash_to_directory_path(output_DGE_dir)

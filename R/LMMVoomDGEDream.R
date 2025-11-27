@@ -7,7 +7,7 @@ LMMVoomDGEDream <- R6Class(
       private$dgeMapper <- DGEMapper$new()
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
-    compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
+    compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = FALSE) {
       dgrpLogger$log("start LMM Voom Dream differential gene expression computation")
       startTime <- Sys.time()
       dgrpLogger$log("start dream computation")

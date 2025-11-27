@@ -8,7 +8,7 @@ LMMVoomDGEJulia <- R6Class(
       private$juliaSetuper <- JuliaSetuper$new()
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
     },
-    compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = F) {
+    compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = FALSE) {
       private$juliaSetuper$setup()
       dgrpLogger$log("start LMM Voom Julia differential gene expression computation")
       startTime <- Sys.time()
@@ -25,7 +25,7 @@ LMMVoomDGEJulia <- R6Class(
       julia_formula <- set_dependent_variable(formula, dependent_variable_name)
       for (i in 1:data_size[1]) {
         rna_data[[dependent_variable_name]] <- as.numeric(voom_data$E[i,])
-        dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, rna_data, REML = T, wts = voom_data$weights[i,])
+        dge <- julia_call("fit", julia_eval("LinearMixedModel"), julia_formula, rna_data, REML = TRUE, wts = voom_data$weights[i,])
         differential_expression <- rbind(differential_expression, private$lmmJuliaToDataFrameMapper$map(dge, rownames(voom_data$E)[i]))
       }
       totalTime <- Sys.time() - partialStartTime

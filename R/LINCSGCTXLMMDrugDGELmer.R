@@ -1,7 +1,7 @@
 LINCSGCTXLMMDrugDGELmer <- R6Class(
   "LINCSGCTXLMMDrugDGELmer",
   public = list(
-    initialize = function(gctx_archive_filename, output_DGE_dir, skip_already_computed_genes = F) {
+    initialize = function(gctx_archive_filename, output_DGE_dir, skip_already_computed_genes = FALSE) {
       lincsMetadataSetuper <- LINCSMetadataSetuper$new()
       lincsGCTXDataLoader <- LINCSGCTXDataLoader$new(gctx_archive_filename)
       lmmDGEByGene <- LMMDGEByGene$new(LMMLmer$new(config$LINCSLMMFormula), LMMLmerToDataFrameMapper$new())

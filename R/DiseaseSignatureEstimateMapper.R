@@ -4,7 +4,7 @@ DiseaseSignatureEstimateMapper <- R6Class(
   public = list(
     map = function(disease_signature) {
       rownames(disease_signature) <- disease_signature$gene_id
-      disease_signature <- disease_signature[, "t.value", drop = F]
+      disease_signature <- disease_signature[, "t.value", drop = FALSE]
       colnames(disease_signature) <- "estimate"
       return(disease_signature)
     }

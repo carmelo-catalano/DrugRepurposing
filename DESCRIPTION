@@ -3,8 +3,8 @@ Type: Package
 Title: Drug Repurposing System
 Version: 1.0.0
 Authors@R: c(
-    person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("aut")),
-     person("Carmelo", "Catalano", email="carmelo.c.mtbe@gmail.com", role = c("cre")))
+    person("Carmelo", "Catalano", email="carmelo.c.mtb@gmail.com", role = c("aut", "cre"))
+ )
 Description: Drug repurposing system based on differential expression analysis of RNA-seq expression profiles
 License: GPLv3
 Encoding: UTF-8
@@ -19,4 +19,5 @@ biocViews: GeneExpression, DifferentialExpression,
         BiomedicalInformatics, FunctionalGenomics, SystemsBiology, ImmunoOncology,
         AlternativeSplicing, DifferentialMethylation, DifferentialSplicing,
         GeneSetEnrichment, BatchEffect, MultipleComparison, QualityControl,
-        TimeCourse, Microarray, Preprocessing, DataImport
+        TimeCourse, Microarray, Preprocessing, DataImport,
+        Pharmacogenomics, Pharmacogenetics

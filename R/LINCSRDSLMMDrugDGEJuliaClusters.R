@@ -1,7 +1,7 @@
 LINCSRDSLMMDrugDGEJuliaClusters <- R6Class(
   "LINCSRDSLMMDrugDGEJuliaClusters",
   public = list(
-    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, skip_already_computed_genes = F) {
+    initialize = function(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay = 40, skip_already_computed_genes = FALSE) {
       private$validate_cunstructor_parameters(lincs_splitted_level3_dir, output_DGE_dir, cluster_start_delay, skip_already_computed_genes)
       private$lincs_splitted_level3_dir <- add_slash_to_directory_path(lincs_splitted_level3_dir)
       private$output_DGE_dir <- add_slash_to_directory_path(output_DGE_dir)

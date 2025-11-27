@@ -6,7 +6,7 @@ LMMDGELmer <- R6Class(
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
       private$lmmLmerToDataFrameMapper <- LMMLmerToDataFrameMapper$new()
     },
-    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = F) {
+    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = FALSE) {
       data_size <- dim(rna_data)
       dgrpLogger$log(sprintf("start LMM lmer differential gene expression computation, data size: %s X %s", data_size[1], data_size[2]))
       if (filter_by_protein_coding) {

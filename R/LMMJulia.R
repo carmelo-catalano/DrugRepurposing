@@ -7,7 +7,7 @@ LMMJulia <- R6Class(
     },
     compute = function(rna_data_metadata) {
       return(
-        julia_call("fit", julia_eval("LinearMixedModel"), private$formula, rna_data_metadata, REML = T)
+        julia_call("fit", julia_eval("LinearMixedModel"), private$formula, rna_data_metadata, REML = TRUE)
       )
     },
     getFormula = function() {
