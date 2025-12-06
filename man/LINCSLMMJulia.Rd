@@ -20,6 +20,9 @@ lincsLMMJulia$compute(rna_data_metadata)
     }
   }
 }
+\value{
+\code{Environment} containing the result of the Julia LMM calculation.
+}
 \examples{
 
 drug_names <- c("DMSO", "AM-251", "AM-251", "AM-404", "AM-404", "AM-580", "DMSO", "AM-580")

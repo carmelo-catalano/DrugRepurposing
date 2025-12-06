@@ -17,7 +17,7 @@ Depends: R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parall
 Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 biocViews: GeneExpression, DifferentialExpression,
-        Genetics, Regression,RNASeq, Transcriptomics, GeneSignature,
+        Genetics, Regression,RNASeq, Transcriptomics,
         Transcription, Sequencing, Epigenetics, Coverage, Normalization, Pathways,
         Bayesian, Clustering, DNAMethylation, ChIPSeq, SingleCell, CellBiology,
         BiomedicalInformatics, FunctionalGenomics, SystemsBiology, ImmunoOncology,

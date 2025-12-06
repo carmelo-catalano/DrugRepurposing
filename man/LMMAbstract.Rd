@@ -27,6 +27,9 @@ LMMImpl <- R6Class(
     }
   }
 }
+\value{
+Output of the LMM computation.
+}
 \examples{
 LMMImpl <- R6Class(
   "LMMImpl",

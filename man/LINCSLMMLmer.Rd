@@ -19,6 +19,9 @@ lincsLMMLmer$compute(rna_data_metadata)
     }
   }
 }
+\value{
+\code{lmerMod} containing output of lmer computation.
+}
 \examples{
 drug_names <- c("DMSO", "AM-251", "AM-251", "AM-404", "AM-404", "AM-580", "DMSO", "AM-580")
 
