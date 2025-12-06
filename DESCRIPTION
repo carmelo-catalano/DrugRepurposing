@@ -1,6 +1,6 @@
 Package: DrugRepurposing
 Type: Package
-Title: Drug Repurposing System
+Title: Drug Repurposing and Differential Gene Expression analysis
 Version: 0.99.0
 Authors@R: c(
     person("Carmelo", "Catalano", email="carmelo.c.mtb@gmail.com", role = c("aut", "cre"))
