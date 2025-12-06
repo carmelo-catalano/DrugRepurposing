@@ -9,6 +9,14 @@ https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation.
 
 This approach compares differential gene expression (DGE) profiles of diseased tissues with those of drug-treated tissues to identify compounds whose transcriptional effects are inversely correlated with disease signatures.
 
+## Installation
+
+```R
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DrugRepurposing")
+```
+
 ### Required packages
 R6, log4r, data.table, R.utils, edgeR, variancePartition, readr, parallel, doParallel, metafor, JuliaCall, lme4, cmapR, PharmacoGx, tibble, testthat.
 
