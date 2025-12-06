@@ -1,6 +1,6 @@
 # Drug Repurposing
 
-This R package is designed for transcriptome-based drug repurposing through the analysis of gene expression data from disease and pharmacological studies. 
+This R package is a drug repurposing system based on transcriptome signature reversion, achieved through the analysis of gene expression data from disease and pharmacological studies.
 
 The objective is to identify candidate compounds that may reverse disease-related gene expression patterns, offering novel therapeutic applications for existing drugs.
 
@@ -8,6 +8,8 @@ The core methodology of the package relies on transcriptome signature inversion,
 https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation. 
 
 This approach compares differential gene expression (DGE) profiles of diseased tissues with those of drug-treated tissues to identify compounds whose transcriptional effects are inversely correlated with disease signatures.
+
+For the calculation of Differential Gene Expression (DGE), DrugRepurposing provides highly efficient algorithm with two available approaches: dichotomic analysis and Linear Mixed Models (LMM).
 
 ## Installation
 

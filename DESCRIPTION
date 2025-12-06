@@ -1,11 +1,15 @@
 Package: DrugRepurposing
 Type: Package
 Title: Drug Repurposing System
-Version: 1.0.0
+Version: 0.99.0
 Authors@R: c(
     person("Carmelo", "Catalano", email="carmelo.c.mtb@gmail.com", role = c("aut", "cre"))
  )
-Description: Drug repurposing system based on differential expression analysis of RNA-seq expression profiles
+Description:
+    Drug repurposing system based on transcriptome signature reversion, achieved through
+    the analysis of gene expression data from disease and pharmacological studies.
+    DrugRepurposing also provides highly efficient Differential Gene Expression (DGE)
+    algorithms of two types: dichotomic and Linear Mixed Models (LMM).
 License: GPLv3
 Encoding: UTF-8
 LazyData: false
