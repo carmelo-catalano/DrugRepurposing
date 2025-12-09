@@ -1,9 +1,6 @@
 DichotomicRNADataMapper <- R6Class(
   "DichotomicRNADataMapper",
   public = list(
-    initialize = function() {
-      private$rnaSeqSampleMapBuilder <- RnaSeqSampleMapBuilder$new()
-    },
     map = function(rna_seq, sample_01_map, test_sample_name) {
       # rna_seq = matrix, rownames = gene_id, cols=experiment rna seq (read count)
       # Example, GSM2433098, GSM2433099, ... = colnames;  100287102, 653635, ...= rownames
@@ -13,18 +10,20 @@ DichotomicRNADataMapper <- R6Class(
       # 653635	    817			480			513			497			1055
       # 102466751	30			18			14			20			24
       # 107985730	1			0			0			0			2
-      rnaSeqSampleMap <- private$rnaSeqSampleMapBuilder$build(sample_01_map, test_sample_name)
-      rna_seq <- rna_seq[, rnaSeqSampleMap$sample_positions]
+      # sample_01_map = 001100X01 => 0 = test sample, 1 = control sample, X = excluded sample
+      sample_vector_map <- strsplit(sample_01_map, split = "")[[1]]
+      sample_positions <- which(sample_vector_map != "X")
+      sample_vector_map <- subset(sample_vector_map, sample_vector_map != "X")
+      sample_vector_map[which(sample_vector_map == '0')] <- test_sample_name
+      sample_vector_map[which(sample_vector_map == '1')] <- "Control"
+      sample_types <- factor(sample_vector_map, levels = c("Control", test_sample_name))
+      rna_seq <- rna_seq[, sample_positions]
       return(
         list(
           gene_expressions = rna_seq,
-          sample_types = rnaSeqSampleMap$sample_types
+          sample_types = sample_types
         )
       )
     }
-  ),
-  private = list(
-    rnaSeqSampleMapBuilder = NA,
-    geneFilter = NA
   )
 )
