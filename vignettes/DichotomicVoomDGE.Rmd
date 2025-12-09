@@ -1,0 +1,58 @@
+---
+title: "Dichotomic Voom Differential Gene Expression analysis (DGE)"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+  %\VignetteIndexEntry{Dichotomic Voom Differential Gene Expression analysis (DGE)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Description
+Computes the differential gene expression analysis. The input consists of two groups of
+RNA-Seq data from tissues under different conditions: control vs. altered state (e.g., a
+disease-affected group and a control group).
+
+RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analysis.
+
+For RNA data following a normal distribution (such as in microarray analysis), see
+`DichotomicDGE`.
+
+Derived class of `DichotomicDGEAbstract`.
+
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+```
+```{r}
+library(DrugRepurposing)
+rna_seq <- matrix(
+  c(
+    262, 281897, 463, 12301, 284, 2966, 4842, 9966,
+    116, 337026, 261, 3277, 132, 2006, 3699, 12406,
+    111, 111736, 193, 862, 88, 1371, 2536, 1531,
+    162, 219471, 281, 5990, 280, 2241, 4527, 12941
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
+)
+
+sample_01_map <- "0X10"
+# How the map is applied:
+#           0      X      1      0
+# GeneID   GSM1   GSM2   GSM3   GSM4
+# 1        262    116    111    162
+# ...
+#
+#
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
+
+filter_by_protein_coding <- FALSE
+
+dichotomicVoomDGE <- DichotomicVoomDGE$new()
+dichotomicVoomDGE$compute(rna_seq, sample_01_map, filter_by_protein_coding)
+```

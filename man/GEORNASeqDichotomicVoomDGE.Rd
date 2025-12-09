@@ -23,6 +23,7 @@ geoRNASeqDichotomicVoomDGE$compute(
     The file contains a table of RNA data. Each column represents an RNA-Seq sample, and each row represents a gene.
     \cr
     Row names are gene IDs, and column names are experiment identifiers.
+    The file name may be a local path (e.g., /user/rna/raw_counts.tsv) or a URL (e.g., https://www.ncbi.gov/geo/download/raw_counts.tsv.gz).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{string}.
@@ -56,7 +57,11 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 \code{DE_log2_FC} = differential gene expression = log2 fold change.
 }
 \examples{
-rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
+
+rna_seq_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
+# a local path is also allowed
+# rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
+
 # File content:
 # GeneID   GSM1    GSM2    GSM3    GSM4
 # 1        262     116     111     162

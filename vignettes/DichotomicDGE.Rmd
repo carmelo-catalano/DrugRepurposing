@@ -7,13 +7,14 @@ vignette: >
   %\VignetteIndexEntry{Dichotomic Differential Gene Expression analysis (DGE)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-abstract: >
- Computes the differential gene expression analysis. The input is composed of two groups of
- RNA data from tissues under different conditions: control/altered state; for example, a
- disease-affected group and a control group. RNA data must follow the "normal distribution",
- usually data from microarray-like analysis. For RNA data following a negative binomial
- distribution, like Illumina RNA-Seq, see `DichotomicVoomDGE`.
 ---
+# Description
+Computes the differential gene expression analysis. The input is composed of two groups of
+RNA data from tissues under different conditions: control/altered state; for example, a
+disease-affected group and a control group. RNA data must follow the "normal distribution",
+usually data from microarray-like analysis. For RNA data following a negative binomial
+distribution, like Illumina RNA-Seq, see `DichotomicVoomDGE`.
+
 
 ```{r setup, include=FALSE}
 library(DrugRepurposing)
@@ -65,12 +66,4 @@ filter_by_protein_coding <- FALSE
 logarithmGeneFilter <- LogarithmGeneFilter$new(1)
 dichotomicDGE <- DichotomicDGE$new(logarithmGeneFilter)
 dichotomicDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
-
-# output:
-# gene_id    DE_log2_FC   std.error      t.value         p.value        adj.p.value
-# 1          0.193        0.005257356    36.7104702      0.005835270    0.014588174
-# 11         -0.585       0.005257356    -111.2726688    0.001337216    0.006686082
-# 13         -0.127       0.674621761    -0.1882536      0.875312240    0.875312240
-# 2          0.312        0.537903769    0.5800294       0.644737671    0.805922089
-# 3          0.766        0.422221949    1.8142117       0.270563280    0.450938800
 ```

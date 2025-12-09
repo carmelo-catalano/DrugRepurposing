@@ -23,11 +23,15 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
 }
 \arguments{
   \item{rna_seq_filename}{
-    Filename of Illumina RNA-Seq file. The file must be in tsv (tab-separated value) format.
+    Filename of the RNA seq file. The file must be in TSV (tab-separated values) format and comply with the GEO NCBI specification.
+    \cr
     The file may also be compressed in gz format.
+    \cr
     The file contains a table of RNA data. Each column represents an RNA-Seq sample, and each row represents a gene.
+    \cr
     Row names are gene IDs, and column names are experiment identifiers.
-    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    The file name may be a local path (e.g., /user/rna/raw_counts.tsv) or a URL (e.g., https://www.ncbi.gov/geo/download/raw_counts.tsv.gz).
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{string}.
     }
