@@ -14,7 +14,7 @@ Derived class of \code{DichotomicDGEAbstract}.
 }
 \usage{
 dichotomicVoomDGE <- DichotomicVoomDGE$new()
-dichotomicVoomDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding)
+dichotomicVoomDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
 }
 \arguments{
   \item{rna_seq}{
@@ -25,13 +25,7 @@ dichotomicVoomDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_p
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
-  \item{test_sample_name}{
-    Test sample name.
+    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} (i.e., the group): 0 = test sample (altered state), 1 = control sample, X = excluded sample.
     \itemize{
       \item Type: \code{string}.
     }
@@ -82,11 +76,10 @@ sample_01_map <- "0X10"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
 dichotomicVoomDGE <- DichotomicVoomDGE$new()
-dichotomicVoomDGE$compute(rna_seq, sample_01_map, test_sample_name, filter_by_protein_coding)
+dichotomicVoomDGE$compute(rna_seq, sample_01_map, filter_by_protein_coding)
 
 # Output:
 # gene_id  DE_log2_FC    std.error     t.value       p.value     adj.p.value

@@ -1,7 +1,7 @@
 DichotomicRNADataMapper <- R6Class(
   "DichotomicRNADataMapper",
   public = list(
-    map = function(rna_seq, sample_01_map, test_sample_name) {
+    map = function(rna_seq, sample_01_map) {
       # rna_seq = matrix, rownames = gene_id, cols=experiment rna seq (read count)
       # Example, GSM2433098, GSM2433099, ... = colnames;  100287102, 653635, ...= rownames
       # colnames are not used so they are optional
@@ -14,9 +14,9 @@ DichotomicRNADataMapper <- R6Class(
       sample_vector_map <- strsplit(sample_01_map, split = "")[[1]]
       sample_positions <- which(sample_vector_map != "X")
       sample_vector_map <- subset(sample_vector_map, sample_vector_map != "X")
-      sample_vector_map[which(sample_vector_map == '0')] <- test_sample_name
+      sample_vector_map[which(sample_vector_map == '0')] <- "TestSample"
       sample_vector_map[which(sample_vector_map == '1')] <- "Control"
-      sample_types <- factor(sample_vector_map, levels = c("Control", test_sample_name))
+      sample_types <- factor(sample_vector_map, levels = c("Control", "TestSample"))
       rna_seq <- rna_seq[, sample_positions]
       return(
         list(

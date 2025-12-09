@@ -11,7 +11,7 @@ The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.
 \usage{
 geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
 geoRNASeqDichotomicVoomDGE$compute(
-  rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
+  rna_seq_filename, sample_01_map, filter_by_protein_coding
 )
 }
 \arguments{
@@ -31,12 +31,6 @@ geoRNASeqDichotomicVoomDGE$compute(
   \item{sample_01_map}{
     The map has the same length as the number of columns in the \code{rna_seq_filename} table.
     Each character represents the type of the corresponding column in the \code{rna_seq_filename} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
-  \item{test_sample_name}{
-    Test sample name.
     \itemize{
       \item Type: \code{string}.
     }
@@ -86,12 +80,11 @@ sample_01_map <- "0X10"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
 geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
 geoRNASeqDichotomicVoomDGE$compute(
-  rna_seq_filename, sample_01_map, test_sample_name, filter_by_protein_coding
+  rna_seq_filename, sample_01_map, filter_by_protein_coding
 )
 
 # Output:

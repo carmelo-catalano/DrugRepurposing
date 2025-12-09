@@ -11,7 +11,7 @@ DichotomicDGEImpl <- R6Class(
   "DichotomicDGEImpl",
   inherit = DichotomicDGEAbstract,
   public = list(
-    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = FALSE) {
+    compute = function(rna_data, sample_01_map, filter_by_protein_coding = FALSE) {
       # do something
     }
   )
@@ -27,15 +27,9 @@ DichotomicDGEImpl <- R6Class(
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} (i.e., the group): 0 = test sample (altered state), 1 = control sample, X = excluded sample.
     \cr
     See \code{DichotomicDGE} or \code{DichotomicVoomDGE} for more details.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
-  \item{test_sample_name}{
-    Test sample name.
     \itemize{
       \item Type: \code{string}.
     }
@@ -58,7 +52,7 @@ DichotomicDGEImpl <- R6Class(
   "DichotomicDGEImpl",
   inherit = DichotomicDGEAbstract,
   public = list(
-    compute = function(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding = FALSE) {
+    compute = function(rna_data, sample_01_map, filter_by_protein_coding = FALSE) {
       # do something
     }
   )

@@ -17,7 +17,7 @@ DichotomicDrugRepurposeCore <- R6Class(
       binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName, private$dgeToSignatureMapper)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
-      disease_dge <- private$dichotomicCustomTypeDGE$compute(rna_data, sample_01_map, disease_name, filter_by_protein_coding)
+      disease_dge <- private$dichotomicCustomTypeDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
       connectivity_score <- binChenDiseaseDGEDrugListConnectivityScore$compute(
         disease_dge, drugs, drugs_genes, random_distribution_size, disease_name,
         drug_perturbation_time, parallel_computation, signature_mapper_parameter

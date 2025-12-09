@@ -47,7 +47,7 @@ rownames(rna_data) <- c(1, 2, 3, 9, 10, 11, 12, 13) # gene ids
 # the first column represents the gene id not the table's first column
 
 sample_01_map <- "0X10"
-# 0 = altered state
+# 0 = test sample (altered state)
 # 1 = control state
 # X = excluded
 
@@ -60,12 +60,11 @@ sample_01_map <- "0X10"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-test_sample_name <- "IPF"
 filter_by_protein_coding <- FALSE
 
 logarithmGeneFilter <- LogarithmGeneFilter$new(1)
 dichotomicDGE <- DichotomicDGE$new(logarithmGeneFilter)
-dichotomicDGE$compute(rna_data, sample_01_map, test_sample_name, filter_by_protein_coding)
+dichotomicDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
 
 # output:
 # gene_id    DE_log2_FC   std.error      t.value         p.value        adj.p.value

@@ -69,9 +69,10 @@ dichotomicDrugRepurposeCore$compute(rna_data, sample_01_map,
     }
   }
   \item{disease_name}{
-    This argument serves as the \code{test_sample_name} argument for \code{dichotomicDGE$ompute} function.
+    Disease name. If specified, a column containing the disease name will be added to the output table. It is not used for the computation.
     \itemize{
       \item Type: \code{string}.
+      \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
