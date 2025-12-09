@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{example}
+  %\VignetteIndexEntry{Compute drug repurposing with DrugRepurposing}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 abstract: >
