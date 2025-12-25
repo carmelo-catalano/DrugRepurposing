@@ -1,0 +1,49 @@
+---
+title: "Dichotomic Voom Differential Gene Expression analysis (DGE)"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+  %\VignetteIndexEntry{Dichotomic Voom Differential Gene Expression analysis (DGE)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Description
+Computes the differential gene expression analysis. The input consists of two groups of
+RNA-Seq data from tissues under different conditions: control vs. altered state (e.g., a
+disease-affected group and a control group).
+
+RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analysis.
+
+For RNA data following a normal distribution (such as in microarray analysis), see
+`DichotomicDGE`.
+
+Derived class of `DichotomicDGEAbstract`.
+
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+```
+```{r}
+library(DrugRepurposing)
+disease_dge <- data.frame(
+  gene_id = c(1, 2, 3, 9, 11, 15),
+  t.value = c(-9.261609, -10.36986, 8.17305166, 5.60715925, -8.444215, 7.12957687)
+)
+
+drug_dge <- data.frame(
+  gene_id = c(1, 2, 3, 10, 11, 13),
+  t.value = c(-2.26559, 1.369012, 3.173466, -4.60136, -2.191482, 4.2035724)
+)
+
+drug_dge_t_value_column_name <- "t.value"
+random_distribution_size <- 1e4
+compute_p_value <- TRUE
+signature_mapper_parameter <- 4
+
+binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
+binChenDiseaseDGEDrugConnectivityScore$compute(
+  disease_dge, drug_dge, drug_dge_t_value_column_name,
+  random_distribution_size, compute_p_value, signature_mapper_parameter
+)
+```

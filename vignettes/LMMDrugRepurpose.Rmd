@@ -1,0 +1,139 @@
+---
+title: "GEO RNA Seq Dichotomic Voom Differential Gene Expression analysis (DGE)"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+  %\VignetteIndexEntry{GEO RNA Seq Dichotomic Voom Differential Gene Expression analysis (DGE)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Description
+Given a disease RNA data analysis and a list of drug DGEs, \code{LMMDrugRepurpose} computes the connectivity score between the disease and the drugs.
+
+This class creates an instance of \code{LMMDrugRepurposeCore} and uses it for the computation.
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+```
+```{r}
+library(DrugRepurposing)
+
+accession <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
+               "GSM7", "GSM8", "GSM9", "GSM10", "GSM11", "GSM12")
+rna_data <- matrix(
+  # rna microarray analysis
+  c(2.9972499, 4.2469098, 19.0690947, 7.5957615, -6.5289474, 36.6519995,
+    12.2326273, -1.2400751, -12.0185859, 9.6117539, -9.7031797, 11.9692450,
+    -17.2317513, 13.3941123, 19.7100277, -9.7931619, 15.3568206, 26.0890177,
+    8.9792826, 4.0547337, 36.0595866, -7.2987920, 19.1745696, 30.5492311,
+    -10.6683999, 11.9134902, 4.3919955, -18.0423696, 0.4506173, 15.8493678,
+    -4.6110365, -7.3977498, -9.0876729, -10.1055128, -3.1825579, -2.4332119),
+  nrow = 3,
+  ncol = 12,
+  dimnames = list(
+    # gene IDs
+    c(203228, 6647, 2521),
+    # accession
+    accession
+  )
+)
+# the first column represents the row names (gene IDs)
+# rna_data =
+#          GSM1        GSM2        GSM3         GSM4          GSM5         ...
+# 203228   2.9972499   4.2469098   19.0690947   7.5957615     -6.5289474   ...
+# 6647     9.6117539   -9.7031797  11.9692450   -17.2317513   13.3941123   ...
+# 2521     8.9792826   4.0547337   36.0595866   -7.2987920    19.1745696   ...
+
+tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
+                   "ALS", "ALS", "Control", "Control")
+tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
+rna_metadata <- data.frame(
+  accession = accession,
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum", "Cerebellum", "Cerebellum",
+             "Cerebellum", "Cerebellum", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum"),
+  tissue_status = tissue_status_factor
+)
+# rna_metadata =
+# accession   tissue                  tissue_status
+# GSM1        Spinal Cord Lumbar      ALS
+# GSM2        Spinal Cord Lumbar      ALS
+# GSM3        Spinal Cord Lumbar      ALS
+# GSM4        Spinal Cord Lumbar      ALS
+# GSM5        Cerebellum              ALS
+# GSM6        Cerebellum              ALS
+# GSM7        Cerebellum              ALS
+# GCS8        Cerebellum              ALS
+# GSM9        Cerebellum              ALS
+# GSM10       Spinal Cord Lumbar      ALS
+# GSM11       Spinal Cord Lumbar      Control
+# GSM12       Cerebellum              Control
+
+formula <- ~tissue_status + (1 | tissue)
+
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494"),
+  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+)
+
+A_23187_drug <- data.frame(
+  gene_id = c(203228, 6647, 2521),
+  estimate = c(1.98564, -1.51579, 0.33099)
+)
+
+A_443644_drug <- data.frame(
+  gene_id = c(203228, 6647, 2521),
+  estimate = c(-1.55774, -4.4155, 1.21015)
+)
+
+AG_490_drug <- data.frame(
+  gene_id = c(203228, 6647, 2521),
+  estimate = c(-1.35143, 0.58724, -1.31592)
+)
+
+AG_494_drug <- data.frame(
+  gene_id = c(203228, 6647, 2521),
+  estimate = c(-3.43357, -0.14896, 0.90733)
+)
+
+drugs_rna_data <- list()
+drugs_rna_data[["A-23187"]] <- A_23187_drug
+drugs_rna_data[["A-443644"]] <- A_443644_drug
+drugs_rna_data[["AG-490"]] <- AG_490_drug
+drugs_rna_data[["AG-494"]] <- AG_494_drug
+
+
+drugs_genes <- c(203228, 6647, 2521)
+random_distribution_size <- 10^4
+
+EasyDrugSignatureLoader <- R6Class(
+  "EasyDrugSignatureLoader",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    initialize = function(drugs_rna_data) {
+      private$drugs_rna_data <- drugs_rna_data
+    },
+    load = function(drug_name) {
+      return(private$drugs_rna_data[[drug_name]])
+    }
+  ),
+  private = list(
+    drugs_rna_data = NA
+  )
+)
+
+easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
+lmmDGE <- LMMDGELmer$new() # Alternatives: LMMDGEDream, LMMDGEJulia
+lmmDrugRepurpose <- LMMDrugRepurpose$new(lmmDGE, easyDrugSignatureLoader)
+lmmDrugRepurpose$compute(
+  rna_data, rna_metadata, formula, drugs, drugs_genes,
+  random_distribution_size,
+  disease_name = "ALS",
+  parallel_computation = FALSE,
+  filter_by_protein_coding = FALSE,
+  signature_mapper_parameter = 3
+)
+
+```
