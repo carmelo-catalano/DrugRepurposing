@@ -37,7 +37,7 @@ result <- sut$compute(
   drugs,
   drug_genes,
   10,
-  "ipf",
+  "als",
   "6h",
   F,
   F,
