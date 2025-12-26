@@ -131,19 +131,19 @@ drugs <- data.frame(
                "drugs_dge/AG-494.Rds", "drugs_dge/AG-957.Rds", "drugs_dge/AM-404.Rds")
 )
 drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
-random_distribution_size <- 10^5
-disease_name <- "IPF"
-drug_perturbation_time <- "6h"
-filter_by_protein_coding <- FALSE
-parallel_computation <- FALSE
-signature_mapper_parameter <- 8
 
 dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new()
 dichotomicVoomDrugRepurpose$compute(
-  rna_seq, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-  random_distribution_size, disease_name,
-  drug_perturbation_time, filter_by_protein_coding, parallel_computation,
-  signature_mapper_parameter
+  rna_seq = rna_seq,
+  sample_01_map = sample_01_map,
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10^5,
+  disease_name = "IPF",
+  drug_perturbation_time = "6h"
+  filter_by_protein_coding = FALSE,
+  parallel_computation = FALSE,
+  signature_mapper_parameter = 8
 )
 # Output:
 # drug        connectivity_score   disease  disease_signature_type  drug_perturbation_time

@@ -1,0 +1,122 @@
+---
+title: "Dichotomic Voom Drug Repurpose"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+  %\VignetteIndexEntry{Dichotomic Voom Drug Repurpose}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Description
+Given a disease RNA-Seq analysis and a list of drug DGEs, `DichotomicVoomDrugRepurpose`
+ computes the connectivity score between the disease and the drugs.
+
+This class composes the classes `DichotomicDGE` and `BinChenDiseaseDGEDrugListConnectivityScore`
+through the `DichotomicDrugRepurposeCore` class.
+
+Disease RNA-Seq data must be expressed as counts.
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+```
+```{r}
+library(DrugRepurposing)
+
+rna_seq <- matrix(
+  c(
+    262, 281897, 463, 12301, 284, 2966, 4842, 9966,
+    116, 337026, 261, 3277, 132, 2006, 3699, 12406,
+    111, 111736, 193, 862, 88, 1371, 2536, 1531,
+    162, 219471, 281, 5990, 280, 2241, 4527, 12941
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
+)
+
+sample_01_map <- "0X10"
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
+  filename = c("drugs_dge/A-23187.Rds", "drugs_dge/A-443644.Rds",
+               "drugs_dge/AG-490.Rds", "drugs_dge/AG-494.Rds",
+               "drugs_dge/AG-957.Rds", "drugs_dge/AM-404.Rds")
+)
+drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
+
+
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494"),
+  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+)
+
+A_23187_drug <- data.frame(
+  gene_id = c(1, 2, 3, 9, 10, 11, 12, 13, 6158),
+  estimate = c(1.98564, -1.51579, 0.33099, -0.935718, -3.818529,
+               1.848352, -4.332752, 3.591474,-0.345235423)
+)
+
+A_443644_drug <- data.frame(
+  gene_id = c(1, 2, 3, 9, 10, 11, 12, 13, 6158),
+  estimate = c(-1.55774, -4.4155, 1.21015, 4.8705936, -0.1259465,
+               -2.6003531, -0.3530122, -3.5426363,-3.252352)
+)
+
+AG_490_drug <- data.frame(
+  gene_id = c(1, 2, 3, 9, 10, 11, 12, 13, 6158),
+  estimate = c(-1.35143, 0.58724, -1.31592, 0.22267776, -0.45726445,
+               -2.80993289, -0.05550198, 1.76931022,0.1423542)
+)
+
+AG_494_drug <- data.frame(
+  gene_id = c(1, 2, 3, 9, 10, 11, 12, 13, 6158),
+  estimate = c(-3.43357, -0.14896, 0.90733, 3.084164, -2.594041,
+               4.304979, -4.944015, -2.075178,1.4523542)
+)
+
+drugs_rna_data <- list()
+drugs_rna_data[["A-23187"]] <- A_23187_drug
+drugs_rna_data[["A-443644"]] <- A_443644_drug
+drugs_rna_data[["AG-490"]] <- AG_490_drug
+drugs_rna_data[["AG-494"]] <- AG_494_drug
+
+
+EasyDrugSignatureLoader <- R6Class(
+  "EasyDrugSignatureLoader",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    initialize = function(drugs_rna_data) {
+      private$drugs_rna_data <- drugs_rna_data
+    },
+    load = function(drug_name) {
+      return(private$drugs_rna_data[[drug_name]])
+    }
+  ),
+  private = list(
+    drugs_rna_data = NA
+  )
+)
+
+meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(1)
+easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
+
+dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new(
+  meanThresholdGeneFilter,
+  easyDrugSignatureLoader
+)
+dichotomicVoomDrugRepurpose$compute(
+  rna_seq = rna_seq,
+  sample_01_map = sample_01_map,
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10^4,
+  disease_name = "IPF",
+  filter_by_protein_coding = FALSE,
+  parallel_computation = FALSE,
+  signature_mapper_parameter = 8
+)
+
+```
