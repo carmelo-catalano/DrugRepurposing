@@ -1,0 +1,137 @@
+---
+title: "Dichotomic Drug Repurpose"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+  %\VignetteIndexEntry{Dichotomic Drug Repurpose}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Description
+Given a disease RNA data analysis and a list of drug DGEs, `DichotomicDrugRepurposeCore` computes the
+ connectivity score between the disease and the drugs.
+
+This class composes the classes `DichotomicDGE` and `BinChenDiseaseDGEDrugListConnectivityScore`
+ through `DichotomicDrugRepurposeCore` class.
+
+RNA data must be on the "normal distribution", usually data from microarray like analysis.
+
+For RNA data on negative binomial distribution like Illumina RNA-Seq see `DichotomicVoomDrugRepurpose`.
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+```
+```{r}
+library(DrugRepurposing)
+rna_data <- matrix(
+  c(
+    6.930737, 6.643856, 5.247928, 7.169925, 7.303781, 6.375039, 6.108524, 7.055282,
+    6.554589, 6.741467, 7.721099, 6.247928, 7.139551, 6.569856, 5.554589, 6.392317,
+    6.643856, 5.392317, 7.348728, 7.491853, 6.044394, 5.700440, 6.169925, 5.247928,
+    5.954196, 6.672425, 6.614710, 5.169925, 6.988685, 7.357552, 6.954196, 6.285402
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
+)
+
+# rna_data =
+# GeneID   GSM1        GSM2        GSM3        GSM4
+# 1        6.930737    6.554589    6.643856    5.954196
+# 2        6.643856    6.741467    5.392317    6.672425
+# 3        5.247928    7.721099    7.348728    6.614710
+# 9        7.169925    6.247928    7.491853    5.169925
+# 10       7.303781    7.139551    6.044394    6.988685
+# 11       6.375039    6.569856    5.700440    7.357552
+# 12       6.108524    5.554589    6.169925    6.954196
+# 13       7.055282    6.392317    5.247928    6.285402
+
+
+sample_01_map <- "0X10"
+
+# How the map is applied:
+#           0      X      1      0
+# GeneID   GSM1   GSM2   GSM3   GSM4
+# 1        262    116    111    162
+# ...
+#
+#
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
+
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494"),
+  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+)
+
+A_23187_drug <- data.frame(
+  gene_id = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224),
+  estimate = c(1.98564, -1.51579, 0.33099, -0.935718, -3.818529,
+               1.848352, -4.332752, 3.591474)
+)
+
+A_443644_drug <- data.frame(
+  gene_id = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224),
+  estimate = c(-1.55774, -4.4155, 1.21015, 4.8705936, -0.1259465,
+               -2.6003531, -0.3530122, -3.5426363)
+)
+
+AG_490_drug <- data.frame(
+  gene_id = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224),
+  estimate = c(-1.35143, 0.58724, -1.31592, 0.22267776, -0.45726445,
+               -2.80993289, -0.05550198, 1.76931022)
+)
+
+AG_494_drug <- data.frame(
+  gene_id = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224),
+  estimate = c(-3.43357, -0.14896, 0.90733, 3.084164, -2.594041,
+               4.304979, -4.944015, -2.075178)
+)
+
+drugs_rna_data <- list()
+drugs_rna_data[["A-23187"]] <- A_23187_drug
+drugs_rna_data[["A-443644"]] <- A_443644_drug
+drugs_rna_data[["AG-490"]] <- AG_490_drug
+drugs_rna_data[["AG-494"]] <- AG_494_drug
+
+
+EasyDrugSignatureLoader <- R6Class(
+  "EasyDrugSignatureLoader",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    initialize = function(drugs_rna_data) {
+      private$drugs_rna_data <- drugs_rna_data
+    },
+    load = function(drug_name) {
+      return(private$drugs_rna_data[[drug_name]])
+    }
+  ),
+  private = list(
+    drugs_rna_data = NA
+  )
+)
+
+meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(1)
+easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
+
+drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224)
+
+dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new(
+  geneFilter = meanThresholdGeneFilter,
+  drugSignatureLoader = easyDrugSignatureLoader
+)
+dichotomicDrugRepurpose$compute(
+  rna_data = rna_data,
+  sample_01_map = sample_01_map,
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10^4,
+  disease_name = "IPF",
+  filter_by_protein_coding = FALSE,
+  parallel_computation = FALSE,
+  signature_mapper_parameter = 8
+)
+```
