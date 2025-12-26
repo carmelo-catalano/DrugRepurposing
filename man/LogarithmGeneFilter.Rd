@@ -8,6 +8,8 @@ The filtering formula is:
 \cr
 \code{rowMeans(log(gene_expressions + 1, 2)) > threshold}.
 \cr
+Input values must be greater than or equal to 0.
+\cr
 This class is a derived class of \code{GeneFilterAbstract}.
 }
 \usage{

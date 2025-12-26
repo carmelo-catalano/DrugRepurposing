@@ -7,14 +7,15 @@ Given a disease RNA data analysis and a list of drug DGEs, \code{DichotomicDrugR
 This class composes the classes \code{DichotomicDGE} and \code{BinChenDiseaseDGEDrugListConnectivityScore}
 through \code{DichotomicDrugRepurposeCore} class.
 \cr
-RNA data must be on the "normal distribution", usually data from microarray like analysis.
-For RNA data on negative binomial distribution like Illumina RNA-Seq see \code{DichotomicVoomDrugRepurpose}.
+Disease RNA data must be expressed as log-ratios or log-expression values.
+\cr
+Disease RNA data must be on the "normal distribution", usually data from microarray like analysis.
+For Disease RNA data on negative binomial distribution like Illumina RNA-Seq see \code{DichotomicVoomDrugRepurpose}.
 }
 \usage{
 dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new()
 result <- dichotomicDrugRepurpose$compute(
-  rna_data, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-  drug_dge_t_value_column_name, random_distribution_size, disease_name,
+  rna_data, sample_01_map, drugs, drugs_genes, random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )
@@ -34,12 +35,6 @@ result <- dichotomicDrugRepurpose$compute(
       \item Type: \code{string}.
     }
   }
-  \item{drug_dge_dir}{
-    Directory containing the drug DGEs.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
   \item{drugs}{
     A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
     \itemize{
@@ -51,13 +46,6 @@ result <- dichotomicDrugRepurpose$compute(
     The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
     \itemize{
       \item Type: \code{vector}.
-    }
-  }
-  \item{drug_dge_t_value_column_name}{
-    The drug DGE parameter used for connectivity score computation is the t-value. This field contains the column name of the t-value in the DGE table.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: "t.value".
     }
   }
   \item{random_distribution_size}{
@@ -106,6 +94,13 @@ result <- dichotomicDrugRepurpose$compute(
     \itemize{
       \item Type: derived class of \code{GeneFilterAbstract}.
       \item Default value: Instance of class MeanThresholdGeneFilter.
+    }
+  }
+  \item{drugSignatureLoader (constructor argument)}{
+    Loader for drug DGEs in the argument \code{drugs}.
+    \itemize{
+      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
+      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
@@ -159,13 +154,12 @@ sample_01_map <- "0X10"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-drug_dge_dir <- "/drugs_dge/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404")
+  filename = c("dge_dir/A-23187.Rds", "dge_dir/A-443644.Rds", "dge_dir/AG-490.Rds",
+  "dge_dir/AG-494.Rds", "dge_dir/AG-957.Rds", "dge_dir/AM-404.Rds")
 )
 drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
-drug_dge_t_value_column_name <- "t.value_6h"
 random_distribution_size <- 10^5
 disease_name <- "IPF"
 drug_perturbation_time <- "6h"
@@ -175,8 +169,7 @@ signature_mapper_parameter <- 150
 
 dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new()
 result <- dichotomicDrugRepurpose$compute(
-  rna_data, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-  drug_dge_t_value_column_name, random_distribution_size, disease_name,
+  rna_data, sample_01_map, drugs, drugs_genes, random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )

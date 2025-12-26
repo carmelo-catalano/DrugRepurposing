@@ -6,12 +6,13 @@ Given a disease RNA-Seq analysis and a list of drug DGEs, \code{DichotomicVoomDr
 connectivity score between the disease and the drugs. This class composes the
 classes \code{DichotomicDGE} and \code{BinChenDiseaseDGEDrugListConnectivityScore}
 through the \code{DichotomicDrugRepurposeCore} class.
+\cr
+Disease RNA-Seq data must be expressed as counts.
 }
 \usage{
 dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new()
 dichotomicVoomDrugRepurpose$compute(
-  rna_seq, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-  drug_dge_t_value_column_name, random_distribution_size, disease_name,
+  rna_seq, sample_01_map, drugs, drugs_genes, random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )
@@ -29,12 +30,6 @@ dichotomicVoomDrugRepurpose$compute(
       \item Type: \code{string}.
     }
   }
-  \item{drug_dge_dir}{
-    Directory containing the drug DGEs.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
   \item{drugs}{
     A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
     \itemize{
@@ -46,13 +41,6 @@ dichotomicVoomDrugRepurpose$compute(
     The gene ID list to use for connectivity score computation. Typically, a subset of the entire DGE is used, excluding certain genes.
     \itemize{
       \item Type: \code{vector}.
-    }
-  }
-  \item{drug_dge_t_value_column_name}{
-    The drug DGE parameter used for connectivity score computation is the t-value. This field contains the column name of the t-value in the DGE table.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: "t.value".
     }
   }
   \item{random_distribution_size}{
@@ -102,6 +90,13 @@ dichotomicVoomDrugRepurpose$compute(
       \item Default value: Instance of class \code{LowCountsGeneFilter}.
     }
   }
+  \item{drugSignatureLoader (constructor argument)}{
+    Loader for drug DGEs in the argument \code{drugs}.
+    \itemize{
+      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
+      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+    }
+  }
   \item{dgeToSignatureMapper (constructor argument)}{
     Mapper for transforming \code{disease_dge} to a disease signature.
     \itemize{
@@ -130,13 +125,12 @@ rna_seq <- matrix(
 )
 
 sample_01_map <- "0X10"
-drug_dge_dir <- "/drugs_dge/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404")
+  filename = c("drugs_dge/A-23187.Rds", "drugs_dge/A-443644.Rds", "drugs_dge/AG-490.Rds",
+               "drugs_dge/AG-494.Rds", "drugs_dge/AG-957.Rds", "drugs_dge/AM-404.Rds")
 )
 drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
-drug_dge_t_value_column_name <- "t.value_6h"
 random_distribution_size <- 10^5
 disease_name <- "IPF"
 drug_perturbation_time <- "6h"
@@ -147,7 +141,7 @@ signature_mapper_parameter <- 8
 dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new()
 dichotomicVoomDrugRepurpose$compute(
   rna_seq, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-  drug_dge_t_value_column_name, random_distribution_size, disease_name,
+  random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )

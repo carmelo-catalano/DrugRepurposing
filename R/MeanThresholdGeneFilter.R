@@ -2,7 +2,7 @@ MeanThresholdGeneFilter <- R6Class(
   "MeanThresholdGeneFilter",
   inherit = GeneFilterAbstract,
   public = list(
-    initialize = function(threshold = 10) {
+    initialize = function(threshold = 3) {
       private$threshold <- threshold
     },
     filter = function(gene_expressions, samples) {

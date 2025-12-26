@@ -1,20 +1,25 @@
 DichotomicDrugRepurposeCore <- R6Class(
   "DichotomicDrugRepurposeCore",
   public = list(
-    initialize = function(dichotomicCustomTypeDGE, dgeToSignatureMapper = NA) {
+    initialize = function(dichotomicCustomTypeDGE, drugSignatureLoader = NA, dgeToSignatureMapper = NA) {
       if (!"DichotomicDGEAbstract" %in% class(dichotomicCustomTypeDGE)) {
         stop("incompatible parameter type: the class type of dichotomicCustomTypeDGE must be a subclass of DichotomicDGEAbstract")
+      }
+      if (!obj_is_na(drugSignatureLoader)) {
+        if (!"DrugSignatureLoaderAbstract" %in% class(drugSignatureLoader))
+          stop("incompatible parameter type: the class type of drugSignatureLoader must be a subclass of DrugSignatureLoaderAbstract")
+        private$drugSignatureLoader <- drugSignatureLoader
+      }else {
+        private$drugSignatureLoader <- DrugSignatureLoaderByFilename$new()
       }
       private$dichotomicCustomTypeDGE <- dichotomicCustomTypeDGE
       private$dgeToSignatureMapper <- dgeToSignatureMapper
     },
-    compute = function(rna_data, sample_01_map, drug_dge_dir, drugs, drugs_genes,
-                       drug_dge_t_value_column_name = "t.value", random_distribution_size = 10^5,
+    compute = function(rna_data, sample_01_map, drugs, drugs_genes, random_distribution_size = 10^5,
                        disease_name = NA, drug_perturbation_time = NA, filter_by_protein_coding = FALSE,
                        parallel_computation = FALSE, signature_mapper_parameter = NA
     ) {
-      drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
-      binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName, private$dgeToSignatureMapper)
+      binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(private$drugSignatureLoader, private$dgeToSignatureMapper)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- private$dichotomicCustomTypeDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
@@ -29,6 +34,7 @@ DichotomicDrugRepurposeCore <- R6Class(
   ),
   private = list(
     dichotomicCustomTypeDGE = NA,
+    drugSignatureLoader = NA,
     dgeToSignatureMapper = NA
   )
 )

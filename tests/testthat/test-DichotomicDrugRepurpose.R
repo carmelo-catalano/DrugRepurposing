@@ -1,7 +1,8 @@
 library(testthat)
 
 # setup
-sut <- DichotomicDrugRepurpose$new()
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("test/connectivity_score/drug_dge/"), "t.value_6h")
+sut <- DichotomicDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
@@ -13,23 +14,21 @@ drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
 disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
 disease_rna_seq <- as.matrix(data.table::fread(disease_rna_seq_filename, header = T, colClasses = "integer"), rownames = "GeneID")
-disease_rna_seq <- log2(disease_rna_seq + 1)
+pseudo_disease_rna_data <- log2(disease_rna_seq + 1)
 expected <- package_readRDS("test/drug_repurpose/DichotomicDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(
-  disease_rna_seq,
-  "000000000000000000001111111111111111111",
-  absolute_package_directory("test/connectivity_score/drug_dge/"),
+  rna_data = pseudo_disease_rna_data,
+  sample_01_map = "000000000000000000001111111111111111111",
   drugs,
   drug_genes,
-  "t.value_6h",
-  10,
-  "ipf",
-  "6h",
-  F,
-  F,
-  100
+  random_distribution_size = 10,
+  disease_name = "ipf",
+  drug_perturbation_time = "6h",
+  filter_by_protein_coding = F,
+  parallel_computation = F,
+  signature_mapper_parameter = 100
 )
 
 # then

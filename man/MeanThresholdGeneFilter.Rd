@@ -10,6 +10,8 @@ The filtering formula is:
 \cr
 This class is a derived class of \code{GeneFilterAbstract}.
 }
+\cr
+Input values must be greater than or equal to 0.
 \usage{
 meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(threshold)
 meanThresholdGeneFilter$filter(gene_expressions)
@@ -22,7 +24,7 @@ meanThresholdGeneFilter$filter(gene_expressions)
     Mean threshold for filtering.
     \itemize{
       \item Type: \code{float}.
-      \item Default value: \code{10}.
+      \item Default value: \code{3}.
     }
   }
 }
