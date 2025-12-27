@@ -1,7 +1,8 @@
 library(testthat)
 
 # setup
-sut <- GEORNASeqDichotomicVoomDrugRepurpose$new()
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir = absolute_package_directory("test/connectivity_score/drug_dge/"), t_value_column_name = "t.value_6h")
+sut <- GEORNASeqDichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
@@ -17,10 +18,8 @@ expected <- package_readRDS("test/drug_repurpose/GEORNASeqDichotomicVoomDrugRepu
 result <- sut$compute(
   absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"),
   "000000000000000000001111111111111111111",
-  absolute_package_directory("test/connectivity_score/drug_dge/"),
   drugs,
   drug_genes,
-  "t.value_6h",
   10,
   "ipf",
   "6h",

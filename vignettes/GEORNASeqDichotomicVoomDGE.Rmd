@@ -39,7 +39,6 @@ rna_seq_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type
 
 sample_01_map <- "0X10"
 
-sample_01_map <- "0X10"
 # How the map is applied:
 #           0      X      1      0
 # GeneID   GSM1   GSM2   GSM3   GSM4
