@@ -4,9 +4,9 @@ output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{Dichotomic Voom Differential Gene Expression analysis (DGE)}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+ %\VignetteIndexEntry{Dichotomic Voom Differential Gene Expression analysis (DGE)}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
 ---
 # Description
 Computes the differential gene expression analysis. The input consists of two groups of
@@ -36,14 +36,14 @@ drug_dge <- data.frame(
   t.value = c(-2.26559, 1.369012, 3.173466, -4.60136, -2.191482, 4.2035724)
 )
 
-drug_dge_t_value_column_name <- "t.value"
-random_distribution_size <- 1e4
-compute_p_value <- TRUE
-signature_mapper_parameter <- 4
-
 binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
 binChenDiseaseDGEDrugConnectivityScore$compute(
-  disease_dge, drug_dge, drug_dge_t_value_column_name,
-  random_distribution_size, compute_p_value, signature_mapper_parameter
+  disease_dge = disease_dge,
+  drug_dge = drug_dge,
+  drug_dge_t_value_column_name = "t.value",
+  random_distribution_size = 10, # 10 is a poor value used only to speed up
+                                 # computation; an appropriate value is 10^5
+  compute_p_value = TRUE,
+  signature_mapper_parameter = 4
 )
 ```

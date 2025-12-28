@@ -135,7 +135,8 @@ lmmVoomDrugRepurpose$compute(
   formula = formula,
   drugs = drugs,
   drugs_genes = drugs_genes,
-  random_distribution_size = 10,
+  random_distribution_size = 10, # 10 is a poor value used only to speed up
+                                 # computation; an appropriate value is 10^5
   disease_name = "ALS",
   parallel_computation = FALSE,
   filter_by_protein_coding = FALSE,

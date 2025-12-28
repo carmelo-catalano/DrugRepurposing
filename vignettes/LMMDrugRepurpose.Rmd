@@ -4,9 +4,9 @@ output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{LMM Drug Repurpose}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+ %\VignetteIndexEntry{LMM Drug Repurpose}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
 ---
 # Description
 Given a disease RNA data analysis and a list of drug DGEs, `LMMDrugRepurpose` computes the connectivity score between the disease and the drugs.
@@ -112,7 +112,6 @@ drugs_rna_data[["AG-494"]] <- AG_494_drug
 
 
 drugs_genes <- c(203228, 6647, 2521)
-random_distribution_size <- 10^4
 
 EasyDrugSignatureLoader <- R6Class(
   "EasyDrugSignatureLoader",
@@ -134,8 +133,13 @@ easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
 lmmDGE <- LMMDGELmer$new() # Alternatives: LMMDGEDream, LMMDGEJulia
 lmmDrugRepurpose <- LMMDrugRepurpose$new(lmmDGE, easyDrugSignatureLoader)
 lmmDrugRepurpose$compute(
-  rna_data, rna_metadata, formula, drugs, drugs_genes,
-  random_distribution_size,
+  rna_data = rna_data,
+  rna_metadata = rna_metadata,
+  formula = formula,
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10, # 10 is a poor value used only to speed up
+                                 # computation; an appropriate value is 10^5
   disease_name = "ALS",
   parallel_computation = FALSE,
   filter_by_protein_coding = FALSE,
