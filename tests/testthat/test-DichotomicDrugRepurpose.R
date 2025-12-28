@@ -1,8 +1,9 @@
 library(testthat)
 
 # setup
+meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(threshold = 10)
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("test/connectivity_score/drug_dge/"), "t.value_6h")
-sut <- DichotomicDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
+sut <- DichotomicDrugRepurpose$new(geneFilter = meanThresholdGeneFilter, drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
