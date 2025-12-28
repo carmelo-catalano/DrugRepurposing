@@ -11,8 +11,7 @@ geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMV
 geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
         rna_seq_metadata_filename, formula, tissue_status_field_name,
         tissue_statuses_to_be_tested, tissue_statuses_map,
-        sample_id_field_name, additional_fields, drug_dge_dir, drugs,
-        drugs_genes, drug_gde_t_value_column_name,
+        sample_id_field_name, additional_fields, drugs, drugs_genes,
         random_distribution_size, disease_name, drug_perturbation_time,
         parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter
@@ -59,10 +58,6 @@ geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
     Column name in the \code{rna_seq_metadata} table that contains the sample_id. The sample_id is used to match metadata with the RNA-Seq data.
     Type: \code{string}.
   }
-  \item{drug_dge_dir}{
-    Directory containing the drug DGE files.
-    Type: \code{string}.
-  }
   \item{drugs}{
     Drug signatures.
     A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
@@ -72,11 +67,6 @@ geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
   \item{drugs_genes}{
     The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
     Type: \code{vector}.
-  }
-  \item{drug_dge_t_value_column_name}{
-    The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the name of the column containing the t-value in the DGE table.
-    Type: \code{string}.
-    Default value: \code{"t.value"}.
   }
   \item{random_distribution_size}{
     Size of the random connectivity score distribution. Higher values provide more precise p-values.
@@ -118,6 +108,13 @@ geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
     Type: class derived from \code{DGEToSignatureMapperAbstract}.
     Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
   }
+    \item{drugSignatureLoader (constructor argument)}{
+    Loader for drug DGEs in the argument \code{drugs}.
+    \itemize{
+      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
+      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+    }
+  }
 }
 \value{
 Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \code{adj.p.value}, \code{disease}, \code{disease_signature_type}, \code{drug_perturbation_time}. The field \code{drug_perturbation_time} is optional.
@@ -154,13 +151,12 @@ tissue_statuses_to_be_tested = c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map = c("Control", "als")
 sample_id_field_name = "accession"
 additional_fields = "tissue"
-drug_dge_dir = "/drug_dges/"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404")
+  filename = c("/drug_dges/A-23187.Rds", "/drug_dges/A-443644.Rds", "AG-490.Rds",
+  "/drug_dges/AG-494.Rds", "/drug_dges/AG-957.Rds", "/drug_dges/AM-404.Rds")
 )
 drugs_genes = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
-drug_gde_t_value_column_name = "t.value"
 random_distribution_size = 10^5
 disease_name = "ALS"
 drug_perturbation_time = "6h"
@@ -173,8 +169,7 @@ geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMV
 geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
         rna_seq_metadata_filename, formula, tissue_status_field_name,
         tissue_statuses_to_be_tested, tissue_statuses_map,
-        sample_id_field_name, additional_fields, drug_dge_dir, drugs,
-        drugs_genes, drug_gde_t_value_column_name,
+        sample_id_field_name, additional_fields, drugs, drugs_genes,
         random_distribution_size, disease_name, drug_perturbation_time,
         parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter

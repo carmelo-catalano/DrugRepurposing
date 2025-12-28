@@ -1,7 +1,8 @@
 library(testthat)
 
 # setup
-sut <- GEORNASeqLMMVoomDrugRepurpose$new(GEORNASeqLMMVoomDGEJulia$new())
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("test/connectivity_score/drug_dge/"), "t.value_6h")
+sut <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGE = GEORNASeqLMMVoomDGEJulia$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -32,10 +33,8 @@ result <- sut$compute(
   tissue_statuses_map,
   sample_id_field_name,
   additional_fields,
-  absolute_package_directory("test/connectivity_score/drug_dge/"),
   drugs,
   drug_genes,
-  "t.value_6h",
   10,
   "ipf",
   "6h",

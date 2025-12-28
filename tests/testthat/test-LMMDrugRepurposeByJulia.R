@@ -2,8 +2,8 @@ library(testthat)
 
 # setup
 drug_dge_dir <- absolute_package_directory("test/connectivity_score/drug_dge/")
-drug_gde_t_value_column_name <- "t.value_6h"
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
+drug_dge_t_value_column_name <- "t.value_6h"
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
 sut <- LMMDrugRepurpose$new(lmmDGE = LMMDGEJulia$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given

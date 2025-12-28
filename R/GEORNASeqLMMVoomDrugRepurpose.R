@@ -1,7 +1,7 @@
 GEORNASeqLMMVoomDrugRepurpose <- R6Class(
   "GEORNASeqLMMVoomDrugRepurpose",
   public = list(
-    initialize = function(geoRNASeqLMMVoomDGE = NA, dgeToSignatureMapper = NA) {
+    initialize = function(geoRNASeqLMMVoomDGE = NA, dgeToSignatureMapper = NA, drugSignatureLoader = NA) {
       if (!obj_is_na(geoRNASeqLMMVoomDGE)) {
         if (!"GEORNASeqLMMVoomDGEAbstract" %in% class(geoRNASeqLMMVoomDGE))
           stop("incompatible parameter type: the class type of geoRNASeqLMMVoomDGE must be a subclass of GEORNASeqLMMVoomDGEAbstract")
@@ -10,18 +10,17 @@ GEORNASeqLMMVoomDrugRepurpose <- R6Class(
         private$geoRNASeqLMMVoomDGE <- GEORNASeqLMMVoomDGEDream$new()
       }
       private$dgeToSignatureMapper <- dgeToSignatureMapper
+      private$drugSignatureLoader <- drugSignatureLoader
     },
     compute = function(rna_seq_data_filename, rna_seq_metadata_filename, formula,
                        tissue_status_field_name, tissue_statuses_to_be_tested,
                        tissue_statuses_map, sample_id_field_name = "accession",
-                       additional_fields = NA, drug_dge_dir, drugs,
-                       drugs_genes, drug_gde_t_value_column_name = "t.value",
+                       additional_fields = NA, drugs, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
                        parallel_computation = FALSE, filter_by_protein_coding = FALSE,
                        signature_mapper_parameter = NA
     ) {
-      drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_gde_t_value_column_name)
-      binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoaderByDrugName, private$dgeToSignatureMapper)
+      binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(private$drugSignatureLoader, private$dgeToSignatureMapper)
       startTime <- Sys.time()
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- private$geoRNASeqLMMVoomDGE$compute(
@@ -44,6 +43,7 @@ GEORNASeqLMMVoomDrugRepurpose <- R6Class(
     }
   ), private = list(
     geoRNASeqLMMVoomDGE = NA,
-    dgeToSignatureMapper = NA
+    dgeToSignatureMapper = NA,
+    drugSignatureLoader = NA
   )
 )
