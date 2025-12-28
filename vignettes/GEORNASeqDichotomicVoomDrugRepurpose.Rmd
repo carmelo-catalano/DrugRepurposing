@@ -25,7 +25,7 @@ library(DrugRepurposing)
 ```{r}
 library(DrugRepurposing)
 rna_seq_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
-# File content:
+# File content example:
 # GeneID   GSM1    GSM2    GSM3    GSM4
 # 1        262     116     111     162
 # 2        281897  337026  111736  219471

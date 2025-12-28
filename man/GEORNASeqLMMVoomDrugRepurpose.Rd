@@ -2,8 +2,17 @@
 \alias{GEORNASeqLMMVoomDrugRepurpose}
 \title{Compute connectivity score between disease RNA-Seq dataset and a list of drugs}
 \description{
-Given a disease RNA-Seq analysis and a list of drug DGEs, GEORNASeqLMMVoomDrugRepurpose computes the connectivity score between the disease and the drugs.
-This class composes the class BinChenDiseaseDGEDrugListConnectivityScore and an implementation of GEORNASeqLMMVoomDGEAbstract.
+Given a disease RNA-Seq analysis and a list of drug DGEs, \code{GEORNASeqLMMVoomDrugRepurpose}
+computes the connectivity score between the disease and the drug DGEs.
+\cr
+\code{GEORNASeqLMMVoomDrugRepurpose} calculates differential gene expression from RNA-seq data using a
+Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
+\cr
+This class composes the class BinChenDiseaseDGEDrugListConnectivityScore and an implementation
+of \code{GEORNASeqLMMVoomDGEAbstract}.
+\cr
+RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+\cr
 The input RNA-seq data and metadata files are sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
 }
 \usage{
@@ -145,24 +154,24 @@ rna_seq_metadata_filename <- "/home/user/rna/gse153960_metadata.csv"
 # GSM6            Cerebellum            NEUJZ255ZC5   ALS Spectrum MND
 # GSM7            Cerebellum            NEUJZ233ZL3   Non-Neurological Control
 
-formula = ~tissue_status + (1 | tissue)
-tissue_status_field_name = "tissue_status"
-tissue_statuses_to_be_tested = c("Non-Neurological Control", "ALS Spectrum MND")
-tissue_statuses_map = c("Control", "als")
-sample_id_field_name = "accession"
-additional_fields = "tissue"
+formula <- ~tissue_status + (1 | tissue)
+tissue_status_field_name <- "tissue_status"
+tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
+tissue_statuses_map <- c("Control", "als")
+sample_id_field_name <- "accession"
+additional_fields <- "tissue"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
   filename = c("/drug_dges/A-23187.Rds", "/drug_dges/A-443644.Rds", "AG-490.Rds",
   "/drug_dges/AG-494.Rds", "/drug_dges/AG-957.Rds", "/drug_dges/AM-404.Rds")
 )
-drugs_genes = c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
-random_distribution_size = 10^5
-disease_name = "ALS"
-drug_perturbation_time = "6h"
-parallel_computation = F
-filter_by_protein_coding = F
-signature_mapper_parameter = 150
+drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
+random_distribution_size <- 10^5
+disease_name <- "ALS"
+drug_perturbation_time <- "6h"
+parallel_computation <- FALSE
+filter_by_protein_coding <- FALSE
+signature_mapper_parameter <- 150
 
 geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
