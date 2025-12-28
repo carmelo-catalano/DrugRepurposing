@@ -2,7 +2,10 @@
 \alias{GEORNASeqDichotomicVoomDGE}
 \title{Computes the differential gene expression analysis using Voom transformation}
 \description{
-Computes the differential gene expression analysis. The input consists of two groups of RNA-Seq data from tissues under different conditions, for example, a disease-affected group and a control group. RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+Computes the differential gene expression analysis. The input consists of two groups of RNA-Seq
+data from tissues under different conditions, for example, a disease-affected group and a control
+group. RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like
+analyses.
 \cr
 For RNA data following a normal distribution, such as microarray data, see \code{DichotomicDGE}.
 \cr

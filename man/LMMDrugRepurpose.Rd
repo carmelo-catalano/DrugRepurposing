@@ -2,8 +2,17 @@
 \alias{LMMDrugRepurpose}
 \title{Compute the connectivity score between a disease and a list of drug DGEs}
 \description{
-Given a disease RNA data analysis and a list of drug DGEs, \code{LMMDrugRepurpose} computes the connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug DGEs, \code{LMMDrugRepurpose} computes the
+connectivity score between the disease and the drugs.
+\cr
+\code{LMMDrugRepurpose} calculates differential gene expression from RNA data using a
+Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
+\cr
 This class creates an instance of \code{LMMDrugRepurposeCore} and uses it for the computation.
+\cr
+RNA data must be on the "normal distribution", usually data from microarray like analysis.
+\cr
+For RNA data on negative binomial distribution like Illumina RNA-Seq see  \code{LMMVoomDrugRepurpose}.
 }
 \usage{
 lmmDGE <- LMMDGEJulia$new()

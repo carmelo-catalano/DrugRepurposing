@@ -2,7 +2,13 @@
 \alias{LMMVoomDrugRepurpose}
 \title{Computes the connectivity score between RNA-Seq data of a disease and a list of drugs}
 \description{
-Computes the connectivity score between RNA-Seq data of a disease and a list of drugs.
+Given a disease RNA-Seq data analysis and a list of drug DGEs, \code{LMMVoomDrugRepurpose} computes the
+connectivity score between the disease and the drugs.
+\cr
+\code{LMMVoomDrugRepurpose} calculates differential gene expression from RNA-seq data using a
+Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
+\cr
+RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
 \cr
 This class creates an instance of \code{LMMDrugRepurposeCore} and uses it for the computation.
 }

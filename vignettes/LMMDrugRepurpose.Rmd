@@ -1,18 +1,24 @@
 ---
-title: "GEO RNA Seq Dichotomic Voom Differential Gene Expression analysis (DGE)"
+title: "LMM Drug Repurpose"
 output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{GEO RNA Seq Dichotomic Voom Differential Gene Expression analysis (DGE)}
+  %\VignetteIndexEntry{LMM Drug Repurpose}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 # Description
-Given a disease RNA data analysis and a list of drug DGEs, \code{LMMDrugRepurpose} computes the connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug DGEs, `LMMDrugRepurpose` computes the connectivity score between the disease and the drugs.
 
-This class creates an instance of \code{LMMDrugRepurposeCore} and uses it for the computation.
+`LMMDrugRepurpose` calculates differential gene expression from RNA data using a
+Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
 
+This class creates an instance of `LMMDrugRepurposeCore` and uses it for the computation.
+
+RNA data must be on the "normal distribution", usually data from microarray like analysis.
+
+For RNA data on negative binomial distribution like Illumina RNA-Seq see  `LMMVoomDrugRepurpose`.
 ```{r setup, include=FALSE}
 library(DrugRepurposing)
 ```
