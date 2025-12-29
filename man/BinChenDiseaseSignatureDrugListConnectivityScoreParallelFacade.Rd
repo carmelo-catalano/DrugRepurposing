@@ -2,9 +2,17 @@
 \alias{BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade}
 \title{Facade for BinChenDiseaseSignatureDrugListConnectivityScoreCore using parallel computation}
 \description{
-Facade for \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore}. It creates an instance of \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore} using the parallel implementations of \code{RandomConnectivityScoreDistributionAbstract} and \code{BinChenConnectivityScoreListApplyerAbstract}.
+Computes the connectivity score between a disease signature and a list of drug DGEs.
+\cr
+Facade for \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore}. It creates an instance
+of \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore} using the parallel
+implementations of \code{RandomConnectivityScoreDistributionAbstract} and
+\code{BinChenConnectivityScoreListApplyerAbstract}.
+\cr
 The parallel implementations used are: \code{RandomConnectivityScoreDistributionParallel} and \code{BinChenConnectivityScoreListApplyerParallel}.
+\cr
 This class is identical to \code{BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade}, except for the computation type.
+\cr
 Due to R architecture, it works only on Unix-like systems.
 }
 \usage{
@@ -29,7 +37,8 @@ random_distribution_size, disease_name, drug_perturbation_time)
     }
   }
   \item{n_drug_signatures_genes}{
-    For the connectivity score computation, only a subset of drug signature genes is used. This parameter represents the total number of the drug signature genes.
+    The size of the signature, expressed in number of genes, is needed for the computation of the random distribution.
+    The random distribution is used for p-value computation.
     \itemize{
       \item Type: \code{integer}.
     }

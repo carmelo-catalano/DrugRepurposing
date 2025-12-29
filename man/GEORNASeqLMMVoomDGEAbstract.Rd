@@ -76,7 +76,7 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 }
 \examples{
 
-# rna_seq_data example:
+# rna_seq file content example:
 #
 #  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
 #  1        817    480    513    497    105    123    455    244
@@ -88,7 +88,7 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 #  21       230    133    830    159    127    191    186    100
 #  25       102    605    246    368    611    588    654    811
 
-# rna_seq_metadata structure:
+# rna_seq_metadata example:
 #
 # sample_id      tissue                subject_id     tissue_status
 # GSM1           Spinal Cord Lumbar    NEUEL133AK6   ALS Spectrum MND
@@ -98,6 +98,7 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 # GSM5           Spinal Cord Lumbar    NEUKM699KKH   ALS Spectrum MND
 # GSM6           Cerebellum            NEUJZ255ZC5   ALS Spectrum MND
 # GSM7           Cerebellum            NEUJZ233ZL3   Non-Neurological Control
+#
 # sample_id column is used as a filter for rna_seq_data:
 # rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
 # the GSM8 column of rna_seq_data will be discarded before computation.

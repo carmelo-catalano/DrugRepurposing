@@ -1,26 +1,15 @@
 ---
-title: "Dichotomic Voom Differential Gene Expression analysis (DGE)"
+title: "Bin Chen Disease DGE Drug Connectivity Score"
 output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
- %\VignetteIndexEntry{Dichotomic Voom Differential Gene Expression analysis (DGE)}
+ %\VignetteIndexEntry{Bin Chen Disease DGE Drug Connectivity Score}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---
 # Description
-Computes the differential gene expression analysis. The input consists of two groups of
-RNA-Seq data from tissues under different conditions: control vs. altered state (e.g., a
-disease-affected group and a control group).
-
-RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analysis.
-
-For RNA data following a normal distribution (such as in microarray analysis), see
-`DichotomicDGE`.
-
-Derived class of `DichotomicDGEAbstract`.
-
-
+Given a disease DGE and a drug DGE, computes the connectivity score between them.
 ```{r setup, include=FALSE}
 library(DrugRepurposing)
 ```
