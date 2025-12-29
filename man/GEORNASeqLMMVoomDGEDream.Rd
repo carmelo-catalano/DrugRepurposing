@@ -12,9 +12,7 @@ For more details, see \code{GEORNASeqLMMVoomDGECore}.
 \usage{
 geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
 result <- geoRNASeqLMMVoomDGEDream$compute(
-  rna_seq_data_filename, rna_seq_metadata_filename, formula,
-  tissue_status_field_name, tissue_statuses_to_be_tested,
-  tissue_statuses_map, sample_id_field_name, additional_fields,
+  rna_seq_data_filename, rna_seq_metadata, formula,
   filter_by_protein_coding
 )
 }
@@ -36,8 +34,10 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 # Input data are the same as in GEORNASeqLMMVoomDGECore.
 
 geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
-geoRNASeqLMMVoomDGEDream$compute(rna_seq_data_filename, rna_seq_metadata_filename, formula, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name,
-additional_fields, filter_by_protein_coding)
+geoRNASeqLMMVoomDGEDream$compute(
+    rna_seq_data_filename, rna_seq_metadata, formula,
+    filter_by_protein_coding
+ )
 
 # output is the same as in GEORNASeqLMMVoomDGECore
 }

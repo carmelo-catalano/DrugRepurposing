@@ -15,9 +15,7 @@ See \code{GEORNASeqLMMVoomDGECore} for more information.
 \usage{
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata_filename, formula,
-  tissue_status_field_name, tissue_statuses_to_be_tested,
-  tissue_statuses_map, sample_id_field_name, additional_fields,
+  rna_seq_data_filename, rna_seq_metadata, formula,
   filter_by_protein_coding
 )
 }
@@ -40,9 +38,7 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata_filename, formula,
-  tissue_status_field_name, tissue_statuses_to_be_tested,
-  tissue_statuses_map, sample_id_field_name, additional_fields,
+  rna_seq_data_filename, rna_seq_metadata, formula,
   filter_by_protein_coding
 )
 

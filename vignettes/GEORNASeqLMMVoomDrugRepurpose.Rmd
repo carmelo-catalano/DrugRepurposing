@@ -1,0 +1,150 @@
+---
+title: "GEO RNA Seq LMM Voom Drug Repurpose"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+ %\VignetteIndexEntry{GEO RNA Seq LMM Voom Drug Repurpose}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+# Description
+Given a disease RNA-Seq analysis and a list of drug DGEs, `GEORNASeqLMMVoomDrugRepurpose`
+computes the connectivity score between the disease and the drug DGEs.
+\cr
+`GEORNASeqLMMVoomDrugRepurpose` calculates differential gene expression from RNA-seq data using a
+Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
+\cr
+This class composes the class BinChenDiseaseDGEDrugListConnectivityScore and an implementation
+of `GEORNASeqLMMVoomDGEAbstract`.
+
+RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+
+The input RNA-Seq data file is sourced from NCBI [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/).
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+options(warn = -1)
+```
+```{r}
+library(DrugRepurposing)
+
+tsvLines <- list(
+  "GeneID	GSM2433098	GSM2433099	GSM2433100	GSM2433101	GSM2433102	GSM2433103	GSM2433104	GSM2433109",
+  "1	817	480	513	497	1055	409	661	788",
+  "2	451	315	489	620	762	244	572	234",
+  "9	792	608	560	585	952	436	823	981",
+  "12	220	244	283	404	434	196	314	225",
+  "13	142	229	240	350	332	163	239	324",
+  "14	682	501	354	669	721	520	550	755",
+  "21	230	133	83	59	127	91	86	100",
+  "25	1022	605	246	368	611	588	654	811"
+)
+tsv <- ""
+for (i in 1:9)
+  tsv <- paste(tsv, tsvLines[i], sep = "\n")
+rna_seq_data_filename <- tempfile()
+writeLines(tsv, con = rna_seq_data_filename)
+
+rna_seq_metadata <- data.frame(
+  sample_id = c("GSM2433098", "GSM2433099", "GSM2433100", "GSM2433101",
+                "GSM2433102", "GSM2433103", "GSM2433104"),
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum"),
+  subject_id = c("NEUEL133AK6", "NEUYV496XLP", "NEUZU200WEQ", "NEUEC006FND",
+                 "NEUKM699KKH", "NEUJZ255ZC5", "NEUJZ233ZL3"),
+  tissue_status = c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control")
+)
+# rna_seq_metadata structure:
+#
+# sample_id       tissue                subject_id     tissue_status
+# GSM2433098      Spinal Cord Lumbar    NEUEL133AK6   ALS Spectrum MND
+# GSM2433099      Spinal Cord Lumbar    NEUYV496XLP   ALS Spectrum MND
+# GSM2433100      Spinal Cord Lumbar    NEUZU200WEQ   ALS Spectrum MND
+# GSM2433101      Spinal Cord Lumbar    NEUEC006FND   Non-Neurological Control
+# GSM2433102      Spinal Cord Lumbar    NEUKM699KKH   ALS Spectrum MND
+# GSM2433103      Cerebellum            NEUJZ255ZC5   ALS Spectrum MND
+# GSM2433104      Cerebellum            NEUJZ233ZL3   Non-Neurological Control
+# sample_id column is used as a filter for rna_seq_data:
+# rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
+# In this example, the GSM2433109 column of rna_seq_data will be discarded before computation.
+
+drugs_genes <- c(1, 2, 9, 12, 13, 14, 21, 25)
+
+drugs <- data.frame(
+  name = c("A-23187", "A-443644", "AG-490", "AG-494"),
+  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+)
+
+A_23187_drug <- data.frame(
+  gene_id = c(1, 2, 9, 12, 13, 14, 21, 25, 31),
+  estimate = c(1.98564, -1.51579, 0.33099, -0.935718, -3.818529,
+               1.848352, -4.332752, 3.591474, -0.345235423)
+)
+
+A_443644_drug <- data.frame(
+  gene_id = c(1, 2, 9, 12, 13, 14, 21, 25, 6158),
+  estimate = c(-1.55774, -4.4155, 1.21015, 4.8705936, -0.1259465,
+               -2.6003531, -0.3530122, -3.5426363, -3.252352)
+)
+
+AG_490_drug <- data.frame(
+  gene_id = c(1, 2, 9, 12, 13, 14, 21, 25, 37),
+  estimate = c(-1.35143, 0.58724, -1.31592, 0.22267776, -0.45726445,
+               -2.80993289, -0.05550198, 1.76931022, 0.1423542)
+)
+
+AG_494_drug <- data.frame(
+  gene_id = c(1, 2, 9, 12, 13, 14, 21, 25, 6158),
+  estimate = c(-3.43357, -0.14896, 0.90733, 3.084164, -2.594041,
+               4.304979, -4.944015, -2.075178, 1.4523542)
+)
+
+drugs_rna_data <- list()
+drugs_rna_data[["A-23187"]] <- A_23187_drug
+drugs_rna_data[["A-443644"]] <- A_443644_drug
+drugs_rna_data[["AG-490"]] <- AG_490_drug
+drugs_rna_data[["AG-494"]] <- AG_494_drug
+
+
+EasyDrugSignatureLoader <- R6Class(
+  "EasyDrugSignatureLoader",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    initialize = function(drugs_rna_data) {
+      private$drugs_rna_data <- drugs_rna_data
+    },
+    load = function(drug_name) {
+      return(private$drugs_rna_data[[drug_name]])
+    }
+  ),
+  private = list(
+    drugs_rna_data = NA
+  )
+)
+
+easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
+
+geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGEDream$new()
+geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(
+  geoRNASeqLMMVoomDGE = geoRNASeqLMMVoomDGELmer,
+  drugSignatureLoader = easyDrugSignatureLoader
+)
+
+geoRNASeqLMMVoomDrugRepurpose$compute(
+  rna_seq_data_filename = rna_seq_data_filename,
+  rna_seq_metadata = rna_seq_metadata,
+  formula = ~tissue_status + (1 | tissue),
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10,
+  disease_name = "ALS",
+  parallel_computation = FALSE,
+  filter_by_protein_coding = FALSE,
+  signature_mapper_parameter = 8
+)
+
+unlink(rna_seq_data_filename)
+```

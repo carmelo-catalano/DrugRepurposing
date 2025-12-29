@@ -17,13 +17,11 @@ The input RNA-seq data and metadata files are sourced from NCBI (\url{https://ww
 }
 \usage{
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
-geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
-        rna_seq_metadata_filename, formula, tissue_status_field_name,
-        tissue_statuses_to_be_tested, tissue_statuses_map,
-        sample_id_field_name, additional_fields, drugs, drugs_genes,
-        random_distribution_size, disease_name, drug_perturbation_time,
-        parallel_computation, filter_by_protein_coding,
-        signature_mapper_parameter
+geoRNASeqLMMVoomDrugRepurpose$compute(
+       rna_seq_data_filename, rna_seq_metadata, formula, drugs, drugs_genes,
+       random_distribution_size, disease_name, drug_perturbation_time,
+       parallel_computation, filter_by_protein_coding,
+       signature_mapper_parameter
 )
 }
 \arguments{
@@ -34,8 +32,9 @@ geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     Type: \code{string}.
   }
-  \item{rna_seq_metadata_filename}{
-    Filename of RNA-seq metadata file. The file is in csv format, with ";" separator.
+  \item{rna_seq_metadata}{
+    RNA seq metadata.
+    \cr
     For each RNA-seq analysis column in the rna_seq_data table, there is a row in the rna_seq_metadata table.
     The metadata contains the status control/altered state of the tissue and the additional conditions.
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
@@ -45,27 +44,6 @@ geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
     The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
     Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
     Type: \code{R formula}.
-  }
-  \item{tissue_status_field_name}{
-    Name of the column in the rna_seq_metadata table that contains the tissue status.
-    Type: \code{string}.
-  }
-  \item{tissue_statuses_to_be_tested}{
-    A list of length 2 containing tissue statuses, usually a control tissue and a disease-affected tissue.
-    Type: \code{string vector}.
-  }
-  \item{tissue_statuses_map}{
-    A list of length 2 containing tissue statuses to rename the statuses in tissue_statuses_to_be_tested.
-    \code{tissue_statuses_map} and \code{tissue_statuses_to_be_tested} have the same size.
-    Type: \code{string vector}.
-  }
-  \item{sample_id_field_name}{
-    Additional field to use for LMM computation. This fields represents the additional conditions under which the experiments were conducted.
-    Type: \code{string}.
-  }
-  \item{sample_id_field_name}{
-    Column name in the \code{rna_seq_metadata} table that contains the sample_id. The sample_id is used to match metadata with the RNA-Seq data.
-    Type: \code{string}.
   }
   \item{drugs}{
     Drug signatures.
@@ -130,7 +108,7 @@ Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \co
 }
 \examples{
 rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.tsv.gz"
-# File content:
+# File content example:
 #
 # GeneID   GSM1      GSM2      GSM3      GSM4      GSM5      GSM6      GSM7
 # 1        262       116       111       162       172       182       142
@@ -142,24 +120,20 @@ rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.ts
 # 12       4842      3699      2536      4527      4347      4125      3825
 # 13       9966      12406     1531      12941     11841     10121     11347
 
-rna_seq_metadata_filename <- "/home/user/rna/gse153960_metadata.csv"
-# File content:
+
+# rna_seq_metadata  content example:
 #
-# accession       tissue                subject_id     tissue_status
-# GSM1            Spinal Cord Lumbar    NEUEL133AK6   ALS Spectrum MND
-# GSM2            Spinal Cord Lumbar    NEUYV496XLP   ALS Spectrum MND, Other Neurological Disorders
-# GSM3            Spinal Cord Lumbar    NEUZU200WEQ   ALS Spectrum MND
-# GSM4            Spinal Cord Lumbar    NEUEC006FND   Non-Neurological Control
-# GSM5            Spinal Cord Lumbar    NEUKM699KKH   ALS Spectrum MND, Other Neurological Disorders
-# GSM6            Cerebellum            NEUJZ255ZC5   ALS Spectrum MND
-# GSM7            Cerebellum            NEUJZ233ZL3   Non-Neurological Control
+# sample_id    tissue_status    tissue
+# GSM1         als              Spinal Cord Lumbar
+# GSM2         als              Spinal Cord Lumbar
+# GSM3         als              Spinal Cord Lumbar
+# GSM4         Control          Spinal Cord Lumbar
+# GSM5         als              Spinal Cord Cervical
+# GSM6         als              Spinal Cord Cervical
+# GSM7         Control          Spinal Cord Cervical
 
 formula <- ~tissue_status + (1 | tissue)
-tissue_status_field_name <- "tissue_status"
-tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
-tissue_statuses_map <- c("Control", "als")
-sample_id_field_name <- "accession"
-additional_fields <- "tissue"
+
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
   filename = c("/drug_dges/A-23187.Rds", "/drug_dges/A-443644.Rds", "AG-490.Rds",
@@ -176,9 +150,7 @@ signature_mapper_parameter <- 150
 geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
 geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
-        rna_seq_metadata_filename, formula, tissue_status_field_name,
-        tissue_statuses_to_be_tested, tissue_statuses_map,
-        sample_id_field_name, additional_fields, drugs, drugs_genes,
+        rna_seq_metadata, formula, drugs, drugs_genes,
         random_distribution_size, disease_name, drug_perturbation_time,
         parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter

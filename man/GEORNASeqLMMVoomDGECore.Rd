@@ -16,9 +16,7 @@ Both \code{tissue_statuses_to_be_tested} and \code{tissue_statuses_map} must hav
 lmmVoomDGE = LMMVoomDGEDream$new()
 geoRNASeqLMMVoomDGECore <- GEORNASeqLMMVoomDGECore$new(lmmVoomDGE)
 geoRNASeqLMMVoomDGECore$compute(
-  rna_seq_data_filename, rna_seq_metadata_filename, formula,
-  tissue_status_field_name, tissue_statuses_to_be_tested,
-  tissue_statuses_map, sample_id_field_name, additional_fields,
+  rna_seq_data_filename, rna_seq_metadata, formula,
   filter_by_protein_coding
 )
 }
@@ -55,8 +53,8 @@ rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.ts
 # 12       4842      3699      2536      4527      4347      4125      3825
 # 13       9966      12406     1531      12941     11841     10121     11347
 
-rna_seq_metadata_filename <- "/home/user/rna/gse153960_metadata.csv"
-# file content example:
+rna_seq_metadata
+# rna_seq_metadata content example:
 # accession       tissue                subject_id     tissue_status
 # GSM1            Spinal Cord Lumbar    NEUEL133AK6   ALS Spectrum MND
 # GSM2            Spinal Cord Lumbar    NEUYV496XLP   ALS Spectrum MND, Other Neurological Disorders
@@ -67,20 +65,13 @@ rna_seq_metadata_filename <- "/home/user/rna/gse153960_metadata.csv"
 # GSM7            Cerebellum            NEUJZ233ZL3   Non-Neurological Control
 
 formula <- ~ tissue_status + (1 | tissue)
-tissue_status_field_name <- "tissue_status"
-tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
-tissue_statuses_map <- c("Control", "ALS")
-sample_id_field_name <- "accession"
-additional_fields <- "tissue"
 filter_by_protein_coding <- FALSE
 
 lmmVoomDGE = LMMVoomDGEDream$new()
 geoRNASeqLMMVoomDGECore <- GEORNASeqLMMVoomDGECore$new(lmmVoomDGE)
 geoRNASeqLMMVoomDGECore$compute(
-  rna_seq_data_filename, rna_seq_metadata_filename, formula,
-  tissue_status_field_name, tissue_statuses_to_be_tested,
-  tissue_statuses_map, sample_id_field_name, additional_fields,
-  filter_by_protein_coding
+  rna_seq_data_filename, rna_seq_metadata,
+  formula,filter_by_protein_coding
 )
 # Output:
 # gene_id    DE_log2_FC     std.error     t.value     p.value     adj.p.value
