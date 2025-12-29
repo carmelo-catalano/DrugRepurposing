@@ -1,6 +1,7 @@
 library(testthat)
 
 # setup
+geoRNASeqLMMMetadataLoader <- GEORNASeqLMMMetadataLoader$new()
 sut <- GEORNASeqLMMVoomDGEJulia$new()
 
 # given
@@ -12,18 +13,16 @@ formula <- ~tissue_status + (1 | tissue)
 tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
+
+rna_seq_metadata <- geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
+
 expected <- package_readRDS("test/voom/GEORNASeqLMMVoomDGEJulia_expected.Rds")
 
 # when
 result <- sut$compute(
   rna_seq_data_filename,
-  rna_seq_metadata_filename,
+  rna_seq_metadata,
   formula,
-  tissue_status_field_name,
-  tissue_statuses_to_be_tested,
-  tissue_statuses_map,
-  sample_id_field_name,
-  additional_fields,
   filter_by_protein_coding = F
 )
 result$p.value <- NULL

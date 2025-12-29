@@ -1,5 +1,5 @@
-GEORNASeqLMMLoader <- R6Class(
-  "GEORNASeqLMMLoader",
+GEORNASeqLMMDataMetadataLoader <- R6Class(
+  "GEORNASeqLMMDataMetadataLoader",
   public = list(
     initialize = function(geneFilter = NA) {
       if (!obj_is_na(geneFilter)) {

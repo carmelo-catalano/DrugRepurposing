@@ -12,10 +12,7 @@ GEORNASeqLMMVoomDrugRepurpose <- R6Class(
       private$dgeToSignatureMapper <- dgeToSignatureMapper
       private$drugSignatureLoader <- drugSignatureLoader
     },
-    compute = function(rna_seq_data_filename, rna_seq_metadata_filename, formula,
-                       tissue_status_field_name, tissue_statuses_to_be_tested,
-                       tissue_statuses_map, sample_id_field_name = "accession",
-                       additional_fields = NA, drugs, drugs_genes,
+    compute = function(rna_seq_data_filename, rna_seq_metadata, formula, drugs, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
                        parallel_computation = FALSE, filter_by_protein_coding = FALSE,
                        signature_mapper_parameter = NA
@@ -25,14 +22,10 @@ GEORNASeqLMMVoomDrugRepurpose <- R6Class(
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- private$geoRNASeqLMMVoomDGE$compute(
         rna_seq_data_filename,
-        rna_seq_metadata_filename,
+        rna_seq_metadata,
         formula,
-        tissue_status_field_name,
-        tissue_statuses_to_be_tested,
-        tissue_statuses_map,
-        sample_id_field_name,
-        additional_fields,
-        filter_by_protein_coding)
+        filter_by_protein_coding
+      )
       connectivity_score <- binChenDiseaseDGEDrugListConnectivityScore$compute(
         disease_dge, drugs, drugs_genes, random_distribution_size, disease_name,
         drug_perturbation_time, parallel_computation, signature_mapper_parameter

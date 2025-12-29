@@ -17,8 +17,8 @@ tissue_status_field_name <- "tissue_status"
 sample_id_field_name <- "accession"
 additional_fields <- "tissue"
 
-geoRNASeqLMMLoader <- GEORNASeqLMMLoader$new()
-rna_seq <- geoRNASeqLMMLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
+geoRNASeqLMMDataMetadataLoader <- GEORNASeqLMMDataMetadataLoader$new()
+rna_seq <- geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
 
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
                   "AG-957", "AKT-inhibitor-1-2", "AM-404")
