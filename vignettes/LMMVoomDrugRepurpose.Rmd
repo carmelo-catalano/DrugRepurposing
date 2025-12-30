@@ -48,7 +48,7 @@ rownames(rna_seq_data) <- c(1, 2, 9, 12, 13, 14, 21, 25) # gene id
 # 13   9966     12406     1531     12941    941    2941   1941
 
 rna_seq_metadata <- data.frame(
-  accession = c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7"),
+  sample_id = c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7"),
   tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
              "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum"),
   subject_id = c("NEUEL133AK6", "NEUYV496XLP", "NEUZU200WEQ", "NEUEC006FND",
@@ -59,7 +59,7 @@ rna_seq_metadata <- data.frame(
 )
 
 # rna_seq_metadata =
-# accession   tissue                  subject_id     tissue_status
+# sample_id   tissue                  subject_id     tissue_status
 # GSM1        Spinal Cord Lumbar      NEUEL133AK6    ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      NEUYV496XLP    ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      NEUZU200WEQ    ALS Spectrum MND

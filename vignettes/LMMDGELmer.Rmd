@@ -31,7 +31,7 @@ options(warn = -1)
 ```
 ```{r}
 library(DrugRepurposing)
-accession <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
+sample_id <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
                "GSM7", "GSM8", "GSM9", "GSM10", "GSM11", "GSM12")
 rna_data <- matrix(
   # rna microarray analysis
@@ -46,8 +46,8 @@ rna_data <- matrix(
   dimnames = list(
     # gene IDs
     c(203228, 6647, 2521),
-    # accession
-    accession
+    # sample_id
+    sample_id
   )
 )
 # the first column represents the row names (gene IDs)
@@ -61,7 +61,7 @@ tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
                    "ALS", "ALS", "Control", "Control")
 tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
 rna_metadata <- data.frame(
-  accession = accession,
+  sample_id = sample_id,
   tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
              "Spinal Cord Lumbar", "Cerebellum", "Cerebellum", "Cerebellum",
              "Cerebellum", "Cerebellum", "Spinal Cord Lumbar",
