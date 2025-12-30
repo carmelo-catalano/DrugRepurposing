@@ -1,0 +1,80 @@
+---
+title: "Linear Mixed Model DGE Dream"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+ %\VignetteIndexEntry{Linear Mixed Model DGE Dream}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+# Description
+Derived class of `LMMDGEAbstract`.
+
+Computes differential gene expression analysis using the Linear Mixed Model (LMM).
+
+The LMM computation is performed using the `dream` function (library `variancePartition`).
+
+The input consists of two groups of RNA data analysis from tissues under different conditions: control/altered state.
+For example, a disease-affected group and a control group.
+
+Unlike the dichotomous case, where groups are divided only into "control/altered state", additional conditions exist under which the experiments were conducted. For instance, multiple RNA plates were used, or tissues originated from different parts of the body.
+RNA data must follow "normal distribution", which is typical for RNA microarray analysis.
+
+For RNA data following a "negative binomial distribution", refer to `LMMVoomDGEDream`, `LMMVoomDGEJulia`, or `LMMVoomDGELmer`.
+
+
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+options(warn = -1)
+```
+```{r}
+library(DrugRepurposing)
+accession <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
+               "GSM7", "GSM8", "GSM9", "GSM10", "GSM11", "GSM12")
+rna_data <- matrix(
+  # rna microarray analysis
+  c(2.9972499, 4.2469098, 19.0690947, 7.5957615, -6.5289474, 36.6519995,
+    12.2326273, -1.2400751, -12.0185859, 9.6117539, -9.7031797, 11.9692450,
+    -17.2317513, 13.3941123, 19.7100277, -9.7931619, 15.3568206, 26.0890177,
+    8.9792826, 4.0547337, 36.0595866, -7.2987920, 19.1745696, 30.5492311,
+    -10.6683999, 11.9134902, 4.3919955, -18.0423696, 0.4506173, 15.8493678,
+    -4.6110365, -7.3977498, -9.0876729, -10.1055128, -3.1825579, -2.4332119),
+  nrow = 3,
+  ncol = 12,
+  dimnames = list(
+    # gene IDs
+    c(203228, 6647, 2521),
+    # accession
+    accession
+  )
+)
+# the first column represents the row names (gene IDs)
+# rna_data =
+#          GSM1        GSM2        GSM3         GSM4          GSM5         ...
+# 203228   2.9972499   4.2469098   19.0690947   7.5957615     -6.5289474   ...
+# 6647     9.6117539   -9.7031797  11.9692450   -17.2317513   13.3941123   ...
+# 2521     8.9792826   4.0547337   36.0595866   -7.2987920    19.1745696   ...
+
+tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
+                   "ALS", "ALS", "Control", "Control")
+tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
+rna_metadata <- data.frame(
+  accession = accession,
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum", "Cerebellum", "Cerebellum",
+             "Cerebellum", "Cerebellum", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum"),
+  tissue_status = tissue_status_factor
+)
+formula <- ~tissue_status + (1 | tissue)
+
+lmmDGEDream <- LMMDGEDream$new()
+lmmDGEDream$compute(
+  rna_data = rna_data,
+  rna_metadata = rna_metadata,
+  formula = formula,
+  filter_by_protein_coding = FALSE
+)
+```
