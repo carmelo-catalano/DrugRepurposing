@@ -1,0 +1,65 @@
+---
+title: "GEO RNA Seq LMM Voom DGE by Lmer"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+ %\VignetteIndexEntry{GEO RNA Seq LMM Voom DGE by Lmer}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+# Description
+Derived class of `GEORNASeqLMMVoomDGEAbstract`.
+Computes the Voom Linear Mixed Model (LMM) differential gene expression (DGE) analysis using the `lmer` function from the `lme4` package.
+
+The input consists of two groups of RNA-Seq data from tissues under different conditions: control/altered state. For example, a disease-affected group and a control group.
+
+Unlike the dichotomous case, where groups are divided only into "control/altered state," additional conditions exist under which the experiments were conducted. For instance, multiple RNA plates were used, or tissues originated from different parts of the body.
+
+RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+
+The input RNA-Seq data file is sourced from NCBI [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/).
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+options(warn = -1)
+```
+```{r}
+library(DrugRepurposing)
+
+tsvLines <- list(
+  "GeneID	GSM1	GSM2	GSM3	GSM4	GSM5	GSM6	GSM7	GSM8	GSM9	GSM10	GSM11	GSM12",
+  "203228	632	944	219	547	895	610	369	427	763	3	772	980",
+  "6647	51	659	275	911	449	509	742	410	935	66	238	358",
+  "2521	323	681	521	947	133	492	459	224	876	692	927	836"
+)
+tsv <- tsvLines[1]
+for (i in 2:4)
+  tsv <- paste(tsv, tsvLines[i], sep = "\n")
+rna_seq_data_filename <- tempfile()
+writeLines(tsv, con = rna_seq_data_filename)
+
+sample_id <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
+               "GSM7", "GSM8", "GSM9", "GSM10", "GSM11", "GSM12")
+tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
+                   "ALS", "ALS", "Control", "Control")
+tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
+rna_seq_metadata <- data.frame(
+  sample_id = sample_id,
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum", "Cerebellum", "Cerebellum",
+             "Cerebellum", "Cerebellum", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Cerebellum"),
+  tissue_status = tissue_status_factor
+)
+
+geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
+geoRNASeqLMMVoomDGELmer$compute(
+  rna_seq_data_filename = rna_seq_data_filename,
+  rna_seq_metadata = rna_seq_metadata,
+  formula = ~tissue_status + (1 | tissue),
+  filter_by_protein_coding = FALSE
+)
+
+unlink(rna_seq_data_filename)
+```

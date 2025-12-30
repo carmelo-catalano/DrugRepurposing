@@ -16,8 +16,6 @@ The input consists of two groups of RNA-Seq data from tissues under different co
 
 Unlike the dichotomous case, where groups are divided only into "control/altered state," additional conditions exist under which the experiments were conducted. For instance, multiple RNA plates were used, or tissues originated from different parts of the body.
 
-RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analyses. For RNA data following a normal distribution, refer to `LMMDGEDream`, `LMMDGEJulia`, or `LMMDGELmer`.
-
 RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
 
 The input RNA-Seq data file is sourced from NCBI [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/).
