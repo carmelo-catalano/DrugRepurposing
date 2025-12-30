@@ -4,6 +4,9 @@
 \description{
 Computes differential gene expression analysis using the Linear Mixed Model (LMM).
 \cr
+The LMM computation is performed using the high-performance \code{Julia} environment.
+Julia-based LMM computation is up to 100 times faster than \code{lmer} and \code{dream} computation.
+\cr
 The LMM computation is performed using the high-performance Julia environment.
 \cr
 The input consists of two groups of RNA data analysis from tissues under different conditions: control/altered state. For example, a disease-affected group and a control group.

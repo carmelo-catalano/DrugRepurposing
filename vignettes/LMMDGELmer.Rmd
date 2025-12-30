@@ -1,10 +1,10 @@
 ---
-title: "Linear Mixed Model DGE by Dream"
+title: "Linear Mixed Model DGE by Lmer"
 output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
- %\VignetteIndexEntry{Linear Mixed Model DGE by Dream}
+ %\VignetteIndexEntry{Linear Mixed Model DGE by Lmer}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +13,7 @@ Derived class of `LMMDGEAbstract`.
 
 Computes differential gene expression analysis using the Linear Mixed Model (LMM).
 
-The LMM computation is performed using the `dream` function (library `variancePartition`).
+The LMM computation is performed using the `lmer` function (library `lme4`).
 
 The input consists of two groups of RNA data analysis from tissues under different conditions: control/altered state.
 For example, a disease-affected group and a control group.
@@ -70,8 +70,8 @@ rna_metadata <- data.frame(
 )
 formula <- ~tissue_status + (1 | tissue)
 
-lmmDGEDream <- LMMDGEDream$new()
-lmmDGEDream$compute(
+lmmDGELmer <- LMMDGELmer$new()
+lmmDGELmer$compute(
   rna_data = rna_data,
   rna_metadata = rna_metadata,
   formula = formula,
