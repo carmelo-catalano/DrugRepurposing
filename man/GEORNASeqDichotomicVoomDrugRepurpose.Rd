@@ -36,7 +36,10 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_seq_filename} table. Each character represents the type of the corresponding column in \code{rna_seq_filename} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_seq_filename} table.
+    Each character represents the type of the corresponding column in \code{rna_seq_filename}
+    table (i.e., the group): 0 = control sample, 1 = test sample, X = excluded sample.
+    Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
@@ -121,10 +124,10 @@ rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
 # 12     4842    3699    2536    4527
 # 13     9966    12406   1531    12941
 
-sample_01_map <- "0X10"
+sample_01_map <- "1X01"
 
 # How the map is applied:
-#           0      X      1      0
+#           1      X      0      1
 # GeneID   GSM1   GSM2   GSM3   GSM4
 # 1        262    116    111    162
 # ...

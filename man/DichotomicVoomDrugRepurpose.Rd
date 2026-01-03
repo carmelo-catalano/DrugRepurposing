@@ -25,7 +25,10 @@ dichotomicVoomDrugRepurpose$compute(
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_seq} table. Each character represents the type of the corresponding column in \code{rna_seq} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_seq} table.
+    Each character represents the type of the corresponding column in \code{rna_seq}
+    table (i.e., the group): 0 = control sample, 1 = test sample, X = excluded sample.
+    Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
@@ -124,7 +127,7 @@ rna_seq <- matrix(
   )
 )
 
-sample_01_map <- "0X10"
+sample_01_map <- "1X01"
 drugs <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
   filename = c("drugs_dge/A-23187.Rds", "drugs_dge/A-443644.Rds", "drugs_dge/AG-490.Rds",

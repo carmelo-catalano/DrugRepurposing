@@ -17,7 +17,7 @@ expected <- package_readRDS("test/drug_repurpose/GEORNASeqDichotomicVoomDrugRepu
 # when
 result <- sut$compute(
   absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"),
-  "000000000000000000001111111111111111111",
+  "TTTTTTTTTTTTTTTTTTTTCCCCCCCCCCCCCCCCCCC",
   drugs,
   drug_genes,
   10,

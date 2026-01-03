@@ -38,7 +38,7 @@ rna_seq <- matrix(
   )
 )
 
-sample_01_map <- "0X10"
+sample_01_map <- "1X01"
 
 drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
 

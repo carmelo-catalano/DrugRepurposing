@@ -32,7 +32,10 @@ dichotomicDrugRepurposeCore$compute(rna_data, sample_01_map,, drugs, drugs_genes
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_data} table.
+    Each character represents the type of the corresponding column in
+    \code{rna_data} table (i.e., the group): 0 = control sample, 1 =  test sample (altered state), X = excluded sample.
+    Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
@@ -133,10 +136,10 @@ rna_data <- matrix(
   )
 )
 
-sample_01_map <- "0X10"
+sample_01_map <- "1X01"
 
 # How the map is applied:
-#           0      X      1      0
+#           1      X      0      1
 # GeneID   GSM1   GSM2   GSM3   GSM4
 # 1        262    116    111    162
 # ...

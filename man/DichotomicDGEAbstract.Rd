@@ -27,7 +27,10 @@ DichotomicDGEImpl <- R6Class(
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the corresponding column in \code{rna_data} (i.e., the group): 0 = test sample (altered state), 1 = control sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_data} table. Each character represents the type of the
+    corresponding column in \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
+    Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \cr
     See \code{DichotomicDGE} or \code{DichotomicVoomDGE} for more details.
     \itemize{

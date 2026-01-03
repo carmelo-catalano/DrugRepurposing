@@ -20,7 +20,7 @@ expected <- package_readRDS("test/drug_repurpose/DichotomicVoomDrugRepurpose_exp
 # when
 result <- sut$compute(
   rna_seq = disease_rna_seq,
-  sample_01_map = "000000000000000000001111111111111111111",
+  sample_01_map = "111111111111111111110000000000000000000",
   drugs = drugs,
   drugs_genes = drugs_genes,
   random_distribution_size = 10,

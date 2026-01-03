@@ -21,7 +21,7 @@ expected <- package_readRDS("test/drug_repurpose/DichotomicDrugRepurpose_expecte
 # when
 result <- sut$compute(
   rna_data = pseudo_disease_rna_data,
-  sample_01_map = "000000000000000000001111111111111111111",
+  sample_01_map = "111111111111111111110000000000000000000",
   drugs,
   drug_genes,
   random_distribution_size = 10,

@@ -51,10 +51,10 @@ rna_data <- matrix(
 # 13       7.055282    6.392317    5.247928    6.285402
 
 
-sample_01_map <- "0X10"
+sample_01_map <- "1X01"
 
 # How the map is applied:
-#           0      X      1      0
+#           1      X      0      1
 # GeneID   GSM1   GSM2   GSM3   GSM4
 # 1        262    116    111    162
 # ...
