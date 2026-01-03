@@ -7,18 +7,150 @@ vignette: >
   %\VignetteIndexEntry{Compute drug repurposing with DrugRepurposing}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-abstract: >
-  A tool to compute drug repurposing by getting data from diseases and drugs
-  DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
 ---
+# Description
+  A tool to compute drug repurposing by getting data from diseases and drugs.
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+  A complete example.
 
-```{r setup}
+  DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
+
+```{r setup, include=FALSE}
 library(DrugRepurposing)
+options(warn = -1)
+```
+```{r}
+library(DrugRepurposing)
+rna_seq_drug_1 <- matrix(
+  c(
+    262, 281897, 463, 12301, 284, 2966, 4842, 9966,
+    116, 337026, 261, 3277, 132, 2006, 3699, 12406,
+    111, 111736, 193, 862, 88, 1371, 2536, 1531,
+    162, 219471, 281, 5990, 280, 2241, 4527, 12941
+  ),
+  nrow = 8,
+  ncol = 4,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4")
+  )
+)
+
+sample_01_map_drug_1 <- "1X01"
+# How the map is applied:
+#           1      X      0      1
+# GeneID   GSM1   GSM2   GSM3   GSM4
+# 1        262    281897 463    12301
+# ...
+#
+#
+# GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
+
+filter_by_protein_coding <- FALSE
+
+dichotomicVoomDGE <- DichotomicVoomDGE$new()
+drug_1_DGE <- dichotomicVoomDGE$compute(rna_seq_drug_1, sample_01_map_drug_1, filter_by_protein_coding)
+
+drug_1 <- drug_1_DGE[, c("gene_id", "t.value")]
+colnames(drug_1)[2] <- "estimate"
+
+rna_seq_drug_2 <- matrix(
+  c(
+    146, 247, 504, 938, 627, 733, 844,
+    245, 609, 108, 608, 928, 534, 48,
+    809, 765, 979, 832, 915, 981, 395,
+    644, 124, 830, 296, 738, 120, 235,
+    26, 60, 927, 622, 694, 940, 859,
+    712, 540, 448, 822, 195, 100, 814
+  ),
+  nrow = 6,
+  ncol = 7,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11),
+    c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6", "GSM7")
+  )
+)
+
+sample_01_map_drug_2 <- "X110011"
+# How the map is applied:
+#           X      1      1      0      0      1      1
+# GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7
+# 1        146    247    504    938    627    733    844
+# ...
+#
+
+drug_2_DGE <- dichotomicVoomDGE$compute(rna_seq_drug_2, sample_01_map_drug_2, filter_by_protein_coding)
+drug_2 <- drug_2_DGE[, c("gene_id", "t.value")]
+colnames(drug_2)[2] <- "estimate"
+
+drugs_rna_data <- list()
+drugs_rna_data[["drug_1"]] <- drug_1
+drugs_rna_data[["drug_2"]] <- drug_2
+
+drugs <- data.frame(
+  name = c("drug_1", "drug_2"),
+  filename = c("drug_1", "drug_2")
+)
+
+EasyDrugSignatureLoader <- R6Class(
+  "EasyDrugSignatureLoader",
+  inherit = DrugSignatureLoaderAbstract,
+  public = list(
+    initialize = function(drugs_rna_data) {
+      private$drugs_rna_data <- drugs_rna_data
+    },
+    load = function(drug_name) {
+      return(private$drugs_rna_data[[drug_name]])
+    }
+  ),
+  private = list(
+    drugs_rna_data = NA
+  )
+)
+
+
+meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(1)
+easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
+
+disease_rna_seq <- matrix(
+  c(
+    96, 311, 142, 428, 781,
+    466, 973, 193, 621, 405,
+    537, 179, 65, 486, 267,
+    308, 721, 714, 761, 605,
+    140, 77, 727, 116, 8,
+    460, 520, 645, 881, 328,
+    866, 887, 730, 157, 26,
+    825, 588, 113, 851, 667
+  ),
+  nrow = 8,
+  ncol = 5,
+  dimnames = list(
+    c(1, 2, 3, 9, 10, 11, 12, 13),
+    c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5")
+  )
+)
+
+disease_sample_01_map <- "1X011"
+drugs_genes <- c(1, 2, 3, 9, 10, 11)
+
+
+dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new(
+  meanThresholdGeneFilter,
+  easyDrugSignatureLoader
+)
+dichotomicVoomDrugRepurpose$compute(
+  rna_seq = disease_rna_seq,
+  sample_01_map = disease_sample_01_map,
+  drugs = drugs,
+  drugs_genes = drugs_genes,
+  random_distribution_size = 10, # 10 is a poor value used only to speed up
+                                 # computation; an appropriate value is 10^5
+  disease_name = "IPF",
+  filter_by_protein_coding = FALSE,
+  parallel_computation = FALSE,
+  signature_mapper_parameter = 6 # This parameter typically represents the most significant genes of the disease,
+                                 # and drug repurposing is computed only on this subset.
+)
+
 ```
