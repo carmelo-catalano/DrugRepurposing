@@ -10,7 +10,7 @@ GEORNASeqDichotomicVoomDGE <- R6Class(
       rna_seq <- as.matrix(data.table::fread(rna_seq_filename, header = TRUE, colClasses = "integer"), rownames = "GeneID")
       dge <- private$dichotomicVoomDGE$compute(rna_seq, sample_01_map, filter_by_protein_coding)
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end %s differential gene expression computation, time: %s", totalTime, attr(totalTime, "units")))
+      dgrpLogger$log(sprintf("end differential gene expression computation, time: %s %s", totalTime, attr(totalTime, "units")))
       return(dge)
     }
   ),
