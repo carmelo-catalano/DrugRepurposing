@@ -23,6 +23,8 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
     The metadata contains the control/altered state of the tissue and any additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    \cr
+    The status column must be a factor. The first level of the factor must be the "control" state.
     \itemize{
       \item Type: \code{string}.
     }

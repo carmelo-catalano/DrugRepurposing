@@ -32,6 +32,8 @@ LMMDGEImpl <- R6Class(
     The first column values of \code{rna_metadata} must match the row names of \code{rna_data}.
     \cr
     The metadata contains the status control/altered state of the tissue and the additional conditions.
+    \cr
+    The status column must be a factor. The first level of the factor must be the "control" state.
     \itemize{
       \item Type: \code{data frame}.
     }

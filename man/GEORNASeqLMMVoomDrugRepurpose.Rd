@@ -38,6 +38,8 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
     For each RNA-seq analysis column in the rna_seq_data table, there is a row in the rna_seq_metadata table.
     The metadata contains the status control/altered state of the tissue and the additional conditions.
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    \cr
+    The status column must be a factor. The first level of the factor must be the "control" state.
     Type: \code{string}.
   }
   \item{formula}{

@@ -28,8 +28,13 @@ lmmDrugRepurposeCore$compute(
     }
   }
   \item{rna_metadata}{
-    For each RNA data analysis column in \code{rna_data}, there is a row in \code{rna_metadata}.
+    For each RNA data analysis column in \code{rna_data} table there is a row in \code{rna_metadata} table.
+    \cr
+    The first column values of \code{rna_metadata} must match the row names of \code{rna_data}.
+    \cr
     The metadata contains the status control/altered state of the tissue and the additional conditions.
+    \cr
+    The status column must be a factor. The first level of the factor must be the "control" state.
     \itemize{
       \item Type: \code{data frame}.
     }

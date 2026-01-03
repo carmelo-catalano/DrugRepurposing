@@ -36,6 +36,8 @@ lmmVoomDrugRepurpose$compute(
     The metadata contains the status control/altered state of the tissue and the additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    \cr
+    The status column must be a factor. The first level of the factor must be the "control" state.
     \itemize{
       \item Type: \code{data frame}.
     }
