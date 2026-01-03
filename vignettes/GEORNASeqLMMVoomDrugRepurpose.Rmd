@@ -45,6 +45,11 @@ for (i in 1:9)
   tsv <- paste(tsv, tsvLines[i], sep = "\n")
 rna_seq_data_filename <- tempfile()
 writeLines(tsv, con = rna_seq_data_filename)
+tissue_status <- c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control")
+# The first level must be "Control" state
+tissue_status_factor <- factor(tissue_status, levels = c("Non-Neurological Control", "ALS Spectrum MND"))
 
 rna_seq_metadata <- data.frame(
   sample_id = c("GSM2433098", "GSM2433099", "GSM2433100", "GSM2433101",
@@ -53,10 +58,9 @@ rna_seq_metadata <- data.frame(
              "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum"),
   subject_id = c("NEUEL133AK6", "NEUYV496XLP", "NEUZU200WEQ", "NEUEC006FND",
                  "NEUKM699KKH", "NEUJZ255ZC5", "NEUJZ233ZL3"),
-  tissue_status = c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND",
-                    "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND",
-                    "Non-Neurological Control")
+  tissue_status = tissue_status_factor
 )
+
 # rna_seq_metadata structure:
 #
 # sample_id       tissue                subject_id     tissue_status
@@ -127,9 +131,9 @@ EasyDrugSignatureLoader <- R6Class(
 
 easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
 
-geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGEDream$new()
+geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(
-  geoRNASeqLMMVoomDGE = geoRNASeqLMMVoomDGELmer,
+  geoRNASeqLMMVoomDGE = geoRNASeqLMMVoomDGEDream,
   drugSignatureLoader = easyDrugSignatureLoader
 )
 

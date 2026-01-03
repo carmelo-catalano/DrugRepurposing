@@ -58,6 +58,7 @@ rna_seq_data <-
 
 tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
                    "ALS", "ALS", "Control", "Control")
+# The first level must be "Control" state
 tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
 rna_seq_metadata <- data.frame(
   sample_id = sample_id,

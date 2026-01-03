@@ -43,6 +43,7 @@ sample_id <- c("GSM1", "GSM2", "GSM3", "GSM4", "GSM5", "GSM6",
                "GSM7", "GSM8", "GSM9", "GSM10", "GSM11", "GSM12")
 tissue_status <- c("ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS", "ALS",
                    "ALS", "ALS", "Control", "Control")
+# The first level must be "Control" state
 tissue_status_factor <- factor(tissue_status, levels = c("Control", "ALS"))
 rna_seq_metadata <- data.frame(
   sample_id = sample_id,
