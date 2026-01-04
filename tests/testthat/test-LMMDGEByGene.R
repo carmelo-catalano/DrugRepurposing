@@ -3,7 +3,7 @@ library(R6)
 
 # setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
-lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
+lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir))
 
 lmm <- LMMLmer$new(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate))
 lmmToDataFrameMapper <- LMMLmerToDataFrameMapper$new()

@@ -5,8 +5,7 @@ Sys.setlocale(locale="C")
 gene_computed_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/output"),"/")
 gene_expected_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/expected"),"/")
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
-absolute_path_experiment_data_file <- "/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx"
-lincsGCTXDataRowLoader <- LINCSGCTXDataRowLoader$new(absolute_path_experiment_data_file)
+lincsGCTXDataRowLoader <- LINCSGCTXDataRowLoader$new(test_config$LINCS_gtx_database)
 sut <- LINCSExportByGeneList$new(lincsGCTXDataRowLoader)
 
 # given

@@ -3,7 +3,7 @@ library(lme4)
 
 #setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
-lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
+lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir))
 sut <- LMMLmerToDataFrameMapper$new()
 
 # given

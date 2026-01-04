@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-sut <- LINCSRDSLMMDrugDGEJulia$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir), 4)
+sut <- LINCSRDSLMMDrugDGEJulia$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir), absolute_path_directory(test_config$LINCS_dge_output_dir), 4)
 
 # given
 gene_list <- "780" # symbol "DDR1"

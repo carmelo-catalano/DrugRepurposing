@@ -2,9 +2,8 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-absolute_path_experiment_data_file <- "/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx"
 
-sut <- LINCSExport$new(absolute_path_experiment_data_file)
+sut <- LINCSExport$new(test_config$LINCS_gtx_database)
 
 # given
 gene_ids <- c("22", "23", "25", "29")

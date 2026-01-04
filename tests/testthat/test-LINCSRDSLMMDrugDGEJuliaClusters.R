@@ -2,8 +2,8 @@ library(testthat)
 
 # setup
 sut <- LINCSRDSLMMDrugDGEJuliaClusters$new(
-  absolute_package_directory(test_config$LINCS_splitted_level3_dir),
-  absolute_package_directory(test_config$LINCS_dge_output_dir),
+  absolute_path_directory(test_config$LINCS_splitted_level3_dir),
+  absolute_path_directory(test_config$LINCS_dge_output_dir),
   15
 )
 

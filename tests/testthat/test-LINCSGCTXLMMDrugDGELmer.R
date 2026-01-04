@@ -2,7 +2,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-sut <- LINCSGCTXLMMDrugDGELmer$new("/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx", absolute_package_directory(test_config$LINCS_dge_output_dir))
+sut <- LINCSGCTXLMMDrugDGELmer$new(test_config$LINCS_gtx_database, absolute_path_directory(test_config$LINCS_dge_output_dir))
 
 # given
 gene_list <- "780" # symbol "DDR1"

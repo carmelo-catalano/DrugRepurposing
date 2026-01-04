@@ -2,7 +2,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-sut <- LINCSRDSLMMDrugDGELmer$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir), absolute_package_directory(test_config$LINCS_dge_output_dir))
+sut <- LINCSRDSLMMDrugDGELmer$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir), absolute_path_directory(test_config$LINCS_dge_output_dir))
 
 # given
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide")

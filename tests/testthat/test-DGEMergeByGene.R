@@ -11,7 +11,7 @@ expected2 <- absolute_path_readRDS(paste0(test_config$DGEMergeByGene_expected, "
 expected3 <- absolute_path_readRDS(paste0(test_config$DGEMergeByGene_expected, "AG-957.Rds"))
 
 # when
-sut$merge(gene_list, drug_list, absolute_package_directory(test_config$LINCS_dge_dir), absolute_package_directory(test_config$DGEMergeByGene_output), "drug", "#id_6h.Rds")
+sut$merge(gene_list, drug_list, absolute_path_directory(test_config$LINCS_dge_dir), absolute_path_directory(test_config$DGEMergeByGene_output), "drug", "#id_6h.Rds")
 result1 <- absolute_path_readRDS(paste0(test_config$DGEMergeByGene_output, "3-matida.Rds"))
 result2 <- absolute_path_readRDS(paste0(test_config$DGEMergeByGene_output, "AG-592.Rds"))
 result3 <- absolute_path_readRDS(paste0(test_config$DGEMergeByGene_output, "AG-957.Rds"))

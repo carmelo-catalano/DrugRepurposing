@@ -3,7 +3,7 @@ library(testthat)
 # setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 
-sut <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_splitted_level3_dir))
+sut <- LINCSRDSDataLoader$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir))
 
 # given
 gene_id <- "2101"

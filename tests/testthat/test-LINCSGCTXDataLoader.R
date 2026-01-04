@@ -3,7 +3,7 @@ library(testthat)
 # setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 
-sut <- LINCSGCTXDataLoader$new("/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx")
+sut <- LINCSGCTXDataLoader$new(test_config$LINCS_gtx_database)
 
 # given
 gene_id <- "2101"
