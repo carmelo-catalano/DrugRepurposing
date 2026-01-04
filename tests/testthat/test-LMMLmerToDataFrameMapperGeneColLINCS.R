@@ -1,5 +1,4 @@
 library(testthat)
-library(lme4)
 
 #setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()

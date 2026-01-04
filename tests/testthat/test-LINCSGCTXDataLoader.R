@@ -1,5 +1,5 @@
 library(testthat)
-
+skip_if_not(test_config$LINCS_GTX_tests_enabled, message = "LINCS GTX tests disabled, test skipped")
 # setup
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 
