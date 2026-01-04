@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("test/connectivity_score/drug_dge/"), "t.value_6h")
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
 sut <- DichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
@@ -12,10 +12,10 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drugs_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drugs_genes <- subset(drugs_genes, drugs_genes$is_best_inferred_gene == 1)
 drugs_genes <- drugs_genes$gene_id
-disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
+disease_rna_seq_filename <- absolute_path_filename("unit_test_data/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
 disease_rna_seq <- as.matrix(data.table::fread(disease_rna_seq_filename, header = T, colClasses = "integer"), rownames = "GeneID")
 
-expected <- package_readRDS("test/drug_repurpose/DichotomicVoomDrugRepurpose_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/drug_repurpose/DichotomicVoomDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(

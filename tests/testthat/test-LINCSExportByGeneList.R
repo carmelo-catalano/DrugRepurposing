@@ -2,15 +2,15 @@ library(testthat)
 Sys.setlocale(locale="C")
 
 # setup
-gene_computed_dir <- paste0(absolute_package_filename("test/LMMDGE/LINCS_export/output"),"/")
-gene_expected_dir <- paste0(absolute_package_filename("test/LMMDGE/LINCS_export/expected"),"/")
+gene_computed_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/output"),"/")
+gene_expected_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/expected"),"/")
 lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 absolute_path_experiment_data_file <- "/Users/carmelocatalano/r-projects/tsr-system/data/LINCS-GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx"
 lincsGCTXDataRowLoader <- LINCSGCTXDataRowLoader$new(absolute_path_experiment_data_file)
 sut <- LINCSExportByGeneList$new(lincsGCTXDataRowLoader)
 
 # given
-bing_genes_file <- absolute_package_filename("test/LMMDGE/LINCS_export/bing_genes.csv")
+bing_genes_file <- absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/bing_genes.csv")
 bing_genes <- read.table(bing_genes_file, sep = ";", header = T)
 bing_genes <- bing_genes[, "pr_gene_id"]
 experiments_meta_data <- lincsMetadataSetuper$setup(c("24"))

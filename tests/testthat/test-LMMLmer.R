@@ -10,7 +10,7 @@ gene_id <- "2101" # symbol "ESRRA"
 metadata <- lincsMetadataSetuper$setup("24")
 metadata <- metadata[3:50,]
 rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
-expected <- package_readRDS("test/LMMDGE/LINCSLMMLmer_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSLMMLmer_expected.Rds")
 
 # when
 result <- sut$compute(rna_data_metadata)

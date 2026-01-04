@@ -6,7 +6,7 @@ sut <- LINCSMetadataSetuper$new()
 
 # given
 selected_pert_time <- "6"
-expected <- package_readRDS("test/LMMDGE/LINCSMetadataSetuper6hExpected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSMetadataSetuper6hExpected.Rds")
 
 # when
 result <- sut$setup(selected_pert_time)

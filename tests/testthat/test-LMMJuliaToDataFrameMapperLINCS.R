@@ -14,7 +14,7 @@ rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
 
 julia_library("MixedModels")
 LMM_output <- julia_call("fit", julia_eval("LinearMixedModel"), gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate), rna_data_metadata, show_value = F)
-expected <- package_readRDS("test/LMMDGE/LINCSLMMJuliaToDataFrameMapperExpected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSLMMJuliaToDataFrameMapperExpected.Rds")
 
 # when
 result <- sut$map(LMM_output, NA, "pert_iname", "drug")

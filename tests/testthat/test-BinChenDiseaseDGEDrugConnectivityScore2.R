@@ -4,8 +4,8 @@ library(testthat)
 sut <- BinChenDiseaseDGEDrugConnectivityScore$new(parallel_computation = T)
 
 # given
-disease_dge <- package_readRDS("test/connectivity_score/ipf_dge.Rds")
-drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
+disease_dge <- absolute_path_readRDS("unit_test_data/connectivity_score/ipf_dge.Rds")
+drug_dge <- absolute_path_readRDS("unit_test_data/connectivity_score/drug_dge/A-23187.Rds")
 
 # when
 result <- sut$compute(

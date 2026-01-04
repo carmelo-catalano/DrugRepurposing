@@ -5,8 +5,8 @@ geoRNASeqLMMMetadataLoader <- GEORNASeqLMMMetadataLoader$new()
 sut <- GEORNASeqLMMVoomDGEDream$new()
 
 # given
-rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
-rna_seq_data_filename <- absolute_package_filename("test/voom/GSE153960_raw_counts_GRCh38.p13_NCBI_first_50.tsv")
+rna_seq_metadata_filename <- absolute_path_filename("unit_test_data/voom/gse153960_metadata.csv")
+rna_seq_data_filename <- absolute_path_filename("unit_test_data/voom/GSE153960_raw_counts_GRCh38.p13_NCBI_first_50.tsv")
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
@@ -16,7 +16,7 @@ additional_fields <- "tissue"
 
 rna_seq_metadata <- geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
 
-expected <- package_readRDS("test/voom/GEORNASeqLMMVoomDGEDream_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/voom/GEORNASeqLMMVoomDGEDream_expected.Rds")
 
 # when
 result <- sut$compute(

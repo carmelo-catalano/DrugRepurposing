@@ -7,10 +7,10 @@ genefilter <- LogarithmGeneFilter$new()
 sut <- GEORNASeqDichotomicVoomDGE$new(genefilter)
 
 # given
-disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
+disease_rna_seq_filename <- absolute_path_filename("unit_test_data/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
 disease_rna_seq_sample_01_map <- "TTTTTTTTTTTTTTTTTTTTCCCCCCCCCCCCCCCCCCC"
 
-expected <- package_readRDS("test/voom/GEORNASeqDichotomicVoomDGE_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/voom/GEORNASeqDichotomicVoomDGE_expected.Rds")
 
 # when
 result <- sut$compute(disease_rna_seq_filename, disease_rna_seq_sample_01_map)

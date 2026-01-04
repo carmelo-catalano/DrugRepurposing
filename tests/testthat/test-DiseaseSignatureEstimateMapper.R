@@ -4,8 +4,8 @@ library(testthat)
 sut <- DiseaseSignatureEstimateMapper$new()
 
 # given
-disease_signature <- package_readRDS("test/connectivity_score/BLCA_dge.Rds")
-expected <- package_readRDS("test/connectivity_score/DiseaseSignatureMapper_expected.Rds")
+disease_signature <- absolute_path_readRDS("unit_test_data/connectivity_score/BLCA_dge.Rds")
+expected <- absolute_path_readRDS("unit_test_data/connectivity_score/DiseaseSignatureMapper_expected.Rds")
 
 # when
 result <- sut$map(disease_signature)

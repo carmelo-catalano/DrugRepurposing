@@ -1,14 +1,14 @@
 library(testthat)
 
 # setup
-drug_dge_dir <- absolute_package_directory("test/connectivity_score/drug_dge/")
+drug_dge_dir <- absolute_package_directory("unit_test_data/connectivity_score/drug_dge/")
 drug_dge_t_value_column_name <- "t.value_6h"
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
 sut <- LMMVoomDrugRepurpose$new(lmmVoomDGE = LMMVoomDGEDreamWithEBayes$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
-rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
-rna_seq_data_filename <- absolute_package_filename("test/voom/GSE153960_raw_counts_GRCh38.p13_NCBI_first_50.tsv")
+rna_seq_metadata_filename <- absolute_path_filename("unit_test_data/voom/gse153960_metadata.csv")
+rna_seq_data_filename <- absolute_path_filename("unit_test_data/voom/GSE153960_raw_counts_GRCh38.p13_NCBI_first_50.tsv")
 tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
 tissue_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
@@ -26,7 +26,7 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-expected <- package_readRDS("test/drug_repurpose/LMMVoomDrugRepurpose_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/drug_repurpose/LMMVoomDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(

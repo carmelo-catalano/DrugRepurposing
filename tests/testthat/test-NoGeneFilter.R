@@ -4,7 +4,7 @@ library(testthat)
 sut <- NoGeneFilter$new()
 
 # given
-expected <- package_readRDS("test/voom/als_NYGC_rna_seq.Rds")
+expected <- absolute_path_readRDS("unit_test_data/voom/als_NYGC_rna_seq.Rds")
 
 # when
 result <- sut$filter(expected, NA)

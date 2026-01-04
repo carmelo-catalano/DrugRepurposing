@@ -3,7 +3,7 @@ DichotomicRNADataMapper <- R6Class(
   public = list(
     map = function(rna_seq, sample_01_map) {
       if (obj_is_na_or_NULL(sample_01_map) ||
-        is(sample_01_map, "character") ||
+        (!is(sample_01_map, "character")) ||
         nchar(sample_01_map) < 2)
         stop("invalid sample map")
       if (gsub('X|0|1', '', sample_01_map) != "" && gsub('X|C|T', '', sample_01_map) != "")

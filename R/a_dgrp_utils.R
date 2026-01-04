@@ -21,12 +21,34 @@ absolute_package_filename <- function(filename) {
   return(system.file(filename, package = config$package_name))
 }
 
+develop_package_path <- function() {
+  path <- getwd()
+  if (grepl("/tests/testthat", path, fixed = TRUE)) {
+    return(gsub("/tests/testthat", "", path, fixed = TRUE))
+  }else {
+    return(path)
+  }
+}
+
+absolute_path_filename <- function(filename) {
+  return(paste0(develop_package_path(), "/", filename))
+}
+
 absolute_package_directory <- function(directory) {
   return(paste0(system.file(directory, package = config$package_name), "/"))
 }
 
+absolute_path_directory <- function(directory) {
+  return(paste0(develop_package_path(), "/", directory))
+}
+
 package_readRDS <- function(filename) {
   absolute_filename <- system.file(filename, package = config$package_name)
+  return(readRDS(absolute_filename))
+}
+
+absolute_path_readRDS <- function(filename) {
+  absolute_filename <- paste0(develop_package_path(), "/", filename)
   return(readRDS(absolute_filename))
 }
 

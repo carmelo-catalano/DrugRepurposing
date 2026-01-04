@@ -2,7 +2,7 @@ library(testthat)
 
 # setup
 meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(threshold = 10)
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("test/connectivity_score/drug_dge/"), "t.value_6h")
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
 sut <- DichotomicDrugRepurpose$new(geneFilter = meanThresholdGeneFilter, drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
@@ -13,10 +13,10 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-disease_rna_seq_filename <- absolute_package_filename("test/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
+disease_rna_seq_filename <- absolute_path_filename("unit_test_data/voom/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz")
 disease_rna_seq <- as.matrix(data.table::fread(disease_rna_seq_filename, header = T, colClasses = "integer"), rownames = "GeneID")
 pseudo_disease_rna_data <- log2(disease_rna_seq + 1)
-expected <- package_readRDS("test/drug_repurpose/DichotomicDrugRepurpose_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/drug_repurpose/DichotomicDrugRepurpose_expected.Rds")
 
 # when
 result <- sut$compute(

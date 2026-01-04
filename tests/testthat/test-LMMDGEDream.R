@@ -4,8 +4,8 @@ library(testthat)
 sut <- LMMDGEDream$new()
 
 # given
-rna_seq <- package_readRDS("test/voom/als_NYGC_rna_seq.Rds")
-expected <- package_readRDS("test/LMMDGE/LMMDGEDream_expected.Rds")
+rna_seq <- absolute_path_readRDS("unit_test_data/voom/als_NYGC_rna_seq.Rds")
+expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LMMDGEDream_expected.Rds")
 formula <- ~tissue_status + (1 | tissue)
 rna_seq$data <- log2(rna_seq$data + 1)
 

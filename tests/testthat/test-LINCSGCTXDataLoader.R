@@ -9,7 +9,7 @@ sut <- LINCSGCTXDataLoader$new("/Users/carmelocatalano/r-projects/tsr-system/dat
 gene_id <- "2101"
 experiments_metadata <- lincsMetadataSetuper$setup("24")
 experiments_metadata <- experiments_metadata[3:50,]
-expected_gene_expression <- package_readRDS("test/LMMDGE/LINCSRDSDataLoaderExpected.Rds")
+expected_gene_expression <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSRDSDataLoaderExpected.Rds")
 
 # when
 result <- sut$load("2101", experiments_metadata)

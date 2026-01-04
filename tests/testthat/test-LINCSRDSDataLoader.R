@@ -9,7 +9,7 @@ sut <- LINCSRDSDataLoader$new(absolute_package_directory(test_config$LINCS_split
 gene_id <- "2101"
 experiments_metadata <- lincsMetadataSetuper$setup("24")
 experiments_metadata <- experiments_metadata[3:50,]
-gene_expression <- package_readRDS("test/LMMDGE/LINCSRDSDataLoaderExpected.Rds")
+gene_expression <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSRDSDataLoaderExpected.Rds")
 
 # when
 result <- sut$load("2101", experiments_metadata)

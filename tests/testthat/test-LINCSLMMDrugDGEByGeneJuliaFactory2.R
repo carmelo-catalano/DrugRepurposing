@@ -12,7 +12,7 @@ gene_symbol <- "ESRRA"
 metadata <- lincsMetadataSetuper$setup("24")
 metadata <- metadata[3:50,]
 rna_data_metadata <- lincsRDSDataLoader$load(gene_id, metadata)
-expected <- package_readRDS("test/LMMDGE/LINCSLMMDrugDGEByGeneJuliaFactory2_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSLMMDrugDGEByGeneJuliaFactory2_expected.Rds")
 
 # when
 drugDGE <- sut$create(4, LMMFormula)

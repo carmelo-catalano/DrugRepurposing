@@ -4,8 +4,8 @@ library(testthat)
 sut <- DrugSignatureMapper$new()
 
 # given
-drug_dge <- package_readRDS("test/connectivity_score/drug_dge/A-23187.Rds")
-expected <- package_readRDS("test/connectivity_score/DrugSignatureMapper_expected.Rds")
+drug_dge <- absolute_path_readRDS("unit_test_data/connectivity_score/drug_dge/A-23187.Rds")
+expected <- absolute_path_readRDS("unit_test_data/connectivity_score/DrugSignatureMapper_expected.Rds")
 
 # when
 result <- sut$map(drug_dge, "t.value_6h")

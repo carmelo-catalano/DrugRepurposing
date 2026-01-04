@@ -4,8 +4,8 @@ library(testthat)
 sut <- LMMVoomDGEDreamWithEBayes$new()
 
 # given
-rna_seq <- package_readRDS("test/voom/als_NYGC_rna_seq.Rds")
-expected <- package_readRDS("test/voom/LMMVoomDGEDreamWithEBayes_expected.Rds")
+rna_seq <- absolute_path_readRDS("unit_test_data/voom/als_NYGC_rna_seq.Rds")
+expected <- absolute_path_readRDS("unit_test_data/voom/LMMVoomDGEDreamWithEBayes_expected.Rds")
 formula <- ~tissue_status + (1 | tissue)
 
 # when
