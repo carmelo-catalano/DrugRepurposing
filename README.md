@@ -130,12 +130,15 @@ GEORNASeqDichotomicVoomDGE
 ### LMM differential gene expression
 ```
 LMMDGEDream
+LMMDGEDreamWithEBayes
 LMMDGEJulia
 LMMDGELmer
 LMMVoomDGEDream
+LMMVoomDGEDreamWithEBayes
 LMMVoomDGEJulia
-LMMVoomDGELmerDGE
+LMMVoomDGELmer
 GEORNASeqLMMVoomDGEDream
+GEORNASeqLMMVoomDGEDreamWithEBayes
 GEORNASeqLMMVoomDGEJulia
 GEORNASeqLMMVoomDGELmer
 LINCSRDSLMMDrugDGEJulia

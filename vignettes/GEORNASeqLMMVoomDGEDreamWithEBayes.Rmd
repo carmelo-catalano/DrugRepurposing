@@ -1,0 +1,87 @@
+---
+title: "GEO RNA Seq LMM Voom DGE by Dream With eBayes"
+output: rmarkdown::html_vignette
+author: "Carmelo Catalano"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+vignette: >
+ %\VignetteIndexEntry{GEO RNA Seq LMM Voom DGE by Dream With eBayes}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+# Description
+Derived class of `GEORNASeqLMMVoomDGEAbstract`.
+Computes the Voom Linear Mixed Model (LMM) differential gene expression (DGE) analysis using the `dream` function from the `variancePartition` package.
+
+After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied.
+
+The input consists of two groups of RNA-Seq data from tissues under different conditions: control/altered state. For example, a disease-affected group and a control group.
+
+Unlike the dichotomous case, where groups are divided only into "control/altered state," additional conditions exist under which the experiments were conducted. For instance, multiple RNA plates were used, or tissues originated from different parts of the body.
+
+RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+
+The input RNA-Seq data file is sourced from NCBI [https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/).
+
+```{r setup, include=FALSE}
+library(DrugRepurposing)
+options(warn = -1)
+```
+```{r}
+library(DrugRepurposing)
+
+tsvLines <- list(
+  "GeneID	GSM2433098	GSM2433099	GSM2433100	GSM2433101	GSM2433102	GSM2433103	GSM2433104	GSM2433109",
+  "1	817	480	513	497	1055	409	661	788",
+  "2	451	315	489	620	762	244	572	234",
+  "9	792	608	560	585	952	436	823	981",
+  "12	220	244	283	404	434	196	314	225",
+  "13	142	229	240	350	332	163	239	324",
+  "14	682	501	354	669	721	520	550	755",
+  "21	230	133	83	59	127	91	86	100",
+  "25	1022	605	246	368	611	588	654	811"
+)
+tsv <- ""
+for (i in 1:9)
+  tsv <- paste(tsv, tsvLines[i], sep = "\n")
+rna_seq_data_filename <- tempfile()
+writeLines(tsv, con = rna_seq_data_filename)
+
+tissue_status <- c("ALS Spectrum MND", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND",
+                    "Non-Neurological Control")
+# The first level must be "Control" state
+tissue_status_factor <- factor(tissue_status, levels = c("Non-Neurological Control", "ALS Spectrum MND"))
+
+rna_seq_metadata <- data.frame(
+  sample_id = c("GSM2433098", "GSM2433099", "GSM2433100", "GSM2433101",
+                "GSM2433102", "GSM2433103", "GSM2433104"),
+  tissue = c("Spinal Cord Lumbar", "Spinal Cord Lumbar", "Spinal Cord Lumbar",
+             "Spinal Cord Lumbar", "Spinal Cord Lumbar", "Cerebellum", "Cerebellum"),
+  subject_id = c("NEUEL133AK6", "NEUYV496XLP", "NEUZU200WEQ", "NEUEC006FND",
+                 "NEUKM699KKH", "NEUJZ255ZC5", "NEUJZ233ZL3"),
+  tissue_status = tissue_status_factor
+)
+# rna_seq_metadata structure:
+#
+# sample_id       tissue                subject_id     tissue_status
+# GSM2433098      Spinal Cord Lumbar    NEUEL133AK6   ALS Spectrum MND
+# GSM2433099      Spinal Cord Lumbar    NEUYV496XLP   ALS Spectrum MND
+# GSM2433100      Spinal Cord Lumbar    NEUZU200WEQ   ALS Spectrum MND
+# GSM2433101      Spinal Cord Lumbar    NEUEC006FND   Non-Neurological Control
+# GSM2433102      Spinal Cord Lumbar    NEUKM699KKH   ALS Spectrum MND
+# GSM2433103      Cerebellum            NEUJZ255ZC5   ALS Spectrum MND
+# GSM2433104      Cerebellum            NEUJZ233ZL3   Non-Neurological Control
+# sample_id column is used as a filter for rna_seq_data:
+# rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
+# In this example, the GSM2433109 column of rna_seq_data will be discarded before computation.
+
+geoRNASeqLMMVoomDGEDreamWithEBayes<- GEORNASeqLMMVoomDGEDreamWithEBayes$new()
+geoRNASeqLMMVoomDGEDreamWithEBayes$compute(
+  rna_seq_data_filename = rna_seq_data_filename,
+  rna_seq_metadata = rna_seq_metadata,
+  formula = ~tissue_status + (1 | tissue),
+  filter_by_protein_coding = FALSE
+)
+
+unlink(rna_seq_data_filename)
+```
