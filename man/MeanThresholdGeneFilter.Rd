@@ -9,9 +9,9 @@ The filtering formula is:
 \code{mean <- rowMeans(gene_expressions)}.
 \cr
 This class is a derived class of \code{GeneFilterAbstract}.
-}
 \cr
 Input values must be greater than or equal to 0.
+}
 \usage{
 meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(threshold)
 meanThresholdGeneFilter$filter(gene_expressions)

@@ -143,7 +143,7 @@ dichotomicVoomDrugRepurpose$compute(
   drugs_genes = drugs_genes,
   random_distribution_size = 10^5,
   disease_name = "IPF",
-  drug_perturbation_time = "6h"
+  drug_perturbation_time = "6h",
   filter_by_protein_coding = FALSE,
   parallel_computation = FALSE,
   signature_mapper_parameter = 8
