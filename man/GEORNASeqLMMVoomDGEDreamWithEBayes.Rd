@@ -1,11 +1,14 @@
-\name{GEORNASeqLMMVoomDGEDream}
-\alias{GEORNASeqLMMVoomDGEDream}
+\name{GEORNASeqLMMVoomDGEDreamWithEBayes}
+\alias{GEORNASeqLMMVoomDGEDreamWithEBayes}
 \title{Computes differential gene expression analysis using LMM with Voom-transformed data}
 \description{
 Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
 \cr
 Computes the Voom Linear Mixed Model (LMM) differential gene expression (DGE) analysis using the
 \code{dream} function from the \code{variancePartition} package.
+\cr
+After the \code{dream} computation is completed "Empirical Bayes Statistics for Differential Expression"
+are applied (\code{variancePartition::eBayes}).
 \cr
 The input consists of two groups of RNA-Seq data from tissues under different conditions:
 control/altered state. For example, a disease-affected group and a control group.
@@ -21,8 +24,8 @@ The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.
 For more details, see \code{GEORNASeqLMMVoomDGECore}.
 }
 \usage{
-geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
-result <- geoRNASeqLMMVoomDGEDream$compute(
+geoRNASeqLMMVoomDGEDreamWithEBayes <- GEORNASeqLMMVoomDGEDreamWithEBayes$new()
+result <- geoRNASeqLMMVoomDGEDreamWithEBayes$compute(
   rna_seq_data_filename, rna_seq_metadata, formula,
   filter_by_protein_coding
 )
@@ -44,8 +47,8 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 \examples{
 # Input data are the same as in GEORNASeqLMMVoomDGECore.
 
-geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
-geoRNASeqLMMVoomDGEDream$compute(
+geoRNASeqLMMVoomDGEDreamWithEBayes <- GEORNASeqLMMVoomDGEDreamWithEBayes$new()
+geoRNASeqLMMVoomDGEDreamWithEBayes$compute(
     rna_seq_data_filename, rna_seq_metadata, formula,
     filter_by_protein_coding
  )

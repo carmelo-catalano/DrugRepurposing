@@ -15,7 +15,7 @@ Computes differential gene expression analysis using the Linear Mixed Model (LMM
 
 The LMM computation is performed using the `dream` function (library `variancePartition`).
 
-After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied.
+After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied (`variancePartition::eBayes`).
 
 The input consists of two groups of RNA data analysis from tissues under different conditions: control/altered state.
 For example, a disease-affected group and a control group.

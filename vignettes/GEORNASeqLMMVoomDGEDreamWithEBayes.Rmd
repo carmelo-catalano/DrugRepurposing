@@ -10,9 +10,10 @@ vignette: >
 ---
 # Description
 Derived class of `GEORNASeqLMMVoomDGEAbstract`.
+
 Computes the Voom Linear Mixed Model (LMM) differential gene expression (DGE) analysis using the `dream` function from the `variancePartition` package.
 
-After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied.
+After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied (`variancePartition::eBayes`).
 
 The input consists of two groups of RNA-Seq data from tissues under different conditions: control/altered state. For example, a disease-affected group and a control group.
 

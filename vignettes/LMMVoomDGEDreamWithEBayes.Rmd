@@ -13,7 +13,7 @@ Derived class of `LMMVoomDGEAbstract`.
 
 Computes the Voom Linear Mixed Model (LMM) differential gene expression (DGE) analysis using the `dream` function from the `variancePartition` package.
 
-After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied.
+After the `dream` computation is completed "Empirical Bayes Statistics for Differential Expression" are applied (`variancePartition::eBayes`).
 
 It relies on three collaborators: `LMMVoom`, `DGEMapper`, and `GeneFilterByProteinCoding`.
 
