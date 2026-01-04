@@ -4,7 +4,7 @@ library(testthat)
 drug_dge_dir <- absolute_package_directory("test/connectivity_score/drug_dge/")
 drug_dge_t_value_column_name <- "t.value_6h"
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
-sut <- LMMDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
+sut <- LMMDrugRepurpose$new(lmmDGE = LMMDGEDreamWithEBayes$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
 rna_seq_metadata_filename <- absolute_package_filename("test/voom/gse153960_metadata.csv")
@@ -27,7 +27,7 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-expected <- package_readRDS("test/drug_repurpose/LMMDrugRepurposeByDream_expected.Rds")
+expected <- package_readRDS("test/drug_repurpose/LMMDrugRepurposeByDreamWithEBayes_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -48,7 +48,7 @@ result <- sut$compute(
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
-test_that("test-LMMDrugRepurposeByDream", {
+test_that("test-LMMDrugRepurposeByDreamWithEBayes", {
   expect_equal(result, expected)
 }
 )

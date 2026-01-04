@@ -2,10 +2,11 @@ LMMVoomDGEDream <- R6Class(
   "LMMVoomDGEDream",
   inherit = LMMVoomDGEAbstract,
   public = list(
-    initialize = function() {
+    initialize = function(applyEBayes = FALSE) {
       private$lmmVoom <- LMMVoom$new()
       private$dgeMapper <- DGEMapper$new()
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
+      private$applyEBayes <- applyEBayes
     },
     compute = function(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding = FALSE) {
       dgrpLogger$log("start LMM Voom Dream differential gene expression computation")
@@ -20,7 +21,9 @@ LMMVoomDGEDream <- R6Class(
       differential_expression <- dream(voom_data, formula, rna_seq_metadata, BPPARAM = parallelComputationParam)
       totalTime <- Sys.time() - partialStartTime
       dgrpLogger$log(sprintf("end dream computation, time: %s %s", totalTime, attr(totalTime, "units")))
-      differential_expression <- variancePartition::eBayes(differential_expression)
+      if (private$applyEBayes) {
+        differential_expression <- variancePartition::eBayes(differential_expression)
+      }
       differential_expression <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
       differential_expression <- private$dgeMapper$map(differential_expression)
@@ -32,6 +35,7 @@ LMMVoomDGEDream <- R6Class(
   private = list(
     geneFilterByProteinCoding = NA,
     lmmVoom = NA,
-    dgeMapper = NA
+    dgeMapper = NA,
+    applyEBayes = NA
   )
 )

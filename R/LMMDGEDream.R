@@ -2,9 +2,10 @@ LMMDGEDream <- R6Class(
   "LMMDGEDream",
   inherit = LMMDGEAbstract,
   public = list(
-    initialize = function() {
+    initialize = function(applyEBayes = FALSE) {
       private$geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
       private$dgeMapper <- DGEMapper$new()
+      private$applyEBayes <- applyEBayes
     },
     compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = FALSE) {
       data_size <- dim(rna_data)
@@ -17,7 +18,9 @@ LMMDGEDream <- R6Class(
       startTime <- Sys.time()
       parallelComputationParam <- SnowParam(processorCores$getBPPARAMCores(), "FORK", progressbar = TRUE)
       differential_expression <- dream(rna_data, formula, rna_metadata, BPPARAM = parallelComputationParam)
-      differential_expression <- variancePartition::eBayes(differential_expression)
+      if (private$applyEBayes) {
+        differential_expression <- variancePartition::eBayes(differential_expression)
+      }
       differential_expression <- variancePartition::topTable(differential_expression, coef = 2, number = 10^6)
       differential_expression$std.error <- differential_expression$logFC / differential_expression$t
       totalTime <- Sys.time() - startTime
@@ -27,6 +30,7 @@ LMMDGEDream <- R6Class(
   ),
   private = list(
     geneFilterByProteinCoding = NA,
-    dgeMapper = NA
+    dgeMapper = NA,
+    applyEBayes = NA
   )
 )
