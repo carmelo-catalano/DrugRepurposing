@@ -79,14 +79,16 @@ EasyDrugSignatureLoader <- R6Class(
 )
 
 easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
-
+# To sped up the computation, replace GEORNASeqLMMVoomDGEDream with GEORNASeqLMMVoomDGEJulia
+# To use GEORNASeqLMMVoomDGEJulia, the Julia environment must be installed on your system.
+# To apply eBayes to differential gene expression, replace GEORNASeqLMMVoomDGEDream with GEORNASeqLMMVoomDGEDreamWithEBayes
 geoRNASeqLMMVoomDGE <- GEORNASeqLMMVoomDGEDream$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(
   geoRNASeqLMMVoomDGE = geoRNASeqLMMVoomDGE,
   drugSignatureLoader = easyDrugSignatureLoader
 )
 
-result_drea2 <- geoRNASeqLMMVoomDrugRepurpose$compute(
+result <- geoRNASeqLMMVoomDrugRepurpose$compute(
   rna_seq_data_filename = als_rna_seq_filename,
   rna_seq_metadata = als_rna_seq_metadata,
   formula = ~tissue_status + (1 | tissue) + (1 | genotype),
