@@ -5,7 +5,7 @@ LINCSMetadataSetuper <- R6Class(
     setup = function(perturbation_times, drugs_filter = NA) {
       # "data/LINCS/GSE92742_Broad_LINCS_inst_info.txt"
       # experiment = instance
-      raw_metadata <- package_readRDS(config$LINCS_metadata_RDS_filename)[, c("inst_id", "rna_plate", "pert_id", "pert_iname", "pert_type", "pert_dose", "pert_time", "cell_id")]
+      raw_metadata <- readRDS(LINCS_metadata_RDS_filename())[, c("inst_id", "rna_plate", "pert_id", "pert_iname", "pert_type", "pert_dose", "pert_time", "cell_id")]
 
       metadata <- subset(raw_metadata,
                          pert_type == "trt_cp" &
