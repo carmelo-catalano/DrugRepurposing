@@ -11,7 +11,11 @@ vignette: >
 # Description
   A tool to compute drug repurposing by getting data from diseases and drugs.
 
-  A complete example.
+  Below you will find a complete example built on invented data.
+
+  Here you can find two complete examples built on real data from NCBI ([https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)):
+
+[https://github.com/carmelo-catalano/DrugRepurposing/tree/main/examples](https://github.com/carmelo-catalano/DrugRepurposing/tree/main/examples)
 
   DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
 
