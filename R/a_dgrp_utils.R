@@ -66,19 +66,5 @@ add_slash_to_directory_path <- function(path) {
 }
 
 LINCS_metadata_RDS_filename <- function() {
-  if (obj_is_na(config$LINCS_metadata_RDS_filename)) {
-    return(absolute_path_filename(test_config$LINCS_metadata_RDS_filename))
-  }else {
-    return(config$LINCS_metadata_RDS_filename)
-  }
-}
-
-LINCS_config <- function(LINCS_metadata_RDS_filename, LINCS_gtx_database = NA) {
-  config$LINCS_metadata_RDS_filename <- config$LINCS_metadata_RDS_filename
-  config$LINCS_gtx_database <- LINCS_gtx_database
-}
-
-LINCS_test_config <- function(LINCS_gtx_database, LINCS_GTX_tests_enabled) {
-  test_config$LINCS_gtx_database <- LINCS_gtx_database
-  test_config$LINCS_GTX_tests_enabled <- LINCS_GTX_tests_enabled
+  return(absolute_package_filename(config$LINCS_metadata_RDS_filename))
 }

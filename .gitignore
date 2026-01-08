@@ -62,4 +62,6 @@ Thumbs.db
 !/unit_test_data/LMMDGE/DGEMergeByGene_output/.gitkeep
 /unit_test_data/LMMDGE/LINCS_export/output/*
 !/unit_test_data/LMMDGE/LINCS_export/output/.gitkeep
+/R/test_gtx_LINCS_config.R
 inst/doc
+

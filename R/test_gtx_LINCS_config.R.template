@@ -1,0 +1,3 @@
+test_config$LINCS_GTX_tests_enabled <- TRUE
+test_config$LINCS_gtx_database <- full path to file GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx
+#download from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE92742
