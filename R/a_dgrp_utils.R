@@ -6,10 +6,6 @@ obj_is_na_or_NULL <- function(x) {
   return(obj_is_na(x) || is.null(x))
 }
 
-is.integer <- function(x) {
-  return(is.numeric(x) && x %% 1 == 0)
-}
-
 is.boolean <- function(x) {
   return(is.atomic(x) &&
            !is.na(x) &&

@@ -12,7 +12,7 @@ RandomConnectivityScoreDistributionParallel <- R6Class(
       }
       processorCores$initCores()
       startTime <- Sys.time()
-      dgrpLogger$log("start random connectivity score computation")
+      dgrpLogger$log(paste0("start the random connectivity score computation using ", cores, " CPU cores"))
       block_size <- floor(random_distribution_size / cores)
       first_block_size <- random_distribution_size - block_size * (cores - 1)
       block_sizes <- rep(block_size, cores)
