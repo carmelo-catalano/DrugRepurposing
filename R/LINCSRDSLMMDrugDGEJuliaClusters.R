@@ -22,7 +22,8 @@ LINCSRDSLMMDrugDGEJuliaClusters <- R6Class(
     skip_already_computed_genes = NA,
 
     process_chunk = function(chunk) {
-      library("DrugRepurposing")
+      #l-i-brary("Drug--Repurposing")
+      Exec(as.call(str2lang("library(\"DrugRepurposing\")")))
       private$validate_input_chunk(chunk)
       delay <- (chunk$number - 1) * private$cluster_start_delay
       dgrpLogger$log(sprintf("chunk number %s computation, delay before start: %s", chunk$number, delay))
