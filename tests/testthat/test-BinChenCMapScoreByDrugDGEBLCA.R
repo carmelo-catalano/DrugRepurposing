@@ -8,8 +8,7 @@ downregulatedGeneFilter <- DownregulatedGeneFilter$new()
 upregulatedGeneFilter <- UpregulatedGeneFilter$new()
 
 # given
-all_drug_signatures <- absolute_path_readRDS("unit_test_data/connectivity_score/6h_LINCS_drugs_dge.Rds")
-drug_signature <- subset(all_drug_signatures, drug %in% "digoxin")
+drug_signature <- absolute_path_readRDS("unit_test_data/connectivity_score/digoxin_drug_signature.Rds")
 
 colnames(drug_signature)[1] <- "gene_id"
 drug_signature <- drug_signature[, c("gene_id","t.value_6h"), drop = F]
