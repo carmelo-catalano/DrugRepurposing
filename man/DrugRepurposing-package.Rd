@@ -20,7 +20,7 @@
     \item	Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
     \item Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al - 2017.
   }
-  The transcriptome reversion system proposed in this package generalizes and evolves the mathematical model described by Karel K. M. Koudijs et al implementing significantly more efficient computational procedures. Thanks to concurrent programming and the adoption of optimized algorithms, the new software is up to seventy times faster than the original version.
+  The transcriptome reversion system proposed in this package generalizes and evolves the mathematical model described by Karel K. M. Koudijs et al implementing significantly more efficient computational procedures. Thanks to concurrent programming and the adoption of optimized algorithms, the new software is up to 70 times faster than the original version.
   \cr
   The mathematical model was expanded in order to provide a function that would also allow genetic studies of diseases that affect multiple parts of the body, such as amyotrophic lateral sclerosis, to be analyzed accurately.
   \cr
@@ -35,7 +35,9 @@
   \cr
   The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy pattern”, the behavior of the available classes can be customized.
   \cr
-  In the package code, there are more than eighty tests that can be taken as examples for the use of the library itself.
+  In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
+
 }
 \section{Abstract Classes}{
   In order to make the software structure clearer and facilitate the use of the “strategy pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
@@ -45,11 +47,11 @@
 \section{Suggestion}{
   For better use of this package, it is recommended to consult the code at:
   \cr
-  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/R}{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/R}
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
   \cr
   and to use the tests at:
   \cr
-  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/main/tests/testthat}
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
   \cr
   as guidelines for developing software based on DrugRepurposing.
 }
