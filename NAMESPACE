@@ -1,5 +1,5 @@
 # Parameters
-export("dgrp_logger_types")
+export("dgrp_logger_modes")
 export("config")
 export("test_config")
 
