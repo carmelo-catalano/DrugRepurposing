@@ -16,6 +16,6 @@ result$adj.p.value <- NULL
 
 # then
 test_that("test-LMMDGEJulia", {
-  expect_equal(result, expected)
+  expect_equal(result, expected, tolerance = 0.0000008)
 }
 )

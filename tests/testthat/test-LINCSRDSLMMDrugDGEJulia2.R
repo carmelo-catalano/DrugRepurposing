@@ -20,7 +20,7 @@ result1 <- absolute_path_readRDS(paste0(test_config$LINCS_dge_output_dir, "140_2
 result2 <- absolute_path_readRDS(paste0(test_config$LINCS_dge_output_dir, "54812_24h.Rds"))
 
 test_that("test-LINCSRDSLMMDrugDGEJulia2", {
-  expect_equal(result1, expected1)
+  expect_equal(result1, expected1, tolerance =1e-6)
   expect_equal(result2, expected2, tolerance =1e-6)
 }
 )

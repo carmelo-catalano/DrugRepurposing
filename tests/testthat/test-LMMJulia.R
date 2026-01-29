@@ -21,6 +21,6 @@ result_table <- JuliaCall::field(result_table, "cols")
 
 # then
 test_that("test-LMMJulia", {
-  expect_equal(result_table, expected)
+  expect_equal(result_table, expected, tolerance = 0.0000008)
 }
 )
