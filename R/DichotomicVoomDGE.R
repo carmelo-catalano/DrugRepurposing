@@ -27,7 +27,7 @@ DichotomicVoomDGE <- R6Class(
       dge <- DGEList(gene_experiments_data$gene_expressions, remove.zeros = TRUE)
       dge <- calcNormFactors(dge, method = 'upperquartile')
       design <- model.matrix(~sample_types, data = samples_metadata)
-      voom_data <- voom(dge, design, plot = FALSE)
+      voom_data <- voom(dge, design, plot = FALSE, adaptive.span = FALSE)
       fit_voom <- lmFit(voom_data, design)
       eBayes_fit_voom <- eBayes(fit_voom)
       differential_expression <- topTable(eBayes_fit_voom, coef = 2, number = 10^6)
