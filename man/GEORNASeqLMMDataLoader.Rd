@@ -1,26 +1,15 @@
-\name{GEORNASeqLMMVoomDGEAbstract}
-\alias{GEORNASeqLMMVoomDGEAbstract}
-\title{Base class for computing differential gene expression using Linear Mixed Models and Voom-transformed data}
+\name{GEORNASeqLMMDataLoader}
+\alias{GEORNASeqLMMDataLoader}
+\title{Load RNA-seq data from files sourced from NCBI}
 \description{
-Base class for the constructor parameter \code{lmmVoomDGE} of the class \code{GEORNASeqLMMVoomDGE}.
-\cr
-This class computes differential gene expression analysis using the Linear Mixed Model (LMM) with
-Voom-transformed data.
-\cr
-RNA-seq data and metadata files are sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
+Load RNA-seq data from files sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
+These data must be suitable for Linear Mixed Model (LMM) analysis.
+The files can be either local or remote (typically hosted by NCBI).
+See example.
 }
 \usage{
-GEORNASeqLMMVoomDGEImpl <- R6Class(
-  "GEORNASeqLMMVoomDGEImpl",
-  inherit = GEORNASeqLMMVoomDGEAbstract,
-  public = list(
-    compute = function(rna_seq_data_filename, rna_seq_metadata,
-                  formula, tissue_status_field_name,
-                  filter_by_protein_coding) {
-      # do something
-    }
-  )
-)
+geoRNASeqLMMDataLoader <- GEORNASeqLMMDataLoader$new()
+geoRNASeqLMMDataLoader$load(rna_seq_data_filename, rna_seq_metadata)
 }
 \arguments{
   \item{rna_seq_data_filename}{
@@ -32,12 +21,10 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
-    See example below
-    \itemize{
-      \item Type: \code{string}.
-    }
+    See example below.
+    Type: \code{string}.
   }
-  \item{rna_seq_metadata}{
+    \item{rna_seq_metadata}{
     \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
     \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
     this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
@@ -48,33 +35,22 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
     \cr
-    See example below
+    See example below.
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
-  \item{formula}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
-    \cr
-    Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
+  \item{geneFilter (constructor argument)}{
+    Instance of a class for filtering non-significant genes.
     \itemize{
-      \item Type: \code{R formula}.
-    }
-  }
-  \item{filter_by_protein_coding}{
-    If true, removes non-protein coding genes.
-    \itemize{
-      \item Type: \code{boolean}.
-      \item Default value: \code{FALSE}.
+      \item Type: derived class of \code{GeneFilterAbstract}.
+      \item Default value: instance of class \code{LowCountsGeneFilter}.
     }
   }
 }
 \value{
-Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
-\cr
-\code{DE_log2_FC} represents differential expression = log2 fold change.
-\cr
-\code{Lmer} does not return p-value fields. Therefore, when LMM is computed using \code{lmer}, the fields \code{p.value} and \code{adj.p.value} are not included.
+Data frame. Table of RNA data. Each column represents an RNA analysis, and each row represents a gene.
+Row names are gene IDs; column names are experiment IDs. See example.
 }
 \examples{
 
@@ -105,15 +81,8 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 # rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
 # the GSM8 column of rna_seq_data will be discarded before computation.
 
-GEORNASeqLMMVoomDGEImpl <- R6Class(
-  "GEORNASeqLMMVoomDGEImpl",
-  inherit = GEORNASeqLMMVoomDGEAbstract,
-  public = list(
-    compute = function(rna_seq_data_filename, rna_seq_metadata,
-                       formula, filter_by_protein_coding
-    ) {
-      # do something
-    }
-  )
-)
+rna_seq_metadata_filename <- "unit_test_data/voom/gse153960_metadata.csv"
+geoRNASeqLMMDataLoader <- GEORNASeqLMMDataLoader$new()
+geoRNASeqLMMDataLoader$load(rna_seq_data_filename, rna_seq_metadata)
+
 }

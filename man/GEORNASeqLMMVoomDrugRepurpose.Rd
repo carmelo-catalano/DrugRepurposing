@@ -40,7 +40,7 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
-    Type: \code{string}.
+    \item Type: \code{data.frame}.
   }
   \item{formula}{
     The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.

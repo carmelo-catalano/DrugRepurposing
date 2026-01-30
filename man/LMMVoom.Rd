@@ -26,7 +26,7 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{data.frame}.
     }
   }
   \item{formula (constructor argument)}{
