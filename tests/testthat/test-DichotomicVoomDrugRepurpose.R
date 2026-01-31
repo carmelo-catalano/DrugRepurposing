@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_path_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
 sut <- DichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given

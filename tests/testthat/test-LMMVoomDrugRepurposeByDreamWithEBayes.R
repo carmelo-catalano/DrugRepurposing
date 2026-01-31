@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-drug_dge_dir <- absolute_package_directory("unit_test_data/connectivity_score/drug_dge/")
+drug_dge_dir <- absolute_path_directory("unit_test_data/connectivity_score/drug_dge/")
 drug_dge_t_value_column_name <- "t.value_6h"
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
 sut <- LMMVoomDrugRepurpose$new(lmmVoomDGE = LMMVoomDGEDreamWithEBayes$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
@@ -17,7 +17,7 @@ sample_id_field_name <- "accession"
 additional_fields <- "tissue"
 
 geoRNASeqLMMDataMetadataLoader <- GEORNASeqLMMDataMetadataLoader$new()
-rna_seq <- geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
+rna_seq <- geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_column_name = "accession", additional_columns = "tissue")
 
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
                   "AG-957", "AKT-inhibitor-1-2", "AM-404")

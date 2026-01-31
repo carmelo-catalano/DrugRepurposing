@@ -2,7 +2,7 @@ library(testthat)
 
 # setup
 geoRNASeqLMMMetadataLoader <- GEORNASeqLMMMetadataLoader$new()
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_package_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(absolute_path_directory("unit_test_data/connectivity_score/drug_dge/"), "t.value_6h")
 sut <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGE = GEORNASeqLMMVoomDGELmer$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given
