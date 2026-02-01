@@ -6,13 +6,13 @@ Filters out non-significant genes by keeping those with at least \code{N} counts
 \cr
 The filtering formula is:
 \cr
-\code{keep <- rowSums(gene_expressions >= private$threshold) >= min(table(sample_types))}.
+\code{keep <- rowSums(gene_expressions >= private$threshold) >= min(table(sample_statuses))}.
 \cr
 This class is a derived class of \code{GeneFilterAbstract}.
 }
 \usage{
 lowCountsGeneFilter <- LowCountsGeneFilter$new(threshold)
-lowCountsGeneFilter$filter(gene_expressions, sample_types)
+lowCountsGeneFilter$filter(gene_expressions, sample_statuses)
 }
 
 \arguments{
@@ -32,5 +32,5 @@ A filtered data frame. Rows correspond to genes passing the counts threshold fil
 \examples{
 threshold <- 11
 lowCountsGeneFilter <- LowCountsGeneFilter$new(threshold)
-lowCountsGeneFilter$filter(gene_expressions, sample_types)
+lowCountsGeneFilter$filter(gene_expressions, sample_statuses)
 }
