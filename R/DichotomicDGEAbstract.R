@@ -1,7 +1,7 @@
 DichotomicDGEAbstract <- R6Class(
   "DichotomicDGEAbstract",
   public = list(
-    compute = function(rna_data, sample_01_map, filter_by_protein_coding = FALSE) {
+    compute = function(rna_data, sample_01_map, filter_by_protein_coding) {
       stop("I'm an abstract method, please implement me")
     }
   )

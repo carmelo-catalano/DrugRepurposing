@@ -41,7 +41,6 @@ DichotomicDGEImpl <- R6Class(
     If true, removes non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: FALSE.
     }
   }
 }

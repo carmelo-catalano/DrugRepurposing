@@ -21,7 +21,8 @@ dichotomicDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
   \item{sample_01_map}{
     The map has the same length as the number of columns in the \code{rna_data} table.
     Each character represents the type of the corresponding column in
-    \code{rna_data} table (i.e., the group): 0 = control sample, 1 =  test sample (altered state), X = excluded sample.
+    \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
@@ -31,7 +32,7 @@ dichotomicDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
     If true, remove non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
   \item{geneFilter (constructor argument)}{
