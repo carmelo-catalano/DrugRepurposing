@@ -45,6 +45,19 @@ A filtered data frame. Rows correspond to genes passing the mean expression thre
 }
 \examples{
 threshold <- 8
+
+# gene_expressions
+#  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
+# ---------------------------------------------------------------
+#  1        817    480    513    497    105    123    455    244
+#  2        451    315    489    620    762    244    572    234
+#  9        792    608    560    585    952    436    823    981
+#  12       220    244    283    404    434    196    314    225
+#  13       142    229    240    350    332    163    239    324
+#  14       682    501    354    669    721    520    550    755
+#  21       230    133    830    159    127    191    186    100
+#  25       102    605    246    368    611    588    654    811
+
 meanThresholdGeneFilter <- MeanThresholdGeneFilter$new(threshold)
 meanThresholdGeneFilter$filter(gene_expressions)
 }
