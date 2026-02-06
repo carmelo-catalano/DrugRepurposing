@@ -1,10 +1,14 @@
 \name{GeneFilterAbstract}
 \alias{GeneFilterAbstract}
-\title{Base class for filtering non-significant genes from RNA data}
+\title{Base class for filtering genes from RNA data}
 \description{
-Base class for constructor parameter \code{geneFilter} of the classes \code{DichotomicDGE}, \code{DichotomicVoomDGE}, and others.
+Typically, this class implementation filters non-significant genes from RNA data.
 \cr
-Filters non-significant genes from RNA data. This package provides four implementations: \code{LogarithmGeneFilter}, \code{LowCountsGeneFilter}, \code{MeanThresholdGeneFilter}, and \code{NoGeneFilter}.
+This package provides four implementations: \code{LogarithmGeneFilter}, \code{LowCountsGeneFilter}, \code{MeanThresholdGeneFilter}, and \code{NoGeneFilter}.
+\cr
+Base class for constructor parameter \code{geneFilter} of the classes \code{DichotomicDGE}, \code{DichotomicVoomDGE},
+\code{DichotomicDrugRepurpose}, \code{DichotomicDrugRepurposeCore}, \code{DichotomicVoomDrugRepurpose}
+ and \code{GEORNASeqDichotomicVoomDGE}.
 }
 \usage{
 GeneFilterImpl <- R6Class(

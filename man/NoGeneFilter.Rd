@@ -8,11 +8,11 @@ This class is derived from \code{GeneFilterAbstract}.
 }
 \usage{
 noGeneFilter <- NoGeneFilter$new()
-filtered_data <- noGeneFilter$filter(gene_expressions)
+filtered_data <- noGeneFilter$filter(gene_expressions, samples_statuses)
 }
 \arguments{
   Same as in \code{GeneFilterAbstract}.
 }
 \value{
-Same as in \code{GeneFilterAbstract}.
+ \code{gene_expressions}
 }

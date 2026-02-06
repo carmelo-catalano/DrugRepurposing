@@ -4,6 +4,8 @@
 \description{
 Filters out non-significant genes based on a logarithmic threshold.
 \cr
+Typically, this filter is used for RNA data coming from microarray experiments.
+\cr
 The filtering formula is:
 \cr
 \code{rowMeans(log(gene_expressions + 1, 2)) > threshold}.
@@ -17,7 +19,19 @@ logarithmGeneFilter <- LogarithmGeneFilter$new(threshold)
 logarithmGeneFilter$filter(gene_expressions)
 }
 \arguments{
-  For filter function arguments, refer to GeneFilterAbstract.
+    \item{gene_expressions}{
+    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
+    Row names are gene IDs, and column names are experiment identifiers.
+    \itemize{
+      \item Type: \code{matrix}.
+    }
+  }
+  \item{sample_statuses}{
+    Not used.
+    \itemize{
+      \item Default value: \code{NA}.
+    }
+  }
   \item{threshold (constructor argument)}{
     Logarithm threshold.
     \itemize{

@@ -1,0 +1,102 @@
+\name{LMMGeneFilterByLowLevelRandomEffects}
+\alias{LMMGeneFilterByLowLevelRandomEffects}
+\title{Filter samples associated with low-level grouping variables of a random effect}
+\description{
+A common guideline is that a random effect should have at least five levels for its associated grouping variable.
+Since this requirement may vary depending on the experimental design, it is possible to adjust
+this threshold using the \code{random_effects_level_threshold} argument.
+\cr
+This class filters out samples associated with grouping variables that has fewer levels than the
+specified threshold. Please note that this class currently supports only one random effect.
+\cr
+If \code{random_effects_level_threshold = 0}, no data is filtered.
+}
+\usage{
+lmmGeneFilterByLowLevelRandomEffects<-LMMGeneFilterByLowLevelRandomEffects$new()
+lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_effect_column_name)
+}
+\arguments{
+  \item{gene_expressions}{
+    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
+    Row names are gene IDs, and column names are sample identifiers.
+    \itemize{
+      \item Type: \code{matrix}.
+    }
+  }
+  \item{metadata}{
+    \code{metadata} is a data frame containing metadata for \code{gene_expressions}.
+    \cr
+    \code{metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{gene_expressions}:
+    \code{gene_expressions <- gene_expressions[, metadata$sample_id]}.
+    \cr
+    \code{metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
+    \cr
+    See example below.
+    \itemize{
+      \item Type: \code{data.frame}.
+    }
+  }
+  \item{random_effect_column_name}{
+    This argument specifies the name of the random effect column used to filter out low-level grouping variables.
+    \itemize{
+      \item Type: \code{string}.
+    }
+  }
+  \item{random_effects_level_threshold (constructor parameter)}{
+    This argument specifies the minimum threshold for the number of levels in the grouping variable.
+    \itemize{
+      \item Type: \code{integer}.
+      \item Default value: \code{5}.
+    }
+  }
+
+}
+\value{
+Matrix. Filtered \code{gene_expressions} without samples linked to filtered grouping variables.
+}
+\examples{
+
+# gene_expressions
+#  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
+# ---------------------------------------------------------------
+#  1        817    480    513    497    105    123    455    244
+#  2        451    315    489    620    762    244    572    234
+#  9        792    608    560    585    952    436    823    981
+#  12       220    244    283    404    434    196    314    225
+#  13       142    229    240    350    332    163    239    324
+#  14       682    501    354    669    721    520    550    755
+#  21       230    133    830    159    127    191    186    100
+#  25       102    605    246    368    611    588    654    811
+
+# metadata
+# sample_id   tissue               tissue_status
+# ----------------------------------------------
+# GSM1        Cerebellum           ALS
+# GSM2        Cerebellum           ALS
+# GSM3        Cerebellum           ALS
+# GSM4        Cerebellum           Control
+# GSM5        Cerebellum           Control
+# GSM6        Cortex Sensory       ALS
+# GSM7        Cortex Frontal       ALS
+# GSM8        Cortex Frontal       Control
+
+random_effect_column_name <- "tissue"
+
+lmmGeneFilterByLowLevelRandomEffects <- LMMGeneFilterByLowLevelRandomEffects$new()
+lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_effect_column_name)
+
+# output
+# gene_expressions
+#  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5
+# ------------------------------------------
+#  1        817    480    513    497    105
+#  2        451    315    489    620    762
+#  9        792    608    560    585    952
+#  12       220    244    283    404    434
+#  13       142    229    240    350    332
+#  14       682    501    354    669    721
+#  21       230    133    830    159    127
+#  25       102    605    246    368    611
+
+}
+
