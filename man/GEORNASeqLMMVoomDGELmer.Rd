@@ -40,7 +40,11 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 
 geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
 result <- geoRNASeqLMMVoomDGELmer$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 

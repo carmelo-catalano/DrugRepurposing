@@ -23,7 +23,11 @@ For more details, see \code{GEORNASeqLMMVoomDGECore}.
 \usage{
 geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
 result <- geoRNASeqLMMVoomDGEDream$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 }
@@ -46,8 +50,12 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 
 geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
 geoRNASeqLMMVoomDGEDream$compute(
-    rna_seq_data_filename, rna_seq_metadata, formula,
-    filter_by_protein_coding
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
+  filter_by_protein_coding
  )
 
 # output is the same as in GEORNASeqLMMVoomDGECore

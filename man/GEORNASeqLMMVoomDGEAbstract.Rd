@@ -14,9 +14,7 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
   "GEORNASeqLMMVoomDGEImpl",
   inherit = GEORNASeqLMMVoomDGEAbstract,
   public = list(
-    compute = function(rna_seq_data_filename, rna_seq_metadata,
-                  formula, tissue_status_field_name,
-                  filter_by_protein_coding) {
+    compute = function(rna_seq_data_filename, rna_seq_metadata, formula, random_effect_column_names, counts_filter_column_name, filter_by_protein_coding) {
       # do something
     }
   )
@@ -32,7 +30,9 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
-    See example below
+    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
+    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
+    See example below.
     \itemize{
       \item Type: \code{string}.
     }
@@ -42,7 +42,7 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
     \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
     this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
     \cr
-    The metadata contains the status control/altered state of the tissue and the additional conditions.
+    The metadata contains the status control/altered state of the sample and the additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
@@ -61,11 +61,22 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
       \item Type: \code{R formula}.
     }
   }
+  \item{random_effect_column_name}{
+    This argument specifies the name of the random effect column used to filter out low-level grouping variables.
+    \itemize{
+      \item Type: \code{string}.
+    }
+  }
+  \item{counts_filter_column_name}{
+    This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \itemize{
+      \item Type: \code{string}.
+    }
+  }
   \item{filter_by_protein_coding}{
     If true, removes non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{FALSE}.
     }
   }
 }
@@ -109,9 +120,7 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
   "GEORNASeqLMMVoomDGEImpl",
   inherit = GEORNASeqLMMVoomDGEAbstract,
   public = list(
-    compute = function(rna_seq_data_filename, rna_seq_metadata,
-                       formula, filter_by_protein_coding
-    ) {
+    compute = function(rna_seq_data_filename, rna_seq_metadata, formula, random_effect_column_names, counts_filter_column_name, filter_by_protein_coding) {
       # do something
     }
   )

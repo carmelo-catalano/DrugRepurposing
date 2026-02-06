@@ -25,77 +25,114 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
 )
 }
 \arguments{
-  \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file is in tsv (tab-separated value) format.
+    \item{rna_seq_data_filename}{
+    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+    \cr
     The file may also be compressed in gz format.
-    First column contains the gene id; the other columns contain the RNA-Seq analysis. First column name is "GeneID". The rest of the columns are titled according to the RNA analysis identifier (sample id).
+    \cr
+    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    Type: \code{string}.
+    \cr
+    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
+    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
+    See example below.
+    \itemize{
+      \item Type: \code{string}.
+    }
   }
   \item{rna_seq_metadata}{
-    RNA seq metadata.
+    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
+    \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
+    this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
     \cr
-    For each RNA-seq analysis column in the rna_seq_data table, there is a row in the rna_seq_metadata table.
-    The metadata contains the status control/altered state of the tissue and the additional conditions.
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    The metadata contains the status control/altered state of the sample and the additional conditions.
+    \cr
+    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
-    \item Type: \code{data.frame}.
+    \cr
+    See example below.
+    \itemize{
+      \item Type: \code{data.frame}.
+    }
   }
   \item{formula}{
     The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
     Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
-    Type: \code{R formula}.
+    \itemize{
+      \item Type: \code{R formula}.
+    }
   }
   \item{drugs}{
     Drug signatures.
     A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
-    Type: \code{data.frame}.
-    Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+    \itemize{
+      \item Type: \code{data.frame}.
+      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+    }
   }
   \item{drugs_genes}{
     The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
-    Type: \code{vector}.
+    \itemize{
+      \item Type: \code{vector}.
+    }
   }
   \item{random_distribution_size}{
     Size of the random connectivity score distribution. Higher values provide more precise p-values.
-    Type: \code{integer}.
-    Default value: \code{10^5}.
+    \itemize{
+      \item Type: \code{integer}.
+      \item Default value: \code{10^5}.
+    }
   }
   \item{disease_name}{
     Disease name. If specified, it is added to the output table. It is not used for the computation.
-    Type: \code{string}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{NA}.
+    }
   }
   \item{drug_perturbation_time}{
     Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    Type: \code{string}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{NA}.
+    }
   }
   \item{parallel_computation}{
     Enable parallel computation. Only for Unix-like systems.
-    Type: \code{boolean}.
-    Default value: \code{FALSE}.
+    \itemize{
+      \item Type: \code{boolean}.
+      \item Default value: \code{FALSE}.
+    }
   }
   \item{filter_by_protein_coding}{
     If true, remove non-protein coding genes.
-    Type: \code{boolean}.
-    Default value: \code{FALSE}.
+    \itemize{
+      \item Type: \code{boolean}.
+      \item Default value: \code{FALSE}.
+    }
   }
   \item{signature_mapper_parameter}{
     Parameter used by the constructor argument \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping.
     If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Default value: \code{NA}.
+    }
   }
   \item{geoRNASeqLMMVoomDGE (constructor argument)}{
     Instance of a class for computing LMM with Voom-transformed data.
-    Type: Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
-    Default value: Instance of class \code{GEORNASeqLMMVoomDGEDream}.
+    \itemize{
+      \item Type: Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
+      \item Default value: Instance of class \code{GEORNASeqLMMVoomDGEDream}.
+    }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
     Mapper for transforming \code{disease_dge} to a disease signature.
-    Type: class derived from \code{DGEToSignatureMapperAbstract}.
-    Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+    \itemize{
+      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
+      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+    }
   }
     \item{drugSignatureLoader (constructor argument)}{
     Loader for drug DGEs in the argument \code{drugs}.

@@ -15,7 +15,11 @@ See \code{GEORNASeqLMMVoomDGECore} for more information.
 \usage{
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 }
@@ -38,7 +42,11 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 
