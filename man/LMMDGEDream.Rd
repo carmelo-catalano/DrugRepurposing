@@ -21,7 +21,14 @@ lmmDGEDream <- LMMDGEDream$new()
 lmmDGEDream$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
 }
 \arguments{
-  Same as in \code{LMMDGEAbstract}
+  \item{apply_EBayes (constructor argument)}{
+    If \code{apply_EBayes} is TRUE, empirical Bayes shrinkage is applied after the dream computation.
+    \itemize{
+      \item Type: \code{boolean}.
+      \item Default value: \code{FALSE}.
+    }
+  }
+  For the arguments of the compute function, see \code{LMMDGEAbstract}
 }
 \value{
 Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.

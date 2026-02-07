@@ -17,7 +17,7 @@ geoRNASeqLMMDataLoader$load(rna_seq_metadata_filename, sample_status_column_name
     (assuming the sample ID column is named "sample_id")
     \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}
     \cr
-    The metadata contains the status control/altered state of the sample and the additional conditions.
+    The metadata contain the control/altered status of each sample, along with additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr

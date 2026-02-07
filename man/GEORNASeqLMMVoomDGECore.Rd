@@ -46,7 +46,7 @@ geoRNASeqLMMVoomDGECore$compute(
     The first column of \code{rna_seq_metadata} must be named "\code{sample_id}" and must contain the sample IDs of the RNA-seq experiments.
     This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.
     \cr
-    The metadata contains the status control/altered state of the sample and the additional conditions.
+    The metadata contain the control/altered status of each sample, along with additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr

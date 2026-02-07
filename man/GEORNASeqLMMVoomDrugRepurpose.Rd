@@ -46,7 +46,7 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
     \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
     this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
     \cr
-    The metadata contains the status control/altered state of the sample and the additional conditions.
+    The metadata contain the control/altered status of each sample, along with additional conditions.
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
