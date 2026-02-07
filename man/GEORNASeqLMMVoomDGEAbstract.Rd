@@ -39,8 +39,8 @@ GEORNASeqLMMVoomDGEImpl <- R6Class(
   }
   \item{rna_seq_metadata}{
     \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
-    \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
-    this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
+    The first column of \code{rna_seq_metadata} must be named "\code{sample_id}" and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.
     \cr
     The metadata contains the status control/altered state of the sample and the additional conditions.
     \cr

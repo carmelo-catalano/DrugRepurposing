@@ -98,7 +98,11 @@ List containing two items:
 \cr
 1) \code{rna_seq_metadata}:\cr
 Data frame containing data extracted from the file \code{rna_seq_metadata_filename}.
+\cr
 The data frame includes the columns \code{"sample_id"}, \code{sample_status_column_name}, and \code{additional_columns}.
+\cr
+\code{"sample_id"} is the first column.
+\cr
 \code{sample_status_column_name} is a factor, with the “Control” status as the first level.
 \cr
 \cr
