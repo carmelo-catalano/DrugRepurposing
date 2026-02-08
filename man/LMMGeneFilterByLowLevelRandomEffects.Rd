@@ -13,23 +13,23 @@ If \code{random_effects_level_threshold = 0}, no data is filtered.
 }
 \usage{
 lmmGeneFilterByLowLevelRandomEffects<-LMMGeneFilterByLowLevelRandomEffects$new()
-lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_effect_column_name)
+lmmGeneFilterByLowLevelRandomEffects$filter(rna_data, rna_metadata, random_effect_column_name)
 }
 \arguments{
-  \item{gene_expressions}{
+  \item{rna_data}{
     Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
     Row names are gene IDs, and column names are sample identifiers.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
-  \item{metadata}{
-    \code{metadata} is a data frame containing metadata for \code{gene_expressions}.
+  \item{rna_metadata}{
+    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
     \cr
-    \code{metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{gene_expressions}:
-    \code{gene_expressions <- gene_expressions[, metadata$sample_id]}.
+    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
+    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
     \cr
-    \code{metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
+    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
     \cr
     See example below.
     \itemize{
@@ -52,11 +52,20 @@ lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_e
 
 }
 \value{
-Matrix. Filtered \code{gene_expressions} without samples linked to filtered grouping variables.
+list.
+The list contains 2 items:
+1) rna_data
+\cr
+Matrix. Filtered \code{rna_data} without samples linked to filtered grouping variables.
+\cr
+\cr
+2) rna_metadata
+\cr
+data.frame. Metadata after filtering out rows associated with low-level grouping variables.
 }
 \examples{
 
-# gene_expressions
+# rna_data
 #  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
 # ---------------------------------------------------------------
 #  1        817    480    513    497    105    123    455    244
@@ -68,7 +77,7 @@ Matrix. Filtered \code{gene_expressions} without samples linked to filtered grou
 #  21       230    133    830    159    127    191    186    100
 #  25       102    605    246    368    611    588    654    811
 
-# metadata
+# rna_metadata
 # sample_id   tissue               tissue_status
 # ----------------------------------------------
 # GSM1        Cerebellum           ALS
@@ -83,10 +92,10 @@ Matrix. Filtered \code{gene_expressions} without samples linked to filtered grou
 random_effect_column_name <- "tissue"
 
 lmmGeneFilterByLowLevelRandomEffects <- LMMGeneFilterByLowLevelRandomEffects$new()
-lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_effect_column_name)
+output <- lmmGeneFilterByLowLevelRandomEffects$filter(rna_data, rna_metadata, random_effect_column_name)
 
 # output
-# gene_expressions
+# output$rna_data
 #  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5
 # ------------------------------------------
 #  1        817    480    513    497    105
@@ -97,6 +106,16 @@ lmmGeneFilterByLowLevelRandomEffects$filter(gene_expressions, metadata, random_e
 #  14       682    501    354    669    721
 #  21       230    133    830    159    127
 #  25       102    605    246    368    611
+
+# output$rna_metadata
+# sample_id   tissue               tissue_status
+# ----------------------------------------------
+# GSM1        Cerebellum           ALS
+# GSM2        Cerebellum           ALS
+# GSM3        Cerebellum           ALS
+# GSM4        Cerebellum           Control
+# GSM5        Cerebellum           Control
+
 
 }
 
