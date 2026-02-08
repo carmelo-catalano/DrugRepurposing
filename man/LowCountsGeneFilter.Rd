@@ -31,8 +31,7 @@ lowCountsGeneFilter$filter(gene_expressions, sample_statuses)
       \item Type: \code{vector}.
     }
    }
-  }
-  \item{threshold (constructor argument)}{
+   \item{threshold (constructor argument)}{
     Counts threshold.
     \itemize{
       \item Type: \code{integer}.
