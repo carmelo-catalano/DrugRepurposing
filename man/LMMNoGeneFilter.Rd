@@ -8,11 +8,11 @@ This class is derived from \code{LMMGeneFilterAbstract}.
 }
 \usage{
 lmmNoGeneFilter <- LMMNoGeneFilter$new()
-filtered_data <- lmmNoGeneFilter(gene_expressions, metadata, random_effect_column_names, counts_filter_column_name)
+filtered_data <- lmmNoGeneFilter(rna_data, rna_metadata, random_effect_column_names, counts_filter_column_name)
 }
 \arguments{
   Same as in \code{LMMGeneFilterAbstract}.
 }
 \value{
-  \code{gene_expressions}
+  \code{rna_data}
 }
