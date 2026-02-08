@@ -44,6 +44,12 @@ geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_file
       \item Type: \code{string}.
     }
   }
+  \item{random_effect_column_name}{
+    This argument specifies the name of the random effect column used to filter out low-level grouping variables.
+    \itemize{
+      \item Type: \code{string}.
+    }
+  }
   \item{sample_status_column_name}{
     Name of the column containing the sample statuses. The status represents the clinical condition of each sample (e.g., control, disease). Example of column values: "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND, Other Neurological Disorders", "Other Neurological Disorders".
     \itemize{
