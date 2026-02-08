@@ -10,7 +10,7 @@ Filters out non-significant genes based on a logarithmic threshold.
 \cr
 The filtering formula is:
 \cr
-\code{rowMeans(log(gene_expressions + 1, 2)) > logarithm_threshold}.
+\code{rowMeans(log(rna_data + 1, 2)) > logarithm_threshold}.
 \cr
 Input values must be greater than or equal to 0.
 \cr
@@ -24,23 +24,23 @@ This class is a derived class of \code{LMMGeneFilterAbstract}.
 }
 \usage{
 logarithmGeneFilter <- LMMLogarithmGeneFilter$new(logarithm_threshold, random_effects_level_threshold)
-logarithmGeneFilter$filter(gene_expressions, metadata, random_effect_column_name, counts_filter_column_name)
+logarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
 }
 \arguments{
-    \item{gene_expressions}{
+    \item{rna_data}{
     Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
     Row names are gene IDs, and column names are sample identifiers.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
-  \item{metadata}{
-    \code{metadata} is a data frame containing metadata for \code{gene_expressions}.
+  \item{rna_metadata}{
+    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
     \cr
-    \code{metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{gene_expressions}:
-    \code{gene_expressions <- gene_expressions[, metadata$sample_id]}.
+    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
+    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
     \cr
-    \code{metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
+    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
     \cr
     See example below.
     \itemize{
@@ -82,7 +82,7 @@ logarithm_threshold <- 3
 random_effects_level_threshold <- 5
 random_effect_column_name <- "tissue"
 
-# gene_expressions
+# rna_data
 #  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
 # ---------------------------------------------------------------
 # 1         9.67   8.91   9.00   8.96   6.71   6.94   8.83   7.93
@@ -94,7 +94,7 @@ random_effect_column_name <- "tissue"
 # 21        7.85   7.06   9.70   7.31   6.99   7.58   7.54   6.64
 # 25        6.67   9.24   7.94   8.52   9.25   9.20   9.35   9.66
 
-# metadata
+# rna_metadata
 # sample_id   tissue               tissue_status
 # ----------------------------------------------
 # GSM1        Cerebellum           ALS
@@ -107,5 +107,5 @@ random_effect_column_name <- "tissue"
 # GSM8        Cortex Frontal       Control
 
 lmmLogarithmGeneFilter <- LMMLogarithmGeneFilter$new(logarithm_threshold, random_effects_level_threshold)
-lmmLogarithmGeneFilter$filter(gene_expressions, metadata, random_effect_column_name)
+lmmLogarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name)
 }

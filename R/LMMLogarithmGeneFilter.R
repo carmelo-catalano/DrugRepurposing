@@ -6,9 +6,9 @@ LMMLogarithmGeneFilter <- R6Class(
       private$logarithmGeneFilter <- LogarithmGeneFilter$new(logarithm_threshold)
       private$lmmGeneFilterByLowLevelRandomEffects <- LMMGeneFilterByLowLevelRandomEffects$new(random_effects_level_threshold)
     },
-    filter = function(gene_expressions, metadata, random_effect_column_name, counts_filter_column_name = NA) {
-      gene_expressions <- logarithmGeneFilter$filter(gene_expressions)
-      return(private$lmmGeneFilterByLowLevelRandomEffects(gene_expressions, metadata, random_effect_column_name))
+    filter = function(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name = NA) {
+      rna_data <- logarithmGeneFilter$filter(rna_data)
+      return(private$lmmGeneFilterByLowLevelRandomEffects(rna_data, rna_metadata, random_effect_column_name))
     }
   ),
   private = list(
