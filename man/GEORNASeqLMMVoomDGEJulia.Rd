@@ -26,11 +26,11 @@ result <- geoRNASeqLMMVoomDGEJulia$compute(
 \arguments{
   The \code{compute} function arguments are identical to those in GEORNASeqLMMVoomDGEAbstract.
 
-  \item{geneFilter (constructor argument)}{
-    Instance of a class for filtering non-significant genes.
+  \\item{lmmGeneFilter (constructor argument)}{
+    Instance of a class for filtering RNA data suitable for LMM analysis.
     \itemize{
-      \item Type: derived class of \code{GeneFilterAbstract}.
-      \item Default value: Instance of class \code{LowCountsGeneFilter}.
+      \item Type: derived class of \code{LMMGeneFilterAbstract}.
+      \item Default value: Instance of class \code{LMMLowCountsGeneFilter}.
     }
   }
 }

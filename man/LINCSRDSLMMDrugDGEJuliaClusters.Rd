@@ -62,7 +62,7 @@ lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
     If set to true, the DGE computation will be skipped for genes whose output file already exists.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
 }

@@ -16,7 +16,7 @@ lmmVoomDGEDreamWithEBayes <- LMMVoomDGEDreamWithEBayes$new()
 lmmVoomDGEDreamWithEBayes$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protein_coding)
 }
 \arguments{
-  Same as in LMMVoomDGEAbstract
+  Same as in \code{LMMVoomDGEAbstract}.
 }
 \value{
 Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.

@@ -22,24 +22,30 @@ LMMVoomDGEImpl <- R6Class(
 
 \arguments{
   \item{rna_seq_data}{
-    Rna-seq data. The first column contains the gene id; the other columns contain the RNA-Seq analysis.
-    The first column name is \code{"GeneID"}. The rest of the columns are titled according to the RNA analysis identifier (sample id).
+    The first column contains the gene ID; the other columns contain the RNA-Seq analysis.
+    The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    \cr
+    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
+    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
+    See example in \code{LMMVoomDGEDream}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{data.frame}.
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata. For each RNA-seq analysis column in the \code{rna_seq_data} table, there is a row in the \code{rna_seq_metadata} table.
+    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
+    The first column of \code{rna_seq_metadata} must be named "\code{sample_id}" and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.
     \cr
-    The first column values of \code{rna_metadata} must match the row names of \code{rna_data}.
+    The metadata contain the control/altered status of each sample, along with additional conditions.
     \cr
-    The metadata contains the status control/altered state of the tissue and the additional conditions.
-    \cr
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
+    \cr
+    See example in \code{LMMVoomDGEDream}.
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -54,7 +60,7 @@ LMMVoomDGEImpl <- R6Class(
     If true, remove non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
 }

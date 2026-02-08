@@ -84,14 +84,14 @@ lmmDrugRepurposeCore$compute(
     If true, enables parallel computation (Unix-like systems only).
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
   \item{filter_by_protein_coding}{
     If true, remove non-protein coding genes.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
   \item{signature_mapper_parameter}{
