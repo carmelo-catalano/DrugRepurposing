@@ -9,7 +9,7 @@ This class applies two filter:
 \cr
 The filtering formula is:
 \cr
-\code{keep <- rowSums(gene_expressions >= counts_threshold) >= min(table(sample_statuses))}.
+\code{keep <- rowSums(rna_data >= counts_threshold) >= min(table(sample_statuses))}.
 \cr
 2)
 Filters out samples associated with grouping variables that has fewer levels than the
@@ -21,24 +21,24 @@ This class is a derived class of \code{LMMGeneFilterAbstract}.
 }
 \usage{
 lmmLowCountsGeneFilter <- LMMLowCountsGeneFilter$new(counts_threshold, random_effects_level_threshold)
-lmmLowCountsGeneFilter$filter(gene_expressions, metadata, random_effect_column_name, counts_filter_column_name)
+lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
 }
 
 \arguments{
-  \item{gene_expressions}{
+  \item{rna_data}{
     Table of RNA-seq data. Each column represents an RNA data sample, and each row represents a gene.
     Row names are gene IDs, and column names are sample identifiers.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
-  \item{metadata}{
-    \code{metadata} is a data frame containing metadata for \code{gene_expressions}.
+  \item{rna_metadata}{
+    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
     \cr
-    \code{metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{gene_expressions}:
-    \code{gene_expressions <- gene_expressions[, metadata$sample_id]}.
+    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
+    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
     \cr
-    \code{metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
+    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
     \cr
     See example below.
     \itemize{
@@ -73,7 +73,7 @@ A filtered data frame. Rows correspond to genes passing the counts threshold fil
 counts_threshold <- 11
 random_effects_level_threshold <- 5
 
-# gene_expressions
+# rna_data
 #  GeneID   GSM1   GSM2   GSM3   GSM4   GSM5   GSM6   GSM7   GSM8
 # ---------------------------------------------------------------
 #  1        817    480    513    497    105    123    455    244
@@ -86,7 +86,7 @@ random_effects_level_threshold <- 5
 #  25       102    605    246    368    611    588    654    811
 
 
-# metadata
+# rna_metadata
 # sample_id   tissue               tissue_status
 # ----------------------------------------------
 # GSM1        Cerebellum           ALS
@@ -102,5 +102,5 @@ random_effect_column_name <- "tissue"
 counts_filter_column_name <- "status"
 
 lmmLowCountsGeneFilter <- LowCountsGeneFilter$new(counts_threshold, random_effects_level_threshold)
-lmmLowCountsGeneFilter$filter(gene_expressions, metadata, random_effect_column_name, counts_filter_column_name)
+lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
 }
