@@ -2,8 +2,7 @@ library(testthat)
 
 # setup
 geoRNASeqLMMMetadataLoader <- GEORNASeqLMMMetadataLoader$new()
-lmmGeneFilter <- LMMLowCountsGeneFilter$new(random_effects_level_threshold = 0)
-sut <- GEORNASeqLMMVoomDGEDream$new(lmmGeneFilter)
+sut <- GEORNASeqLMMVoomDGEDreamWithEBayes$new()
 
 # given
 rna_seq_metadata_filename <- absolute_path_filename("unit_test_data/voom/gse153960_metadata.csv")
@@ -19,7 +18,7 @@ counts_filter_column_name <- sample_status_column_name
 
 rna_seq_metadata <- geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, sample_status_column_name, sample_statuses_to_be_tested, sample_statuses_map, sample_id_column_name, additional_columns)
 
-expected <- absolute_path_readRDS("unit_test_data/voom/GEORNASeqLMMVoomDGEDream_expected.Rds")
+expected <- absolute_path_readRDS("unit_test_data/voom/GEORNASeqLMMVoomDGEDreamWithEBayes2_expected.Rds")
 
 # when
 result <- sut$compute(
@@ -27,15 +26,14 @@ result <- sut$compute(
   rna_seq_metadata,
   formula,
   random_effect_column_names,
-  sample_status_column_name,
-  filter_by_protein_coding = FALSE
+  counts_filter_column_name,
+  filter_by_protein_coding = F
 )
-
 result$p.value <- NULL
 result$adj.p.value <- NULL
 
 # then
-test_that("test-GEORNASeqLMMVoomDGEDream", {
+test_that("test-GEORNASeqLMMVoomDGEDreamWithEBayes2", {
   expect_equal(result, expected, tolerance = 0.0005)
 }
 )

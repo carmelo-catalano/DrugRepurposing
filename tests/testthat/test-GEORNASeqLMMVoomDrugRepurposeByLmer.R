@@ -19,11 +19,13 @@ drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
 drug_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drug_genes <- subset(drug_genes, drug_genes$is_best_inferred_gene == 1)
 drug_genes <- drug_genes$gene_id
-tissue_status_field_name <- "tissue_status"
+sample_status_column_name <- "tissue_status"
 sample_id_field_name <- "accession"
-additional_fields <- "tissue"
+additional_columns <- "tissue"
+random_effect_column_names <- additional_columns
+counts_filter_column_name <- sample_status_column_name
 
-rna_seq_metadata <- geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_fields)
+rna_seq_metadata <- geoRNASeqLMMMetadataLoader$load(rna_seq_metadata_filename, sample_status_column_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name, additional_columns)
 
 expected <- absolute_path_readRDS("unit_test_data/drug_repurpose/GEORNASeqLMMVoomDrugRepurpose_expected.Rds")
 
@@ -35,6 +37,8 @@ result <- sut$compute(
   drugs,
   drug_genes,
   10,
+  random_effect_column_names,
+  counts_filter_column_name,
   "ipf",
   "6h",
   F,
