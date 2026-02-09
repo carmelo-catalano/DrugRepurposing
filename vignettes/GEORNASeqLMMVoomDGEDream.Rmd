@@ -73,11 +73,20 @@ rna_seq_metadata <- data.frame(
 # rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
 # In this example, the GSM2433109 column of rna_seq_data will be discarded before computation.
 
-geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
+random_effect_column_names <- "tissue"
+sample_status_column_name <- "tissue_status"
+formula <- ~tissue_status + (1 | tissue)
+
+# In this example, we have limited data, so the random-effects filter is disabled.
+# In a typical DGE analysis, disabling this filter is not recommended.
+lmmGeneFilter <- LMMLowCountsGeneFilter$new(random_effects_level_threshold = 0)
+geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new(lmmGeneFilter)
 geoRNASeqLMMVoomDGEDream$compute(
   rna_seq_data_filename = rna_seq_data_filename,
   rna_seq_metadata = rna_seq_metadata,
-  formula = ~tissue_status + (1 | tissue),
+  random_effect_column_names = random_effect_column_names,
+  counts_filter_column_name = sample_status_column_name,
+  formula <- formula,
   filter_by_protein_coding = FALSE
 )
 

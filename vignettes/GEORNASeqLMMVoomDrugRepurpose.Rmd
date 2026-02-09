@@ -130,8 +130,10 @@ EasyDrugSignatureLoader <- R6Class(
 )
 
 easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
-
-geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new()
+# In this example, we have limited data, so the random-effects filter is disabled.
+# In a typical DGE analysis, disabling this filter is not recommended.
+lmmGeneFilter <- LMMLowCountsGeneFilter$new(random_effects_level_threshold = 0)
+geoRNASeqLMMVoomDGEDream <- GEORNASeqLMMVoomDGEDream$new(lmmGeneFilter)
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(
   geoRNASeqLMMVoomDGE = geoRNASeqLMMVoomDGEDream,
   drugSignatureLoader = easyDrugSignatureLoader
@@ -144,6 +146,8 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
   drugs = drugs,
   drugs_genes = drugs_genes,
   random_distribution_size = 10,
+  random_effect_column_names = "tissue",
+  counts_filter_column_name = "tissue_status",
   disease_name = "ALS",
   parallel_computation = FALSE,
   filter_by_protein_coding = FALSE,
