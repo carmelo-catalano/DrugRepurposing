@@ -42,6 +42,7 @@ dgrpLogger$log("Hello world")
   }
 }
 \value{
+The methods of this class do not return any value.
 }
 \examples{
  # using default configuration
