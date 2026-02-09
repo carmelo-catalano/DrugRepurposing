@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir = absolute_package_directory("unit_test_data/connectivity_score/drug_dge/"), t_value_column_name = "t.value_6h")
+drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir = absolute_path_directory("unit_test_data/connectivity_score/drug_dge/"), t_value_column_name = "t.value_6h")
 sut <- GEORNASeqDichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 
 # given

@@ -15,18 +15,22 @@ See \code{GEORNASeqLMMVoomDGECore} for more information.
 \usage{
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 }
 \arguments{
   The \code{compute} function arguments are identical to those in GEORNASeqLMMVoomDGEAbstract.
 
-  \item{geneFilter (constructor argument)}{
-    Instance of a class for filtering non-significant genes.
+  \\item{lmmGeneFilter (constructor argument)}{
+    Instance of a class for filtering RNA data suitable for LMM analysis.
     \itemize{
-      \item Type: derived class of \code{GeneFilterAbstract}.
-      \item Default value: Instance of class \code{LowCountsGeneFilter}.
+      \item Type: derived class of \code{LMMGeneFilterAbstract}.
+      \item Default value: Instance of class \code{LMMLowCountsGeneFilter}.
     }
   }
 }
@@ -38,7 +42,11 @@ Same as in GEORNASeqLMMVoomDGEAbstract.
 
 geoRNASeqLMMVoomDGEJulia <- GEORNASeqLMMVoomDGEJulia$new()
 result <- geoRNASeqLMMVoomDGEJulia$compute(
-  rna_seq_data_filename, rna_seq_metadata, formula,
+  rna_seq_data_filename,
+  rna_seq_metadata,
+  formula,
+  random_effect_column_names,
+  counts_filter_column_name,
   filter_by_protein_coding
 )
 

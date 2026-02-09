@@ -16,15 +16,15 @@ DichotomicDGE <- R6Class(
     },
     compute = function(rna_data, sample_01_map, filter_by_protein_coding = FALSE) {
       gene_experiments_data <- private$dichotomicRNADataMapper$map(rna_data, sample_01_map)
-      gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_types)
+      gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_statuses)
       if (filter_by_protein_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filterById(gene_experiments_data$gene_expressions)
       }
       samples_metadata <- data.frame(
-        sample_types = gene_experiments_data$sample_types,
+        sample_statuses = gene_experiments_data$sample_statuses,
         sample = colnames(gene_experiments_data$gene_expressions)
       )
-      design <- model.matrix(~sample_types, data = samples_metadata)
+      design <- model.matrix(~sample_statuses, data = samples_metadata)
       fit <- lmFit(gene_experiments_data$gene_expressions, design)
       eBayes_fit <- eBayes(fit)
       differential_expression <- topTable(eBayes_fit, coef = 2, number = 10^6)

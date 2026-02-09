@@ -4,6 +4,8 @@
 \description{
 This class provides methods for specifying the processor cores to be used in parallel computation.
 \cr
+The class cannot be instantiated; you must use the already instantiated object \code{processorCores}.\cr
+\cr
 R environment provide two main ways in which code can be parallelized, via sockets or via forking.
 \cr
 The fork-based approach copies the entire current R session and moves it to a new core. This approach works only on Linux and Mac and not on Windows.

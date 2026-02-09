@@ -18,84 +18,134 @@ The input RNA-seq data and metadata files are sourced from NCBI (\url{https://ww
 \usage{
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
 geoRNASeqLMMVoomDrugRepurpose$compute(
-       rna_seq_data_filename, rna_seq_metadata, formula, drugs, drugs_genes,
-       random_distribution_size, disease_name, drug_perturbation_time,
-       parallel_computation, filter_by_protein_coding,
-       signature_mapper_parameter
+        rna_seq_metadata, formula, drugs, drugs_genes, random_distribution_size,
+        random_effect_column_names, counts_filter_column_name, disease_name,
+        drug_perturbation_time, parallel_computation, filter_by_protein_coding,
+        signature_mapper_parameter
 )
 }
 \arguments{
-  \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file is in tsv (tab-separated value) format.
+    \item{rna_seq_data_filename}{
+    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+    \cr
     The file may also be compressed in gz format.
-    First column contains the gene id; the other columns contain the RNA-Seq analysis. First column name is "GeneID". The rest of the columns are titled according to the RNA analysis identifier (sample id).
+    \cr
+    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    \cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    Type: \code{string}.
+    \cr
+    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
+    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
+    See example below.
+    \itemize{
+      \item Type: \code{string}.
+    }
   }
   \item{rna_seq_metadata}{
-    RNA seq metadata.
+    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
+    \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
+    this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
     \cr
-    For each RNA-seq analysis column in the rna_seq_data table, there is a row in the rna_seq_metadata table.
-    The metadata contains the status control/altered state of the tissue and the additional conditions.
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    The metadata contain the control/altered status of each sample, along with additional conditions.
+    \cr
+    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
-    Type: \code{string}.
+    \cr
+    See example below.
+    \itemize{
+      \item Type: \code{data.frame}.
+    }
   }
   \item{formula}{
     The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
     Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
-    Type: \code{R formula}.
+    \itemize{
+      \item Type: \code{R formula}.
+    }
   }
   \item{drugs}{
     Drug signatures.
     A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
-    Type: \code{data.frame}.
-    Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+    \itemize{
+      \item Type: \code{data.frame}.
+      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+    }
   }
   \item{drugs_genes}{
     The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
-    Type: \code{vector}.
+    \itemize{
+      \item Type: \code{vector}.
+    }
   }
   \item{random_distribution_size}{
     Size of the random connectivity score distribution. Higher values provide more precise p-values.
-    Type: \code{integer}.
-    Default value: \code{10^5}.
+    \itemize{
+      \item Type: \code{integer}.
+      \item Default value: \code{10^5}.
+    }
+  }
+  \item{random_effect_column_name}{
+    This argument specifies the name of the random effect column used to filter out low-level grouping variables.
+    \itemize{
+      \item Type: \code{string}.
+    }
+  }
+  \item{counts_filter_column_name}{
+    This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{"sample_status"}
+    }
   }
   \item{disease_name}{
     Disease name. If specified, it is added to the output table. It is not used for the computation.
-    Type: \code{string}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{NA}.
+    }
   }
   \item{drug_perturbation_time}{
     Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    Type: \code{string}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{NA}.
+    }
   }
   \item{parallel_computation}{
     Enable parallel computation. Only for Unix-like systems.
-    Type: \code{boolean}.
-    Default value: \code{FALSE}.
+    \itemize{
+      \item Type: \code{boolean}.
+      \item Default value: \code{FALSE}.
+    }
   }
   \item{filter_by_protein_coding}{
     If true, remove non-protein coding genes.
-    Type: \code{boolean}.
-    Default value: \code{FALSE}.
+    \itemize{
+      \item Type: \code{boolean}.
+      \item Default value: \code{FALSE}.
+    }
   }
   \item{signature_mapper_parameter}{
     Parameter used by the constructor argument \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping.
     If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
-    Default value: \code{NA}.
+    \itemize{
+      \item Default value: \code{NA}.
+    }
   }
   \item{geoRNASeqLMMVoomDGE (constructor argument)}{
     Instance of a class for computing LMM with Voom-transformed data.
-    Type: Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
-    Default value: Instance of class \code{GEORNASeqLMMVoomDGEDream}.
+    \itemize{
+      \item Type: Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
+      \item Default value: Instance of class \code{GEORNASeqLMMVoomDGEDream}.
+    }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
     Mapper for transforming \code{disease_dge} to a disease signature.
-    Type: class derived from \code{DGEToSignatureMapperAbstract}.
-    Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+    \itemize{
+      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
+      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+    }
   }
     \item{drugSignatureLoader (constructor argument)}{
     Loader for drug DGEs in the argument \code{drugs}.
@@ -113,6 +163,7 @@ rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.ts
 # File content example:
 #
 # GeneID   GSM1      GSM2      GSM3      GSM4      GSM5      GSM6      GSM7
+# -------------------------------------------------------------------------
 # 1        262       116       111       162       172       182       142
 # 2        28189     33702     11173     21947     22147     20817     19117
 # 3        463       261       193       281       351       291       231
@@ -126,6 +177,7 @@ rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.ts
 # rna_seq_metadata  content example:
 #
 # sample_id    tissue_status    tissue
+# ------------------------------------------------
 # GSM1         als              Spinal Cord Lumbar
 # GSM2         als              Spinal Cord Lumbar
 # GSM3         als              Spinal Cord Lumbar
@@ -143,6 +195,8 @@ drugs <- data.frame(
 )
 drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
 random_distribution_size <- 10^5
+random_effect_column_names <- "tissue"
+counts_filter_column_name <- "tissue_status"
 disease_name <- "ALS"
 drug_perturbation_time <- "6h"
 parallel_computation <- FALSE
@@ -152,14 +206,15 @@ signature_mapper_parameter <- 150
 geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
 geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
-        rna_seq_metadata, formula, drugs, drugs_genes,
-        random_distribution_size, disease_name, drug_perturbation_time,
-        parallel_computation, filter_by_protein_coding,
+        rna_seq_metadata, formula, drugs, drugs_genes, random_distribution_size,
+        random_effect_column_names, counts_filter_column_name, disease_name,
+        drug_perturbation_time, parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter
 )
 
 # output
 # drug         connectivity_score   p.value                 adj.p.value             disease    disease_signature_type     drug_perturbation_time
+# ----------------------------------------------------------------------------------------------------------------------------------------------
 # A-23187      0.334653             0.1880556               0.2883341               ALS        4 MostSignificantGenes     6h
 # A-443644     0.4163465            0.1994708               0.2791108               ALS        4 MostSignificantGenes     6h
 # AG-490       0.4176343            0.38551284              0.45781284              ALS        4 MostSignificantGenes     6h

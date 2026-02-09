@@ -1,5 +1,7 @@
 library(testthat)
 
+skip_if(is_windows_os(), message = "BinChenConnectivityScoreListApplyerParallel is not supported on the Windows operating system, test skipped")
+
 # setup
 drugSignatureLoader <- DrugSignatureLoaderByDrugName$new(paste0(absolute_path_filename("unit_test_data/connectivity_score/drug_dge/"), "/"), "t.value_6h")
 sut <- BinChenConnectivityScoreListApplyerParallel$new(drugSignatureLoader)

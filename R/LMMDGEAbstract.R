@@ -1,7 +1,7 @@
 LMMDGEAbstract <- R6Class(
   "LMMDGEAbstract",
   public = list(
-    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding = FALSE) {
+    compute = function(rna_data, rna_metadata, formula, filter_by_protein_coding) {
       stop("I'm an abstract method, please implement me")
     }
   )

@@ -1,5 +1,5 @@
-\name{LmerLMMToDataFrameMapper}
-\alias{LmerLMMToDataFrameMapper}
+\name{LMMLmerToDataFrameMapper}
+\alias{LMMLmerToDataFrameMapper}
 \title{Maps the output of lmer to a data frame}
 \description{
 Maps the output of \code{lmer} to a \code{data frame}. The output of \code{lmer} is an object of class \code{merMod}.
@@ -7,7 +7,7 @@ When the \code{LMM} fixed effect assumes more than two values, the fields \code{
 This class is derived from \code{LMMToDataFrameMapperAbstract}.
 }
 \usage{
-lmmLmerToDataFrameMapper <- LmerLMMToDataFrameMapper$new()
+lmmLmerToDataFrameMapper <- LMMLmerToDataFrameMapper$new()
 lmmLmerToDataFrameMapper$map(LMM_output, gene_id, sample_type_field_name, sample_type_field_name_mapped)
 }
 \arguments{
@@ -49,7 +49,7 @@ LMM_output <- merMod
 gene_id <- "DDR1"
 sample_type_field_name <- "pert_iname"
 sample_type_field_name_mapped <- "drug"
-lmmLmerToDataFrameMapper <- LmerLMMToDataFrameMapper$new()
+lmmLmerToDataFrameMapper <- LMMLmerToDataFrameMapper$new()
 lmmLmerToDataFrameMapper$map(LMM_output, gene_id, sample_type_field_name, sample_type_field_name_mapped)
 # Output example:
 # drug            gene_id   DE_log2_FC   std.error   t.value

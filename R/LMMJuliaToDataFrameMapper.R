@@ -19,9 +19,9 @@ LMMJuliaToDataFrameMapper <- R6Class(
         dge <- add_column(dge, gene_id = gene_id, .before = 1)
       }
       if (!obj_is_na(sample_type_field_name)) {
-        sample_types <- julia_call("coefnames", LMM_output)[-1]
-        sammple_types <- substr(sample_types, nchar(sample_type_field_name) + 3, nchar(sample_types))
-        dge <- add_column(dge, sample_type = sammple_types, .before = 1)
+        sample_statuses <- julia_call("coefnames", LMM_output)[-1]
+        sample_statuses <- substr(sample_statuses, nchar(sample_type_field_name) + 3, nchar(sample_statuses))
+        dge <- add_column(dge, sample_type = sample_statuses, .before = 1)
         colnames(dge)[1] <- sample_type_field_name_mapped
         dge$adj.p.value <- p.adjust(p.value, method = "BH")
       }

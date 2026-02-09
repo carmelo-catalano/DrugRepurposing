@@ -1,12 +1,12 @@
-\name{LINCSRDSLmerDrugDGE}
-\alias{LINCSRDSLmerDrugDGE}
+\name{LINCSRDSLMMDrugDGELmer}
+\alias{LINCSRDSLMMDrugDGELmer}
 \title{Calculate the differential gene expression (DGE) for a gene list and drug list from the LINCS database}
 \description{
 Calculate the differential gene expression (DGE) for a gene list and drug list from the LINCS database. The linear mixed model (LMM) is computed using the lmer function (library lme4).
 }
 \usage{
-lincsRDSLmerDrugDGE <- LINCSRDSLmerDrugDGE$new(lincs_splitted_level3_dir, output_DGE_dir, skip_already_computed_genes)
-lincsRDSLmerDrugDGE$compute(perturbation_times, gene_list, drugs_filter)
+LINCSRDSLMMDrugDGELmer <- LINCSRDSLMMDrugDGELmer$new(lincs_splitted_level3_dir, output_DGE_dir, skip_already_computed_genes)
+LINCSRDSLMMDrugDGELmer$compute(perturbation_times, gene_list, drugs_filter)
 }
 \arguments{
   \item{perturbation_times}{
@@ -44,7 +44,7 @@ lincsRDSLmerDrugDGE$compute(perturbation_times, gene_list, drugs_filter)
     If set to true, the DGE computation will be skipped for genes whose output file already exists.
     \itemize{
       \item Type: \code{boolean}.
-      \item Default value: \code{F}.
+      \item Default value: \code{FALSE}.
     }
   }
 }
@@ -62,8 +62,8 @@ drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide", "aminopurva
 lincs_splitted_level3_dir <- "/home/user/lincs"
 output_DGE_dir <- "/home/user/dge"
 skip_already_computed_genes <- TRUE
-lincsRDSLmerDrugDGE <- LINCSRDSLmerDrugDGE$new(lincs_splitted_level3_dir, output_DGE_dir, skip_already_computed_genes)
-lincsRDSLmerDrugDGE$compute(perturbation_times, gene_list, drugs_filter)
+LINCSRDSLMMDrugDGELmer <- LINCSRDSLMMDrugDGELmer$new(lincs_splitted_level3_dir, output_DGE_dir, skip_already_computed_genes)
+LINCSRDSLMMDrugDGELmer$compute(perturbation_times, gene_list, drugs_filter)
 # Output example:
 # drug               gene_id   DE_log2_FC    std.error    t.value
 # AM-251             780       -0.00983581   0.06666298  -0.1475453

@@ -54,11 +54,20 @@ rna_seq_metadata <- data.frame(
   tissue_status = tissue_status_factor
 )
 
-geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
+random_effect_column_names <- "tissue"
+sample_status_column_name <- "tissue_status"
+formula <- ~tissue_status + (1 | tissue)
+
+# In this example, we have limited data, so the random-effects filter is disabled.
+# In a typical DGE analysis, disabling this filter is not recommended.
+lmmGeneFilter <- LMMLowCountsGeneFilter$new(random_effects_level_threshold = 0)
+geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new(lmmGeneFilter)
 geoRNASeqLMMVoomDGELmer$compute(
   rna_seq_data_filename = rna_seq_data_filename,
   rna_seq_metadata = rna_seq_metadata,
-  formula = ~tissue_status + (1 | tissue),
+  formula =formula,
+  random_effect_column_names = random_effect_column_names,
+  counts_filter_column_name = sample_status_column_name,
   filter_by_protein_coding = FALSE
 )
 

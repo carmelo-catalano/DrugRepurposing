@@ -15,7 +15,7 @@ vignette: >
 
   Here you can find two complete examples built on real data from NCBI ([https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)):
 
-[https://github.com/carmelo-catalano/DrugRepurposing/tree/main/examples](https://github.com/carmelo-catalano/DrugRepurposing/tree/main/examples)
+[https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples)
 
   DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
 

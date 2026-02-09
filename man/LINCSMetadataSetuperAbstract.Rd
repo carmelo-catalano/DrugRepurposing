@@ -31,7 +31,6 @@ LINCSMetadataSetuperImpl <- R6Class(
     List of drugs for which the DGE will be computed.
     \itemize{
       \item Type: \code{vector}.
-      \item Default value: NA.
     }
   }
 }

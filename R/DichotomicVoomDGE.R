@@ -16,18 +16,18 @@ DichotomicVoomDGE <- R6Class(
     },
     compute = function(rna_seq, sample_01_map, filter_by_protein_coding = FALSE) {
       gene_experiments_data <- private$dichotomicRNADataMapper$map(rna_seq, sample_01_map)
-      gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_types)
+      gene_experiments_data$gene_expressions <- private$geneFilter$filter(gene_experiments_data$gene_expressions, gene_experiments_data$sample_statuses)
       if (filter_by_protein_coding) {
         gene_experiments_data$gene_expressions <- private$geneFilterByProteinCoding$filterById(gene_experiments_data$gene_expressions)
       }
       samples_metadata <- data.frame(
-        sample_types = gene_experiments_data$sample_types,
+        sample_statuses = gene_experiments_data$sample_statuses,
         sample = colnames(gene_experiments_data$gene_expressions)
       )
       dge <- DGEList(gene_experiments_data$gene_expressions, remove.zeros = TRUE)
       dge <- calcNormFactors(dge, method = 'upperquartile')
-      design <- model.matrix(~sample_types, data = samples_metadata)
-      voom_data <- voom(dge, design, plot = FALSE)
+      design <- model.matrix(~sample_statuses, data = samples_metadata)
+      voom_data <- voom(dge, design, plot = FALSE, adaptive.span = FALSE)
       fit_voom <- lmFit(voom_data, design)
       eBayes_fit_voom <- eBayes(fit_voom)
       differential_expression <- topTable(eBayes_fit_voom, coef = 2, number = 10^6)

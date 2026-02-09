@@ -10,8 +10,10 @@ a \code{data frame}.
 \arguments{
   \item{rna_data_metadata}{
     Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    \cr
+    See example
     \itemize{
-      \item Type: \code{data frame}.
+      \item Type: \code{data.frame}.
     }
   }
   \item{gene_id}{

@@ -3,6 +3,7 @@ ProcessorCores <- R6Class(
   public = list(
     initialize = function() {
       private$cores <- detectCores()
+      # is_windows_os
       if (Sys.info()[['sysname']] == "Windows")
         private$BPPARAMCores <- 1
       else

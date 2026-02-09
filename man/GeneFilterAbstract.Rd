@@ -1,17 +1,21 @@
 \name{GeneFilterAbstract}
 \alias{GeneFilterAbstract}
-\title{Base class for filtering non-significant genes from RNA data}
+\title{Base class for filtering genes from RNA data}
 \description{
-Base class for constructor parameter \code{geneFilter} of the classes \code{DichotomicDGE}, \code{DichotomicVoomDGE}, and others.
+Typically, this class implementation filters non-significant genes from RNA data.
 \cr
-Filters non-significant genes from RNA data. This package provides four implementations: \code{LogarithmGeneFilter}, \code{LowCountsGeneFilter}, \code{MeanThresholdGeneFilter}, and \code{NoGeneFilter}.
+This package provides four implementations: \code{LogarithmGeneFilter}, \code{LowCountsGeneFilter}, \code{MeanThresholdGeneFilter}, and \code{NoGeneFilter}.
+\cr
+Base class for constructor parameter \code{geneFilter} of the classes \code{DichotomicDGE}, \code{DichotomicVoomDGE},
+\code{DichotomicDrugRepurpose}, \code{DichotomicDrugRepurposeCore}, \code{DichotomicVoomDrugRepurpose}
+ and \code{GEORNASeqDichotomicVoomDGE}.
 }
 \usage{
 GeneFilterImpl <- R6Class(
   "GeneFilterImpl",
   inherit = GeneFilterAbstract,
   public = list(
-    filter = function(gene_expressions, sample_types) {
+    filter = function(gene_expressions, sample_statuses) {
       # do something
     }
   )
@@ -25,8 +29,8 @@ GeneFilterImpl <- R6Class(
       \item Type: \code{matrix}.
     }
   }
-  \item{sample_types}{
-    Each element in the \code{sample_types} vector represents the type of the corresponding RNA data sample column (by position) in the expression matrix.
+  \item{sample_statuses}{
+    Each element in the \code{sample_statuses} vector represents the type of the corresponding RNA data sample column (by position) in the expression matrix.
     \itemize{
       \item Type: \code{vector}.
     }
@@ -40,7 +44,7 @@ GeneFilterImpl <- R6Class(
   "GeneFilterImpl",
   inherit = GeneFilterAbstract,
   public = list(
-    filter = function(gene_expressions, sample_types) {
+    filter = function(gene_expressions, sample_statuses) {
       # do something
     }
   )

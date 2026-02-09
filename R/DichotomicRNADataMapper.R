@@ -27,12 +27,12 @@ DichotomicRNADataMapper <- R6Class(
       sample_vector_map <- subset(sample_vector_map, sample_vector_map != "X")
       sample_vector_map[which(sample_vector_map == '0')] <- "Control"
       sample_vector_map[which(sample_vector_map == '1')] <- "TestSample"
-      sample_types <- factor(sample_vector_map, levels = c("Control", "TestSample"))
+      sample_statuses <- factor(sample_vector_map, levels = c("Control", "TestSample"))
       rna_seq <- rna_seq[, sample_positions]
       return(
         list(
           gene_expressions = rna_seq,
-          sample_types = sample_types
+          sample_statuses = sample_statuses
         )
       )
     }

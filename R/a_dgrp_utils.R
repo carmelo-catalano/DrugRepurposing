@@ -13,6 +13,10 @@ is.boolean <- function(x) {
            (x == TRUE || x == FALSE))
 }
 
+is_windows_os <- function() {
+  return(Sys.info()[['sysname']] == "Windows")
+}
+
 absolute_package_filename <- function(filename) {
   return(system.file(filename, package = config$package_name))
 }

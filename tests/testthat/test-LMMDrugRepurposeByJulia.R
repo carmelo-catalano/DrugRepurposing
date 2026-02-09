@@ -1,7 +1,7 @@
 library(testthat)
 
 # setup
-drug_dge_dir <- absolute_package_directory("unit_test_data/connectivity_score/drug_dge/")
+drug_dge_dir <- absolute_path_directory("unit_test_data/connectivity_score/drug_dge/")
 drug_dge_t_value_column_name <- "t.value_6h"
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir, drug_dge_t_value_column_name)
 sut <- LMMDrugRepurpose$new(lmmDGE = LMMDGEJulia$new(), drugSignatureLoader = drugSignatureLoaderByDrugName)
@@ -9,15 +9,16 @@ sut <- LMMDrugRepurpose$new(lmmDGE = LMMDGEJulia$new(), drugSignatureLoader = dr
 # given
 rna_seq_metadata_filename <- absolute_path_filename("unit_test_data/voom/gse153960_metadata.csv")
 rna_seq_data_filename <- absolute_path_filename("unit_test_data/voom/GSE153960_raw_counts_GRCh38.p13_NCBI_first_50.tsv")
-tissue_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
-tissue_statuses_map <- c("Control", "als")
+sample_statuses_to_be_tested <- c("Non-Neurological Control", "ALS Spectrum MND")
+sample_statuses_map <- c("Control", "als")
 formula <- ~tissue_status + (1 | tissue)
-tissue_status_field_name <- "tissue_status"
-sample_id_field_name <- "accession"
-additional_fields <- "tissue"
+sample_status_column_name <- "tissue_status"
+sample_id_column_name <- "accession"
+additional_columns <- "tissue"
+random_effect_column_names <- additional_columns
 
 geoRNASeqLMMDataMetadataLoader <- GEORNASeqLMMDataMetadataLoader$new()
-rna_seq <- geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, tissue_status_field_name, tissue_statuses_to_be_tested, tissue_statuses_map, sample_id_field_name = "accession", additional_fields = "tissue")
+rna_seq <- geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_filename, random_effect_column_names, sample_status_column_name, sample_statuses_to_be_tested, sample_statuses_map, sample_id_column_name, additional_columns)
 rna_seq$data <- log2(rna_seq$data + 1)
 
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
