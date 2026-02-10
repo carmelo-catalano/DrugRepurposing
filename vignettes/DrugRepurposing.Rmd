@@ -1,21 +1,195 @@
 ---
-title: "Compute drug repurposing with DrugRepurposing"
+title: "Drug repurposing system based on differential expression analysis of RNA expression profiles"
 output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{Compute drug repurposing with DrugRepurposing}
+  %\VignetteIndexEntry{Drug repurposing system based on differential expression analysis of RNA expression profiles}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 # Description
-  A tool to compute drug repurposing by getting data from diseases and drugs.
+  This package provides a set of tools for analyzing genetic data from disease and drug studies to identify potential new uses for existing drugs, in other words, it serves as a drug repurposing system.
 
-  Below you will find a complete example built on invented data.
+  An interesting application involves using genetic data from currently untreatable diseases to generate a list of candidate drugs for their treatment. The obtained results must then be validated in the laboratory.
+
+  The basic idea is to analyze the sequencing of four transcriptomes from: healthy tissue, diseased tissue, diseased tissue treated with a control vehicle, and diseased tissue treated with drugs, in order to identify potential connections between drugs and diseases.
+
+  This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies.
+
+  The software presented in this package is based on the publications:
+
+  1. Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
+  2. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al - 2017.
+
+
+The repository accompanying the first article by Karel K. M. Koudijs et al, available at [https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation](https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation),
+was used as the starting point for the development of DrugRepurposing.
+
+The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, is copied from the software accompanying the second article by Bin Chen et al, available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).
+
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+
+The original implementation provides an algorithm to calculate differential gene expression (DGE) from RNA-seq data for disease analysis and from microarray data for drug-effect analysis.
+DrugRepurposing generalizes this approach by providing functions to compute DGE from both RNA-seq and microarray data, for disease and drug-effect analyses.
+
+## Drug repurposing analysis
+1. Disease DGE: computation of DGE between disease samples and control samples.
+2. Drug DGE: computation of DGE between drug-treated samples and control vehicle samples.
+3. Disease signature: selection of the most significant genes from the disease DGE (typically between 50 and 150 genes).
+4. Connectivity score: computation of the connectivity score between the disease signature and the drug DGE.
+
+The connectivity score represents the correlation between the disease and the drug. The score ranges from -1 to +1.
+
+A positive value indicates that the drug behaves similarly to the disease.
+
+A negative value indicates that the drug behaves conversely to the disease.
+
+A higher positive score implies stronger correlation, while a higher negative score
+indicates greater anticorrelation.
+
+## Differential Gene Expression (DGE) analysis
+This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
+
+1. **RNA data counts following a "negative binomial distribution" (typically RNA-seq data) with a single condition "altered state/control state"**.
+These functions are based on the voom transformation and `lmFit` from the `limma` package.
+They are referred to as Dichotomic voom DGE.
+
+2. **RNA data counts following a "negative binomial distribution" (typically RNA-seq data) (typically RNA-seq data) with additional conditions beyond the base "altered state/control state"**.
+ For example, in a disease analysis, samples may also differ by tissue of origin in addition to the "altered state/control state" condition.
+These functions are based on the voom transformation and Linear Mixed Models (LMM).
+The Linear Mixed Model is computed using one of the following functions: `lmer` from `lme4`, `dream` `variancePartition`, or `fit` from Julia programming language.
+They are referred to as LMM voom DGE.
+
+3. **RNA data log-counts following a "normal distribution" (typically microarray data) with a single condition "altered state/control state"**.
+These functions are based on `lmFit` from the limma package.
+They are referred to as Dichotomic DGE.
+
+4. **RNA data log-counts following a "normal distribution" (typically microarray data) with additional conditions beyond the base "altered state/control state"**.
+For example, in a disease analysis, samples may differ by tissue of origin in addition to the "altered/control condition".
+These functions are based on Linear Mixed Models (LMM).
+The Linear Mixed Model is computed using one of the following functions: `lmer` from `lme4`, `dream` `variancePartition`, or `fit` from Julia programming language.
+They are referred to as LMM DGE.
+
+For further information about voom, see:
+*voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
+
+## Package architecture
+The package is entirely developed following the OOP paradigm through the use of the R6 library.
+
+DrugRepurposing provides more than 80 classes that can be composed at will to perform differential gene expression analysis of RNA data and calculate the connectivity score between diseases and drugs in order to find new uses for existing drugs.
+
+The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy pattern”, the behavior of the available classes can be customized.
+
+In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
+  [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat)
+
+
+## Abstract Classes
+In order to make the software structure clearer and facilitate the use of the “strategy pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
+
+These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the `lmmVoomDGE` parameter of the constructor of the `GEORNASeqLMMVoomDGE` class.
+
+## Suggestion
+  For better use of this package, it is recommended to consult the code at: [https://github.com/carmelo-catalano/DrugRepurposing](https://github.com/carmelo-catalano/DrugRepurposing)
+
+  and to use the tests at:
+
+  [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat)
+
+  as guidelines for developing software based on DrugRepurposing.
+
+## Basic Libraries
+Statistical analyses are performed using the following libraries: limma, lme4, dream, and the Julia programming language.
+
+
+## Main classes
+**Drug repurposing**
+
+DichotomicDrugRepurpose
+
+DichotomicVoomDrugRepurpose
+
+GEORNASeqDichotomicVoomDrugRepurpose
+
+LMMDrugRepurpose
+
+LMMVoomDrugRepurpose
+
+GEORNASeqLMMVoomDrugRepurpose
+
+** **
+
+**Connectivity score**
+
+BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade
+
+BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade
+
+**Dichotomic differential gene expression**
+
+DichotomicDGE
+
+DichotomicVoomDGE
+
+GEORNASeqDichotomicVoomDGE
+
+** **
+
+**LMM differential gene expression**
+
+LMMDreamDGE
+
+LMMJuliaDGE
+
+LMMLmerDGE
+
+LMMVoomDreamDGE
+
+LMMVoomJuliaDGE
+
+LMMVoomLmerDGE
+
+
+
+
+
+GEORNASeqLMMVoomDreamDGE
+
+GEORNASeqLMMVoomJuliaDGE
+
+GEORNASeqLMMVoomLmerDGE
+
+LINCSRDSLMMDrugDGEJulia
+
+LINCSRDSLMMDrugDGEJuliaClusters
+
+LINCSRDSLMMDrugDGELmer
+
+** **
+
+**Metanalysis**
+
+DGEMetanalysisByMatrix
+
+** **
+
+**LINCS GCTX archive export**
+
+LINCSExport
+
+
+#
+# Examples
 
   Here you can find two complete examples built on real data from NCBI ([https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)):
 
 [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples)
+
+** **
+
+  Below you will find a complete example built on invented data.
+
 
   DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
 
