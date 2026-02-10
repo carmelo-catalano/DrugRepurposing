@@ -4,7 +4,8 @@
 \docType{package}
 \title{Drug Repurposing System}
 \description{
-  \code{DrugRepurposing} Drug repurposing system based on differential expression analysis of RNA-seq expression profiles
+  \code{DrugRepurposing} Drug repurposing system based on differential expression analysis of RNA expression profiles
+  \cr\cr
 }
 \section{Package}{
   This package provides a set of tools for analyzing genetic data from disease and drug studies to identify potential new uses for existing drugs, in other words, it serves as a drug repurposing system.
@@ -17,17 +18,77 @@
   \cr
   The software presented in this package is based on the publications:
   \itemize{
-    \item	Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
+    \item Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
     \item Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al - 2017.
   }
-  The transcriptome reversion system proposed in this package generalizes and evolves the mathematical model described by Karel K. M. Koudijs et al implementing significantly more efficient computational procedures. Thanks to concurrent programming and the adoption of optimized algorithms, the new software is up to 70 times faster than the original version.
-  \cr
-  The mathematical model was expanded in order to provide a function that would also allow genetic studies of diseases that affect multiple parts of the body, such as amyotrophic lateral sclerosis, to be analyzed accurately.
-  \cr
-  Studies of diseases such as ALS provide genetic data from different parts of the body, for example: Cerebellum, Spinal Cord Cervical, Cortex Sensory, Spinal Cord Lumbar.
-  \cr
-  The computational procedures for connectivity score and linear mixed models were greatly optimized using parallel computation and Julia programming language. However, the support of parallel computation is fully supported only on unix like systems.
+The repository accompanying the first article by Karel K. M. Koudijs et al, available at \href{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation}{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation},
+was used as the starting point for the development of DrugRepurposing.
+\cr
+The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, is copied from the software accompanying the second article by Bin Chen et al, available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
+\cr
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+\cr
+The original implementation provides an algorithm to calculate differential gene expression (DGE) from RNA-seq data for disease analysis and from microarray data for drug-effect analysis.
+DrugRepurposing generalizes this approach by providing functions to compute DGE from both RNA-seq and microarray data, for disease and drug-effect analyses.
+\cr\cr
 }
+\section{Drug repurposing analysis}{
+    \itemize{
+        \item Disease DGE: computation of DGE between disease samples and control samples.
+        \item Drug DGE: computation of DGE between drug-treated samples and control vehicle samples.
+        \item Disease signature: selection of the most significant genes from the disease DGE (typically between 50 and 150 genes).
+        \item Connectivity score: computation of the connectivity score between the disease signature and the drug DGE.
+    }
+    The connectivity score represents the correlation between the disease and the drug. The score ranges from -1 to +1.
+    \cr
+    A positive value indicates that the drug behaves similarly to the disease.
+    \cr
+    A negative value indicates that the drug behaves conversely to the disease.
+    \cr
+    A higher positive score implies stronger correlation, while a higher negative score
+    indicates greater anticorrelation.
+    \cr\cr
+}
+\section{Differential Gene Expression (DGE) analysis}{
+    This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
+    \itemize{
+        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-seq data) with a single condition "altered state/control state"}.
+        \cr
+        These functions are based on the voom transformation and \code{lmFit} from the \code{limma} package.
+        \cr
+        They are referred to as Dichotomic voom DGE.
+
+        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-seq data) (typically RNA-seq data) with additional conditions beyond the base "altered state/control state"}.
+         \cr
+         For example, in a disease analysis, samples may also differ by tissue of origin in addition to the "altered state/control state" condition.
+        \cr
+        These functions are based on the voom transformation and Linear Mixed Models (LMM).
+        \cr
+        The Linear Mixed Model is computed using one of the following functions: \code{lmer} from \code{lme4}, \code{dream} from \code{variancePartition}, or \code{fit} from Julia programming language.
+        \cr
+        They are referred to as LMM voom DGE.
+
+        \item \strong{RNA data log-counts following a "normal distribution" (typically microarray data) with a single condition "altered state/control state"}.
+        \cr
+        These functions are based on \code{lmFit} from the limma package.
+        \cr
+        They are referred to as Dichotomic DGE.
+
+        \item \strong{RNA data log-counts following a "normal distribution" (typically microarray data) with additional conditions beyond the base "altered state/control state"}.
+        \cr
+        For example, in a disease analysis, samples may differ by tissue of origin in addition to the "altered/control condition".
+        \cr
+        These functions are based on Linear Mixed Models (LMM).
+        \cr
+        The Linear Mixed Model is computed using one of the following functions: \code{lmer} from \code{lme4}, \code{dream} from \code{variancePartition}, or \code{fit} from Julia programming language.
+        \cr
+        They are referred to as LMM DGE.
+    }
+    For further information about voom, see:
+    *voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
+    \cr\cr
+}
+
 \section{Package architecture}{
   The package is entirely developed following the OOP paradigm through the use of the R6 library.
   \cr
@@ -37,31 +98,35 @@
   \cr
   In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
   \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
-
+  \cr\cr
 }
 \section{Abstract Classes}{
   In order to make the software structure clearer and facilitate the use of the “strategy pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
   \cr
   These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the lmmVoomDGE parameter of the constructor of the GEORNASeqLMMVoomDGE class.
+  \cr\cr
 }
 \section{Suggestion}{
   For better use of this package, it is recommended to consult the code at:
   \cr
-  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/}
   \cr
   and to use the tests at:
   \cr
   \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
   \cr
   as guidelines for developing software based on DrugRepurposing.
+  \cr\cr
 }
 \section{Basic Libraries}{
   Statistical analyses are performed using the following libraries: limma, lme4, dream, and the Julia programming language.
+  \cr\cr
 }
 \section{Julia}{
-  To achieve a significant performance boost in the calculation of mixed linear models, the Julia programming lamguage has been utilized. DrugRepurposing is able to invoke Julia's fit function, which makes it possible to compute linear mixed models up to 70 times faster than lmer.
+  To achieve a significant performance boost in the calculation of mixed linear models, the Julia programming language has been utilized. DrugRepurposing is able to invoke Julia's fit function, which makes it possible to compute linear mixed models up to 70 times faster than \code{lmer}.
   \cr
-  The porting between R and Julia is accomplished through the JuliaCall library.
+  The porting between R and Julia is accomplished through the \code{JuliaCall} library.
+  \cr\cr
 }
 \section{Julia installation}{
   For Julia environment installation, see: https://julialang.org/.
@@ -71,19 +136,20 @@
   \code{import Pkg;
   Pkg.add("MixedModels")
   Pkg.add("DataFrames")
+  \cr\cr
   }
-
 }
 \section{Troubleshooting Julia Integration with R}{
   If your R environment is unable to locate the Julia installation, you may need to configure the JULIA_HOME environment variable. Try one or both of the following instructions:
   \itemize{
-    \item Option 1: Set JULIA_HOME within R
+    \item Option 1: Set JULIA_HOME within R.
     options(JULIA_HOME = "/your-julia-installation-folder/bin/")
     This command sets the JULIA_HOME option within your current R session, pointing to the Julia executable. To make it persistent, you can add this line to your .Rprofile file.
-    \item Option 2: Set JULIA_HOME in your system environment
+    \item Option 2: Set JULIA_HOME in your system environment.
     Bash
-    export JULIA_HOME=/your-julia-installation-folder/bin/
+    export JULIA_HOME=/your-julia-installation-folder/bin/.
     This command sets the JULIA_HOME environment variable for your current shell session. You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
+    \cr\cr
     }
 }
 \section{Main classes}{
