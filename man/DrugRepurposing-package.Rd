@@ -119,14 +119,14 @@ This package provides many classes to analyze the level 3 of LINCS dataset.
   \cr
   DrugRepurposing provides more than 80 classes that can be composed at will to perform differential gene expression analysis of RNA data and calculate the connectivity score between diseases and drugs in order to find new uses for existing drugs.
   \cr
-  The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy pattern”, the behavior of the available classes can be customized.
+  The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy design pattern”, the behavior of the available classes can be customized.
   \cr
   In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
   \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat}
   \cr\cr
 }
 \section{Abstract Classes}{
-  In order to make the software structure clearer and facilitate the use of the “strategy pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
+  In order to make the software structure clearer and facilitate the use of the “strategy design pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
   \cr
   These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the lmmVoomDGE parameter of the constructor of the GEORNASeqLMMVoomDGE class.
   \cr\cr

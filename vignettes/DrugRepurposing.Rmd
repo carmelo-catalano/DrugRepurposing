@@ -15,12 +15,12 @@ vignette: >
 
   The basic idea is to analyze the sequencing of four transcriptomes from: healthy tissue, diseased tissue, diseased tissue treated with a control vehicle, and diseased tissue treated with drugs, in order to identify potential connections between drugs and diseases.
 
-  This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies.
+  This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies (e.g., [1,2]).
 
   The software presented in this package is based on the publications:
 
-  1. Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
-  2. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al - 2017.
+  1. Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al. - 2022.
+  2. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al. - 2017.
 
 
 The repository accompanying the first article by Karel K. M. Koudijs et al., available at [https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation](https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation),
@@ -105,14 +105,14 @@ The package is entirely developed following the OOP paradigm through the use of 
 
 DrugRepurposing provides more than 80 classes that can be composed at will to perform differential gene expression analysis of RNA data and calculate the connectivity score between diseases and drugs in order to find new uses for existing drugs.
 
-The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy pattern”, the behavior of the available classes can be customized.
+The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy design pattern”, the behavior of the available classes can be customized.
 
 In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
   [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat)
 
 
 ## Abstract Classes
-In order to make the software structure clearer and facilitate the use of the “strategy pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
+In order to make the software structure clearer and facilitate the use of the “strategy design pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
 
 These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the `lmmVoomDGE` parameter of the constructor of the `GEORNASeqLMMVoomDGE` class.
 
