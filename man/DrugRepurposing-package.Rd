@@ -18,27 +18,32 @@
   \cr
   The software presented in this package is based on the publications:
   \itemize{
-    \item Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al - 2022.
-    \item Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al - 2017.
+    \item Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al. - 2022.
+    \item Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al. - 2017.
   }
-The repository accompanying the first article by Karel K. M. Koudijs et al, available at \href{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation}{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation},
+The repository accompanying the first article by Karel K. M. Koudijs et al., available at \href{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation}{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation},
 was used as the starting point for the development of DrugRepurposing.
 \cr
-The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, is copied from the software accompanying the second article by Bin Chen et al, available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
+The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, was extracted from the software accompanying the second article by Chen et al., available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
 \cr
 The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
-\cr
-The original implementation provides an algorithm to calculate differential gene expression (DGE) from RNA-seq data for disease analysis and from microarray data for drug-effect analysis.
-DrugRepurposing generalizes this approach by providing functions to compute DGE from both RNA-seq and microarray data, for disease and drug-effect analyses.
 \cr\cr
 }
 \section{Drug repurposing analysis}{
+    The implemented repurposing pipeline consists of four principal stages:
     \itemize{
-        \item Disease DGE: computation of DGE between disease samples and control samples.
-        \item Drug DGE: computation of DGE between drug-treated samples and control vehicle samples.
-        \item Disease signature: selection of the most significant genes from the disease DGE (typically between 50 and 150 genes).
-        \item Connectivity score: computation of the connectivity score between the disease signature and the drug DGE.
+        \item \strong{Disease DGE Generation}. DGE is computed between diseased and healthy samples using either a dichotomic or linear mixed model (LMM)-based method, depending on study design and available metadata.
+        \item \strong{Drug DGE Generation}. DGE is computed for samples exposed to drugs versus vehicle-treated controls. This step is repeated for each compound under evaluation.
+        \item \strong{Signature Generation}. The most differential expressed genes are selected using either:
+        \itemize{
+            \item the top n genes ranked by absolute t-value (typically 50–150), or
+            \item genes with adjusted p-value < 0.001 and absolute log fold change above a specified threshold (e.g., 1.5).
+        }
+        \item \strong{Connectivity Score Computation}. A connectivity score is calculated to quantify the degree of inversion between the disease and drug signatures. A negative score suggests potential therapeutic relevance, indicating that the drug may reverse the disease gene expression pattern.
     }
+    \cr
+}
+\section{Connectivity Score}{
     The connectivity score represents the correlation between the disease and the drug. The score ranges from -1 to +1.
     \cr
     A positive value indicates that the drug behaves similarly to the disease.
@@ -46,8 +51,22 @@ DrugRepurposing generalizes this approach by providing functions to compute DGE 
     A negative value indicates that the drug behaves conversely to the disease.
     \cr
     A higher positive score implies stronger correlation, while a higher negative score
-    indicates greater anticorrelation.
+    indicates greater anticorrelation. Drugs with strongly negative scores are prioritized as repurposing candidates.
     \cr\cr
+}
+
+\section{Connectivity Score Calculation}{
+The connectivity score algorithm is based on the model proposed by Lamb et al. [3] and refined by Chen et al. [2], the latter being the recommended implementation due to its robustness and specificity.
+\cr\cr
+}
+\section{Differential Expression Models}{
+The package provides two classes of DGE methods:
+\itemize{
+  \item Dichotomic Models for pairwise comparisons (e.g., disease vs. control).
+  \item Linear Mixed Models (LMM) for analyses involving additional factors such as tissue origin.
+}
+Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-seq data requiring a preprocessing step via the voom transformation.
+\cr\cr
 }
 \section{Differential Gene Expression (DGE) analysis}{
     This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
@@ -85,11 +104,17 @@ DrugRepurposing generalizes this approach by providing functions to compute DGE 
         They are referred to as LMM DGE.
     }
     For further information about voom, see:
+    \cr
     *voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
     \cr\cr
 }
+\section{Integration with LINCS [4]}{
+The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
+This package provides many classes to analyze the level 3 of LINCS dataset.
+\cr\cr
+}
 
-\section{Package architecture}{
+\section{Package overview}{
   The package is entirely developed following the OOP paradigm through the use of the R6 library.
   \cr
   DrugRepurposing provides more than 80 classes that can be composed at will to perform differential gene expression analysis of RNA data and calculate the connectivity score between diseases and drugs in order to find new uses for existing drugs.
@@ -142,35 +167,42 @@ DrugRepurposing generalizes this approach by providing functions to compute DGE 
 \section{Troubleshooting Julia Integration with R}{
   If your R environment is unable to locate the Julia installation, you may need to configure the JULIA_HOME environment variable. Try one or both of the following instructions:
   \itemize{
-    \item Option 1: Set JULIA_HOME within R.
-    options(JULIA_HOME = "/your-julia-installation-folder/bin/")
+    \item Option 1: Set JULIA_HOME within R.\cr
+    options(JULIA_HOME = "/your-julia-installation-folder/bin/")\cr
     This command sets the JULIA_HOME option within your current R session, pointing to the Julia executable. To make it persistent, you can add this line to your .Rprofile file.
-    \item Option 2: Set JULIA_HOME in your system environment.
-    Bash
-    export JULIA_HOME=/your-julia-installation-folder/bin/.
+    \item Option 2: Set JULIA_HOME in your system environment.\cr
+    Bash\cr
+    export JULIA_HOME=/your-julia-installation-folder/bin/.\cr
     This command sets the JULIA_HOME environment variable for your current shell session. You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
     \cr\cr
     }
 }
 \section{Main classes}{
 \strong{Drug repurposing}\cr
+\code{
 DichotomicDrugRepurpose\cr
 DichotomicVoomDrugRepurpose\cr
 GEORNASeqDichotomicVoomDrugRepurpose\cr
 LMMDrugRepurpose\cr
 LMMVoomDrugRepurpose\cr
 GEORNASeqLMMVoomDrugRepurpose\cr
+}
 \cr
 \strong{Connectivity score}\cr
+\code{
 BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade\cr
 BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade\cr
+}
 \cr
 \strong{Dichotomic differential gene expression}\cr
+\code{
 DichotomicDGE\cr
 DichotomicVoomDGE\cr
 GEORNASeqDichotomicVoomDGE\cr
+}
 \cr
 \strong{LMM differential gene expression}\cr
+\code{
 LMMDreamDGE\cr
 LMMJuliaDGE\cr
 LMMLmerDGE\cr
@@ -183,11 +215,33 @@ GEORNASeqLMMVoomLmerDGE\cr
 LINCSRDSLMMDrugDGEJulia\cr
 LINCSRDSLMMDrugDGEJuliaClusters\cr
 LINCSRDSLMMDrugDGELmer\cr
+}
 \cr
 \strong{Metanalysis}\cr
+\code{
 DGEMetanalysisByMatrix\cr
+}
 \cr
 \strong{LINCS GCTX archive export}\cr
+\code{
 LINCSExport
-
 }
+\cr\cr
+}
+
+\section{Examples}{
+  Here you can find two complete examples built on real data from NCBI \href{https://www.ncbi.nlm.nih.gov/}{https://www.ncbi.nlm.nih.gov/)}:\cr
+  \href{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples}{https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples}
+  \cr\cr
+}
+
+\section{References}{
+    \itemize{
+        \item 1.	Koudijs K.K.M. et al. Validation of transcriptome signature reversion for drug repurposing in oncology. Briefings in Bioinformatics, 2022.
+        \item 2.	Chen B. et al. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets. Nature Communications, 2017; 8:16022.
+        \item 3.	Lamb J. et al. The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease. Science, 2006; 313(5795):1929–1935.
+        \item 4.	Keenan A.B. et al. The Library of Integrated Network-Based Cellular Signatures NIH Program: System-Level Cataloging of Human Cells Response to Perturbations. Cell Systems, 2018; 6.
+    }
+}
+
+

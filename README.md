@@ -92,7 +92,7 @@ The package includes a comprehensive suite of unit tests that serve as usage exa
 
 ### Integration with LINCS [4]
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
-This package provides many classes to analyse the level 3 of LINCS dataset. 
+This package provides many classes to analyze the level 3 of LINCS dataset. 
 
 
 ## Performance and Scalability
