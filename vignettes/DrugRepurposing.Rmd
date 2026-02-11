@@ -1,21 +1,232 @@
 ---
-title: "Compute drug repurposing with DrugRepurposing"
+title: "Drug repurposing system based on differential expression analysis of RNA expression profiles"
 output: rmarkdown::html_vignette
 author: "Carmelo Catalano"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 vignette: >
-  %\VignetteIndexEntry{Compute drug repurposing with DrugRepurposing}
+  %\VignetteIndexEntry{Drug repurposing system based on differential expression analysis of RNA expression profiles}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 # Description
-  A tool to compute drug repurposing by getting data from diseases and drugs.
+  This package provides a set of tools for analyzing genetic data from disease and drug studies to identify potential new uses for existing drugs, in other words, it serves as a drug repurposing system.
 
-  Below you will find a complete example built on invented data.
+  An interesting application involves using genetic data from currently untreatable diseases to generate a list of candidate drugs for their treatment. The obtained results must then be validated in the laboratory.
+
+  The basic idea is to analyze the sequencing of four transcriptomes from: healthy tissue, diseased tissue, diseased tissue treated with a control vehicle, and diseased tissue treated with drugs, in order to identify potential connections between drugs and diseases.
+
+  This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies (e.g., [1,2]).
+
+  The software presented in this package is based on the publications:
+
+  1. Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al. - 2022.
+  2. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al. - 2017.
+
+
+The repository accompanying the first article by Karel K. M. Koudijs et al., available at [https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation](https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation),
+was used as the starting point for the development of DrugRepurposing.
+
+The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, was extracted from the software accompanying the second article by Bin Chen et al., available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).
+
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+
+## Drug repurposing analysis
+The implemented repurposing pipeline consists of four principal stages:
+
+1.	**Disease DGE Generation**. DGE is computed between diseased and healthy samples using either a dichotomic or linear mixed model (LMM)-based method, depending on study design and available metadata.
+
+
+2.	**Drug DGE Generation**. DGE is computed for samples exposed to drugs versus vehicle-treated controls. This step is repeated for each compound under evaluation.
+
+
+3.	**Signature Generation**. The most differential expressed genes are selected using either:
+* the top n genes ranked by absolute t-value (typically 50–150), or
+
+* genes with adjusted p-value < 0.001 and absolute log fold change above a specified threshold (e.g., 1.5).
+
+4.	**Connectivity Score Computation**. A connectivity score is calculated to quantify the degree of inversion between the disease and drug signatures. A negative score suggests potential therapeutic relevance, indicating that the drug may reverse the disease gene expression pattern.
+
+
+## Connectivity Score
+The connectivity score represents the correlation between the disease and the drug. The score ranges from -1 to +1.
+
+A positive value indicates that the drug behaves similarly to the disease.
+
+A negative value indicates that the drug behaves conversely to the disease.
+
+A higher positive score implies stronger correlation, while a higher negative score
+indicates greater anticorrelation. Drugs with strongly negative scores are prioritized as repurposing candidates.
+
+
+## Connectivity Score Calculation
+The connectivity score algorithm is based on the model proposed by Lamb et al. [3] and refined by Chen et al. [2], the latter being the recommended implementation due to its robustness and specificity.
+
+
+## Differential Expression Models
+The package provides two classes of DGE methods:
+* Dichotomic Models for pairwise comparisons (e.g., disease vs. control).
+* Linear Mixed Models (LMM) for analyses involving additional factors such as tissue origin.
+
+Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-seq data requiring a preprocessing step via the voom transformation.
+
+
+## Differential Gene Expression (DGE) analysis
+This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
+
+1. **RNA data counts following a "negative binomial distribution" (typically RNA-seq data) with a single condition "altered state/control state"**.\
+These functions are based on the voom transformation and `lmFit` from the `limma` package.
+They are referred to as Dichotomic voom DGE.
+
+2. **RNA data counts following a "negative binomial distribution" (typically RNA-seq data)  with additional conditions beyond the base "altered state/control state"**.\
+ For example, in a disease analysis, samples may also differ by tissue of origin in addition to the "altered state/control state" condition.
+These functions are based on the voom transformation and Linear Mixed Models (LMM).
+The Linear Mixed Model is computed using one of the following functions: `lmer` from `lme4`, `dream` from `variancePartition`, or `fit` from Julia programming language.
+They are referred to as LMM voom DGE.
+
+3. **RNA data log-counts following a "normal distribution" (typically microarray data) with a single condition "altered state/control state"**.\
+These functions are based on `lmFit` from the limma package.
+They are referred to as Dichotomic DGE.
+
+4. **RNA data log-counts following a "normal distribution" (typically microarray data) with additional conditions beyond the base "altered state/control state"**.\
+For example, in a disease analysis, samples may differ by tissue of origin in addition to the "altered/control condition".
+These functions are based on Linear Mixed Models (LMM).
+The Linear Mixed Model is computed using one of the following functions: `lmer` from `lme4`, `dream` from `variancePartition`, or `fit` from Julia programming language.
+They are referred to as LMM DGE.
+
+For further information about voom, see:
+*voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
+
+## Integration with LINCS [4]
+The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
+This package provides many classes to analyze the level 3 of LINCS dataset.
+
+## Package overview
+The package is entirely developed following the OOP paradigm through the use of the R6 library.
+
+DrugRepurposing provides more than 80 classes that can be composed at will to perform differential gene expression analysis of RNA data and calculate the connectivity score between diseases and drugs in order to find new uses for existing drugs.
+
+The library provides ready-made classes for calculating the connectivity score or DGE, but thanks to the use of the “strategy design pattern”, the behavior of the available classes can be customized.
+
+In the package code, there are more than 100 tests that can be taken as examples for the use of the library itself:
+  [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat)
+
+
+## Abstract Classes
+In order to make the software structure clearer and facilitate the use of the “strategy design pattern”, pseudo-abstract classes have been created to mimic the behavior of abstract classes found in more structured languages than R, such as C++ or Java.
+
+These classes allow constructor parameters to be “typed” preventing the use of collaborators of the wrong type. As an example, one can see the `lmmVoomDGE` parameter of the constructor of the `GEORNASeqLMMVoomDGE` class.
+
+## Suggestion
+  For better use of this package, it is recommended to consult the code at: [https://github.com/carmelo-catalano/DrugRepurposing](https://github.com/carmelo-catalano/DrugRepurposing)
+
+  and to use the tests at:
+
+  [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/tests/testthat)
+
+  as guidelines for developing software based on DrugRepurposing.
+
+
+## Basic Libraries
+Statistical analyses are performed using the following libraries: limma, lme4, dream, and the Julia programming language.
+
+## Julia
+  To achieve a significant performance boost in the calculation of mixed linear models, the Julia programming language has been utilized. DrugRepurposing is able to invoke Julia's fit function, which makes it possible to compute linear mixed models up to 70 times faster than `lmer`.
+
+  The porting between R and Julia is accomplished through the `JuliaCall` library.
+}
+
+## Julia installation
+  For Julia environment installation, see: https://julialang.org/.
+
+  After installing Julia on your system, you need to install the Julia packages MixedModels and DataFrames:
+
+   ```
+   import Pkg;
+   Pkg.add("MixedModels")
+   Pkg.add("DataFrames")
+   ```
+
+## Troubleshooting Julia Integration with R
+  If your R environment is unable to locate the Julia installation, you may need to configure the JULIA_HOME environment variable. Try one or both of the following instructions:
+
+1.   Option 1: Set JULIA_HOME within R.\
+  options(JULIA_HOME = "/your-julia-installation-folder/bin/").\
+  This command sets the JULIA_HOME option within your current R session, pointing to the Julia executable. To make it persistent, you can add this line to your .Rprofile file.
+
+2. Option 2: Set JULIA_HOME in your system environment.\
+    Bash\
+    export JULIA_HOME=/your-julia-installation-folder/bin/.\
+    This command sets the JULIA_HOME environment variable for your current shell session. You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
+
+
+## Main classes
+**Drug repurposing**
+```
+DichotomicDrugRepurpose
+DichotomicVoomDrugRepurpose
+GEORNASeqDichotomicVoomDrugRepurpose
+LMMDrugRepurpose
+LMMVoomDrugRepurpose
+GEORNASeqLMMVoomDrugRepurpose
+```
+
+**Connectivity score**
+```
+BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade
+BinChenDiseaseSignatureDrugListConnectivityScoreSyncFacade
+```
+
+**Dichotomic differential gene expression**
+```
+DichotomicDGE
+DichotomicVoomDGE
+GEORNASeqDichotomicVoomDGE
+```
+
+**LMM differential gene expression**
+```
+LMMDreamDGE
+LMMJuliaDGE
+LMMLmerDGE
+LMMVoomDreamDGE
+LMMVoomJuliaDGE
+LMMVoomLmerDGE
+GEORNASeqLMMVoomDreamDGE
+GEORNASeqLMMVoomJuliaDGE
+GEORNASeqLMMVoomLmerDGE
+LINCSRDSLMMDrugDGEJulia
+LINCSRDSLMMDrugDGEJuliaClusters
+LINCSRDSLMMDrugDGELmer
+```
+
+**Metanalysis**
+```
+DGEMetanalysisByMatrix
+```
+
+**LINCS [3] GCTX archive export**
+```
+LINCSExport
+```
+
+## References
+1.	Koudijs K.K.M. et al. Validation of transcriptome signature reversion for drug repurposing in oncology. Briefings in Bioinformatics, 2022.
+2.	Chen B. et al. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets. Nature Communications, 2017; 8:16022.
+3.	Lamb J. et al. The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease. Science, 2006; 313(5795):1929–1935.
+4.	Keenan A.B. et al. The Library of Integrated Network-Based Cellular Signatures NIH Program: System-Level Cataloging of Human Cells Response to Perturbations. Cell Systems, 2018; 6.
+
+
+#
+# Examples
 
   Here you can find two complete examples built on real data from NCBI ([https://www.ncbi.nlm.nih.gov/](https://www.ncbi.nlm.nih.gov/)):
 
 [https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples](https://github.com/carmelo-catalano/DrugRepurposing/tree/devel/examples)
+
+** **
+
+  Below you will find a complete example built on invented data.
+
 
   DrugRepurposing package version: `r packageVersion("DrugRepurposing")`
 

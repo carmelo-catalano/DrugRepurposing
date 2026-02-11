@@ -16,12 +16,6 @@ GeneFilterByProteinCoding <- R6Class(
         dgrpLogger$log(sprintf("RNA seq data size after filtering by protein coding genes: %s X %s", data_size[1], data_size[2]))
       }
       return(gene_expressions)
-    },
-    filterBySymbol = function(gene_expressions) {
-      return(gene_expressions[rownames(gene_expressions) %in% private$protein_coding_gene$symbol,])
-    },
-    filterByEnsemblId = function(gene_expressions) {
-      return(gene_expressions[rownames(gene_expressions) %in% private$protein_coding_gene$ensemblId,])
     }
   ),
   private = list(
