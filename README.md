@@ -85,12 +85,12 @@ Scores range from -1 (perfect inverse correlation) to +1 (direct correlation). D
 The package is entirely developed following the OOP paradigm through the use of the R6 library. It provides a modular and extensible architecture. Over 80 classes are available, supporting:
 * DGE calculation
 * Connectivity Score analysis
-* LINCS Level 3 data exploration
+* LINCS [4] Level 3 data exploration
 
 Custom behaviors can be introduced through the strategy design pattern, allowing experienced users to adapt components for specific research needs.
 The package includes a comprehensive suite of unit tests that serve as usage examples and facilitate reproducibility.
 
-### Integration with LINCS
+### Integration with LINCS [4]
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
 This package provides many classes to analyse the level 3 of LINCS dataset. 
 

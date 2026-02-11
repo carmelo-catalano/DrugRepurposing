@@ -30,15 +30,13 @@ The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, is copied fro
 
 The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
 
-The original implementation provides an algorithm to calculate differential gene expression (DGE) from RNA-seq data for disease analysis and from microarray data for drug-effect analysis.
-DrugRepurposing generalizes this approach by providing functions to compute DGE from both RNA-seq and microarray data, for disease and drug-effect analyses.
-
 ## Drug repurposing analysis
 1. Disease DGE: computation of DGE between disease samples and control samples.
 2. Drug DGE: computation of DGE between drug-treated samples and control vehicle samples.
 3. Disease signature: selection of the most significant genes from the disease DGE (typically between 50 and 150 genes).
 4. Connectivity score: computation of the connectivity score between the disease signature and the drug DGE.
 
+## Connectivity Score
 The connectivity score represents the correlation between the disease and the drug. The score ranges from -1 to +1.
 
 A positive value indicates that the drug behaves similarly to the disease.
@@ -46,7 +44,36 @@ A positive value indicates that the drug behaves similarly to the disease.
 A negative value indicates that the drug behaves conversely to the disease.
 
 A higher positive score implies stronger correlation, while a higher negative score
-indicates greater anticorrelation.
+indicates greater anticorrelation. Drugs with strongly negative scores are prioritized as repurposing candidates.
+
+
+## Connectivity Score Calculation
+The connectivity score algorithm is based on the model proposed by Lamb et al. [3] and refined by Chen et al. [2], the latter being the recommended implementation due to its robustness and specificity.
+
+## Algorithmic Overview
+The implemented repurposing pipeline consists of four principal stages:
+
+1.	**Disease DGE Generation**. DGE is computed between diseased and healthy samples using either a dichotomic or linear mixed model (LMM)-based method, depending on study design and available metadata.
+
+
+2.	**Drug DGE Generation**. DGE is computed for samples exposed to drugs versus vehicle-treated controls. This step is repeated for each compound under evaluation.
+
+
+3.	**Signature Generation**. The most differential expressed genes are selected using either:
+* the top n genes ranked by absolute t-value (typically 50–150), or
+
+* genes with adjusted p-value < 0.001 and absolute log fold change above a specified threshold (e.g., 1.5).
+
+4.	**Connectivity Score Computation**. A connectivity score is calculated to quantify the degree of inversion between the disease and drug signatures. A negative score suggests potential therapeutic relevance, indicating that the drug may reverse the disease gene expression pattern.
+
+
+## Differential Expression Models
+The package provides two classes of DGE methods:
+* Dichotomic Models for pairwise comparisons (e.g., disease vs. control).
+* Linear Mixed Models (LMM) for analyses involving additional factors such as tissue origin.
+
+Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-seq data requiring a preprocessing step via the voom transformation.
+
 
 ## Differential Gene Expression (DGE) analysis
 This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
@@ -130,8 +157,7 @@ Statistical analyses are performed using the following libraries: limma, lme4, d
     Bash
     export JULIA_HOME=/your-julia-installation-folder/bin/.
     This command sets the JULIA_HOME environment variable for your current shell session. You might need to add this line to your shell's configuration file (e.g., .bashrc, .zshrc) to make it permanent.
-    }
-}
+
 
 ## Main classes
 **Drug repurposing**
@@ -180,10 +206,6 @@ LMMVoomJuliaDGE
 
 LMMVoomLmerDGE
 
-
-
-
-
 GEORNASeqLMMVoomDreamDGE
 
 GEORNASeqLMMVoomJuliaDGE
@@ -204,9 +226,16 @@ DGEMetanalysisByMatrix
 
 ** **
 
-**LINCS GCTX archive export**
+**LINCS [3] GCTX archive export**
 
 LINCSExport
+
+
+## References
+1.	Koudijs K.K.M. et al. Validation of transcriptome signature reversion for drug repurposing in oncology. Briefings in Bioinformatics, 2022.
+2.	Chen B. et al. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets. Nature Communications, 2017; 8:16022.
+3.	Lamb J. et al. The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease. Science, 2006; 313(5795):1929–1935.
+4.	Keenan A.B. et al. The Library of Integrated Network-Based Cellular Signatures NIH Program: System-Level Cataloging of Human Cells Response to Perturbations. Cell Systems, 2018; 6.
 
 
 #
