@@ -18,19 +18,20 @@ DGEMetanalysisByMatrix <- R6Class(
 
       # in questo ciclo for viene fatta la meta analisi per calcolare l'effetto combinato di drugs_6h e drugs_24h
       total_drug_by_gene_dges <- nrow(drug_by_gene_DGE_A_B)
-      metalalysis_A_B <- data.frame(matrix(NA, nrow = total_drug_by_gene_dges, ncol = 17))
+      meta_analysis_A_B <- data.frame(matrix(NA, nrow = total_drug_by_gene_dges, ncol = 16))
       dgrpLogger$log(sprintf("dge common drugs: %s", total_drug_by_gene_dges))
       for (i in 1:total_drug_by_gene_dges) {
-        metalalysis_A_B[i,] <- private$dgeMetanalysisByRow$compute(drug_by_gene_DGE_A_B[i,])
+        meta_analysis_A_B[i,] <- private$dgeMetanalysisByRow$compute(drug_by_gene_DGE_A_B[i,])
       }
-      colnames(metalalysis_A_B) <- c(colnames(drug_by_gene_DGE_A_B), c("DE_log2_FC_A_B", "std.error_A_B", "t.value_A_B", "p.value_A_B","adj.p.value_A_B"))
+      colnames(meta_analysis_A_B) <- c(colnames(drug_by_gene_DGE_A_B), c("DE_log2_FC_A_B", "std.error_A_B", "t.value_A_B", "p.value_A_B"))
+      meta_analysis_A_B["adj.p.value_A_B"] <- p.adjust(meta_analysis_A_B["p.value_A_B"]$p.value_A_B, method = "BH")
       # drug_by_gene_DGE_6h_24h_ma
       #    drug      gene   DE_log2_FC_6h    std.error_6h   t.value_6h      DE_log2_FC_24h    std.error_24h        t.value_24h      DE_log2_FC_6h_24h  std.error_6h_24h    t.value_6h_24h       p.value_6h_24h
       # 1  ABT-737   AARS   0.4461631309544  0.14302313904  0.155102125097  0.15510212509716  0.15479839964925124  1.0019620709813  0.3066570115074    0.1454057567166199  0.21089743517179400  0.0349467955686023
       # 2  ABT-751   AARS   0.0103021782160  0.05283095800  0.195002676573  -0.0534011868235  0.09920129528376088  -0.538311386668  -0.003773423983    0.0466304544571578  -0.0809218787845287  0.9355040802701673
       totalTime <- Sys.time() - startTime
-      dgrpLogger$log(sprintf("end meta analysis, computation time: %s %s", totalTime, attr(totalTime, "units")))
-      return(metalalysis_A_B)
+      dgrpLogger$log(sprintf("end meta-analysis, computation time: %s %s", totalTime, attr(totalTime, "units")))
+      return(meta_analysis_A_B)
     }
   ),
   private = list(

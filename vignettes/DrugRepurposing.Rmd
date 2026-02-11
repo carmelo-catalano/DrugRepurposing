@@ -13,7 +13,7 @@ vignette: >
 
   An interesting application involves using genetic data from currently untreatable diseases to generate a list of candidate drugs for their treatment. The obtained results must then be validated in the laboratory.
 
-  The basic idea is to analyze the sequencing of four transcriptomes from: healthy tissue, diseased tissue, diseased tissue treated with a control vehicle, and diseased tissue treated with drugs, in order to identify potential connections between drugs and diseases.
+  The basic idea is to analyze the sequencing of four transcriptomes from: healthy sample, diseased sample, diseased sample treated with a control vehicle, and diseased sample treated with drugs, in order to identify potential connections between drugs and diseases.
 
   This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies (e.g., [1,2]).
 
@@ -95,6 +95,28 @@ They are referred to as LMM DGE.
 
 For further information about voom, see:
 *voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
+
+## DGE output format
+The DGE output format of DGE functions is a data.frame containing the following columns:\
+`gene_id` = Unique NCBI Gene ID\
+`DE_log2_FC` = Differential expression expressed as the log2 fold change\
+`std.error` = `DE_log2_FC / t.value`\
+`t.value` = moderated t-statistic\
+`p.value` = p-value\
+`adj.p.value` = adjusted p-values calculated using the Benjamini-Hochberg (BH) method.\
+\
+**Note: DGEs calculated using `lmer` from the `lme4` package do not include the `p.value` and `adj.p.value` columns due to limitations of `lmer`.**
+
+**Example**
+```
+gene_id    DE_log2_FC    std.error    t.value     p.value     adj.p.value
+-------------------------------------------------------------------------
+140        -0.0510758    0.11917072   -0.428593   0.668218    0.924787
+780        -0.0078762    0.12499224   -0.0630141  0.949755    0.993189
+2101       -0.0058122    0.08224453   -0.0706701  0.943660    0.986571
+2597        0.00710451   0.10404212    0.06828492 0.945558    0.999256
+54812      -0.1922592    0.11767320   -1.8237562  0.102292    0.430841
+```
 
 ## Integration with LINCS [4]
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
