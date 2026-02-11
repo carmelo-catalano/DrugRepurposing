@@ -2,16 +2,19 @@
 
 This package provides a set of tools for analyzing genetic data from disease and drug studies to identify potential new uses for existing drugs, in other words, it serves as a drug repurposing system.\
 An interesting application involves using genetic data from currently untreatable diseases to generate a list of candidate drugs for their treatment. The obtained results must then be validated in the laboratory.\
-The basic idea is to analyze the sequencing of four transcriptomes from: healthy tissue, diseased tissue, diseased tissue treated with a control vehicle, and diseased tissue treated with drugs, in order to identify potential connections between drugs and diseases.\
+The basic idea is to analyze the sequencing of four transcriptomes from: healthy sample, diseased sample, diseased sample treated with a control vehicle, and diseased sample treated with drugs, in order to identify potential connections between drugs and diseases.\
 This technique, known as "transcriptome signature reversion," has already been proposed and validated in several studies (e.g., [1,2]).\
-The software presented in this package is based on the publications:\
+The software presented in this package is based on the publications:
+
 
   1. Validation of transcriptome signature reversion for drug repurposing in oncology - Karel K. M. Koudijs et al. - 2022.
   2. Reversal of cancer gene expression correlates with drug efficacy and reveals therapeutic targets – Bin Chen et al. - 2017.
 
 The repository accompanying the first article by Karel K. M. Koudijs et al., available at [https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation](https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation),
 was used as the starting point for the development of DrugRepurposing.\
+\
 The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, was extracted from the software accompanying the second article by Bin Chen et al., available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).\
+\
 The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
 
 ## Installation
