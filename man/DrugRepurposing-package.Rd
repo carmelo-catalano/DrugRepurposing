@@ -105,8 +105,22 @@ Support is provided for data following both normal distributions (e.g., microarr
     }
     For further information about voom, see:
     \cr
-    *voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
+    voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014
     \cr\cr
+}
+
+\section{DGE output format}{
+The DGE output format of DGE functions is a data.frame containing the following columns:\cr
+\code{gene_id} = Unique NCBI Gene ID\cr
+\code{DE_log2_FC} = Differential expression expressed as the log2 fold change\cr
+\code{std.error} = \code{DE_log2_FC / t.value}\cr
+\code{t.value} = moderated t-statistic\cr
+\code{p.value} = p-value\cr
+\code{adj.p.value} = adjusted p-values calculated using the Benjamini-Hochberg (BH) method.\cr
+\cr
+\strong{Note: DGEs calculated using \code{lmer} from the \code{lme4} package do not include the \code{p.value} and \code{adj.p.value} columns due to limitations of \code{lmer}.}
+\cr
+\cr
 }
 \section{Integration with LINCS [4]}{
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).

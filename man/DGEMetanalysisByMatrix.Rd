@@ -2,7 +2,19 @@
 \alias{DGEMetanalysisByMatrix}
 \title{Perform meta-analysis on two DGEs using RMA function}
 \description{
-Given two matrices containing two DGEs, this class performs meta-analysis using the RMA function.
+Given two matrices (data.frame) containing two DGEs, this class performs meta-analysis using the \code{rma} function from the \code{metafor} package.
+\cr
+The input DGEs matrices must met the following conditions:
+  \itemize{
+    \item They must contain the following columns (no other columns are allowed): \code{drug}, \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, and \code{t.value}, \code{p.value}, and \code{adj.p.value}.
+    \item They must have the same size.
+    \item For each row in matrix A, the corresponding row in matrix B must have the same drug and gene ID.
+    \item DGE matrix (data.frame) is defined as described in section "DGE output format" of "DrugRepurposing" vignette.
+  }
+  The output matrix (data.frame) includes all columns from matrices A and B, plus the meta-analysis results in
+  \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}.
+  For more information about meta-analysis see \code{DGEMetanalysisByRow}
+  See example below.
 }
 \usage{
 dgeMetanalysisByMatrix <- DGEMetanalysisByMatrix$new()
@@ -25,9 +37,18 @@ dgeMetanalysisByMatrix$compute(dge_A, dge_B)
   }
 }
 \value{
-Matrix containing the columns of the first matrix, the columns of the second matrix, and the meta-analysis results. Columns: \code{gene_id}, \code{drug}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{p.value_A}, \code{adj.p.value_A}, \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}, \code{p.value_B}, \code{adj.p.value_B}, \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}.
+Matrix containing the columns of the first matrix, the columns of the second matrix, and the meta-analysis results.
+Columns: \code{gene_id}, \code{drug}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{p.value_A}, \code{adj.p.value_A}, \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}, \code{p.value_B}, \code{adj.p.value_B}, \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}.
 }
 \examples{
+
+# dge_A
+# drug     gene_id    DE_log2_FC    std.error   t.value      p.value     adj.p.value
+------------------------------------------------------------------------------------
+# AG-370   2          0.18762536    0.2214814   0.8471383    0.3969181   0.7443946
+# AG-490   2          -0.07646016   0.1538573   -0.4969552   0.6192206   0.8846641
+# AG-494   2          0.19295867    0.2215244   0.8710492    0.3837273   0.7345071
+
 dge_A <- data.frame(
   drug = c("AG-370", "AG-490", "AG-494"),
   gene_id = c(2, 2, 2),
@@ -37,6 +58,13 @@ dge_A <- data.frame(
   p.value = c(0.3969181, 0.6192206, 0.3837273),
   adj.p.value = c(0.7443946, 0.8846641, 0.7345071)
 )
+
+# dge_B
+# drug     gene_id   DE_log2_FC   std.error    t.value      p.value     adj.p.value
+-----------------------------------------------------------------------------------
+# AG-370   2         0.2877854    0.42148139   0.9634614    0.3789181   0.8113946
+# AG-490   2         -0.1764582   0.07899726   -0.5456520   0.7474812   0.9533641
+# AG-494   2         0.3456478    0.31657524   15.235.189   0.2903727   0.5572071
 
 dge_B <- data.frame(
   drug = c("AG-370", "AG-490", "AG-494"),

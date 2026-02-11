@@ -1,8 +1,28 @@
 \name{DGEMetanalysisByRow}
 \alias{DGEMetanalysisByRow}
-\title{Perform meta-analysis on a one-row data frame containing two DGE datasets}
+\title{Perform meta-analysis on a one-row data frame containing two DGEs}
 \description{
-Given a one-row data frame containing two DGE datasets, this class performs meta-analysis using the rma function.
+Given a one-row data frame containing two differential gene expression and corresponding standard error, this class performs meta-analysis using the \code{rma} function from the \code{metafor} package.
+\cr
+The input is a data.frame of one row containing the following columns:
+\code{DE_log2_FC_A}, \code{std.error_A}, \code{DE_log2_FC_B}, and \code{std.error_B}.
+\cr
+Any additional columns present in the input data.frame will be retained in the output.
+\cr
+  The output consists of the input data frame plus the meta-analysis result columns:
+  \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}.
+\cr
+The meta-analysis is computed by:\cr
+rma_output <- rma(yi = c(dge_A_B$DE_log2_FC_A, dge_A_B$DE_log2_FC_B), sei = c(dge_A_B$std.error_A, dge_A_B$std.error_B))
+\cr
+The meta-analysis result columns are constructed as follows:\cr
+\code{
+    DE_log2_FC_A_B = ma_output$b[, 1] \cr
+    std.error_A_B = ma_output$se \cr
+    t.value_A_B = ma_output$zval \cr
+    p.value_A_B = ma_output$pval \cr
+}
+
 }
 \usage{
 dgeMetanalysisByRow <- DGEMetanalysisByRow$new()
@@ -13,14 +33,14 @@ dgeMetanalysisByRow$compute(dge_A_B)
     One-row data frame containing two DGEs.
     \itemize{
       \item Type: \code{data.frame}.
-      \item Columns: \code{gene_id}, \code{drug}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}.
+      \item Columns: \code{DE_log2_FC_A}, \code{std.error_A}, \code{DE_log2_FC_B}, \code{std.error_B}.
     }
   }
 }
 \value{
 One-row data frame containing the original columns plus the columns with meta-analysis results.
 \cr
-Columns: \code{gene_id}, \code{drug}, \code{DE_log2_FC_A}, \code{std.error_A}, \code{t.value_A}, \code{p.value_A}, \code{adj.p.value_A}, \code{DE_log2_FC_B}, \code{std.error_B}, \code{t.value_B}, \code{p.value_B}, \code{adj.p.value_B}, \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}, \code{adj.p.value_A_B}.
+New columns: \code{DE_log2_FC_A_B}, \code{std.error_A_B}, \code{t.value_A_B}, \code{p.value_A_B}.
 }
 \examples{
 dge_A_B <- data.frame(
@@ -37,6 +57,6 @@ dge_A_B <- data.frame(
 dgeMetanalysisByRow <- DGEMetanalysisByRow$new()
 dgeMetanalysisByRow$compute(dge_A_B)
 # output
-# gene_id   drug      DE_log2_FC_A   std.error_A   t.value_A   DE_log2_FC_B   std.error_B   t.value_B   DE_log2_FC_A_B   std.error_A_B   t.value_A_B   p.value_A_B   adj.p.value_A_B
-# 2197      AM-251   -0.02839397     0.05199355    -0.54611    -0.05193237    0.05581761    -0.93039    -0.08061236      0.21665491     -0.37208       0.7098354     0.7098354
+# gene_id   drug      DE_log2_FC_A   std.error_A   t.value_A   DE_log2_FC_B   std.error_B   t.value_B   DE_log2_FC_A_B   std.error_A_B   t.value_A_B   p.value_A_B
+# 2197      AM-251   -0.02839397     0.05199355    -0.54611    -0.05193237    0.05581761    -0.93039    -0.08061236      0.21665491     -0.37208       0.7098354
 }

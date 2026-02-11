@@ -12,6 +12,7 @@ Filter genes by id;
 \cr
 2) filterByIdOnCondition(gene_expressions, filter_by_protein_coding)\cr
 Filter genes by id only if \code{filter_by_protein_coding = TRUE}.
+}
 \usage{
 geneFilterByProteinCoding <- GeneFilterByProteinCoding$new()
 geneFilterByProteinCoding$filterById(gene_expressions)
