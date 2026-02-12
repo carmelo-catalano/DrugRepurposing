@@ -12,10 +12,12 @@ juliaSetuper$setup(BLAS_num_threads)
 }
 \arguments{
   \item{BLAS_num_threads}{
-    Threads number for parallel computation through Julia LinearAlgebra.BLAS module.
+    Number of threads for parallel computation using the Julia \code{LinearAlgebra.BLAS} module.
+    \cr
+    If not specified, the value from \code{processorCores$getJuliaCores()} will be used.
     \itemize{
       \item Type: \code{integer}.
-      \item Default value: \code{4}.
+      \item Default value: \code{NA}.
     }
   }
 }

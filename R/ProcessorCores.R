@@ -3,6 +3,7 @@ ProcessorCores <- R6Class(
   public = list(
     initialize = function() {
       private$cores <- detectCores()
+      private$juliaCores <- private$cores
       # is_windows_os
       if (Sys.info()[['sysname']] == "Windows")
         private$BPPARAMCores <- 1
@@ -14,6 +15,12 @@ ProcessorCores <- R6Class(
     },
     get = function() {
       return(private$cores)
+    },
+    setJuliaCores = function(juliaCores) {
+      private$juliaCores <- juliaCores
+    },
+    getJuliaCores = function() {
+      return(private$juliaCores)
     },
     setBPPARAMCores = function(BPPARAMCores) {
       private$BPPARAMCores <- BPPARAMCores
@@ -31,6 +38,7 @@ ProcessorCores <- R6Class(
   ),
   private = list(
     cores = NA,
+    juliaCores = NA,
     BPPARAMCores = NA
   )
 )

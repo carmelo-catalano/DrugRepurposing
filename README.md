@@ -15,7 +15,7 @@ was used as the starting point for the development of DrugRepurposing.\
 \
 The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, was extracted from the software accompanying the second article by Bin Chen et al., available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).\
 \
-The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel processing is fully supported only on unix like systems.
 
 ## Installation
 

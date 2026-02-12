@@ -27,7 +27,7 @@ was used as the starting point for the development of DrugRepurposing.
 \cr
 The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, was extracted from the software accompanying the second article by Chen et al., available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
 \cr
-The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel processing is fully supported only on unix like systems.
 \cr\cr
 }
 \section{Drug repurposing analysis}{
@@ -128,7 +128,22 @@ The Common Fund’s Library of Integrated Network-based Cellular Signatures (LIN
 This package provides many classes to analyze the level 3 of LINCS dataset.
 \cr\cr
 }
-
+\section{Parallel Processing}{
+    The parallel processing is controlled by the \code{processorCores} instance of the \code{ProcessorCores} class.
+    Through \code{processorCores} instance, it is possible to retrieve the number of processor cores available on
+    the system and to configure how many cores are used for parallel processing.
+    \cr
+    For more information, see the \code{ProcessorCores} documentation.
+    \cr\cr
+}
+\section{Logging system}{
+    Package logging is controlled by the \code{dgrpLogger} instance of the \code{DGRPLogger} class.
+    The \code{dgrpLogger} instance allows switching the logging mode between \code{CONSOLE}, \code{FILE}, or both \code{CONSOLE} and \code{FILE}.
+    It can be used to log activity and data.
+    \cr
+    For more information, see the \code{DGRPLogger} documentation.
+    \cr\cr
+}
 \section{Package overview}{
   The package is entirely developed following the OOP paradigm through the use of the R6 library.
   \cr

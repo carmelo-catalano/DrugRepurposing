@@ -3,7 +3,7 @@ JuliaSetuper <- R6Class(
   public = list(
     setup = function(BLAS_num_threads = NA) {
       if (obj_is_na(BLAS_num_threads))
-        BLAS_num_threads <- processorCores$get()
+        BLAS_num_threads <- processorCores$getJuliaCores()
       dgrpLogger$log("julia setup...")
       julia_setup()
       julia_library("MixedModels")

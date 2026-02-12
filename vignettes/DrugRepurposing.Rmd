@@ -28,7 +28,7 @@ was used as the starting point for the development of DrugRepurposing.
 
 The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, was extracted from the software accompanying the second article by Bin Chen et al., available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).
 
-The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel computation is fully supported only on unix like systems.
+The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel processing is fully supported only on unix like systems.
 
 ## Drug repurposing analysis
 The implemented repurposing pipeline consists of four principal stages:
@@ -121,6 +121,17 @@ gene_id    DE_log2_FC    std.error    t.value     p.value     adj.p.value
 ## Integration with LINCS [4]
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
 This package provides many classes to analyze the level 3 of LINCS dataset.
+
+## Parallel Processing
+The parallel processing is controlled by the `processorCores` instance of the `ProcessorCores` class.
+Through  `processorCores` instance, it is possible to retrieve the number of processor cores available on the system and to configure how many cores are used for parallel processing.\
+For more information, see the `ProcessorCores` documentation.
+
+## Logging system
+Package logging is controlled by the `dgrpLogger` instance of the `DGRPLogger` class.
+The `dgrpLogger` instance allows switching the logging mode between `CONSOLE`, `FILE`, or both `CONSOLE` and `FILE`.
+It can be used to log activity and data.\
+For more information, see the `DGRPLogger` documentation.
 
 ## Package overview
 The package is entirely developed following the OOP paradigm through the use of the R6 library.
