@@ -2,7 +2,12 @@
 \alias{DGEMetanalysisByMatrix}
 \title{Perform meta-analysis on two DGEs using RMA function}
 \description{
-Given two matrices (data.frame) containing two DGEs, this class performs meta-analysis using the \code{rma} function from the \code{metafor} package.
+This class allows the creation of a consensus DGE from two distinct DGE results.
+Fold change and standard error estimates are combined using meta-analysis techniques via
+the \code{rma} function from the \pkg{metafor} package.
+\cr
+Given two matrices (data.frame) containing two DGEs, this class performs meta-analysis using
+the \code{rma} function from the \code{metafor} package.
 \cr
 The input DGEs matrices must met the following conditions:
   \itemize{
