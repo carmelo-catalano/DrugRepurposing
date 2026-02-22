@@ -5,7 +5,7 @@ GEORNASeqDichotomicVoomDrugRepurpose <- R6Class(
       private$dgeToSignatureMapper <- dgeToSignatureMapper
       private$drugSignatureLoader <- drugSignatureLoader
     },
-    compute = function(rna_seq_filename, sample_01_map, drugs, drugs_genes,
+    compute = function(rna_seq_filename, sample_01_map, drug_signatures, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA,
                        drug_perturbation_time = NA, parallel_computation = FALSE,
                        filter_by_protein_coding = FALSE, signature_mapper_parameter = NA
@@ -16,7 +16,7 @@ GEORNASeqDichotomicVoomDrugRepurpose <- R6Class(
       dgrpLogger$log("start drug repurposing computation")
       disease_dge <- geoRNASeqDichotomicVoomDGE$compute(rna_seq_filename, sample_01_map, filter_by_protein_coding)
       connectivity_score <- binChenDiseaseDGEDrugListConnectivityScore$compute(
-        disease_dge, drugs, drugs_genes, random_distribution_size,
+        disease_dge, drug_signatures, drugs_genes, random_distribution_size,
         disease_name, drug_perturbation_time, parallel_computation, signature_mapper_parameter
       )
       totalTime <- Sys.time() - startTime

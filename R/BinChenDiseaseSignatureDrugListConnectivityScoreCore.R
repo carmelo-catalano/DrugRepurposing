@@ -14,7 +14,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       private$binChenConnectivityScoreListApplyer <- binChenConnectivityScoreListApplyer
       private$diseaseDrugListConnectivityScoreMapper <- DiseaseDrugListConnectivityScoreMapper$new()
     },
-    compute = function(disease_signature, drugs, n_drug_signatures_genes,
+    compute = function(disease_signature, drug_signatures, n_drug_signatures_genes,
                        random_distribution_size = 10^5, disease_name = NA,
                        disease_signature_type = NA, drug_perturbation_time = NA
     ) {
@@ -25,8 +25,8 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
       # 51493   10,4324
       # estimate = t value, row names = gene id
 
-      # drugs example:
-      # name         filename
+      # Example of drug_signatures where the signature_reference column contains filenames.
+      # name         signature_reference
       # ethisterone  drugs/ethisterone.Rds
       # ethoprop     drugs/ethoprop.Rds
       # ethotoin     drugs/ethotoin.Rds
@@ -47,7 +47,7 @@ BinChenDiseaseSignatureDrugListConnectivityScoreCore <- R6Class(
         )
       connectivity_score_matrix <- private$
         binChenConnectivityScoreListApplyer$
-        compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribution)
+        compute(disease_signature_down_regulated_genes, disease_signature_up_regulated_genes, drug_signatures, random_connectivity_score_distribution)
       connectivity_scores <- private$
         diseaseDrugListConnectivityScoreMapper$
         map(connectivity_score_matrix, disease_name, disease_signature_type, drug_perturbation_time)

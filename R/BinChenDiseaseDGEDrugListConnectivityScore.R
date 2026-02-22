@@ -17,7 +17,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
         private$dgeToSignatureMapper <- MostSignificantGenesSignatureMapper$new()
       }
     },
-    compute = function(disease_dge, drugs, drugs_genes, random_distribution_size = 10^5,
+    compute = function(disease_dge, drug_signatures, drugs_genes, random_distribution_size = 10^5,
                        disease_name = NA, drug_perturbation_time = NA,
                        parallel_computation = FALSE, signature_mapper_parameter = NA
     ) {
@@ -32,7 +32,7 @@ BinChenDiseaseDGEDrugListConnectivityScore <- R6Class(
       }
       return(
         binChenDiseaseSignatureDrugListConnectivityScore$compute(
-          disease_signature, drugs, length(disease_drug_common_genes), random_distribution_size,
+          disease_signature, drug_signatures, length(disease_drug_common_genes), random_distribution_size,
           disease_name, private$dgeToSignatureMapper$getSignatureType(signature_mapper_parameter), drug_perturbation_time
         )
       )

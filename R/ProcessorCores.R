@@ -8,7 +8,7 @@ ProcessorCores <- R6Class(
       if (Sys.info()[['sysname']] == "Windows")
         private$BPPARAMCores <- 1
       else
-        private$BPPARAMCores <- private$cores
+        private$BPPARAMCores <- 1 #cprivate$cores
     },
     set = function(cores) {
       private$cores <- cores

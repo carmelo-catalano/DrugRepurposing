@@ -11,14 +11,14 @@ LMMVoomDrugRepurpose <- R6Class(
       }
       private$lmmVoomDrugRepurposeCore <- LMMDrugRepurposeCore$new(lmmVoomDGE, drugSignatureLoader, dgeToSignatureMapper)
     },
-    compute = function(rna_seq_data, rna_seq_metadata, formula, drugs, drugs_genes,
+    compute = function(rna_seq_data, rna_seq_metadata, formula, drug_signatures, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
                        parallel_computation = FALSE, filter_by_protein_coding = FALSE,
                        signature_mapper_parameter = NA
     ) {
       return(
         private$lmmVoomDrugRepurposeCore$compute(
-          rna_seq_data, rna_seq_metadata, formula, drugs, drugs_genes, random_distribution_size,
+          rna_seq_data, rna_seq_metadata, formula, drug_signatures, drugs_genes, random_distribution_size,
           disease_name, drug_perturbation_time, parallel_computation, filter_by_protein_coding,
           signature_mapper_parameter
         )

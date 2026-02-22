@@ -9,7 +9,6 @@ sut <- BinChenConnectivityScoreListApplyerParallel$new(drugSignatureLoader)
 diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
 downregulatedGeneFilter <- DownregulatedGeneFilter$new()
 upregulatedGeneFilter <- UpregulatedGeneFilter$new()
-processorCores <- ProcessorCores$new()
 
 # given
 disease_signature <- absolute_path_readRDS("unit_test_data/connectivity_score/ipf_dge.Rds")
@@ -29,7 +28,7 @@ drugs$filename <- drugs$name
 random_connectivity_score_distribution <- absolute_path_readRDS("unit_test_data/connectivity_score/random_connectivity_score_distribution.Rds")
 expected <- absolute_path_readRDS("unit_test_data/connectivity_score/BinChenConnectivityScoreListApplyer_expected.Rds")
 
-#when
+# when
 result <- sut$compute(disease_down_regulated_genes, disease_up_regulated_genes, drugs, random_connectivity_score_distribution)
 
 # then

@@ -8,7 +8,7 @@ LMMDrugRepurposeCore <- R6Class(
       private$lmmDGE <- lmmDGE
       private$binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new(drugSignatureLoader, dgeToSignatureMapper)
     },
-    compute = function(rna_data, rna_metadata, formula, drugs, drugs_genes,
+    compute = function(rna_data, rna_metadata, formula, drug_signatures, drugs_genes,
                        random_distribution_size = 10^5, disease_name = NA, drug_perturbation_time = NA,
                        parallel_computation = FALSE, filter_by_protein_coding = FALSE,
                        signature_mapper_parameter = NA
@@ -18,7 +18,7 @@ LMMDrugRepurposeCore <- R6Class(
       disease_dge <- private$lmmDGE$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
       connectivity_score <- private$
         binChenDiseaseDGEDrugListConnectivityScore$
-        compute(disease_dge, drugs, drugs_genes, random_distribution_size, disease_name,
+        compute(disease_dge, drug_signatures, drugs_genes, random_distribution_size, disease_name,
                 drug_perturbation_time, parallel_computation, signature_mapper_parameter
       )
       totalTime <- Sys.time() - startTime
