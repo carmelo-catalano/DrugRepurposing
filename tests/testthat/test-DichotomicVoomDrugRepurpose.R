@@ -7,7 +7,7 @@ sut <- DichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoader
 # given
 drugs_vector <- c("A-23187", "A-443644", "AG-490", "AG-494",
                   "AG-957", "AKT-inhibitor-1-2", "AM-404")
-drugs <- data.frame(name = drugs_vector, filename = drugs_vector)
+drug_signatures <- data.frame(name = drugs_vector, signature_reference = drugs_vector)
 
 drugs_genes <- package_readRDS("extdata/LINCS_gene_info.Rds")
 drugs_genes <- subset(drugs_genes, drugs_genes$is_best_inferred_gene == 1)
@@ -21,7 +21,7 @@ expected <- absolute_path_readRDS("unit_test_data/drug_repurpose/DichotomicVoomD
 result <- sut$compute(
   rna_seq = disease_rna_seq,
   sample_01_map = "111111111111111111110000000000000000000",
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10,
   disease_name = "ipf",

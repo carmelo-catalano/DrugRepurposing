@@ -14,14 +14,14 @@ disease_signature$abs_t.value <- abs(disease_signature$t.value)
 disease_signature <- disease_signature[order(disease_signature$abs_t.value, decreasing = T),]
 disease_signature <- disease_signature[1:150, , drop = FALSE]
 
-drugs <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
+drug_signatures <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
                              "A-443644", "AG-494", "AG-957"))
-drugs$filename <- drugs$name
+drug_signatures$signature_reference <- drug_signatures$name
 disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 expected <- absolute_path_readRDS("unit_test_data/connectivity_score/DiseaseDrugConnectivityScoreByPharmacoGx_expected.Rds")
 
 # when
-result <- sut$compute(disease_signature, drugs, n_permutations = 100, disease_name = "IPF", drug_perturbation_time = "6h")
+result <- sut$compute(disease_signature, drug_signatures, n_permutations = 100, disease_name = "IPF", drug_perturbation_time = "6h")
 result$p.value <- NULL
 result$adj.p.value <- NULL
 

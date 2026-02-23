@@ -3,7 +3,7 @@ library(testthat)
 Sys.setlocale(locale = "C")
 
 # setup
-genefilter <- LogarithmGeneFilter$new()
+genefilter <- LogarithmGeneFilter$new(threshold = 6)
 sut <- GEORNASeqDichotomicVoomDGE$new(genefilter)
 
 # given

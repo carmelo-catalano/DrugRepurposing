@@ -35,13 +35,13 @@ disease_signature$abs_t.value <- abs(disease_signature$t.value)
 disease_signature <- disease_signature[order(disease_signature$abs_t.value, decreasing = T),]
 disease_signature <- disease_signature[1:50, , drop = FALSE]
 
-drugs <- data.frame(name = unique(LINCS_drug_signature$drug))
-drugs$filename <- drugs$name
+drug_signatures <- data.frame(name = unique(LINCS_drug_signature$drug))
+drug_signatures$signature_reference <- drug_signatures$name
 disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 expected <- absolute_path_readRDS("unit_test_data/connectivity_score/DiseaseDrugConnectivityScoreByBinChenBLCA_expected.Rds")
 
 # when
-result <- sut$compute(disease_signature, drugs, length(LINCS_lm), random_distribution_size = 10, disease_name = "BLCA")
+result <- sut$compute(disease_signature, drug_signatures, length(LINCS_lm), random_distribution_size = 10, disease_name = "BLCA")
 result$p.value <- NULL
 result$adj.p.value <- NULL
 

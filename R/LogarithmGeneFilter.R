@@ -2,7 +2,7 @@ LogarithmGeneFilter <- R6Class(
   "LogarithmGeneFilter",
   inherit = GeneFilterAbstract,
   public = list(
-    initialize = function(threshold = 6) {
+    initialize = function(threshold = 1.5) {
       private$threshold <- threshold
     },
     filter = function(gene_expressions, sample_statuses = NA) {

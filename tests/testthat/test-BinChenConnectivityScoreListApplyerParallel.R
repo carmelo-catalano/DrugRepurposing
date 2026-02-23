@@ -22,14 +22,14 @@ disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 disease_up_regulated_genes <- upregulatedGeneFilter$filter(disease_signature)
 disease_down_regulated_genes <- downregulatedGeneFilter$filter(disease_signature)
 
-drugs <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
+drug_signatures <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
                              "A-443644", "AG-494", "AG-957"))
-drugs$filename <- drugs$name
+drug_signatures$signature_reference <- drug_signatures$name
 random_connectivity_score_distribution <- absolute_path_readRDS("unit_test_data/connectivity_score/random_connectivity_score_distribution.Rds")
 expected <- absolute_path_readRDS("unit_test_data/connectivity_score/BinChenConnectivityScoreListApplyer_expected.Rds")
 
 # when
-result <- sut$compute(disease_down_regulated_genes, disease_up_regulated_genes, drugs, random_connectivity_score_distribution)
+result <- sut$compute(disease_down_regulated_genes, disease_up_regulated_genes, drug_signatures, random_connectivity_score_distribution)
 
 # then
 test_that("test-BinChenConnectivityScoreListApplyerParallel", {

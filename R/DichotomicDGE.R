@@ -8,7 +8,7 @@ DichotomicDGE <- R6Class(
           stop("incompatible parameter type: the class type of geneFilter must be a subclass of GeneFilterAbstract")
         private$geneFilter <- geneFilter
       }else {
-        private$geneFilter <- MeanThresholdGeneFilter$new()
+        private$geneFilter <- LogarithmGeneFilter$new()
       }
       private$dichotomicRNADataMapper <- DichotomicRNADataMapper$new()
       private$dgeMapper <- DGEMapper$new()
