@@ -32,7 +32,7 @@ LINCSRDSLMMDrugDGEJuliaClusters <- R6Class(
       lincsRDSLMMDrugDGEJulia <- LINCSRDSLMMDrugDGEJulia$new(private$lincs_splitted_level3_dir, private$output_DGE_dir, chunk$BLAS_num_threads, private$skip_already_computed_genes)
       startTime <- Sys.time()
       dgrpLogger$log(sprintf("start chunk number %s computation ", chunk$number))
-      lincsRDSLMMDrugDGEJulia$compute(chunk$perturbation_times, chunk$gene_list, chunk$drugs_filter)
+      lincsRDSLMMDrugDGEJulia$compute(chunk$drug_perturbation_times, chunk$gene_list, chunk$drugs_filter)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end chunk number %s computation, time: %s %s", chunk$number, totalTime, attr(totalTime, "units")))
       return(NA)
@@ -56,8 +56,8 @@ LINCSRDSLMMDrugDGEJuliaClusters <- R6Class(
       if (!is.numeric(chunk$number) || chunk$number <= 0) {
         stop("chunk$number must be a positive integer")
       }
-      if (obj_is_na_or_NULL(chunk$perturbation_times)) {
-        stop("chunk$perturbation_times must be specified")
+      if (obj_is_na_or_NULL(chunk$drug_perturbation_times)) {
+        stop("chunk$drug_perturbation_times must be specified")
       }
       if (obj_is_na_or_NULL(chunk$gene_list)) {
         stop("chunk$gene_list must be specified")

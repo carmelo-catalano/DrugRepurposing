@@ -13,12 +13,12 @@ LINCSExport <- R6Class(
       private$lincsExportByGeneList <- LINCSExportByGeneList$new(lincsSGCTXDataRowLoader)
     },
     export = function(gene_list,
-                      perturbation_times,
+                      drug_perturbation_times,
                       output_dir,
                       gene_number_batch_size = 200,
                       drugs_filter = NA
     ) {
-      experiments_meta_data <- private$lincsMetadataSetuper$setup(perturbation_times, drugs_filter)
+      experiments_meta_data <- private$lincsMetadataSetuper$setup(drug_perturbation_times, drugs_filter)
       gene_index <- 1
       tot_genes <- length(gene_list)
       while (gene_index <= tot_genes) {

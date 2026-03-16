@@ -6,11 +6,11 @@ sut <- LINCSRDSLMMDrugDGEJulia$new(absolute_path_directory(test_config$LINCS_spl
 # given
 gene_list <- "780" # symbol "DDR1"
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide", "aminopurvalanol-a")
-perturbation_times <- "24"
+drug_perturbation_times <- "24"
 expected <- absolute_path_readRDS(paste0(test_config$LINCS_expected_dge_dir, "780_24h-expected.Rds"))
 
 # when
-sut$compute(perturbation_times, gene_list, drugs_filter)
+sut$compute(drug_perturbation_times, gene_list, drugs_filter)
 
 # then
 result <- absolute_path_readRDS(paste0(test_config$LINCS_dge_output_dir, "780_24h.Rds"))

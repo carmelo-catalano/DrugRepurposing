@@ -2,7 +2,6 @@ library(testthat)
 
 # setup
 sut <- BinChenCMapScoreByDrugDGE$new()
-drugSignatureLoader <- DrugSignatureLoaderByFilename$new("t.value_6h")
 diseaseSignatureEstimateMapper <- DiseaseSignatureEstimateMapper$new()
 downregulatedGeneFilter <- DownregulatedGeneFilter$new()
 upregulatedGeneFilter <- UpregulatedGeneFilter$new()

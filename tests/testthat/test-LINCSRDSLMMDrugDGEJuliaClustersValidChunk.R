@@ -8,7 +8,7 @@ sut <- LINCSRDSLMMDrugDGEJuliaClusters$new(
 
 # given
 chunk1 <- list()
-chunk1$perturbation_times <- NA
+chunk1$drug_perturbation_times <- NA
 chunk1$gene_list <- c("140", "780")
 chunk1$drugs_filter <- c("AM-92016", "AMG-9810", "AMN-082")
 chunk1$number <- 1
@@ -24,7 +24,7 @@ result1 <- tryCatch({
   "error"
 })
 
-chunk1$perturbation_times <- "24"
+chunk1$drug_perturbation_times <- "24"
 chunk1$gene_list <- NA
 result2 <- tryCatch({
   sut$process(chunks)

@@ -8,8 +8,8 @@ LINCSRDSLMMDrugDGELmer <- R6Class(
       private$lincsLMMDrugDGE <- LINCSLMMDrugDGE$new(lincsMetadataSetuper, lincsRDSDataLoader, lmmDGEByGene, output_dge_dir, skip_already_computed_genes)
     },
 
-    compute = function(perturbation_times, gene_list, drugs_filter = NA) {
-      private$lincsLMMDrugDGE$compute(perturbation_times, gene_list, drugs_filter)
+    compute = function(drug_perturbation_times, gene_list, drugs_filter = NA) {
+      private$lincsLMMDrugDGE$compute(drug_perturbation_times, gene_list, drugs_filter)
       return(NA)
     }
   ),

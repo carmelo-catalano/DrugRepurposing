@@ -8,7 +8,7 @@ sut <- LINCSExport$new(test_config$LINCS_gtx_database)
 
 # given
 gene_ids <- c("22", "23", "25", "29")
-perturbation_times <- c("24")
+drug_perturbation_times <- c("24")
 
 output_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/output"), "/")
 gene_expected_dir <- paste0(absolute_path_filename("unit_test_data/LMMDGE/LINCS_export/expected"), "/")
@@ -18,7 +18,7 @@ expected25 <- readRDS(paste0(gene_expected_dir, "25.Rds"))
 expected29 <- readRDS(paste0(gene_expected_dir, "29.Rds"))
 
 # when
-sut$export(gene_ids, perturbation_times, output_dir)
+sut$export(gene_ids, drug_perturbation_times, output_dir)
 
 # then
 

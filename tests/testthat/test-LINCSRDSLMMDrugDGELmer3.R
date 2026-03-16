@@ -7,7 +7,7 @@ sut <- LINCSRDSLMMDrugDGELmer$new(absolute_path_directory(test_config$LINCS_spli
 # given
 drugs_filter <- c("AM-251", "AM-404", "AM-580", "aminoglutethimide")
 gene_list <- c("2101", "2597")
-perturbation_times <- c("6", "24")
+drug_perturbation_times <- c("6", "24")
 
 expected1 <- absolute_path_readRDS(paste0(test_config$LINCS_expected_dge_dir, "2101_6h-expected.Rds"))
 expected2 <- absolute_path_readRDS(paste0(test_config$LINCS_expected_dge_dir, "2101_24h-expected.Rds"))
@@ -15,7 +15,7 @@ expected3 <- absolute_path_readRDS(paste0(test_config$LINCS_expected_dge_dir, "2
 expected4 <- absolute_path_readRDS(paste0(test_config$LINCS_expected_dge_dir, "2597_24h-expected.Rds"))
 
 # when
-sut$compute(perturbation_times, gene_list, drugs_filter)
+sut$compute(drug_perturbation_times, gene_list, drugs_filter)
 
 # then
 result1 <- absolute_path_readRDS(paste0(test_config$LINCS_dge_output_dir, "2101_6h.Rds"))

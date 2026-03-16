@@ -7,8 +7,8 @@ LINCSRDSLMMDrugDGEJulia <- R6Class(
       lmmDGEByGene <- LINCSLMMDrugDGEByGeneJuliaFactory$new()$create(BLAS_num_threads)
       private$lincsLMMDrugDGE <- LINCSLMMDrugDGE$new(lincsMetadataSetuper, lincsRDSDataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes)
     },
-    compute = function(perturbation_times, gene_list, drugs_filter = NA) {
-      private$lincsLMMDrugDGE$compute(perturbation_times, gene_list, drugs_filter)
+    compute = function(drug_perturbation_times, gene_list, drugs_filter = NA) {
+      private$lincsLMMDrugDGE$compute(drug_perturbation_times, gene_list, drugs_filter)
       return(NA)
     }
   ),

@@ -10,11 +10,9 @@ DrugSignatureLoaderByFilename <- R6Class(
     load = function(filename) {
       drug_dge <- readRDS(filename)
       if (!obj_is_na(private$disease_drug_common_genes)) {
-        drug_signature <- subset(drug_dge, drug_dge$gene_id %in% private$disease_drug_common_genes)
-      }else {
-        drug_signature <- drug_dge
+        drug_dge <- subset(drug_dge, drug_dge$gene_id %in% private$disease_drug_common_genes)
       }
-      return(private$drugSignatureMapper$map(drug_signature, private$t_value_column_name))
+      return(private$drugSignatureMapper$map(drug_dge, private$t_value_column_name))
     }
   ),
   private = list(
