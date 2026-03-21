@@ -2,7 +2,7 @@ LMMLmerToDataFrameMapper <- R6Class(
   "LMMLmerToDataFrameMapper",
   inherit = LMMToDataFrameMapperAbstract,
   public = list(
-    map = function(LMM_output, gene_id = NA, sample_type_field_name = NA, sample_type_field_name_mapped = "sample_type") {
+    map = function(LMM_output, gene_id = NA, sample_name_column_name = NA, sample_name_column_name_mapped = "sample_name") {
       # estrae i coefficienti dell'analisi "lmer". Esempio:
       #                               Estimate      Std. Error  t value
       # (Intercept)                   5.459338302   0.27436280  19.89824544
@@ -19,13 +19,13 @@ LMMLmerToDataFrameMapper <- R6Class(
         old_column_names <- c("gene_id", old_column_names)
         new_column_names <- c("gene_id", new_column_names)
       }
-      if (!obj_is_na(sample_type_field_name)) {
+      if (!obj_is_na(sample_name_column_name)) {
         # crea la colonna drug dai nomi delle righe dei coefficienti dell'analisi "lmer"
-        differential_expression[[sample_type_field_name_mapped]] <- rownames(differential_expression)
+        differential_expression[[sample_name_column_name_mapped]] <- rownames(differential_expression)
         # elimina il prefisso pert_iname dal nome del farmaco nella colonna drug
-        differential_expression[[sample_type_field_name_mapped]] <- substr(differential_expression[[sample_type_field_name_mapped]], nchar(sample_type_field_name) + 1, nchar(differential_expression[[sample_type_field_name_mapped]]))
-        old_column_names <- c(sample_type_field_name_mapped, old_column_names)
-        new_column_names <- c(sample_type_field_name_mapped, new_column_names)
+        differential_expression[[sample_name_column_name_mapped]] <- substr(differential_expression[[sample_name_column_name_mapped]], nchar(sample_name_column_name) + 1, nchar(differential_expression[[sample_name_column_name_mapped]]))
+        old_column_names <- c(sample_name_column_name_mapped, old_column_names)
+        new_column_names <- c(sample_name_column_name_mapped, new_column_names)
       }
 
       # lascia solo le colonne contenenti i dati necessari

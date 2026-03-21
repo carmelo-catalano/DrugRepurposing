@@ -10,7 +10,7 @@ LMMDGEByGene <- R6Class(
       private$fixed_effect <- as.character(terms(lmm$getFormula())[1][[3]])
       private$lmmToDataFrameMapper <- lmmToDataFrameMapper
     },
-    compute = function(rna_data_metadata, gene_id = NA, sample_type_column_name = "sample_type") {
+    compute = function(rna_data_metadata, gene_id = NA, sample_name_column_name = "sample_name") {
       if (obj_is_na(gene_id)) {
         gene_id_prn <- ""
       }else {
@@ -19,7 +19,7 @@ LMMDGEByGene <- R6Class(
       dgrpLogger$log(sprintf("start differential gene expression computation for gene: %s", gene_id_prn))
       startTime <- Sys.time()
       differentialExpression <- private$lmm$compute(rna_data_metadata)
-      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_id, private$fixed_effect, sample_type_column_name)
+      differentialExpression <- private$lmmToDataFrameMapper$map(differentialExpression, gene_id, private$fixed_effect, sample_name_column_name)
       totalTime <- Sys.time() - startTime
       dgrpLogger$log(sprintf("end gene differential expression computation%s, time: %s %s", gene_id_prn, totalTime, attr(totalTime, "units")))
       # force garbage collection to prevent out of memory
