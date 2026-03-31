@@ -6,7 +6,7 @@ LMMLogarithmGeneFilter <- R6Class(
       private$logarithmGeneFilter <- LogarithmGeneFilter$new(logarithm_threshold)
       private$lmmGeneFilterByLowLevelRandomEffects <- LMMGeneFilterByLowLevelRandomEffects$new(random_effects_level_threshold)
     },
-    filter = function(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name = NA) {
+    filter = function(rna_data, rna_metadata, random_effect_column_name, sample_status_column_name = NA) {
       rna_data <- private$logarithmGeneFilter$filter(rna_data)
       return(private$lmmGeneFilterByLowLevelRandomEffects$filter(rna_data, rna_metadata, random_effect_column_name))
     }

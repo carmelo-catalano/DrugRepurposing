@@ -2,36 +2,45 @@
 \alias{LMMDGEByGene}
 \title{Compute the differential gene expression (DGE) of a gene under different conditions using a Linear Mixed Model (LMM)}
 \description{
-This function computes the differential gene expression (DGE) of a gene under different conditions
-using a Linear Mixed Model (LMM). It combines a derived class from \code{LMMAbstract} for LMM
-computation and a derived class from \code{LMMToDataFrameMapperAbstract} to map the results into
-a \code{data frame}.
+Given a gene ID and the associated RNA gene expression data and metadata, computes the differential
+gene expression (\link{DGE}) under different conditions using a Linear Mixed Model (LMM).
+The metadata contain information about the RNA experiment (conditions). See example below.
+\cr
+It combines a derived class from \code{LMMAbstract} for LMM computation and a derived
+class from \code{LMMToDataFrameMapperAbstract} to map the results into a \code{data frame}.
+\cr
+This class serves as the core component for the following classes:
+\code{\link{LINCSGCTXLMMDrugDGELmer}}, \code{\link{LINCSRDSLMMDrugDGELmer}}, and \code{\link{LINCSRDSLMMDrugDGEJulia}}.
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
-    \cr
-    See example
+    Data frame containing RNA expression values and associated metadata. The \code{gene_expression} column stores the gene expression levels, while all other columns provide experimental metadata used in the LMM computation.
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
   \item{gene_id}{
-    Gene id. If specified, it is added to the output table. It is not used for the computation.
+    Gene id. If specified, it is added to the output table. The column is populated with the same value \code{"gene_id"}.
+    \cr
+    It is not used for the computation.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
-  \item{sample_type_column_name}{
-    Sample type column name. For example, usually for LINCS analysis is \code{"drug"}.
+  \item{sample_name_column_name}{
+    Name of the column containing the sample name. For example, usually for LINCS analysis is \code{"drug"}.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{"sample_type"}.
     }
   }
   \item{lmm (constructor argument)}{
-    Instance class from LMM computation. This class instance must be compatible with \code{lmmToDataFrameMapper}.
+    Instance of a class for LMM computation. Two implementations are available: \code{LMMJulia}, and \code{LMMLmer}.
+    \cr
+    This class instance must be compatible with the constructor argument \code{lmmToDataFrameMapper}.
+    If \code{lmm = LMMJulia}, then \code{lmmToDataFrameMapper = LMMJuliaToDataFrameMapper}.
+    If \code{lmm = LMMLmer}, then \code{lmmToDataFrameMapper = LMMLmerToDataFrameMapper}.
     \itemize{
       \item Type: Derived class of \code{LMMAbstract}.
     }
@@ -56,14 +65,15 @@ rna_data_metadata <- data.frame(
   gene_expression = c(8.308500, 8.333750, 7.146400, 7.538700, 8.561700, 7.506200, 8.372150, 9.003900)
 )
 gene_id <- 780
-sample_type_column_name <- "drug"
+sample_name_column_name <- "drug"
 lmm <- LINCSLMMJulia$new()
 lmmToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
 lmmDGEByGene <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
-result <- lmmDGEByGene$compute(rna_data_metadata, gene_id, sample_type_column_name)
+result <- lmmDGEByGene$compute(rna_data_metadata, gene_id, sample_name_column_name)
 print(result)
 # Output example:
 # drug            gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value
+# -----------------------------------------------------------------------------------
 # AM-251          DDR1      -0.047038    0.073635    -0.639    0.523     0.653
 # AM-404          DDR1      -0.199576    0.071673    -2.785    0.00536   0.0268
 # AM-580          DDR1       0.051221    0.055126     0.929    0.353     0.588
