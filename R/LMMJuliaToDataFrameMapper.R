@@ -2,7 +2,7 @@ LMMJuliaToDataFrameMapper <- R6Class(
   "LMMJuliaToDataFrameMapper",
   inherit = LMMToDataFrameMapperAbstract,
   public = list(
-    map = function(LMM_output, gene_id = NA, sample_type_field_name = NA, sample_type_field_name_mapped = "sample_type") {
+    map = function(LMM_output, gene_id = NA, lmm_fixed_effect_column_name = NA, lmm_fixed_effect_new_column_name = NA) {
       LMM_table <- julia_call("coeftable", LMM_output)
       LMM_table <- JuliaCall::field(LMM_table, "cols")
       DE_log2_FC <- LMM_table[[1]][-1]
@@ -18,11 +18,13 @@ LMMJuliaToDataFrameMapper <- R6Class(
       if (!obj_is_na(gene_id)) {
         dge <- add_column(dge, gene_id = gene_id, .before = 1)
       }
-      if (!obj_is_na(sample_type_field_name)) {
-        sample_statuses <- julia_call("coefnames", LMM_output)[-1]
-        sample_statuses <- substr(sample_statuses, nchar(sample_type_field_name) + 3, nchar(sample_statuses))
-        dge <- add_column(dge, sample_type = sample_statuses, .before = 1)
-        colnames(dge)[1] <- sample_type_field_name_mapped
+      if (!obj_is_na(lmm_fixed_effect_column_name)) {
+        if (obj_is_na(lmm_fixed_effect_new_column_name)) {
+          lmm_fixed_effect_new_column_name <- lmm_fixed_effect_column_name
+        }
+        fixed_effects <- julia_call("coefnames", LMM_output)[-1]
+        dge <- add_column(dge, sample_type = fixed_effects, .before = 1)
+        colnames(dge)[1] <- lmm_fixed_effect_new_column_name
         dge$adj.p.value <- p.adjust(p.value, method = "BH")
       }
       return(dge)

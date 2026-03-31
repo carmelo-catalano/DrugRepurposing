@@ -4,8 +4,8 @@ LINCSGCTXLMMDrugDGELmer <- R6Class(
     initialize = function(gctx_archive_filename, output_DGE_dir, skip_already_computed_genes = FALSE) {
       lincsMetadataSetuper <- LINCSMetadataSetuper$new()
       lincsGCTXDataLoader <- LINCSGCTXDataLoader$new(gctx_archive_filename)
-      lmmDGEByGene <- LMMDGEByGene$new(LMMLmer$new(config$LINCSLMMFormula), LMMLmerToDataFrameMapper$new())
-      private$lincsLMMDrugDGE <- LINCSLMMDrugDGE$new(lincsMetadataSetuper, lincsGCTXDataLoader, lmmDGEByGene, output_DGE_dir, skip_already_computed_genes)
+      lincsLMMDGEByGene <- LINCSLMMDGEByGene$new(LMMLmer$new(config$LINCSLMMFormula), LINCSLMMLmerToDataFrameMapper$new())
+      private$lincsLMMDrugDGE <- LINCSLMMDrugDGE$new(lincsMetadataSetuper, lincsGCTXDataLoader, lincsLMMDGEByGene, output_DGE_dir, skip_already_computed_genes)
     },
 
     compute = function(drug_perturbation_times, gene_list, drugs_filter = NA) {

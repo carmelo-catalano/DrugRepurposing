@@ -11,9 +11,9 @@ LINCSLMMDrugDGEByGeneJuliaFactory <- R6Class(
       }else{
         lmmJulia <- LMMJulia$new(LMMFormula)
       }
-      lmmJuliaToDataFrameMapper <- LMMJuliaToDataFrameMapper$new()
-      lmmDGEByGene <- LMMDGEByGene$new(lmmJulia, lmmJuliaToDataFrameMapper)
-      return(lmmDGEByGene)
+      lincsLMMJuliaToDataFrameMapper <- LINCSLMMJuliaToDataFrameMapper$new()
+      lincsLMMDGEByGene <- LINCSLMMDGEByGene$new(lmmJulia, lincsLMMJuliaToDataFrameMapper)
+      return(lincsLMMDGEByGene)
     }
   ),
   private = list(

@@ -6,8 +6,8 @@ lincsMetadataSetuper <- LINCSMetadataSetuper$new()
 lincsRDSDataLoader <- LINCSRDSDataLoader$new(absolute_path_directory(test_config$LINCS_splitted_level3_dir))
 
 lmm <- LMMLmer$new(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate))
-lmmToDataFrameMapper <- LMMLmerToDataFrameMapper$new()
-sut <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
+lincsLMMToDataFrameMapper <- LINCSLMMLmerToDataFrameMapper$new()
+sut <- LINCSLMMDGEByGene$new(lmm, lincsLMMToDataFrameMapper)
 
 # given
 gene_id <- "780" # symbol "DDR1"
@@ -20,7 +20,7 @@ expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LMMDGEByGene_expected.R
 result <- sut$compute(rna_data_metadata, NA, "drug")
 
 # then
-test_that("test-LMMDGEByGene", {
+test_that("test-LINCSLMMDGEByGene", {
   expect_equal(result, expected)
 }
 )
