@@ -7,24 +7,27 @@ Base class for the constructor parameter \code{lincsMetadataSetuper} of the clas
 Configure the metadata in GSE92742_Broad_LINCS_inst_info.txt to read gene RNA experiments data from the
 LINCS archive.
 \cr
-The package includes one implementation: LINCSMetadataSetuper.
+See \code{\link{LINCSMetadataSetuper}} for more information.
+\cr
+The package includes one implementation: \code{\link{LINCSMetadataSetuper}}.
 }
 \usage{
 LINCSMetadataSetuperImpl <- R6Class(
   "LINCSMetadataSetuperImpl",
   inherit = LINCSMetadataSetuperAbstract,
   public = list(
-    setup = function(perturbation_times, rna_plates, cell_types, drugs) {
+    setup = function(drug_perturbation_times, rna_plates, cell_types, drugs) {
       # do something
     }
   )
 )
 }
 \arguments{
-  \item{perturbation_times}{
-    List of perturbation times.
+  \item{drug_perturbation_times}{
+    List of drug perturbation times.
+    Drug perturbation time is the duration for which the sample is treated with the drug.
     \itemize{
-      \item Type: \code{string vector}.
+      \item Type: \code{character vector}.
     }
   }
   \item{drugs_filter}{
@@ -43,7 +46,7 @@ LINCSMetadataSetuperImpl <- R6Class(
   "LINCSMetadataSetuperImpl",
   inherit = LINCSMetadataSetuperAbstract,
   public = list(
-    setup = function(perturbation_times, rna_plates, cell_types, drugs) {
+    setup = function(drug_perturbation_times, rna_plates, cell_types, drugs) {
       # do something
     }
   )

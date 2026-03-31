@@ -2,13 +2,13 @@
 \alias{DichotomicVoomDGE}
 \title{Computes the differential gene expression analysis using Voom transformation}
 \description{
-Computes the differential gene expression analysis. The input consists of two groups of RNA-Seq data from
+Computes the differential gene expression analysis (\link{DGE}). The input consists of two groups of RNA-Seq data from
 tissues under different conditions: control vs. altered state (e.g., a disease-affected group
 and a control group).
 \cr
 RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analysis.
 \cr
-For RNA data following a normal distribution (such as in microarray analysis), see \code{DichotomicDGE}.
+For RNA data following a normal distribution (such as in microarray analysis), see \code{\link{DichotomicDGE}}.
 \cr
 Derived class of \code{DichotomicDGEAbstract}.
 }
@@ -18,7 +18,10 @@ dichotomicVoomDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
 }
 \arguments{
   \item{rna_seq}{
-    Table of RNA-Seq data. Each column represents an RNA analysis sample, and each row represents a gene.
+    Table of RNA-Seq data analysis. Each column represents an RNA-Seq analysis sample, and each row corresponds to a gene.
+    \cr
+    RNA data must follow a "negative binomial distribution".
+    \cr
     Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
@@ -27,14 +30,15 @@ dichotomicVoomDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
   \item{sample_01_map}{
     The map has the same length as the number of columns in the \code{rna_data} table.
     Each character represents the type of the corresponding column in
-    \code{rna_data} (i.e., the group): 0 = control sample, 1 =  test sample (altered state), X = excluded sample.
+    \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
   }
   \item{filter_by_protein_coding}{
-    If true, removes non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
@@ -43,15 +47,17 @@ dichotomicVoomDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
   \item{geneFilter (constructor argument)}{
     Instance of a class for filtering non-significant genes.
     \itemize{
-      \item Type: derived class of \code{GeneFilterAbstract}.
-      \item Default value: instance of class \code{LowCountsGeneFilter}.
+      \item Type: derived class of \code{\link{GeneFilterAbstract}}.
+      \item Default value: instance of class \code{\link{LowCountsGeneFilter}}.
     }
   }
 }
 \value{
 Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
 \cr
-\code{DE_log2_FC} = differential expression = log2 fold change.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_seq <- matrix(
@@ -86,6 +92,7 @@ dichotomicVoomDGE$compute(rna_seq, sample_01_map, filter_by_protein_coding)
 
 # Output:
 # gene_id  DE_log2_FC    std.error     t.value       p.value     adj.p.value
+# --------------------------------------------------------------------------
 # 1        -14.468.569   0.26210106    -5.520.225    5,60E+02    1,12E+03
 # 10       -0.6876448    0.25642630    -2.681.647    2,79E+04    3,18E+04
 # 11       -14.106.530   0.06931947    -20.350.026   3,55E-02    2,84E-01

@@ -17,7 +17,7 @@ For example, a disease-affected group and a control group.
 Unlike the dichotomous case, where groups are divided only into "control/altered state", additional conditions exist under which the experiments were conducted. For instance, multiple RNA plates were used, or tissues originated from different parts of the body.
 RNA data must follow "normal distribution", which is typical for RNA microarray analysis.
 \cr
-For RNA data following a "negative binomial distribution", refer to \code{LMMVoomDGEDream}, \code{LMMVoomDGEJulia}, or \code{LMMVoomDGELmer}.
+For RNA data following a "negative binomial distribution", refer to \code{\link{LMMVoomDGEDream}}, \code{\link{LMMVoomDGEJulia}}, or \code{\link{LMMVoomDGELmer}}.
 }
 \usage{
 lmmDGEDream <- LMMDGEDream$new()
@@ -27,7 +27,10 @@ lmmDGEDream$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
   Same as in \code{LMMDGEAbstract}
 }
 \value{
-Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_data <- matrix(
@@ -50,6 +53,7 @@ rna_data <- matrix(
 
 # rna_data =
 #          GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# ------------------------------------------------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
 # 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
 # 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
@@ -71,6 +75,7 @@ rna_metadata <- data.frame(
 
 # rna_metadata =
 # accession   tissue                  tissue_status
+# ------------------------------------------------------------
 # GSM1        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      ALS Spectrum MND
@@ -86,6 +91,7 @@ lmmDGEDreamWithEBays$compute(rna_data, rna_metadata, formula, filter_by_protein_
 
 # output
 # gene_id   DE_log2_FC   std.error   t.value      p.value       adj.p.value
+# -------------------------------------------------------------------------
 # 1         -3.173187    1.950159    -1.627142    0.10374557    0.1264301
 # 10        -3.232872    1.939666    -1.666716    0.09560943    0.1264301
 # 11        -3.443194    1.927671    -1.786194    0.07410504    0.1264301

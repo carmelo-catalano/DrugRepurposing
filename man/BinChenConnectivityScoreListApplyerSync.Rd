@@ -2,7 +2,7 @@
 \alias{BinChenConnectivityScoreListApplyerSync}
 \title{Synchronous Implementation of the Connectivity Score Computation}
 \description{
-Implementation of the abstract class \code{BinChenConnectivityScoreListApplyerAbstract} for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}. \cr
+Implementation of the abstract class \code{\link{BinChenConnectivityScoreListApplyerAbstract}} for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}. \cr
 This class computes the connectivity score for all input drugs using synchronous computation.
 It is identical to \code{BinChenConnectivityScoreListApplyerSync}, except for the synchronous computation.
 }
@@ -13,10 +13,14 @@ disease_signature_up_regulated_genes, drugs, random_connectivity_score_distribut
 }
 \arguments{
   \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: class derived from \code{DrugSignatureLoaderAbstract}
-      \item Default value: \code{NA}
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
   \item{Other arguments}{

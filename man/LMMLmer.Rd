@@ -2,8 +2,8 @@
 \alias{LMMLmer}
 \title{Computes a Linear Mixed Model (LMM) for differential gene expression (DGE) analysis under different conditions}
 \description{
-Computes a Linear Mixed Model (LMM) for differential gene expression (DGE) analysis under different conditions.
-This class is derived from \code{LMMAbstract}.
+Computes a Linear Mixed Model (LMM) for differential gene expression (\link{DGE}) analysis under different conditions.
+This class is derived from \code{\link{LMMAbstract}}.
 The formula is set via the constructor (constructor argument) to facilitate its use as a collaborator in other classes.
 The LMM is computed using the \code{lmer} function from the \code{lme4} package.
 }
@@ -13,13 +13,14 @@ lmmLmer$compute(rna_data_metadata)
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    Data frame containing RNA expression values and associated metadata. The \code{gene_expression} column stores the gene expression levels, while all other columns provide experimental metadata used in the LMM computation.
     \itemize{
-      \item Type: \code{data frame}.
+      \item Type: \code{data.frame}.
     }
   }
   \item{formula (constructor argument)}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA experiments were performed.
+    The formula for LMM computation. The formula includes mixed effects and random effects to account
+    for all the conditions under which the RNA experiments were performed.
     \itemize{
       \item Type: \code{R formula}.
     }
@@ -44,6 +45,7 @@ rna_data_metadata <- data.frame(
 
 # rna_data_metadata =
 # inst_id     rna_plate   pert_iname   cell_id   gene_expression
+# ---------------------------------------------------------------
 # AML001      XA34        DMSO         CD33      8.308500
 # AML002      XA34        AM-251       CD33      8.333750
 # AML003      XA34        AM-251       CD33      7.146400
@@ -65,6 +67,7 @@ dge <- lmmLmerToDataFrameMapper$map(result, "DDR1", "pert_iname", "drug")
 
 # Output =
 # drug            gene_id   DE_log2_FC   std.error   t.value
+# ------------------------------------------------------------
 # AM-251          DDR1      -0.600250    0.7667697   -0.7828296
 # AM-404          DDR1      -0.290125    0.7667697   -0.3783731
 # AM-580          DDR1      -0.085275    0.7667697   -0.1112133

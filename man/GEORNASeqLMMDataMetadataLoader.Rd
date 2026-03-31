@@ -11,35 +11,30 @@ geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_file
 }
 \arguments{
   \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
-    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
-    See example below.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata_filename}{
     Filename of a CSV file delimited by ";".
-    The file contains metadata for the RNA-seq data in \code{rna_seq_data_filename}.
+    The file contains metadata for the RNA-seq data in \code{rna_seq_data_filename}.\cr
     One column of the CSV must contain the sample IDs. This column is used to subset the rna_seq_data object:
     (assuming the sample ID column is named "sample_id")
     \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}
     \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
     \cr
     This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
-    \cr
-    See example below.
     \itemize{
       \item Type: \code{string}.
     }
@@ -91,11 +86,11 @@ geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_file
     }
   }
   \item{lmmGeneFilter (constructor argument)}{
-    Instance of a class for filtering non-significant genes and rows connected to low level random effects.
-    See \code{LMMGeneFilterAbstract}.
+    Instance of a class used to filter RNA data suitable for LMM analysis.\cr
+    See \code{\link{LMMGeneFilterAbstract}} for more information.
     \itemize{
-      \item Type: derived class of \code{LMMGeneFilterAbstract}.
-      \item Default value: instance of class \code{LMMLowCountsGeneFilter}.
+      \item Type: a class derived from \code{\link{LMMGeneFilterAbstract}}.
+      \item Default value: an instance of \code{\link{LMMLowCountsGeneFilter}}.
     }
   }
 }

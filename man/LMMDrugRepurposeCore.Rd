@@ -2,7 +2,9 @@
 \alias{LMMDrugRepurposeCore}
 \title{Compute the connectivity score between a disease and a list of drug DGEs}
 \description{
-Given a disease RNA data analysis and a list of drug DGEs, \code{LMMDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug signatures (\link{Gene-expression-signature}),
+\code{LMMDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
+\cr
 This class composes the class \code{BinChenDiseaseDGEDrugListConnectivityScore} and a derived class of \code{LMMDGEAbstract} or \code{LMMVoomDGEAbstract}.
 \code{LMMDrugRepurposeCore} may process different types of disease RNA data depending on the \code{lmmDGE} constructor parameter.
 The class first computes the disease DGE and then calculates the connectivity score.
@@ -14,71 +16,87 @@ The connectivity score is computed using \code{BinChenDiseaseDGEDrugListConnecti
 lmmDGE <- LMMDGEJulia$new()
 lmmDrugRepurposeCore <- LMMDrugRepurposeCore$new(lmmDGE)
 lmmDrugRepurposeCore$compute(
-  rna_data, rna_metadata, formula, drugs, drugs_genes,
+  rna_data, rna_metadata, formula, drug_signatures, drugs_genes,
   random_distribution_size, disease_name, drug_perturbation_time,
   parallel_computation, filter_by_protein_coding, signature_mapper_parameter
 )
 }
 \arguments{
   \item{rna_data}{
-    Table of RNA data. Each column represents an RNA analysis, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment IDs.
+    Table of RNA data analysis, which may include RNA-Seq, Microarray data, or other types, depending on the calling class.
+    \cr
+    Each column represents an RNA data analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
-      \item Type: \code{matrix}.
+      \item Type: matrix.
     }
   }
   \item{rna_metadata}{
-    For each RNA data analysis column in \code{rna_data} table there is a row in \code{rna_metadata} table.
-    \cr
-    The first column of \code{rna_metadata} must contain the sample IDs and must match the row names of \code{rna_data}.
-    \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
+    RNA metadata table associated with the RNA data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA sample column in the RNA data table, there must be a corresponding row in the \code{rna_metadata} table.\cr
+    One column of \code{rna_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA experiments.
+    This column is used to filter \code{rna_data}: \code{rna_data <- rna_data[, rna_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
   \item{formula}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA experiments were performed.
-    Because data and metadata are in separate files, the dependent variable to the left of the \code{~} operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}
+    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-seq experiments were performed.
+    \cr
+    Because data and metadata are stored in separate tables, the dependent variable (to the left of the \code{~} operator) must not be specified.
+    For example: \code{~ tissue_status + (1 | tissue)}.
     \itemize{
-      \item Type: \code{R formula}.
+      \item Type: \code{formula}.
     }
   }
-  \item{drugs}{
-    Drug signatures. A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{drugs_genes}{
-    The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
+    The gene ID list to use for connectivity score computation. A subset of the signature may be used.
     \itemize{
       \item Type: \code{vector}.
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
   \item{parallel_computation}{
     If true, enables parallel computation (Unix-like systems only).
@@ -88,17 +106,19 @@ lmmDrugRepurposeCore$compute(
     }
   }
   \item{filter_by_protein_coding}{
-    If true, remove non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping.
-    If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}.
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{lmmDGE (constructor argument)}{
@@ -108,17 +128,21 @@ lmmDrugRepurposeCore$compute(
     }
   }
   \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
-      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} to a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
     \itemize{
-      \item Type: \code{class derived from DGEToSignatureMapperAbstract}.
-      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
 }
@@ -146,6 +170,7 @@ rna_data <- matrix(
 
 # rna_data =
 #          GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# ------------------------------------------------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
 # 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
 # 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
@@ -167,6 +192,7 @@ rna_metadata <- data.frame(
 
 # rna_metadata =
 # accession   tissue                  tissue_status
+# ------------------------------------------------------------
 # GSM1        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      ALS Spectrum MND
@@ -183,6 +209,7 @@ drugs <- data.frame(
 
 # drugs =
 # name         filename
+# ---------------------
 # A-23187      A-23187
 # A-443644     A-443644
 # AG-490       AG-490
@@ -207,6 +234,7 @@ lmmDrugRepurposeCore$compute(
 
 # output =
 # drug        connectivity_score   p.value      adj.p.value   disease   disease_signature_type   drug_perturbation_time
+# ---------------------------------------------------------------------------------------------------------------------
 # A-23187     0.334653             0.1880556    0.2883341     ALS       7 MostSignificantGenes   6h
 # A-443644    0.4163465            0.1994708    0.2791108     ALS       7 MostSignificantGenes   6h
 # AG-490      0.4176343            0.38551284   0.45781284    ALS       7 MostSignificantGenes   6h

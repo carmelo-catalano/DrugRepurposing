@@ -2,7 +2,7 @@
 \alias{DGEMergeByGene}
 \title{Reorganize gene-wise DGEs into drug-wise DGEs}
 \description{
-Differential gene expression (DGE) analysis using linear mixed models (LMM) is sometimes performed gene-by-gene across different conditions.
+Differential gene expression (\link{DGE}) analysis using linear mixed models (LMM) is sometimes performed gene-by-gene across different conditions.
 In this case, a function like \code{LMMDGEByGene$compute} returns the DGE analysis for a single gene across different conditions, meaning the output is grouped by gene.
 \cr
 When analyzing the LINCS database, DGE is not calculated from the entire sequencing of a drug's effect but rather by examining the effect of all drugs on a single gene.

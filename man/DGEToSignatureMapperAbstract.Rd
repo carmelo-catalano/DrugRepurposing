@@ -1,9 +1,9 @@
 \name{DGEToSignatureMapperAbstract}
 \alias{DGEToSignatureMapperAbstract}
-\title{Base class for mapping DGE to a gene signature}
+\title{Base class for mapping DGE to a gene expression signature}
 \description{
 Base class for constructor parameter \code{dgeToSignatureMapper} of many classes such as \code{BinChenDiseaseDGEDrugConnectivityScore}, and \code{BinChenDiseaseDGEDrugListConnectivityScore}.
-Maps the DGE to a gene signature.
+Maps the \link{DGE} to a \link{Gene-expression-signature}.
 The \code{map} method calculates the signature. The \code{getSignatureType} method returns the mapping strategy type name.
 This package provides two implementations: \code{MostSignificantGenesSignatureMapper} and \code{PValueAndFCThresholdSignatureMapper}.
 }
@@ -33,7 +33,7 @@ dgeToSignatureMapperImpl <- R6Class(
   }
 }
 \value{
-Data frame. Columns: \code{estimate} (usually the t-value column of the DGE). Row names contain the gene IDs.
+Data frame. Columns: \code{gene_id}, \code{estimate} (usually the t-value column of the DGE).
 }
 \examples{
 dgeToSignatureMapperImpl <- R6Class(

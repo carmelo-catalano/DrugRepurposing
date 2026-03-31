@@ -2,7 +2,7 @@
 \alias{DichotomicDrugRepurpose}
 \title{Computes the connectivity score between a disease and a list of drug}
 \description{
-Given a disease RNA data analysis and a list of drug DGEs, \code{DichotomicDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug DGEs (see \link{DGE}), \code{DichotomicDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
 \cr
 This class composes the classes \code{DichotomicDGE} and \code{BinChenDiseaseDGEDrugListConnectivityScore}
 through \code{DichotomicDrugRepurposeCore} class.
@@ -15,64 +15,80 @@ For Disease RNA data on negative binomial distribution like Illumina RNA-Seq see
 \usage{
 dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new()
 result <- dichotomicDrugRepurpose$compute(
-  rna_data, sample_01_map, drugs, drugs_genes, random_distribution_size, disease_name,
+  rna_data, sample_01_map, drug_signatures, drugs_genes, random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )
 }
 \arguments{
   \item{rna_data}{
-    Table of RNA data. Each column represents an RNA analysis, each row a gene.
-    Row names are gene id, columns names are experiments id.
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    RNA data must follow the "normal distribution", usually data from microarray-like analysis.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
-      \item Type: matrix.
-      \item Columns: Typically, the column names correspond to the RNA data analysis sample identifiers.
+      \item Type: \code{matrix}.
     }
   }
   \item{sample_01_map}{
     The map has the same length as the number of columns in the \code{rna_data} table.
-    Each character represents the type of the corresponding column
-    in \code{rna_data} table (i.e., the group): 0 = test sample, 1 = control sample, X = excluded sample.
+    Each character represents the type of the corresponding column in
+    \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
   }
-  \item{drugs}{
-    A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{drugs_genes}{
-    The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
+    The gene ID list to use for connectivity score computation. A subset of the signature may be used.
     \itemize{
       \item Type: \code{vector}.
     }
   }
   \item{random_distribution_size}{
-    Parameter needed for p-value connectivity score computation. It is the size of the random connectivity score distribution.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
     }
   }
   \item{disease_name}{
-    This argument serves as the \code{test_sample_name} argument for \code{dichotomicDGE$ompute} function.
-    \itemize{
-      \item Type: \code{string}.
-    }
-  }
-  \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
+  \item{drug_perturbation_time}{
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
+  }
   \item{filter_by_protein_coding}{
-    If true, removes non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
@@ -86,37 +102,42 @@ result <- dichotomicDrugRepurpose$compute(
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping.
-    If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}.
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{geneFilter (constructor argument)}{
     Instance of a class for filtering non-significant genes.
     \itemize{
-      \item Type: derived class of \code{GeneFilterAbstract}.
-      \item Default value: Instance of class MeanThresholdGeneFilter.
+      \item Type: derived class of \code{\link{GeneFilterAbstract}}.
+      \item Default value: Instance of class \code{\link{LogarithmGeneFilter}}.
     }
   }
   \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
-      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} to a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
-      \item Default value: \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
 }
 \value{
-Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{disease}, \code{disease_signature_type}, \code{drug_perturbation_time}.
-The column \code{drug_perturbation_time} is optional.
+Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{disease},\code{disease_signature_type} \code{drug_perturbation_time}.
 }
 \examples{
 rna_data <- matrix(
@@ -136,6 +157,7 @@ rna_data <- matrix(
 
 # rna_data =
 # GeneID   GSM1        GSM2        GSM3        GSM4
+# -----------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196
 # 2        6.643856    6.741467    5.392317    6.672425
 # 3        5.247928    7.721099    7.348728    6.614710
@@ -157,9 +179,9 @@ sample_01_map <- "1X01"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494", "AG-957", "AM-404"),
-  filename = c("dge_dir/A-23187.Rds", "dge_dir/A-443644.Rds", "dge_dir/AG-490.Rds",
+  signature_reference = c("dge_dir/A-23187.Rds", "dge_dir/A-443644.Rds", "dge_dir/AG-490.Rds",
   "dge_dir/AG-494.Rds", "dge_dir/AG-957.Rds", "dge_dir/AM-404.Rds")
 )
 drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
@@ -172,13 +194,14 @@ signature_mapper_parameter <- 150
 
 dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new()
 result <- dichotomicDrugRepurpose$compute(
-  rna_data, sample_01_map, drugs, drugs_genes, random_distribution_size, disease_name,
+  rna_data, sample_01_map, drug_signatures, drugs_genes, random_distribution_size, disease_name,
   drug_perturbation_time, filter_by_protein_coding, parallel_computation,
   signature_mapper_parameter
 )
 
 # output:
 # drug        connectivity_score   disease   disease_signature_type       drug_perturbation_time
+# ----------------------------------------------------------------------------------------------
 # A-23187     0.0006964073         IPF       100 MostSignificantGenes     6h
 # A-443644   -0.0753171062         IPF       100 MostSignificantGenes     6h
 # AG-490      0.0047974725         IPF       100 MostSignificantGenes     6h

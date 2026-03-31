@@ -2,11 +2,16 @@
 \alias{MostSignificantGenesSignatureMapper}
 \title{Extract the most significant genes from the input DGE}
 \description{
-Extracts the \code{n} most significant genes from the input Differential Gene Expression (DGE) table.
+Extracts the \code{n} most significant genes from the input Differential Gene Expression (\link{DGE}) table.
 \cr
 Significance is determined based on the absolute value of the \code{t.value}. Rows in the DGE table are ordered by the absolute \code{t.value}, and the top \code{n} rows are extracted.
 \cr
-The output contains only one column, named \code{estimate}, which holds the \code{t.value}. Row names correspond to the \code{gene_id}.
+The output table is structured as a data.frame with two columns:
+\itemize{
+        \item The first column, named "gene_id", contains the gene identifiers.
+        \item The second column, named "estimate", contains the t-value.
+}
+The output represents the \link{Gene-expression-signature}.
 }
 \usage{
 mostSignificantGenesSignatureMapper <- MostSignificantGenesSignatureMapper$new()
@@ -14,17 +19,13 @@ mostSignificantGenesSignatureMapper$map(dge)
 }
 \arguments{
   \item{dge}{
-    A table containing a DGE.
+    A table containing a \link{DGE}.
     \itemize{
       \item Type: \code{data.frame}.
-      \item Required columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{n_most_significant_genes}{
-    The connectivity score computation is based on the disease signature.
-    \cr
-    The disease's \code{n} most significant genes represent the signature.
-    A typical \code{n} value ranges from 50 to 300.
+    Size of the output \link{Gene-expression-signature}. A typical value ranges from 50 to 300.
     \cr
     If not specified, \code{n_most_significant_genes} constructor parameter is used.
     \itemize{
@@ -33,10 +34,7 @@ mostSignificantGenesSignatureMapper$map(dge)
     }
   }
   \item{n_most_significant_genes (constructor argument)}{
-    The connectivity score computation is based on the disease signature.
-    \cr
-    The disease's \code{n} most significant genes represent the signature.
-    A typical \code{n} value ranges from 50 to 300.
+    Size of the output \link{Gene-expression-signature}.  A typical value ranges from 50 to 300.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{100}.
@@ -44,11 +42,7 @@ mostSignificantGenesSignatureMapper$map(dge)
   }
 }
 \value{
-Data frame with the following properties:
-\itemize{
-  \item Row names: \code{gene_id}.
-  \item Column: \code{estimate} (corresponding to the \code{t.value} from the DGE).
-}
+  Data frame. Columns: \code{gene_id}, \code{estimate} (usually the t-value column of the DGE).
 }
 \examples{
 dge <- data.frame(
@@ -62,6 +56,7 @@ dge <- data.frame(
 
 # dge =
 # gene_id     DE_log2_FC    std.error    t.value      p.value      adj.p.value
+# ----------------------------------------------------------------------------
 # 1           0.4113099     0.1568919    2.6216134    1.23E+04     2.76E+04
 # 10          0.2016503     0.2180894    0.9246224    3.61E+05     4.53E+05
 # 100         0.2077629     0.1691538    1.2282485    2.26E+05     3.10E+05
@@ -78,10 +73,11 @@ mostSignificantGenesSignatureMapper <- MostSignificantGenesSignatureMapper$new()
 mostSignificantGenesSignatureMapper$map(dge, n_most_significant_genes)
 
 # output =
-# estimate
-# 1000    6.609430
-# 10003  -6.571687
-# 10002  -3.371615
-# 1       2.621613
-# 10005  -2.212797
+# gene_id   estimate
+# -------------------
+# 1000      6.609430
+# 10003     -6.571687
+# 10002     -3.371615
+# 1         2.621613
+# 10005     -2.212797
 }

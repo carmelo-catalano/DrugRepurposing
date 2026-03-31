@@ -15,7 +15,7 @@ Unlike the dichotomous case, where groups are divided only into "control/altered
 \cr
 RNA data must follow "normal distribution", which is typical for RNA microarray analysis.
 \cr
-For RNA data following a "negative binomial distribution", refer to \code{LMMVoomDGEDream}, \code{LMMVoomDGEJulia}, or \code{LMMVoomDGELmer}.
+For RNA data following a "negative binomial distribution", refer to \code{\link{LMMVoomDGEDream}}, \code{\link{LMMVoomDGEJulia}}, or \code{\link{LMMVoomDGELmer}}.
 \cr
 To use this class, the Julia environment must be installed on the system.
 }
@@ -27,7 +27,10 @@ lmmDGEJulia$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
   Same as in \code{LMMDGEAbstract}
 }
 \value{
-\code{Data frame}. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_data <- matrix(
@@ -50,6 +53,7 @@ rna_data <- matrix(
 
 # rna_data =
 #          GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# ------------------------------------------------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
 # 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
 # 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
@@ -71,6 +75,7 @@ rna_metadata <- data.frame(
 
 # rna_metadata =
 # accession   tissue                  tissue_status
+# ------------------------------------------------------------
 # GSM1        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      ALS Spectrum MND
@@ -86,6 +91,7 @@ lmmDGEJulia$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
 
 # output =
 # gene_id   DE_log2_FC   std.error   t.value      p.value       adj.p.value
+# -------------------------------------------------------------------------
 # 1         -3.173187    1.972801    -1.608468    0.107732704   0.12312309
 # 10        -3.232872    1.622695    -1.992286    0.046339687   0.09043508
 # 11        -3.443194    1.231042    -2.796975    0.005158359   0.02524483

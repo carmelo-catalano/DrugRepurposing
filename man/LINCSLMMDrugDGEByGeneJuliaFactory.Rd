@@ -2,9 +2,9 @@
 \alias{LINCSLMMDrugDGEByGeneJuliaFactory}
 \title{Create an instance of LMMDGEByGene for LMM computation by Julia}
 \description{
-Create an instance of \code{LMMDGEByGene} for LMM computation by Julia.
+Create an instance of \code{\link{LMMDGEByGene}} for LMM computation by Julia.
 \cr
-To use this function, the Julia environment must be installed on the system.
+To use this class, the Julia environment must be installed on the system.
 }
 \usage{
 BLAS_num_threads <- 5
@@ -15,9 +15,11 @@ lincsLMMDrugDGEByGeneJuliaFactory$create(BLAS_num_threads, LMMFormula)
 \arguments{
   \item{BLAS_num_threads}{
     Threads number for parallel computation through Julia \code{LinearAlgebra.BLAS} module.
+    \cr
+    If not specified, the value from \code{processorCores$getJuliaCores()} will be used.
     \itemize{
       \item Type: \code{integer}.
-      \item Default value: \code{4}.
+      \item Default value: \code{NA}.
     }
   }
   \item{LMMFormula}{

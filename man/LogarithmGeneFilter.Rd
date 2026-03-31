@@ -19,9 +19,10 @@ logarithmGeneFilter <- LogarithmGeneFilter$new(threshold)
 logarithmGeneFilter$filter(gene_expressions)
 }
 \arguments{
-    \item{gene_expressions}{
-    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment identifiers.
+   \item{gene_expressions}{
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }
@@ -36,7 +37,7 @@ logarithmGeneFilter$filter(gene_expressions)
     Logarithm threshold.
     \itemize{
       \item Type: \code{float}.
-      \item Default value: \code{6}.
+      \item Default value: \code{1.5}.
     }
   }
 }

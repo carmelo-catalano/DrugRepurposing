@@ -19,21 +19,23 @@ disease_signature_up_regulated_genes, drug_signature)
 }
 \arguments{
   \item{disease_signature_down_regulated_genes}{
-    Disease signature down-regulated genes.
+    Disease signature down-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
     }
   }
   \item{disease_signature_up_regulated_genes}{
-    Disease signature up-regulated genes.
+    Disease signature up-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
     }
   }
-  \item{drug_signature}{
-    Drug signature.
+  \item{drug_signature_by_rank}{
+    Drug signature in which the estimate is replaced by the rank defined as \code{rank(-1 * drug_signature$estimate, ties.method = "random")}..
     \itemize{
       \item Type: \code{data.frame}
       \item Columns: \code{gene_id}, \code{rank}.\cr

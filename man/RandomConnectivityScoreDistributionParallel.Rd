@@ -6,7 +6,7 @@ Derived class of \code{RandomConnectivityScoreDistributionAbstract}.
 \cr
 \code{RandomConnectivityScoreDistributionParallel} generates a random distribution for p-value computation using parallel processing.
 \cr
-See \code{RandomConnectivityScoreDistributionAbstract} for additional details.
+See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
 }
 \usage{
 randomConnectivityScoreDistributionParallel <- RandomConnectivityScoreDistributionParallel$new()

@@ -17,9 +17,11 @@ ConnectivityScorePValue$compute(connectivity_score, random_connectivity_score_di
     }
   }
   \item{random_connectivity_score_distribution}{
-    Random connectivity score distribution.
+    Random connectivity score distribution.\cr
+    \code{random_connectivity_score_distribution} is compared with connectivity score for p-value computation.\cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
-      \item Type: \code{numeric vector}.
+      \item Type: \code{numeric vector}
     }
   }
 }

@@ -1,21 +1,23 @@
-\name{LMMToDataFrameMapperAbstract}
-\alias{LMMToDataFrameMapperAbstract}
-\title{Base class for mapping LMM output to a data frame}
+\name{LINCSLMMToDataFrameMapperAbstract}
+\alias{LINCSLMMToDataFrameMapperAbstract}
+\title{Base class for mapping LINCS LMM output to a data frame}
 \description{
-Base class for mapping the output of an LMM computation to a \code{data frame}, enabling easy usage with functions in this package.
+Base class for mapping the output of an \link{LINCS} LMM computation to a \code{data frame}, enabling easy usage with functions in this package.
 \cr
 When the LMM fixed effect assumes more than two values, the \link{DGE} is computed for
 each value of the fixed effect except for the control state. In this case,
 \code{fixed_effect_column_name} and \code{fixed_effect_new_column_name} should be specified.
 \cr
-This package provides two implementations: \code{LMMJuliaToDataFrameMapper} and \code{LMMLmerToDataFrameMapper}.
+\code{LINCSLMMToDataFrameMapperAbstract} is also used as a base class for the \code{lincsLMMToDataFrameMapper}
+constructor parameter in the \code{LINCSLMMDGEByGene} class.
+This package provides two implementations: \code{LINCSLMMJuliaToDataFrameMapper} and \code{LINCSLMMLmerToDataFrameMapper}.
 }
 \usage{
-LMMToDataFrameMapperImpl <- R6Class(
-  "LMMToDataFrameMapperImpl",
-  inherit = LMMToDataFrameMapperAbstract,
+LINCSLMMToDataFrameMapperImpl <- R6Class(
+  "LINCSLMMToDataFrameMapperImpl",
+  inherit = LINCSLMMToDataFrameMapperAbstract,
   public = list(
-    map = function(LMM_output, gene_id = NA, fixed_effect_column_name, fixed_effect_new_column_name) {
+    map = function(LMM_output, gene_id, fixed_effect_column_name, fixed_effect_new_column_name, LINCS_drug_rename_column_name) {
       # do something
     }
   )
@@ -23,10 +25,7 @@ LMMToDataFrameMapperImpl <- R6Class(
 }
 \arguments{
   \item{LMM_output}{
-    Output of \code{lmer}.
-    \itemize{
-      \item Type: \code{merMod}.
-    }
+    Output of LMM computation.
   }
   \item{gene_id}{
     Gene id. If specified, it is added to the output table. The column is populated with the same value \code{"gene_id"}.
@@ -59,16 +58,24 @@ LMMToDataFrameMapperImpl <- R6Class(
       \item Default value: \code{NA}.
     }
   }
+  \item{LINCS_drug_rename_column_name}{
+    The drug names in \link{LINCS} are prefixed by the string "pert_iname".
+    The default value is "pert_iname", set it to \code{NA} for not removing the prefix or change.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{pert_iname}.
+    }
+  }
 }
 \value{
 \code{Data frame}. Columns: \code{fixed_effect_new_column_name} (optional), \code{gene_id} (optional), \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
 }
 \examples{
-LMMToDataFrameMapperImpl <- R6Class(
-  "LMMToDataFrameMapperImpl",
-  inherit = LMMToDataFrameMapperAbstract,
+LINCSLMMToDataFrameMapperImpl <- R6Class(
+  "LINCSLMMToDataFrameMapperImpl",
+  inherit = LINCSLMMToDataFrameMapperAbstract,
   public = list(
-    map = function(LMM_output, gene_id = NA, fixed_effect_column_name, fixed_effect_new_column_name) {
+    map = function(LMM_output, gene_id = NA, fixed_effect_column_name, fixed_effect_new_column_name, LINCS_drug_rename_column_name = 'pert_iname') {
       # do something
     }
   )

@@ -18,19 +18,22 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata. For each RNA-seq analysis column in the \code{rna_seq_data} table, there is a row in the \code{rna_seq_metadata} table.
-    \cr
-    The metadata contains the control/altered state of the tissue and any additional conditions.
-    \cr
+    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
+    See example below.
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
   \item{formula (constructor argument)}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed. As data and metadata are in separate files, the dependent variable to the left of the \code{~} operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
+    The formula for LMM computation. The formula includes mixed effects and random effects to account
+    for all the conditions under which the RNA experiments were performed.
     \itemize{
       \item Type: \code{R formula}.
     }
@@ -43,6 +46,7 @@ An \code{EList} object, similar to the result of \code{limma::voom()}, containin
 
 # rna_seq_data =
 # GeneID   GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# -------------------------------------------------------------------------------------
 # 1        262         116         111         162         172         182         142
 # 2        28189       33702       11173       21947       22147       20817       19117
 # 3        463         261         193         281         351         291         231
@@ -54,6 +58,7 @@ An \code{EList} object, similar to the result of \code{limma::voom()}, containin
 
 # rna_seq_metadata =
 # accession   tissue                  subject_id     tissue_status
+# -------------------------------------------------------------------
 # GSM1        Spinal Cord Lumbar      NEUEL133AK6    ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      NEUYV496XLP    ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      NEUZU200WEQ    ALS Spectrum MND
@@ -68,6 +73,7 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
 # output:
 # E =
 # GeneID   GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# ------------------------------------------------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
 # 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
 # 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
@@ -79,6 +85,7 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
 
 # weights =
 # V1        V2        V3        V4        V5        V6        V7
+# --------------------------------------------------------------------
 # 3.201166  2.990876  2.712801  3.239883  3.196680  2.955101  2.681659
 # 5.999187  6.388492  7.274140  5.937821  6.109534  6.575438  7.633159
 # 6.161782  6.564428  7.617335  6.098332  5.963517  6.415417  7.320517

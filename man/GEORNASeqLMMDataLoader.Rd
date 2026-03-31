@@ -2,7 +2,7 @@
 \alias{GEORNASeqLMMDataLoader}
 \title{Load RNA-seq data from files sourced from NCBI}
 \description{
-Load RNA-seq metadata from csv file.
+Load RNA-Seq metadata from csv file.
 These metadata must be suitable for Linear Mixed Model (LMM) analysis.
 }
 \usage{
@@ -11,31 +11,28 @@ geoRNASeqLMMDataLoader$load(rna_seq_data_filename, rna_seq_metadata)
 }
 \arguments{
   \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
-    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
-    See example below.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{
-    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
-    \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
-    this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
-    \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
-    \cr
-    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
+    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     See example below.
     \itemize{

@@ -24,25 +24,26 @@ This class is a derived class of \code{LMMGeneFilterAbstract}.
 }
 \usage{
 logarithmGeneFilter <- LMMLogarithmGeneFilter$new(logarithm_threshold, random_effects_level_threshold)
-logarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
+logarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, sample_status_column_name)
 }
 \arguments{
-    \item{rna_data}{
-    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are sample identifiers.
+  \item{rna_data}{
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    RNA data must follow the "normal distribution", usually data from microarray-like analysis.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
   \item{rna_metadata}{
-    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
-    \cr
-    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
-    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
-    \cr
-    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
-    \cr
-    See example below.
+    RNA metadata table associated with the RNA data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA sample column in the RNA data table, there must be a corresponding row in the \code{rna_metadata} table.\cr
+    One column of \code{rna_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA experiments.
+    This column is used to filter \code{rna_data}: \code{rna_data <- rna_data[, rna_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -53,7 +54,7 @@ logarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, co
       \item Type: \code{string}.
     }
   }
-  \item{counts_filter_column_name}{
+  \item{sample_status_column_name}{
     Not used.
     \itemize{
       \item Default value: \code{NA}.
@@ -63,7 +64,7 @@ logarithmGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, co
     Logarithm threshold.
     \itemize{
       \item Type: \code{float}.
-      \item Default value: \code{6}.
+      \item Default value: \code{1.5}.
     }
   }
   \item{random_effects_level_threshold (constructor parameter)}{

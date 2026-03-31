@@ -1,8 +1,8 @@
-\name{LMMDGEByGene}
-\alias{LMMDGEByGene}
+\name{LINCSLMMDGEByGene}
+\alias{LINCSLMMDGEByGene}
 \title{Compute the differential gene expression (DGE) of a gene under different conditions using a Linear Mixed Model (LMM)}
 \description{
-Given a gene ID and the associated RNA gene expression data and metadata, computes the differential
+Given a gene ID and the associated RNA gene expression data and metadata from \link{LINCS}, computes the differential
 gene expression (\link{DGE}) under different conditions using a Linear Mixed Model (LMM).
 The metadata contain information about the RNA experiment (conditions). See example below.
 \cr
@@ -14,7 +14,10 @@ This class serves as the core component for the following classes:
 }
 \arguments{
   \item{rna_data_metadata}{
-    Data frame containing RNA expression values and associated metadata. The \code{gene_expression} column stores the gene expression levels, while all other columns provide experimental metadata used in the LMM computation.
+    Table composed of \link{LINCS} metadata (GSE92742_Broad_LINCS_inst_info.txt) and the corresponding
+    gene expression levels from GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.
+    \cr
+    RNA data follow a normal distribution.
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -28,27 +31,35 @@ This class serves as the core component for the following classes:
       \item Default value: \code{NA}.
     }
   }
-  \item{sample_name_column_name}{
-    Name of the column containing the sample name. For example, usually for LINCS analysis is \code{"drug"}.
+  \item{fixed_effect_new_column_name}{
+    This package performs \link{LINCS} differential gene expression analysis for multiple drugs against
+    a single gene, as shown in the example below.
+    \cr
+    The Linear Mixed Model is fitted using the formula: \code{gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)}
+    (the fixed effect "pert_iname" corresponds to the drug name).
+    \cr
+    With this configuration, the DGE is computed for each input drug.
+    \code{fixed_effect_new_column_name} specifies the name of the drug column in the output table.
     \itemize{
       \item Type: \code{string}.
-      \item Default value: \code{"sample_type"}.
+      \item Default value: \code{"drug"}.
     }
   }
   \item{lmm (constructor argument)}{
     Instance of a class for LMM computation. Two implementations are available: \code{LMMJulia}, and \code{LMMLmer}.
     \cr
     This class instance must be compatible with the constructor argument \code{lmmToDataFrameMapper}.
-    If \code{lmm = LMMJulia}, then \code{lmmToDataFrameMapper = LMMJuliaToDataFrameMapper}.
-    If \code{lmm = LMMLmer}, then \code{lmmToDataFrameMapper = LMMLmerToDataFrameMapper}.
+    If \code{lmm = LMMJulia}, then \code{lincsLMMToDataFrameMapper = LINCSLMMJuliaToDataFrameMapper}.
+    If \code{lmm = LMMLmer}, then \code{lincsLMMToDataFrameMapper = LINCSLMMLmerToDataFrameMapper}.
     \itemize{
       \item Type: Derived class of \code{LMMAbstract}.
     }
   }
-  \item{lmmToDataFrameMapper (constructor argument)}{
-    Instance class for mapping the output of the LMM computation into a \code{data frame}. This class instance must be compatible with \code{lmm}.
+  \item{lincsLMMToDataFrameMapper (constructor argument)}{
+    Instance class for mapping the output of the LMM computation into a \code{data frame}.
+    This class instance must be compatible with \code{lmm}.
     \itemize{
-      \item Type: \code{Derived class of LMMToDataFrameMapperAbstract}.
+      \item Type: \code{Derived class of LINCSLMMToDataFrameMapperAbstract}.
     }
   }
 }
@@ -64,12 +75,24 @@ rna_data_metadata <- data.frame(
   cell_id = c("CD33", "CD33", "CD33", "CD35", "CD35", "CD34", "CD34", "CD34"),
   gene_expression = c(8.308500, 8.333750, 7.146400, 7.538700, 8.561700, 7.506200, 8.372150, 9.003900)
 )
+# rna_data_metadata
+# inst_id         rna_plate   pert_iname   cell_id   gene_expression
+# ------------------------------------------------------------------
+# AML001          XA34        DMSO         CD33      8.308500
+# AML002          XA34        AM-251       CD33      8.333750
+# AML003          XA34        AM-251       CD33      7.146400
+# AML004          XA34        AM-404       CD35      7.538700
+# AML005          XA35        AM-404       CD35      8.561700
+# AML006          XA35        AM-580       CD34      7.506200
+# AML007          XA35        DMSO         CD34      8.372150
+# AML008          XA35        AM-580       CD34      9.003900
+
 gene_id <- 780
 sample_name_column_name <- "drug"
-lmm <- LINCSLMMJulia$new()
+lmm <- LINCSLMMJulia$new() # LINCSLMMJulia uses the formula: gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)
 lmmToDataFrameMapper <- JuliaLMMToDataFrameMapper$new()
-lmmDGEByGene <- LMMDGEByGene$new(lmm, lmmToDataFrameMapper)
-result <- lmmDGEByGene$compute(rna_data_metadata, gene_id, sample_name_column_name)
+lincsLMMDGEByGene <- LINCSLMMDGEByGene$new(lmm, lmmToDataFrameMapper)
+result <- lincsLMMDGEByGene$compute(rna_data_metadata, gene_id, sample_name_column_name)
 print(result)
 # Output example:
 # drug            gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value

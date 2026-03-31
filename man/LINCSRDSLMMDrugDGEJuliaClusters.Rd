@@ -2,9 +2,12 @@
 \alias{LINCSRDSLMMDrugDGEJuliaClusters}
 \title{Calculate the differential gene expression (DGE) for a gene list and drug list from the \code{LINCS} database}
 \description{
-Calculate the differential gene expression (DGE) for a gene list and drug list from the \code{LINCS} database. The linear mixed model (LMM) is computed using the \code{Julia} environment.
-Parallel computation is implemented using the \code{clusterApply} function. The input is divided into chunks, and this class creates a cluster for each chunk.
+Calculate the differential gene expression (DGE) for a gene list and drug list from the \link{LINCS} database.
+The linear mixed model (LMM) is computed using the \code{Julia} environment.
+Multiple parallel DGE computations are implemented using the \code{clusterApply} function.
+The input is divided into chunks, and this class creates a cluster for each chunk.
 The computation for each chunk is performed by \code{LINCSRDSJuliaDrugDGE}.
+\cr
 To use this function, the \code{Julia} environment must be installed on the system.
 }
 \usage{
@@ -14,7 +17,13 @@ lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
 \arguments{
   \item{chunks}{
     List of chunks. Each chunk is a list containing the necessary data to invoke the
-    \code{compute} function of the \code{LINCSRDSJuliaDrugDGE} class. The chunk items are: perturbation_times, gene_list, drugs_filter, and number.
+    \code{compute} function of the \code{LINCSRDSJuliaDrugDGE} class.
+    \cr
+    The chunk items are: drug_perturbation_times, gene_list, drugs_filter, and number.
+    \cr
+    number is a label to identify the chunk.
+    \cr
+    See example below.
     \itemize{
       \item Type: \code{list}.
     }
@@ -33,7 +42,8 @@ lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
     }
   }
   \item{lincs_splitted_level3_dir (constructor argument)}{
-    Folder containing the RDS files exported from \code{LINCS} archive. Each file contains RNA data for a specific gene_id, and its name corresponds to the gene_id.
+    Folder containing the RDS files exported from LINCS archive.
+    Each file contains RNA data for a specific gene_id, and its name corresponds to the gene_id.
     \itemize{
       \item Type: \code{string}.
     }
@@ -55,11 +65,11 @@ lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
     Threads number for parallel computation through \code{Julia} \code{LinearAlgebra.BLAS} module.
     \itemize{
       \item Type: \code{integer}.
-      \item Default value: \code{4}.
+      \item Default value: \code{processorCores$getJuliaCores()}.
     }
   }
   \item{skip_already_computed_genes (constructor argument)}{
-    If set to true, the DGE computation will be skipped for genes whose output file already exists.
+    If set to \code{TRUE}, the \link{DGE} computation will be skipped for genes whose output file already exists.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
@@ -93,6 +103,7 @@ lincsRDSLMMDrugDGEJuliaClusters$compute(chunks)
 
 # Output example:
 # drug               gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value
+# -------------------------------------------------------------------------------------
 # AM-251             780       -0.047038    0.073635    -0.639    0.523     0.653
 # AM-404             780       -0.199576    0.071673    -2.785    0.00536   0.0268
 # AM-580             780        0.051221    0.055126     0.929    0.353     0.588

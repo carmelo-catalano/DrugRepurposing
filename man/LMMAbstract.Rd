@@ -21,14 +21,14 @@ LMMImpl <- R6Class(
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    Data frame containing RNA expression values and associated metadata. The \code{gene_expression} column stores the gene expression levels, while all other columns provide experimental metadata used in the LMM computation.
     \itemize{
-      \item Type: \code{data frame}.
+      \item Type: \code{data.frame}.
     }
   }
 }
 \value{
-Output of the LMM computation.
+The output of the LMM function used for the computation (i.e., \code{lmer} from the \pkg{lme4} package).
 }
 \examples{
 LMMImpl <- R6Class(

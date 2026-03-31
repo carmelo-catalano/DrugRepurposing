@@ -12,7 +12,7 @@ Unlike the dichotomous case, where groups are divided only into "control/altered
 \cr
 RNA data must follow "normal distribution", which is typical for RNA microarray analysis.
 \cr
-For RNA data following a "negative binomial distribution", refer to \code{LMMVoomDGEDream}, \code{LMMVoomDGEJulia}, or \code{LMMVoomDGELmer}.
+For RNA data following a "negative binomial distribution", refer to \code{\link{LMMVoomDGEDream}}, \code{\link{LMMVoomDGEJulia}}, or \code{\link{LMMVoomDGELmer}}.
 }
 \usage{
 lmmDGELmer <- LMMDGELmer$new()
@@ -23,8 +23,12 @@ lmmDGELmer$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
 }
 \value{
 Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
+\cr
 \code{lmer} does not return a \code{p-value}.
 Therefore, when LMM is computed using \code{lmer}, the fields \code{p.value} and \code{adj.p.value} are not included.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_data <- matrix(
@@ -47,6 +51,7 @@ rna_data <- matrix(
 
 # rna_data =
 #          GSM1        GSM2        GSM3        GSM4        GSM5        GSM6        GSM7
+# ------------------------------------------------------------------------------------------
 # 1        6.930737    6.554589    6.643856    5.954196    6.539159    5.426265    13.230020
 # 2        6.643856    6.741467    5.392317    6.672425    6.727920    6.870365    12.707359
 # 3        5.247928    7.721099    7.348728    6.614710    6.845490    5.857981    12.294334
@@ -68,6 +73,7 @@ rna_metadata <- data.frame(
 
 # rna_metadata =
 # accession   tissue                  tissue_status
+# -------------------------------------------------------------
 # GSM1        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM2        Spinal Cord Lumbar      ALS Spectrum MND
 # GSM3        Spinal Cord Lumbar      ALS Spectrum MND
@@ -83,6 +89,7 @@ lmmDGELmer$compute(rna_data, rna_metadata, formula, filter_by_protein_coding)
 
 # output =
 # gene_id   DE_log2_FC   std.error   t.value
+# --------------------------------------------
 # 1         -3.173187    1.972801    -1.608468
 # 10        -3.232872    1.622695    -1.992286
 # 11        -3.443194    1.231042    -2.796975

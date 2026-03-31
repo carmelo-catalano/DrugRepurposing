@@ -6,7 +6,7 @@ Derived class of \code{RandomConnectivityScoreDistributionAbstract}.
 \cr
 It generates a random distribution for p-value computation using synchronous computation.
 \cr
-See \code{RandomConnectivityScoreDistributionAbstract} for additional details.
+See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
 }
 \usage{
 randomConnectivityScoreDistributionSync <- RandomConnectivityScoreDistributionSync$new()

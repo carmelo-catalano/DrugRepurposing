@@ -20,13 +20,14 @@ result <- geoRNASeqLMMVoomDGELmer$compute(
 )
 }
 \arguments{
-  The \code{compute} function arguments are identical to those in GEORNASeqLMMVoomDGEAbstract.
+  The \code{compute} function arguments are identical to those in \code{\link{GEORNASeqLMMVoomDGEAbstract}}.
 
   \item{lmmGeneFilter (constructor argument)}{
-    Instance of a class for filtering RNA data suitable for LMM analysis.
+    Instance of a class used to filter RNA data suitable for LMM analysis.\cr
+    See \code{\link{LMMGeneFilterAbstract}} for more information.
     \itemize{
-      \item Type: derived class of \code{LMMGeneFilterAbstract}.
-      \item Default value: Instance of class \code{LMMLowCountsGeneFilter}.
+      \item Type: a class derived from \code{\link{LMMGeneFilterAbstract}}.
+      \item Default value: an instance of \code{\link{LMMLowCountsGeneFilter}}.
     }
   }
 }
@@ -44,7 +45,7 @@ result <- geoRNASeqLMMVoomDGELmer$compute(
   rna_seq_metadata,
   formula,
   random_effect_column_names,
-  counts_filter_column_name,
+  sample_status_column_name,
   filter_by_protein_coding
 )
 

@@ -21,26 +21,27 @@ This class is a derived class of \code{LMMGeneFilterAbstract}.
 }
 \usage{
 lmmLowCountsGeneFilter <- LMMLowCountsGeneFilter$new(counts_threshold, random_effects_level_threshold)
-lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
+lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, sample_status_column_name)
 }
 
 \arguments{
   \item{rna_data}{
-    Table of RNA-seq data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are sample identifiers.
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
   \item{rna_metadata}{
-    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
-    \cr
-    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
-    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
-    \cr
-    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
-    \cr
-    See example below.
+    RNA metadata table associated with the RNA data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA sample column in the RNA data table, there must be a corresponding row in the \code{rna_metadata} table.\cr
+    One column of \code{rna_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA experiments.
+    This column is used to filter \code{rna_data}: \code{rna_data <- rna_data[, rna_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -49,6 +50,15 @@ lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name,
     This argument specifies the name of the random effect column used to filter out low-level grouping variables.
     \itemize{
       \item Type: \code{string}.
+    }
+  }
+  \item{sample_status_column_name}{
+    This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \cr
+    See \code{\link{LowCountsGeneFilter}} for more information.
+    \itemize{
+      \item Type: \code{string}.
+      \item Default value: \code{"sample_status"}
     }
   }
   \item{counts_threshold (constructor argument)}{
@@ -99,8 +109,8 @@ random_effects_level_threshold <- 5
 # GSM8        Cortex Frontal       Control
 
 random_effect_column_name <- "tissue"
-counts_filter_column_name <- "status"
+sample_status_column_name <- "tissue_status"
 
 lmmLowCountsGeneFilter <- LowCountsGeneFilter$new(counts_threshold, random_effects_level_threshold)
-lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, counts_filter_column_name)
+lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name, sample_status_column_name)
 }

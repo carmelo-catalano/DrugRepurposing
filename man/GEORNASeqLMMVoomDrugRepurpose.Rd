@@ -19,38 +19,35 @@ The input RNA-seq data and metadata files are sourced from NCBI (\url{https://ww
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
 geoRNASeqLMMVoomDrugRepurpose$compute(
         rna_seq_metadata, formula, drugs, drugs_genes, random_distribution_size,
-        random_effect_column_names, counts_filter_column_name, disease_name,
+        random_effect_column_names, sample_status_column_name, disease_name,
         drug_perturbation_time, parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter
 )
 }
 \arguments{
-    \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+  \item{rna_seq_data_filename}{
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
-    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
-    See example below.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{
-    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
-    \code{rna_seq_metadata} must contain a column called "\code{sample_id}",
-    this column is used as a filter for rna_seq_data: rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]
-    \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
-    \cr
-    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
+    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     See example below.
     \itemize{
@@ -58,28 +55,36 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
     }
   }
   \item{formula}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
-    Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
+    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-seq experiments were performed.
+    \cr
+    Because data and metadata are stored in separate tables, the dependent variable (to the left of the \code{~} operator) must not be specified.
+    For example: \code{~ tissue_status + (1 | tissue)}.
     \itemize{
-      \item Type: \code{R formula}.
+      \item Type: \code{formula}.
     }
   }
-  \item{drugs}{
-    Drug signatures.
-    A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{drugs_genes}{
-    The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
+    The gene ID list to use for connectivity score computation. A subset of the signature may be used.
     \itemize{
       \item Type: \code{vector}.
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
@@ -91,67 +96,80 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
       \item Type: \code{string}.
     }
   }
-  \item{counts_filter_column_name}{
+  \item{sample_status_column_name}{
     This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \cr
+    See \code{\link{LowCountsGeneFilter}} for more information.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{"sample_status"}
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
   \item{parallel_computation}{
-    Enable parallel computation. Only for Unix-like systems.
+    If true, enables parallel computation (Unix-like systems only).
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{filter_by_protein_coding}{
-    If true, remove non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper}. The mapper may use this parameter for mapping.
-    If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}.
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{geoRNASeqLMMVoomDGE (constructor argument)}{
     Instance of a class for computing LMM with Voom-transformed data.
     \itemize{
-      \item Type: Derived class of \code{GEORNASeqLMMVoomDGEAbstract}.
-      \item Default value: Instance of class \code{GEORNASeqLMMVoomDGEDream}.
+      \item Type: Derived class of \code{\link{GEORNASeqLMMVoomDGEAbstract}}.
+      \item Default value: Instance of class \code{\link{GEORNASeqLMMVoomDGEDream}}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} to a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
-      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
-    \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+  \item{drugSignatureLoader (constructor argument)}{
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: \code{class derived from DrugSignatureLoaderAbstract}.
-      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
 }
@@ -196,7 +214,7 @@ drugs <- data.frame(
 drugs_genes <- c(780, 7849, 2049, 2101, 8717, 10594, 826, 11224, 6158)
 random_distribution_size <- 10^5
 random_effect_column_names <- "tissue"
-counts_filter_column_name <- "tissue_status"
+sample_status_column_name <- "tissue_status"
 disease_name <- "ALS"
 drug_perturbation_time <- "6h"
 parallel_computation <- FALSE
@@ -207,7 +225,7 @@ geoRNASeqLMMVoomDGELmer <- GEORNASeqLMMVoomDGELmer$new()
 geoRNASeqLMMVoomDrugRepurpose <- GEORNASeqLMMVoomDrugRepurpose$new(geoRNASeqLMMVoomDGELmer)
 geoRNASeqLMMVoomDrugRepurpose$compute(rna_seq_data_filename,
         rna_seq_metadata, formula, drugs, drugs_genes, random_distribution_size,
-        random_effect_column_names, counts_filter_column_name, disease_name,
+        random_effect_column_names, sample_status_column_name, disease_name,
         drug_perturbation_time, parallel_computation, filter_by_protein_coding,
         signature_mapper_parameter
 )

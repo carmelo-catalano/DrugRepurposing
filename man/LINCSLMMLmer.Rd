@@ -3,9 +3,9 @@
 \title{Execute lmer to compute LMM using the formula:
 gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)}
 \description{
-Execute \code{lmer} to compute Linear Mixed Models (LMM) using the formula:
+Executes the \code{lmer} function from the \pkg{lme4} package to fit a Linear Mixed Model (LMM) defined by the following formula:
 \cr
-\code{gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)}.
+\code{gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)}
 }
 \usage{
 lincsLMMLmer <- LINCSLMMLmer$new()
@@ -13,7 +13,10 @@ lincsLMMLmer$compute(rna_data_metadata)
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    Table composed of \link{LINCS} metadata (GSE92742_Broad_LINCS_inst_info.txt) and the corresponding
+    gene expression levels from GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.
+    \cr
+    RNA data follow a normal distribution.
     \itemize{
       \item Type: \code{data.frame}.
     }

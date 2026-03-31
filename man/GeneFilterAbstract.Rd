@@ -23,14 +23,15 @@ GeneFilterImpl <- R6Class(
 }
 \arguments{
   \item{gene_expressions}{
-    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment identifiers.
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
   \item{sample_statuses}{
-    Each element in the \code{sample_statuses} vector represents the type of the corresponding RNA data sample column (by position) in the expression matrix.
+    Each element in the \code{sample_statuses} vector represents the status (control/altered) of the corresponding RNA data sample column (by position) in the expression matrix.
     \itemize{
       \item Type: \code{vector}.
     }

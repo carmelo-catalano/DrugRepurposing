@@ -2,47 +2,49 @@
 \alias{GEORNASeqDichotomicVoomDGE}
 \title{Computes the differential gene expression analysis using Voom transformation}
 \description{
-Computes the differential gene expression analysis. The input consists of two groups of RNA-Seq
+Computes the differential gene expression analysis (\link{DGE}). The input consists of two groups of RNA-Seq
 data from tissues under different conditions, for example, a disease-affected group and a control
 group. RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like
 analyses.
 \cr
-For RNA data following a normal distribution, such as microarray data, see \code{DichotomicDGE}.
+For RNA data following a normal distribution, such as microarray data, see \code{\link{DichotomicDGE}}.
 \cr
 The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}).
 }
 \usage{
 geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
 geoRNASeqDichotomicVoomDGE$compute(
-  rna_seq_filename, sample_01_map, filter_by_protein_coding
+  rna_seq_data_filename, sample_01_map, filter_by_protein_coding
 )
 }
 \arguments{
-  \item{rna_seq_filename}{
-    Filename of the RNA seq file. The file must be in TSV (tab-separated values) format and comply with the GEO NCBI specification.
+  \item{rna_seq_data_filename}{
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The file contains a table of RNA data. Each column represents an RNA-Seq sample, and each row represents a gene.
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
-    Row names are gene IDs, and column names are experiment identifiers.
-    The file name may be a local path (e.g., /user/rna/raw_counts.tsv) or a URL (e.g., https://www.ncbi.gov/geo/download/raw_counts.tsv.gz).
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_seq_filename} table.
-    Each character represents the type of the corresponding column in the \code{rna_seq_filename} table (i.e., the group):
-    0 = control sample, 1 = test sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_data} table.
+    Each character represents the type of the corresponding column in
+    \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
   }
   \item{filter_by_protein_coding}{
-    If true, removes non-protein-coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
@@ -51,8 +53,8 @@ geoRNASeqDichotomicVoomDGE$compute(
   \item{geneFilter (constructor argument)}{
     Instance of a class for filtering non-significant genes.
     \itemize{
-      \item Type: Derived class of \code{GeneFilterAbstract}.
-      \item Default value: Instance of class \code{LowCountsGeneFilter}.
+      \item Type: derived class of \code{\link{GeneFilterAbstract}}.
+      \item Default value: instance of class \code{\link{LowCountsGeneFilter}}.
     }
   }
 }
@@ -60,12 +62,14 @@ geoRNASeqDichotomicVoomDGE$compute(
 Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
 \cr
 \code{DE_log2_FC} = differential gene expression = log2 fold change.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 
-rna_seq_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
+rna_seq_data_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
 # a local path is also allowed
-# rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
+# rna_seq_data_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
 
 # File content:
 # GeneID   GSM1    GSM2    GSM3    GSM4
@@ -93,7 +97,7 @@ filter_by_protein_coding <- FALSE
 
 geoRNASeqDichotomicVoomDGE <- GEORNASeqDichotomicVoomDGE$new()
 geoRNASeqDichotomicVoomDGE$compute(
-  rna_seq_filename, sample_01_map, filter_by_protein_coding
+  rna_seq_data_filename, sample_01_map, filter_by_protein_coding
 )
 
 # Output:

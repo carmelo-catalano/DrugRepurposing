@@ -4,13 +4,15 @@
 \description{
 Typically, this filter is used for RNA-seq data.
 \cr
-Filters out non-significant genes by keeping those with at least \code{threshold} counts greater than the specified threshold, where \code{threshold} equals the size of the smallest group.
+Filters out low count genes.
 \cr
-The filtering formula is:
+\code{sample_statuses: Control, Control, Test_sample, Comtol, Test_sample, ...}
 \cr
-\code{keep <- rowSums(gene_expressions >= threshold) >= min(table(sample_statuses))}.
+keep genes with at least N counts > private$threshold, where N = size of smallest group, the code is:
+\code{keep <- rowSums(gene_expressions >= private$threshold) >= min(table(sample_statuses))}
+\code{gene_expressions <- gene_expressions[keep,]}
 \cr
-This class is a derived class of \code{GeneFilterAbstract}.
+This class is a derived class of \code{\link{GeneFilterAbstract}}.
 }
 \usage{
 lowCountsGeneFilter <- LowCountsGeneFilter$new(threshold)
@@ -19,18 +21,19 @@ lowCountsGeneFilter$filter(gene_expressions, sample_statuses)
 
 \arguments{
   \item{gene_expressions}{
-    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment identifiers.
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }
   }
   \item{sample_statuses}{
-    Each element in the \code{sample_statuses} vector represents the type of the corresponding RNA data sample column (by position) in the expression matrix.
+    Each element in the \code{sample_statuses} vector represents the status (control/altered) of the corresponding RNA data sample column (by position) in the expression matrix.
     \itemize{
       \item Type: \code{vector}.
     }
-   }
+  }
    \item{threshold (constructor argument)}{
     Counts threshold.
     \itemize{

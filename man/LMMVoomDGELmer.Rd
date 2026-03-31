@@ -16,9 +16,15 @@ lmmVoomDGELmer$compute(rna_seq_data, rna_seq_metadata, formula, filter_by_protei
   Same as in \code{LMMVoomDGEAbstract}.
 }
 \value{
-Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}.
+Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
 \cr
-The lmer function does not return \code{p.value} and \code{adj.p.value}.
+See \link{DGE} for additional details.
+\cr
+\code{lmer} does not return a \code{p-value}.
+Therefore, when LMM is computed using \code{lmer}, the fields \code{p.value} and \code{adj.p.value} are not included.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_seq_data <- data.frame(

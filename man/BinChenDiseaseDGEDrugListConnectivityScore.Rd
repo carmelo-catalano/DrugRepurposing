@@ -2,7 +2,7 @@
 \alias{BinChenDiseaseDGEDrugListConnectivityScore}
 \title{Compute the connectivity score between a disease and a list of drug DGEs}
 \description{
-Given a disease DGE and a list of drug DGEs, computes the connectivity score between disease and each drug.
+Given a disease \link{DGE} and a list of drug DGEs, computes the connectivity score between disease and each drug.
 }
 \usage{
 binChenDiseaseDGEDrugListConnectivityScore <- BinChenDiseaseDGEDrugListConnectivityScore$new()
@@ -13,45 +13,56 @@ binChenDiseaseDGEDrugListConnectivityScore$compute(
 }
 \arguments{
   \item{disease_dge}{
-    A table containing a subset of the disease's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
+    A table containing the disease \link{DGE}.
     \itemize{
       \item Type: \code{data.frame}.
-      \item Columns: \code{gene_id}, \code{t.value}.
     }
   }
-  \item{drugs}{
-    A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{drugs_genes}{
-    The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
+    The gene ID list to use for connectivity score computation. A subset of the signature may be used.
     \itemize{
       \item Type: \code{vector}.
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
   \item{parallel_computation}{
     If true, enables parallel computation (Unix-like systems only).
@@ -61,24 +72,32 @@ binChenDiseaseDGEDrugListConnectivityScore$compute(
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper (constructor argument)}. The mapper may use this parameter for mapping.
-    If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}.
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: class derived from \code{DrugSignatureLoaderAbstract}.
-      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} to a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
+    \cr
+    In this class, it is used to process the \code{disease_dge} parameter.
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
-      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
 }

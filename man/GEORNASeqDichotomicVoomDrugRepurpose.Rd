@@ -13,98 +13,113 @@ The input RNA-Seq data file is sourced from NCBI (\url{https://www.ncbi.nlm.nih.
 }
 \usage{
 geoRNASeqDichotomicVoomDrugRepurpose <- GEORNASeqDichotomicVoomDrugRepurpose$new()
-geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
-        rna_seq_filename, sample_01_map, drugs,
+geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_data_filename,
+        rna_seq_data_filename, sample_01_map, drugs,
         drugs_genes, random_distribution_size, disease_name,
         drug_perturbation_time, parallel_computation,
         filter_by_protein_coding, signature_mapper_parameter
 )
 }
 \arguments{
-  \item{rna_seq_filename}{
-    Filename of the RNA seq file. The file must be in TSV (tab-separated values) format and comply with the GEO NCBI specification.
+  \item{rna_seq_data_filename}{
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The file contains a table of RNA data. Each column represents an RNA-Seq sample, and each row represents a gene.
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
-    Row names are gene IDs, and column names are experiment identifiers.
-    The file name may be a local path (e.g., /user/rna/raw_counts.tsv) or a URL (e.g., https://www.ncbi.gov/geo/download/raw_counts.tsv.gz).
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{sample_01_map}{
-    The map has the same length as the number of columns in the \code{rna_seq_filename} table.
-    Each character represents the type of the corresponding column in \code{rna_seq_filename}
-    table (i.e., the group): 0 = control sample, 1 = test sample, X = excluded sample.
+    The map has the same length as the number of columns in the \code{rna_data} table.
+    Each character represents the type of the corresponding column in
+    \code{rna_data} table (i.e., the group):
+    0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
       \item Type: \code{string}.
     }
   }
-  \item{drugs}{
-    Drug signatures.
-    A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{drugs_genes}{
-    The gene ID list used for connectivity score computation. Typically, a subset of the full DGE is used, excluding certain genes.
+    The gene ID list to use for connectivity score computation. A subset of the signature may be used.
     \itemize{
       \item Type: \code{vector}.
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
   \item{parallel_computation}{
-    Enable parallel computation (Unix-like systems only).
+    If true, enables parallel computation (Unix-like systems only).
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{filter_by_protein_coding}{
-    If true, removes non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper (constructor argument)}. The mapper may use this parameter for mapping.
-    If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
-      \item Default value: \code{NA}.
+      \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} to a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
-      \item Default value: \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
 }
@@ -112,9 +127,10 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_filename,
 Data frame. Columns: \code{drug}, \code{connectivity_score}, \code{p.value}, \code{adj.p.value}, \code{disease}, \code{disease_signature_type}, \code{drug_perturbation_time}. The field \code{drug_perturbation_time} is optional.
 }
 \examples{
-rna_seq_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
+rna_seq_data_filename <- "/home/user/rna/GSE92592_raw_counts_GRCh38.p13_NCBI.tsv"
 # File content:
 # GeneID GSM1    GSM2    GSM3    GSM4
+# -------------------------------------
 # 1      262     116     111     162
 # 2      281897  337026  111736  219471
 # 3      463     261     193     281
@@ -129,6 +145,7 @@ sample_01_map <- "1X01"
 # How the map is applied:
 #           1      X      0      1
 # GeneID   GSM1   GSM2   GSM3   GSM4
+# ----------------------------------
 # 1        262    116    111    162
 # ...
 #
@@ -150,7 +167,7 @@ signature_mapper_parameter <- 150
 drugSignatureLoaderByDrugName <- DrugSignatureLoaderByDrugName$new(drug_dge_dir = "/drug_dges/", t_value_column_name = "t.value_6h")
 geoRNASeqDichotomicVoomDrugRepurpose <- GEORNASeqDichotomicVoomDrugRepurpose$new(drugSignatureLoader = drugSignatureLoaderByDrugName)
 geoRNASeqDichotomicVoomDrugRepurpose$compute(
-        rna_seq_filename, sample_01_map, drugs,
+        rna_seq_data_filename, sample_01_map, drugs,
         drugs_genes, random_distribution_size, disease_name,
         drug_perturbation_time, parallel_computation,
         filter_by_protein_coding, signature_mapper_parameter
@@ -158,8 +175,9 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(
 
 # Output:
 # drug        connectivity_score   p.value   adj.p.value    disease    disease_signature_type    drug_perturbation_time
+# ---------------------------------------------------------------------------------------------------------------------
 # A-23187     -0.00684643         1.436e-16 1.494e-12      IPF        150 MostSignificantGenes  6h
 # A-443644    0.042984999         2.351e-14 6.988e-11      IPF        150 MostSignificantGenes  6h
 # AG-490      0.320787632         3.359e-14 6.988e-11      IPF        150 MostSignificantGenes  6h
-# AG-494      -0.07737998         4.439e-14 7.695e-11      IPF        150
+# AG-494      -0.07737998         4.439e-14 7.695e-11      IPF        150 MostSignificantGenes  6h
 }

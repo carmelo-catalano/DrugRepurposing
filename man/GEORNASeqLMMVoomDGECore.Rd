@@ -20,49 +20,47 @@ geoRNASeqLMMVoomDGECore$compute(
   rna_seq_metadata,
   formula,
   random_effect_column_names,
-  counts_filter_column_name,
+  sample_status_column_name,
   filter_by_protein_coding
 )
 }
 \arguments{
   \item{rna_seq_data_filename}{
-    Filename for RNA-seq data compatible with the Gene Expression Omnibus (GEO) format. The file must be in tsv (tab-separated value) format.
+    Name of the file containing the RNA-Seq data.
     \cr
-    The file may also be compressed in gz format.
+    The file must be in TSV (tab-separated values) format, optionally compressed in GZ format, and must comply with the GEO NCBI specification.
     \cr
-    The first column contains the gene ID; the other columns contain the RNA-Seq analysis. The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
+    The file contains a table of RNA-Seq data.\cr
+    The table should have gene IDs in the first column (named \code{GeneID}) and RNA-Seq analysis identifiers (sample IDs) as subsequent column headers.
+    Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
+    The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
     This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
-    https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
-    See example below.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{
-    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
-    The first column of \code{rna_seq_metadata} must be named "\code{sample_id}" and must contain the sample IDs of the RNA-seq experiments.
-    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.
+    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
-    \cr
-    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
-    \cr
-    See example below
+    See example below.
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
   \item{formula}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-seq experiments were performed.
+    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-seq experiments were performed.
     \cr
-    Because data and metadata are in separate files, the dependent variable to the left of the ~ operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
+    Because data and metadata are stored in separate tables, the dependent variable (to the left of the \code{~} operator) must not be specified.
+    For example: \code{~ tissue_status + (1 | tissue)}.
     \itemize{
-      \item Type: \code{R formula}.
+      \item Type: \code{formula}.
     }
   }
   \item{random_effect_column_name}{
@@ -71,31 +69,35 @@ geoRNASeqLMMVoomDGECore$compute(
       \item Type: \code{string}.
     }
   }
-  \item{counts_filter_column_name}{
+  \item{sample_status_column_name}{
     This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \cr
+    See \code{\link{LowCountsGeneFilter}} for more information.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{"sample_status"}
     }
   }
   \item{filter_by_protein_coding}{
-    If true, removes non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.
     }
   }
   \item{lmmVoomDGE (constructor argument)}{
-    Instance of a class for LMM computation.
+    Instance of a class used to compute the disease DGE using LMM.
     \itemize{
-      \item Type: class derived from \code{LMMVoomDGEAbstract}.
+      \item Type: a class derived from \code{\link{LMMVoomDGEAbstract}}.
+      \item Default value: an instance of \code{\link{LMMVoomDreamDGE}}.
     }
   }
   \item{lmmGeneFilter (constructor argument)}{
-    Instance of a class for filtering RNA data suitable for LMM analysis.
+    Instance of a class used to filter RNA data suitable for LMM analysis.\cr
+    See \code{\link{LMMGeneFilterAbstract}} for more information.
     \itemize{
-      \item Type: derived class of \code{LMMGeneFilterAbstract}.
-      \item Default value: Instance of class \code{LMMLowCountsGeneFilter}.
+      \item Type: a class derived from \code{\link{LMMGeneFilterAbstract}}.
+      \item Default value: an instance of \code{\link{LMMLowCountsGeneFilter}}.
     }
   }
 }
@@ -110,6 +112,7 @@ Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{
 rna_seq_data_filename <- "/home/user/rna/GSE153960_raw_counts_GRCh38.p13_NCBI.tsv.gz"
 # file content example:
 # GeneID   GSM1      GSM2      GSM3      GSM4      GSM5      GSM6      GSM7
+# --------------------------------------------------------------------------
 # 1        262       116       111       162       172       182       142
 # 2        28189     33702     11173     21947     22147     20817     19117
 # 3        463       261       193       281       351       291       231
@@ -132,7 +135,7 @@ rna_seq_metadata
 
 formula <- ~ tissue_status + (1 | tissue)
 random_effect_column_names <- "tissue"
-counts_filter_column_name <- "tissue_status"
+sample_status_column_name <- "tissue_status"
 filter_by_protein_coding <- FALSE
 
 lmmVoomDGE = LMMVoomDGEDream$new()
@@ -142,7 +145,7 @@ geoRNASeqLMMVoomDGECore$compute(
   rna_seq_metadata,
   formula,
   random_effect_column_names,
-  counts_filter_column_name,
+  sample_status_column_name,
   filter_by_protein_coding
 )
 # Output:

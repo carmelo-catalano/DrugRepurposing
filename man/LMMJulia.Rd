@@ -2,8 +2,8 @@
 \alias{LMMJulia}
 \title{Computes a Linear Mixed Model (LMM) for differential gene expression (DGE) analysis under different conditions}
 \description{
-Computes a Linear Mixed Model (LMM) for differential gene expression (\code{DGE}) analysis under different conditions.
-This class is derived from \code{LMMAbstract}.
+Computes a Linear Mixed Model (LMM) for differential gene expression (\code{\link{DGE}}) analysis under different conditions.
+This class is derived from \code{\link{LMMAbstract}}.
 The formula is set via the constructor to facilitate its use as a collaborator in other classes.
 The \code{lmer} function from the \code{lme4} package and the \code{dream} function from \code{variancePartition} have very low performance.
 In contrast, the \code{fit} function from the Julia environment is approximately 60–70 times faster than \code{lmer} and 100 times faster than \code{dream}.
@@ -15,13 +15,14 @@ juliaLMM$compute(rna_data_metadata)
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    Data frame containing RNA expression values and associated metadata. The \code{gene_expression} column stores the gene expression levels, while all other columns provide experimental metadata used in the LMM computation.
     \itemize{
-      \item Type: \code{data frame}.
+      \item Type: \code{data.frame}.
     }
   }
   \item{formula (constructor argument)}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA experiments were performed.
+    The formula for LMM computation. The formula includes mixed effects and random effects to account
+    for all the conditions under which the RNA experiments were performed.
     \itemize{
       \item Type: \code{R formula}.
     }
@@ -46,6 +47,7 @@ rna_data_metadata <- data.frame(
 
 # rna_data_metadata =
 # inst_id     rna_plate   pert_iname   cell_id   gene_expression
+# --------------------------------------------------------------
 # AML001      XA34        DMSO         CD33      8.308500
 # AML002      XA34        AM-251       CD33      8.333750
 # AML003      XA34        AM-251       CD33      7.146400
@@ -63,6 +65,7 @@ dge <- lmmJuliaToDataFrameMapper$map(result, "DDR1", "pert_iname", "drug")
 
 # dge output example:
 # drug            gene_id   DE_log2_FC   std.error   t.value      p.value     adj.p.value
+# ---------------------------------------------------------------------------------------
 # AM-251          DDR1      -0.600250    0.7667697   -0.7828296   0.4337272   0.9114472
 # AM-404          DDR1      -0.290125    0.7667697   -0.3783731   0.7051535   0.9114472
 # AM-580          DDR1      -0.085275    0.7667697   -0.1112133   0.9114472   0.9114472

@@ -4,18 +4,18 @@
 \description{
 Typically, this class implementation filters non-significant genes from RNA data and samples associated with low-level grouping variables of a random effect.
 \cr
-This package provides three implementation: \code{LMMLogarithmGeneFilter}, \code{LMMLowCountsGeneFilter}, and \code{LMMNoGeneFilter}.
+This package provides three implementation: \code{\link{LMMLogarithmGeneFilter}}, \code{\link{LMMLowCountsGeneFilter}}, and \code{\link{LMMNoGeneFilter}}.
 \cr
-Base class for constructor parameter \code{lmmGeneFilter} of the classes \code{GEORNASeqLMMDataMetadataLoader}, \code{GEORNASeqLMMVoomDGECore},
-\code{GEORNASeqLMMVoomDGELmer}, \code{GEORNASeqLMMVoomDGECore}, \code{GEORNASeqLMMVoomDGEDream}, \code{GEORNASeqLMMVoomDGEDreamWithEBayes},
-and \code{GEORNASeqLMMVoomDGEJulia}.
+Base class for constructor parameter \code{lmmGeneFilter} of the classes \code{\link{GEORNASeqLMMDataMetadataLoader}}, \code{\link{GEORNASeqLMMVoomDGECore}},
+\code{\link{GEORNASeqLMMVoomDGELmer}}, \code{\link{GEORNASeqLMMVoomDGECore}}, \code{\link{GEORNASeqLMMVoomDGEDream}}, \code{\link{GEORNASeqLMMVoomDGEDreamWithEBayes}},
+and \code{\link{GEORNASeqLMMVoomDGEJulia}}.
 }
 \usage{
 LMMGeneFilterImpl <- R6Class(
   "LMMGeneFilterImpl",
   inherit = LMMGeneFilterAbstract,
   public = list(
-    filter = function(rna_data, rna_metadata, random_effect_column_names, counts_filter_column_name) {
+    filter = function(rna_data, rna_metadata, random_effect_column_names, sample_status_column_name) {
       # do something
     }
   )
@@ -23,21 +23,22 @@ LMMGeneFilterImpl <- R6Class(
 }
 \arguments{
   \item{rna_data}{
-    Table of RNA data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment identifiers.
+    Table of RNA data analysis, which may include RNA-Seq, Microarray data, or other types, depending on the derived class.
+    \cr
+    Each column represents an RNA data analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
-      \item Type: \code{matrix}.
+      \item Type: matrix.
     }
   }
   \item{rna_metadata}{
-    \code{rna_metadata} is a data frame containing metadata for \code{rna_data}.
-    \cr
-    \code{rna_metadata} must contain a column named \code{"sample_id"}, which is used to filter \code{rna_data}:
-    \code{rna_data <- rna_data[, rna_metadata$sample_id]}.
-    \cr
-    \code{rna_metadata} must also contain a column whose name is given by \code{random_effect_column_name}, which is used to filter low-level grouping variables.
-    \cr
-    See example below.
+    RNA metadata table associated with the RNA data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA sample column in the RNA data table, there must be a corresponding row in the \code{rna_metadata} table.\cr
+    One column of \code{rna_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA experiments.
+    This column is used to filter \code{rna_data}: \code{rna_data <- rna_data[, rna_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -48,22 +49,25 @@ LMMGeneFilterImpl <- R6Class(
       \item Type: \code{string}.
     }
   }
-  \item{sample_statuses}{
-    Each element in the \code{sample_statuses} vector represents the status of the corresponding RNA data sample column (by position) in the expression matrix.
+  \item{sample_status_column_name}{
+    This argument specifies the name of the samples status column used to filter out non-significant genes.
+    \cr
+    See \code{\link{LowCountsGeneFilter}} for more information.
     \itemize{
-      \item Type: \code{vector}.
+      \item Type: \code{string}.
+      \item Default value: \code{"sample_status"}
     }
   }
 }
 \value{
-Filtered \code{rna_data}.
+    Filtered \code{rna_data}.
 }
 \examples{
 LMMGeneFilterImpl <- R6Class(
   "LMMGeneFilterImpl",
   inherit = LMMGeneFilterAbstract,
   public = list(
-    filter = function(rna_data, rna_metadata, random_effect_column_names, counts_filter_column_name) {
+    filter = function(rna_data, rna_metadata, random_effect_column_names, sample_status_column_name) {
       # do something
     }
   )

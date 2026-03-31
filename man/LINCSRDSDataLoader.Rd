@@ -1,8 +1,8 @@
 \name{LINCSRDSDataLoader}
 \alias{LINCSRDSDataLoader}
-\title{Loads LINCS data from RDS file}
+\title{Loads LINCS gene expression level from RDS file}
 \description{
-Loads LINCS data from RDS file.
+Loads \link{LINCS} gene expression level from RDS file. The Rds file is the output of \code{\link{LINCSExport}}.
 }
 \usage{
 lincs_splitted_level3_dir <- "/home/user/lincs_data"
@@ -45,6 +45,7 @@ metadata <- data.frame(
 
 # Example of RDS gene_id file content:
 # F1B10:B01   F1B10:E02	 ...  F1B10:E023   F1B10:E24
+# --------------------------------------------------
 # 8.42569     7.948492   ...  9.148722     8.499799
 
 lincs_splitted_level3_dir <- "/home/user/lincs_data"
@@ -53,6 +54,7 @@ result <- lincsRDSDataLoader$load(gene_id, metadata)
 
 # output
 # inst_id       rna_plate   pert_id        pert_time   gene_expression
+# --------------------------------------------------------------------
 # F1B10:B01     24H_X1      DMSO           24          8.42569
 # F1B10:E02     24H_X1      BRD-K27499107  24          7.948492
 # F1B10:E07     24H_X2      BRD-K27499107  24          9.847269

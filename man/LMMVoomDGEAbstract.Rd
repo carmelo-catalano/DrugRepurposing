@@ -35,29 +35,26 @@ LMMVoomDGEImpl <- R6Class(
     }
   }
   \item{rna_seq_metadata}{
-    \code{rna_seq_metadata} contain metadata for \code{rna_seq_data}.
-    The first column of \code{rna_seq_metadata} must be named "\code{sample_id}" and must contain the sample IDs of the RNA-seq experiments.
-    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.
-    \cr
-    The metadata contain the control/altered status of each sample, along with additional conditions.
-    \cr
-    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
-    \cr
-    The status column must be a factor. The first level of the factor must be the "control" state.
-    \cr
-    See example in \code{LMMVoomDGEDream}.
+    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
+    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
+    The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
+    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{data.frame}.
     }
   }
   \item{formula (constructor argument)}{
-    The formula for LMM computation. The formula includes mixed effects and random effects to account for all the conditions under which the RNA-Seq experiments were performed. Because data and metadata are in separate data frames, the dependent variable to the left of the \code{~} operator must not be specified. For example: \code{~ tissue_status + (1 | tissue)}.
+    The formula for LMM computation. The formula includes mixed effects and random effects to account
+    for all the conditions under which the RNA experiments were performed.
     \itemize{
       \item Type: \code{R formula}.
     }
   }
   \item{filter_by_protein_coding}{
-    If true, remove non-protein coding genes.
+    If \code{TRUE}, non-protein-coding genes are removed from the analysis.
     \itemize{
       \item Type: \code{boolean}.
       \item Default value: \code{FALSE}.

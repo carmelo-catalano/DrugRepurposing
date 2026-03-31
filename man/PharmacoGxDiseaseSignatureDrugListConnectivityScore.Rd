@@ -2,8 +2,9 @@
 \alias{PharmacoGxDiseaseSignatureDrugListConnectivityScore}
 \title{Compute connectivity score between disease and drugs}
 \description{
-Given a disease Differential Gene Expression (DGE) and a list of drug DGEs, this class computes the connectivity score between the disease and each drug.
-The computation is based on the \code{PharmacoGx::connectivityScore} function from the \code{PharmacoGx} library.
+Given a disease signature (\link{Gene-expression-signature}) and a list of drug signatures, this class computes
+the connectivity score between the disease and each drug.
+The computation is based on the \code{PharmacoGx::connectivityScore} function from the \code{PharmacoGx} package.
 }
 \usage{
 pharmacoGxDiseaseSignatureDrugListConnectivityScore <- PharmacoGxDiseaseSignatureDrugListConnectivityScore$new()
@@ -12,18 +13,22 @@ pharmacoGxDiseaseSignatureDrugListConnectivityScore$compute(
 )
 }
 \arguments{
-  \item{disease_dge}{
-    A table containing a subset of the disease's \code{DGE}. For connectivity score computation, only the \code{t.value} is required. The sign of the \code{t.value} indicates the gene's status: positive = upregulated, negative = downregulated.
+  \item{disease_signature}{
+    A table containing the disease \link{Gene-expression-signature}.
     \itemize{
-      \item Type: \code{data frame}.
-      \item Columns: \code{gene_id}, \code{t.value}.
+      \item Type: \code{data.frame}.
     }
   }
-  \item{drugs}{
-    Drug signatures. A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{n_permutations}{
@@ -34,25 +39,30 @@ pharmacoGxDiseaseSignatureDrugListConnectivityScore$compute(
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{disease_signature_type}{
-    Gene selection strategy. If specified, it is added to the output table. It is not used for the computation.
+    Specifies the disease signature type. It indicates the technique used to map the DGE to the signature. If provided, it is added to the output table but is not used in the computation.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
 }
 \value{
@@ -66,6 +76,7 @@ disease_signature <- data.frame(
 
 # disease_signature =
 # row_names    t.value
+# ----------------------
 # 1            -9.261609
 # 2            -10.36986
 # 3             8.173052
@@ -80,6 +91,7 @@ drugs <- data.frame(
 
 # drugs
 # name        filename
+# --------------------
 # A-23187     A-23187
 # A-443644    A-443644
 # AG-490      AG-490
@@ -98,6 +110,7 @@ pharmacoGxDiseaseSignatureDrugListConnectivityScore$compute(
 )
 # output:
 # drug        connectivity_score   p.value      adj.p.value   disease   disease_signature_type      drug_perturbation_time
+# -------------------------------------------------------------------------------------------------------------------------
 # A-23187     -0.00684643          1.44E-16    1.49E-12       IPF       150 MostSignificantGenes    6h
 # A-443644    0.042984999          2.35E-14    6.98E-11       IPF       150 MostSignificantGenes    6h
 # AG-490      0.320787632          3.35E-14    6.98E-11       IPF       150 MostSignificantGenes    6h

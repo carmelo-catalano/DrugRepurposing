@@ -14,7 +14,10 @@ lincsLMMJulia$compute(rna_data_metadata)
 }
 \arguments{
   \item{rna_data_metadata}{
-    Table containing RNA data analysis and metadata. The \code{gene_expression} column stores gene expression values under different conditions, while all other columns contain metadata for the LMM.
+    Table composed of \link{LINCS} metadata (GSE92742_Broad_LINCS_inst_info.txt) and the corresponding
+    gene expression levels from GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.
+    \cr
+    RNA data follow a normal distribution.
     \itemize{
       \item Type: \code{data.frame}.
     }
@@ -40,6 +43,8 @@ rna_data_metadata <- data.frame(
 )
 
 lincsLMMJulia <- LINCSLMMJulia$new()
-lincsLMMJulia$compute(rna_data_metadata)
+result <- lincsLMMJulia$compute(rna_data_metadata)
+result_table <- julia_call("coeftable", result)
+result_table <- JuliaCall::field(result_table, "cols")
 
 }

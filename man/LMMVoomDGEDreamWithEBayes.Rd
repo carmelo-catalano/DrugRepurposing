@@ -19,7 +19,10 @@ lmmVoomDGEDreamWithEBayes$compute(rna_seq_data, rna_seq_metadata, formula, filte
   Same as in \code{LMMVoomDGEAbstract}.
 }
 \value{
-Data frame. Columns: \code{gene_id}, \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+Data frame. Columns: \code{DE_log2_FC}, \code{std.error}, \code{t.value}, \code{p.value}, \code{adj.p.value}.
+\code{DE_log2_FC} = differential expression = log2 Fold Change.
+\cr
+See \link{DGE} for additional details.
 }
 \examples{
 rna_seq_data <- data.frame(

@@ -2,12 +2,12 @@
 \alias{BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacade}
 \title{Facade for BinChenDiseaseSignatureDrugListConnectivityScoreCore using parallel computation}
 \description{
-Computes the connectivity score between a disease signature and a list of drug DGEs.
+Computes the connectivity score between a disease signature (see \link{Gene-expression-signature}) and a list of drug DGEs (see \link{DGE}).
 \cr
-Facade for \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore}. It creates an instance
+Facade for \code{\link{BinChenDiseaseSignatureDrugListConnectivityScoreCore}}. It creates an instance
 of \code{BinChenDiseaseSignatureDrugListConnectivityScoreCore} using the parallel
-implementations of \code{RandomConnectivityScoreDistributionAbstract} and
-\code{BinChenConnectivityScoreListApplyerAbstract}.
+implementations of \code{\link{RandomConnectivityScoreDistributionAbstract}} and
+\code{\link{BinChenConnectivityScoreListApplyerAbstract}}.
 \cr
 The parallel implementations used are: \code{RandomConnectivityScoreDistributionParallel} and \code{BinChenConnectivityScoreListApplyerParallel}.
 \cr
@@ -22,36 +22,44 @@ random_distribution_size, disease_name, drug_perturbation_time)
 }
 \arguments{
   \item{disease_signature}{
-    A table containing the data of the disease's n most significant genes from DGE. A typical n value ranges from 50 to 300. This table represents the signature.
-    For connectivity score computation, only the t-value is needed. The sign of the t-value indicates the status of the gene: positive = upregulated, negative = downregulated.
+    A table containing the disease signature, defined as in \link{Gene-expression-signature}
     \itemize{
       \item Type: \code{data.frame}.
-      \item Columns: \code{gene_id}, \code{t.value}.
+      \item Columns: \code{gene_id}, \code{estimate}.
     }
   }
-  \item{drugs}{
-    A table containing the drug names and their corresponding DGE filenames. The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
     \itemize{
-      \item Type: \code{data.frame}.
-      \item Columns: \code{name} = drug name, \code{filename} = drug DGE filename.
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
+    \itemize{
+      \item Type: \code{data.frame}
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{n_drug_signatures_genes}{
-    The size of the signature, expressed in number of genes, is needed for the computation of the random distribution.
-    The random distribution is used for p-value computation.
+    Total number of genes in the drug signature. This value is required for computing the random distribution used for p-value estimation.\cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details on the random distribution.
     \itemize{
       \item Type: \code{integer}.
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
       \item Default value: \code{10^5}.
     }
   }
   \item{disease_name}{
-    Disease name. If specified, it is added to the output table. It is not used for the computation.
+    Disease name. If specified, a column containing the disease name will be added to the output table.
+    \cr
+    This parameter is optional and is ignored by the computation logic.
     \itemize{
       \item Type: \code{string}.
       \item Default value: \code{NA}.
@@ -65,17 +73,24 @@ random_distribution_size, disease_name, drug_perturbation_time)
     }
   }
   \item{drug_perturbation_time}{
-    Drug perturbation time. If specified, it is added to the output table. It is not used for the computation.
-    \itemize{
-      \item Type: \code{string}.
-      \item Default value: \code{NA}.
-    }
+      Drug perturbation time, i.e., the duration for which the sample is treated with the drug.
+      If specified, a column containing the drug perturbation time will be added to the output table.
+      \cr
+      This parameter is optional and is ignored by the computation logic.
+      \itemize{
+        \item Type: \code{character}.
+        \item Default value: \code{NA}.
+      }
   }
   \item{drugSignatureLoader (constructor argument)}{
-    Loader for drug DGEs in the argument \code{drugs}.
+    Loader for drug signatures provided in the \code{drug_signatures} argument.
+    \cr
+    This class uses the \code{signature_reference} column of the \code{drug_signatures} table to load the drug signature.
+    \cr
+    The \code{signature_reference} field may contain either the signature itself or a reference to it (e.g., a filename).
     \itemize{
-      \item Type: class derived from \code{DrugSignatureLoaderAbstract}.
-      \item Default value: Instance of class \code{DrugSignatureLoaderByFilename}.
+      \item Type: class derived from \code{\link{DrugSignatureLoaderAbstract}}.
+      \item Default value: Instance of class \code{\link{DrugSignatureLoaderByFilename}}.
     }
   }
 }

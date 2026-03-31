@@ -2,9 +2,9 @@
 \alias{BinChenConnectivityScoreListApplyerAbstract}
 \title{Base Class for Computing Connectivity Score for All Input Drugs}
 \description{
-Base class for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{BinChenDiseaseDrugListConnectivityScoreCore}.\cr
+Base class for the constructor parameter \code{binChenConnectivityScoreListApplyer} of the class \code{link{BinChenDiseaseDrugListConnectivityScoreCore}}.\cr
 This class computes the connectivity score for all input drugs.\cr
-The package includes two implementations: \code{BinChenConnectivityScoreListApplyerParallel} and \code{BinChenConnectivityScoreListApplyerSync}.
+The package includes two implementations: \code{link{BinChenConnectivityScoreListApplyerParallel}} and \code{link{BinChenConnectivityScoreListApplyerSync}}.
 }
 \usage{
 BinChenConnectivityScoreListApplyerImpl <- R6Class(
@@ -22,30 +22,37 @@ BinChenConnectivityScoreListApplyerImpl <- R6Class(
 }
 \arguments{
   \item{disease_signature_down_regulated_genes}{
-    Disease signature down-regulated genes.
+    Disease signature down-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
     }
   }
   \item{disease_signature_up_regulated_genes}{
-    Disease signature up-regulated genes.
+    Disease signature up-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
     }
   }
-  \item{drugs}{
-    Drug signatures.\cr A table containing the drug names and their corresponding DGE filenames.
-    The files must be in RDS format.
+  \item{drug_signatures}{
+    A table (data.frame) containing drug signatures.
+    It must contain two columns:
+    \itemize{
+        \item \code{name}: The name of the drug.
+        \item \code{signature_reference}: Either a data.frame containing the \link{Gene-expression-signature}, or a reference (e.g., a filename) used by the signature loader class to retrieve the data.
+    }
     \itemize{
       \item Type: \code{data.frame}
-      \item Columns: \code{name} (drug name), \code{filename} (drug DGE filename)
+      \item Columns: \code{name} (drug name), \code{signature_reference}
     }
   }
   \item{random_connectivity_score_distribution}{
-    Random connectivity score distribution.
-    \code{random_connectivity_score_distribution} is compared with connectivity score for p-value computation.
+    Random connectivity score distribution.\cr
+    \code{random_connectivity_score_distribution} is compared with connectivity score for p-value computation.\cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{numeric vector}
     }

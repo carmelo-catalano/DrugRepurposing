@@ -1,8 +1,8 @@
 \name{BinChenDiseaseDGEDrugConnectivityScore}
 \alias{BinChenDiseaseDGEDrugConnectivityScore}
-\title{Compute the connectivity score between a disease and a drug DGE}
+\title{Compute the connectivity score between a disease DGE and a drug DGE}
 \description{
-Given a disease DGE and a drug DGE, computes the connectivity score between them.
+Given a disease \link{DGE} and a drug \link{DGE}, computes the connectivity score between them.
 }
 \usage{
 binChenDiseaseDGEDrugConnectivityScore <- BinChenDiseaseDGEDrugConnectivityScore$new()
@@ -13,31 +13,32 @@ binChenDiseaseDGEDrugConnectivityScore$compute(
 }
 \arguments{
   \item{disease_dge}{
-    A table containing a subset of the disease's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
+    A table containing the disease \link{DGE}.
     \itemize{
       \item Type: \code{data.frame}.
-      \item Columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{drug_dge}{
-    A table containing a subset of the drug's DGE. For connectivity score computation, only the t-value is required. The sign of the t-value indicates the gene's status: positive = upregulated, negative = downregulated.
+    A table containing the drug \link{DGE}.
     \itemize{
       \item Type: \code{data.frame}.
       \item Columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{drug_dge_t_value_column_name}{
-    The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the column name of the t-value in the DGE table.
+    The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the column name of the t-value in the \link{DGE} table.
     \itemize{
       \item Type: \code{string}.
       \item Default value: "t.value".
     }
   }
   \item{random_distribution_size}{
-    Size of the random connectivity score distribution. Higher values provide more precise p-values.
+    This parameter specifies the size of the random connectivity score distribution generated for p-value computation.
+    Higher values provide more precise p-values. \cr
+    See \code{\link{RandomConnectivityScoreDistributionAbstract}} for additional details.
     \itemize{
       \item Type: \code{integer}.
-      \item Default value: 10^5.
+      \item Default value: \code{10^5}.
     }
   }
   \item{compute_p_value}{
@@ -48,16 +49,21 @@ binChenDiseaseDGEDrugConnectivityScore$compute(
     }
   }
   \item{signature_mapper_parameter}{
-    Parameter used by the constructor argument \code{dgeToSignatureMapper (constructor argument)}. The mapper may use this parameter for mapping. If not specified, the default mapper is \code{MostSignificantGenesSignatureMapper}, so \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
+    Parameter used by the class specified in the constructor argument \code{dgeToSignatureMapper}.
+    \cr
+    The mapper may use this parameter during the mapping process. If not specified, the default mapper is \code{\link{MostSignificantGenesSignatureMapper}};
+    in this case, \code{signature_mapper_parameter} corresponds to \code{n_most_significant_genes}.
     \itemize{
       \item Default value: \code{MostSignificantGenesSignatureMapper}.
     }
   }
   \item{dgeToSignatureMapper (constructor argument)}{
-    Mapper for transforming \code{disease_dge} into a disease signature.
+    Mapper for transforming a disease \link{DGE} into a disease signature (see \link{Gene-expression-signature}).
+    \cr
+    In this class, it is used to process the \code{disease_dge} parameter.
     \itemize{
-      \item Type: class derived from \code{DGEToSignatureMapperAbstract}.
-      \item Default value: Instance of class \code{MostSignificantGenesSignatureMapper}.
+      \item Type: class derived from \code{\link{DGEToSignatureMapperAbstract}}.
+      \item Default value: \code{\link{MostSignificantGenesSignatureMapper}}.
     }
   }
   \item{parallel_computation (constructor argument)}{

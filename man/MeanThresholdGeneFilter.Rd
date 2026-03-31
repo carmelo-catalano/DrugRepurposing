@@ -20,8 +20,9 @@ meanThresholdGeneFilter$filter(gene_expressions)
 }
 \arguments{
    \item{gene_expressions}{
-    Table of RNA-seq data. Each column represents an RNA data sample, and each row represents a gene.
-    Row names are gene IDs, and column names are experiment identifiers.
+    Table of RNA data analysis. Each column represents an RNA analysis sample, and each row corresponds to a gene.
+    \cr
+    Row names are gene IDs; column names are experiment IDs.
     \itemize{
       \item Type: \code{matrix}.
     }

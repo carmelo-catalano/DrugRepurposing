@@ -2,7 +2,7 @@
 \alias{DGEMetanalysisByMatrix}
 \title{Perform meta-analysis on two DGEs using RMA function}
 \description{
-This class allows the creation of a consensus DGE from two distinct DGE results.
+This class allows the creation of a consensus \link{DGE} from two distinct DGE results.
 Fold change and standard error estimates are combined using meta-analysis techniques via
 the \code{rma} function from the \pkg{metafor} package.
 \cr

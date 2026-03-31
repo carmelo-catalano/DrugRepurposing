@@ -2,11 +2,15 @@
 \alias{ADJPValueAndFCThresholdSignatureMapper}
 \title{Extract the most significant genes based on adjusted p-value and differential gene expression}
 \description{
-  Extract the most significant genes from the input DGE table.\cr
-  Significance is determined based on the adjusted p-value and the differential gene expression.\cr
-  The DGE table’s rows with adjusted p-value greater than a given threshold and differential gene expression less than a given threshold are removed.\cr
-  The output will contain only one column, named \code{estimate}, which holds the t-values.\cr
-  Row names contain the gene IDs.
+    Extract the most significant genes from the input \code{\link{DGE}} table.\cr
+    Significance is determined based on the adjusted p-value and the differential gene expression.\cr
+    The \code{\link{DGE}} table’s rows with adjusted p-value greater than a given threshold and differential gene expression less than a given threshold are removed.\cr
+    The output table is structured as a data.frame with two columns:
+    \itemize{
+            \item The first column, named "gene_id", contains the gene identifiers.
+            \item The second column, named "estimate", contains the t-value.
+    }
+    The output represents the \link{Gene-expression-signature}.
 }
 
 \usage{
@@ -20,27 +24,26 @@
     A table containing a DGE.
     \itemize{
       \item Type: \code{data.frame}
-      \item Required columns: \code{gene_id}, \code{t.value}.
     }
   }
   \item{adj.p.value_threshold (constructor argument)}{
     p-value threshold.
     \itemize{
       \item Type: \code{float}
-      \item Required columns: \code{0.001}.
+      \item Default value: \code{0.001}.
     }
   }
   \item{DE_log2_FC_threshold (constructor argument)}{
     Differential gene expression threshold expressed as base 2 logarithm of fold change.
-      \itemize{
+    \itemize{
       \item Type: \code{float}
-      \item Required columns: \code{1.5}.
+      \item Default value: \code{1.5}.
     }
   }
 }
 
 \value{
-  \code{data.frame}. Columns: \code{estimate} (t-value column of the DGE). Row names contain the gene IDs.
+  Data frame. Columns: \code{gene_id}, \code{estimate} (usually the t-value column of the DGE).
 }
 
 \examples{
@@ -53,6 +56,20 @@
     adj.p.value = c(0.002, 0.003, 0.1012, 0.213, 0.04, 0.0001, 0.005, 0.004, 0.04, 0.003)
   )
 
+# dge =
+# gene_id   DE_log2_FC   std.error   t.value   p.value   adj.p.value
+--------------------------------------------------------------------
+# 1         3.411        0.156       2.621     0.0003    0.0020
+# 10        0.201        0.218       0.924     0.0010    0.0030
+# 100       0.207        0.169       1.228     0.0912    0.1012
+# 1000      2.618        0.396       6.609     0.1230    0.2130
+# 10000     -1.921       0.112       -1.082    0.0080    0.0400
+# 10001     -2.102       0.048       -2.097    0.00001   0.0001
+# 10002     -0.838       0.248       -3.371    0.0020    0.0050
+# 10003     -2.924       0.140       -6.571    0.0010    0.0040
+# 10004     -3.118       0.083       -1.430    0.0200    0.0400
+# 10005     -0.243       0.110       -2.212    0.0020    0.0030
+
   adj.p.value_threshold <- 0.05
   DE_log2_FC_threshold <- 1.7
 
@@ -61,10 +78,11 @@
   adjPValueAndFCThresholdSignatureMapper$getSignatureType()
 
   # output
-  #	          estimate
-  # 1	      2.621613414
-  # 10000	  -1.082000871
-  # 10001	  -2.097975261
-  # 10003	  -6.571687173
-  # 10004	  -1.430383326
+  # gene_id   estimate
+  # ----------------------
+  # 1         2.621613414
+  # 10000     -1.082000871
+  # 10001     -2.097975261
+  # 10003     -6.571687173
+  # 10004     -1.430383326
 }

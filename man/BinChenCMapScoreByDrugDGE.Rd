@@ -15,14 +15,16 @@ BinChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, diseas
 }
 \arguments{
   \item{disease_signature_down_regulated_genes}{
-    Disease signature down-regulated genes.
+    Disease signature down-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
     }
   }
   \item{disease_signature_up_regulated_genes}{
-    Disease signature up-regulated genes.
+    Disease signature up-regulated genes. The genes are ordered by decreasing absolute value of the estimate.\cr
+    See \link{Gene-expression-signature} for more details.
     \itemize{
       \item Type: \code{data.frame}
       \item Column: \code{gene_id}
@@ -32,7 +34,7 @@ BinChenCMapScoreByDrugDGE$compute(disease_signature_down_regulated_genes, diseas
     Drug signature.
     \itemize{
       \item Type: \code{data.frame}
-      \item Columns: \code{gene_id}, \code{estimate} (estimate = log2 Fold Change)
+      \item Columns: \code{gene_id}, \code{estimate} (estimate = t-value)
     }
   }
 }
