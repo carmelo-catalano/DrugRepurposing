@@ -77,9 +77,9 @@ rna_seq_metadata <- data.frame(
 
 drugs_genes <- c(1, 2, 9, 12, 13, 14, 21, 25)
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+  signature_reference = c("A-23187", "A-443644", "AG-490", "AG-494")
 )
 
 A_23187_drug <- data.frame(
@@ -143,11 +143,11 @@ geoRNASeqLMMVoomDrugRepurpose$compute(
   rna_seq_data_filename = rna_seq_data_filename,
   rna_seq_metadata = rna_seq_metadata,
   formula = ~tissue_status + (1 | tissue),
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10,
   random_effect_column_names = "tissue",
-  counts_filter_column_name = "tissue_status",
+  sample_status_column_name = "tissue_status",
   disease_name = "ALS",
   parallel_computation = FALSE,
   filter_by_protein_coding = FALSE,

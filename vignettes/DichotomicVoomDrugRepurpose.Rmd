@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 # Description
-Given a disease RNA-Seq analysis and a list of drug DGEs, `DichotomicVoomDrugRepurpose`
+Given a disease RNA-Seq analysis and a list of drug signatures, `DichotomicVoomDrugRepurpose`
  computes the connectivity score between the disease and the drugs.
 
 This class composes the classes `DichotomicDGE` and `BinChenDiseaseDGEDrugListConnectivityScore`
@@ -42,9 +42,9 @@ sample_01_map <- "1X01"
 
 drugs_genes <- c(1, 2, 3, 9, 10, 11, 12, 13, 6158)
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+  signature_reference = c("A-23187", "A-443644", "AG-490", "AG-494")
 )
 
 A_23187_drug <- data.frame(
@@ -104,7 +104,7 @@ dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new(
 dichotomicVoomDrugRepurpose$compute(
   rna_seq = rna_seq,
   sample_01_map = sample_01_map,
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10, # 10 is a poor value used only to speed up
                                  # computation; an appropriate value is 10^5

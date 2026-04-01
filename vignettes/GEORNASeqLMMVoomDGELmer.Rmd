@@ -67,7 +67,7 @@ geoRNASeqLMMVoomDGELmer$compute(
   rna_seq_metadata = rna_seq_metadata,
   formula =formula,
   random_effect_column_names = random_effect_column_names,
-  counts_filter_column_name = sample_status_column_name,
+  sample_status_column_name = sample_status_column_name,
   filter_by_protein_coding = FALSE
 )
 

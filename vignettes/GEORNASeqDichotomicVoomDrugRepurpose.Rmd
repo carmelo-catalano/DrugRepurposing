@@ -24,7 +24,7 @@ library(DrugRepurposing)
 ```
 ```{r}
 library(DrugRepurposing)
-rna_seq_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
+rna_seq_data_filename <- "https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz"
 # File content example:
 # GeneID   GSM1    GSM2    GSM3    GSM4
 # 1        262     116     111     162
@@ -49,9 +49,9 @@ sample_01_map <- "1X01"
 
 drugs_genes <- c(1, 2, 9, 12, 13, 14, 21, 25)
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+  signature_reference = c("A-23187", "A-443644", "AG-490", "AG-494")
 )
 
 A_23187_drug <- data.frame(
@@ -106,9 +106,9 @@ easyDrugSignatureLoader <- EasyDrugSignatureLoader$new(drugs_rna_data)
 geoRNASeqDichotomicVoomDrugRepurpose <- GEORNASeqDichotomicVoomDrugRepurpose$new(
   drugSignatureLoader = easyDrugSignatureLoader)
 geoRNASeqDichotomicVoomDrugRepurpose$compute(
-  rna_seq_filename = rna_seq_filename,
+  rna_seq_data_filename = rna_seq_data_filename,
   sample_01_map = sample_01_map,
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10, # 10 is a poor value used only to speed up
                                  # computation; an appropriate value is 10^5

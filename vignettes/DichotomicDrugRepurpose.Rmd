@@ -9,11 +9,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 # Description
-Given a disease RNA data analysis and a list of drug DGEs, `DichotomicDrugRepurposeCore` computes the
- connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug signatures, `DichotomicDrugRepurposeCore` computes the connectivity score between the disease and the drugs.
 
 This class composes the classes `DichotomicDGE` and `BinChenDiseaseDGEDrugListConnectivityScore`
  through `DichotomicDrugRepurposeCore` class.
+
+Disease RNA data must be expressed as log-ratios or log-expression values.
 
 RNA data must be on the "normal distribution", usually data from microarray like analysis.
 
@@ -62,9 +63,9 @@ sample_01_map <- "1X01"
 #
 # GSM1, GSM4 = IPF; GSM3 = control; GSM2 = excluded
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+  signature_reference = c("A-23187", "A-443644", "AG-490", "AG-494")
 )
 
 A_23187_drug <- data.frame(
@@ -126,7 +127,7 @@ dichotomicDrugRepurpose <- DichotomicDrugRepurpose$new(
 dichotomicDrugRepurpose$compute(
   rna_data = rna_data,
   sample_01_map = sample_01_map,
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10, # 10 is a poor value used only to speed up
                                  # computation; an appropriate value is 10^5

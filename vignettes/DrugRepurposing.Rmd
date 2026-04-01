@@ -28,6 +28,8 @@ was used as the starting point for the development of DrugRepurposing.
 
 The core class for drug repurposing, `BinChenCMapScoreByDrugRank`, was extracted from the software accompanying the second article by Bin Chen et al., available at [https://github.com/Bin-Chen-Lab/RGES](https://github.com/Bin-Chen-Lab/RGES).
 
+Alternatively to `BinChenCMapScoreByDrugRank` is possible to use `connectivityScore` from `PharmacoGx`.
+
 The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel processing is fully supported only on unix like systems.
 
 ## Drug repurposing analysis
@@ -96,7 +98,7 @@ They are referred to as LMM DGE.
 For further information about voom, see:
 *voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014*
 
-## DGE output format
+## DGE format
 The DGE output format of DGE functions is a data.frame containing the following columns:\
 `gene_id` = Unique NCBI Gene ID\
 `DE_log2_FC` = Differential expression expressed as the log2 fold change\
@@ -118,9 +120,133 @@ gene_id    DE_log2_FC    std.error    t.value     p.value     adj.p.value
 54812      -0.1922592    0.11767320   -1.8237562  0.102292    0.430841
 ```
 
+## Gene expression signature
+A table containing a subset of the disease DGE corresponding to the n most significant genes.
+A typical value of n ranges from 50 to 300.
+Only two columns from the original DGE are retained: gene_id and t.value.
+The table is structured as a data.frame with two columns:
+
+1. The first column, named "gene_id", contains the gene identifiers.
+2. The second column, named "estimate", contains the t-value.
+
+The "estimate" column represents a gene-level statistic derived from the DGE analysis.
+
+This package adopts the convention defined by Koudijs et al. [1], in which the t-value is used as the expression estimate.
+
+In contrast, the implementation by Chen et al. [2] uses the log fold change.\cr
+
+**Note**: For connectivity score computation, the "estimate" value is needed.
+The sign of the "estimate" indicates the status of the gene: positive = upregulated, negative = downregulated.
+
+**Example**
+```
+gene_id    estimate
+---------------------
+140        3.0510758
+780        -1.0078762
+2101       -0.1058122
+2597        0.0071045
+54812      -2.1922592
+```
+
 ## Integration with LINCS [4]
 The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
-This package provides many classes to analyze the level 3 of LINCS dataset.
+
+The LINCS data are downloaded from [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE92742](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE92742).
+
+This package provides functions to analyze level 3 data. Level 3 contains RNA analysis
+of cancer tissue treated with drugs and control vehicles (DMSO).
+
+Due to the structure of the LINCS database, differential gene expression analysis is performed
+for multiple drugs against a single gene.
+
+The LINCS classes use a Linear Mixed Model with the formula: `gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate)` (the fixed effect pert_iname corresponds to the drug name) to compute the DGE.
+
+With this configuration, the DGE is computed for each input drug.
+
+Level 3 data used are:
+
+**extdata/LINCS_gene_info.Rds** (extracted from GSE92742_Broad_LINCS_gene_info.txt)
+Gene information.
+
+1. gene_id: gene id
+2. gene_symbol: gene symbol
+3. lincs_gene_symbol: gene symbol in LINCS database
+4. gene_full_name: gene full name
+5. is_landmark_gene: indicates whether the gene is a LINCS landmark gene
+6. is_best_inferred_gene: indicates whether the gene is well inferred
+
+See example below.
+
+**GSE92742_Broad_LINCS_inst_info.Rds** (extracted from GSE92742_Broad_LINCS_inst_info.txt)
+
+RNA analysis metadata.
+
+1. inst_id: sample id
+2. rna_plate: rna plate
+3. rna_well: rna well
+4. pert_id: id of the perturbagen
+5. pert_iname: standardized name of the perturbagen (e.g., drug name)
+6. pert_type: category of the perturbation, such as "trt_cp" (chemical treatment) or "ctl_vehicle" (control samples, typically DMSO).
+7. pert_dose: concentration of the treatment
+8. pert_time: duration of the cellular exposure to the perturbagen (e.g., 6h, 24h, 48h)
+9. cell_id: name of the specific cell line used in the assay (e.g., MCF7, PC3, VCAP)
+
+See example below.
+
+**GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx** (not provided with package)
+
+RNA expression data.
+
+For each row in the table GSE92742_Broad_LINCS_inst_info.txt, there is a corresponding column in
+GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx. The column name matches the
+inst_id column in GSE92742_Broad_LINCS_inst_info.txt.
+The table contains only one row, which represents the gene expression level.
+Data follow the "normal distribution".
+
+See example below.
+
+**Examples**
+```
+LINCS_gene_info
+# gene_id   gene_symbol   lincs_gene_symbol   gene_full_name    is_landmark_gene
+# ------------------------------------------------------------------------------
+# 7849      PAX8          PAX8                paired box 8      1
+# 2049      EPHB3         EPHB3               EPH receptor B3   0
+# 11335     CBX3          CBX3                chromobox 3       0
+
+# is_best_inferred_gene
+# ---------------------
+# 1
+# 1
+# 1
+
+GSE92742_Broad_LINCS_inst_info
+# inst_id                                 rna_plate            rna_well   pert_id
+# -------------------------------------------------------------------------------------
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:P21   ASG001_MCF7_24H_X1   P21        DMSO
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:P22   ASG001_MCF7_24H_X1   P22        DMSO
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:A06   ASG001_MCF7_24H_X1   A06        BRD-A60070924
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:E06   ASG001_MCF7_24H_X1   E06        BRD-A60070924
+
+# pert_iname        pert_type     pert_dose   pert_time   cell_id
+# ---------------------------------------------------------------
+# DMSO              ctl_vehicle   0.1         24          MCF7
+# DMSO              ctl_vehicle   0.1         24          MCF7
+# alpha-estradiol   trt_cp        10          24          MCF7
+# alpha-estradiol   trt_cp        10          24          MCF7
+
+
+GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:P21   ASG001_MCF7_24H_X1_B7_DUO52HI53LO:P22
+# -----------------------------------------------------------------------------
+# 9.178                                   9.4127
+
+# ASG001_MCF7_24H_X1_B7_DUO52HI53LO:A06   ASG001_MCF7_24H_X1_B7_DUO52HI53LO:E06
+# -----------------------------------------------------------------------------
+# 9.2043                                  9.3412
+
+```
 
 ## Parallel Processing
 The parallel processing is controlled by the `processorCores` instance of the `ProcessorCores` class.
@@ -335,9 +461,9 @@ drugs_rna_data <- list()
 drugs_rna_data[["drug_1"]] <- drug_1
 drugs_rna_data[["drug_2"]] <- drug_2
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("drug_1", "drug_2"),
-  filename = c("drug_1", "drug_2")
+  signature_reference = c("drug_1", "drug_2")
 )
 
 EasyDrugSignatureLoader <- R6Class(
@@ -390,7 +516,7 @@ dichotomicVoomDrugRepurpose <- DichotomicVoomDrugRepurpose$new(
 dichotomicVoomDrugRepurpose$compute(
   rna_seq = disease_rna_seq,
   sample_01_map = disease_sample_01_map,
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10, # 10 is a poor value used only to speed up
                                  # computation; an appropriate value is 10^5

@@ -85,7 +85,7 @@ geoRNASeqLMMVoomDGEDream$compute(
   rna_seq_data_filename = rna_seq_data_filename,
   rna_seq_metadata = rna_seq_metadata,
   random_effect_column_names = random_effect_column_names,
-  counts_filter_column_name = sample_status_column_name,
+  sample_status_column_name = sample_status_column_name,
   formula <- formula,
   filter_by_protein_coding = FALSE
 )

@@ -80,9 +80,9 @@ rna_metadata <- data.frame(
 
 formula <- ~tissue_status + (1 | tissue)
 
-drugs <- data.frame(
+drug_signatures <- data.frame(
   name = c("A-23187", "A-443644", "AG-490", "AG-494"),
-  filename = c("A-23187", "A-443644", "AG-490", "AG-494")
+  signature_reference = c("A-23187", "A-443644", "AG-490", "AG-494")
 )
 
 A_23187_drug <- data.frame(
@@ -137,7 +137,7 @@ lmmDrugRepurpose$compute(
   rna_data = rna_data,
   rna_metadata = rna_metadata,
   formula = formula,
-  drugs = drugs,
+  drug_signatures = drug_signatures,
   drugs_genes = drugs_genes,
   random_distribution_size = 10, # 10 is a poor value used only to speed up
                                  # computation; an appropriate value is 10^5

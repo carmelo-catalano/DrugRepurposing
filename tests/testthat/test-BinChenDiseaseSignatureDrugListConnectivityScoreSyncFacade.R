@@ -14,9 +14,10 @@ disease_signature$abs_t.value <- abs(disease_signature$t.value)
 disease_signature <- disease_signature[order(disease_signature$abs_t.value, decreasing = T),]
 disease_signature <- disease_signature[1:150, , drop = FALSE]
 
-drug_signatures <- data.frame(name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404",
-                             "A-443644", "AG-494", "AG-957"))
-drug_signatures$signature_reference <- drug_signatures$name
+drug_signatures <- data.frame(
+  name = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404", "A-443644", "AG-494", "AG-957"),
+  signature_reference = c("A-23187", "AG-490", "AKT-inhibitor-1-2", "AM-404", "A-443644", "AG-494", "AG-957")
+)
 disease_signature <- diseaseSignatureEstimateMapper$map(disease_signature)
 expected <- absolute_path_readRDS("unit_test_data/connectivity_score/DiseaseDrugConnectivityScoreByBinChen_expected.Rds")
 
