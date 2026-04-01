@@ -5,7 +5,7 @@ LINCSLMMJuliaToDataFrameMapper <- R6Class(
     initialize = function() {
       private$lmmJuliaToDataFrameMapper <- LMMJuliaToDataFrameMapper$new()
     },
-    map = function(LMM_output, gene_id = NA, lmm_fixed_effect_column_name = NA, lmm_fixed_effect_new_column_name = NA, LINCS_drug_rename_column_name = NA) {
+    map = function(LMM_output, gene_id = NA, lmm_fixed_effect_column_name = NA, lmm_fixed_effect_new_column_name = NA, LINCS_drug_rename_column_name = "pert_iname") {
       dge <- private$lmmJuliaToDataFrameMapper$map(LMM_output, gene_id, lmm_fixed_effect_column_name, lmm_fixed_effect_new_column_name)
       if (!obj_is_na(lmm_fixed_effect_column_name) && !obj_is_na(LINCS_drug_rename_column_name)) {
         if (obj_is_na(lmm_fixed_effect_new_column_name)) {
