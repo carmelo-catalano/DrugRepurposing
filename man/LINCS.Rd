@@ -78,6 +78,7 @@ See example below.
     }
 \cr
 }
+\value{NA}
 \examples{
 LINCS_gene_info
 # gene_id   gene_symbol   lincs_gene_symbol   gene_full_name    is_landmark_gene   is_best_inferred_gene

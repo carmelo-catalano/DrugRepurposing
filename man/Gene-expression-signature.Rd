@@ -16,6 +16,7 @@ In contrast, the implementation by Chen et al. [2] uses the log fold change.\cr
 \strong{Note}: For connectivity score computation, the "estimate" value is needed.
 The sign of the "estimate" indicates the status of the gene: positive = upregulated, negative = downregulated.
 }
+\value{NA}
 \section{References}{
     \itemize{
         \item 1.	Koudijs K.K.M. et al. Validation of transcriptome signature reversion for drug repurposing in oncology. Briefings in Bioinformatics, 2022.
@@ -23,11 +24,11 @@ The sign of the "estimate" indicates the status of the gene: positive = upregula
     }
 }
 \examples{
-gene_id    estimate
----------------------
-140        3.0510758
-780        -1.0078762
-2101       -0.1058122
-2597        0.0071045
-54812      -2.1922592
+# gene_id    estimate
+# ---------------------
+# 140        3.0510758
+# 780        -1.0078762
+# 2101       -0.1058122
+# 2597        0.0071045
+# 54812      -2.1922592
 }
