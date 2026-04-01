@@ -2,7 +2,7 @@
 \alias{DichotomicDrugRepurpose}
 \title{Computes the connectivity score between a disease and a list of drug}
 \description{
-Given a disease RNA data analysis and a list of drug DGEs (see \link{DGE}), \code{DichotomicDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
+Given a disease RNA data analysis and a list of drug signatures (see \link{Gene-expression-signature}), \code{DichotomicDrugRepurposeCore} computes the connectivity score between the disease and the drugs.
 \cr
 This class composes the classes \code{DichotomicDGE} and \code{BinChenDiseaseDGEDrugListConnectivityScore}
 through \code{DichotomicDrugRepurposeCore} class.

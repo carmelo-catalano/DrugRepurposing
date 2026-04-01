@@ -154,7 +154,10 @@
 \section{Integration with LINCS [4]}{
     The Common Fund’s Library of Integrated Network-based Cellular Signatures (LINCS).
     This package provides many classes to analyze the level 3 of LINCS dataset.
+    \cr
+    See \link{LINCS} for more information.
     \cr\cr
+
 }
 \section{Parallel Processing}{
     The parallel processing is controlled by the \code{processorCores} instance of the \code{ProcessorCores} class.
