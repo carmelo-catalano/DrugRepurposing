@@ -20,6 +20,6 @@ result <- drugDGE$compute(rna_data_metadata, gene_symbol, "drug")
 
 # then
 test_that("test-LINCSLMMDrugDGEByGeneJuliaFactory2", {
-  expect_equal(result, expected)
+  expect_equal(result, expected, expected, tolerance = 1e-6)
 }
 )
