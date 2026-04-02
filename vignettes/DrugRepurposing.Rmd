@@ -303,6 +303,8 @@ Statistical analyses are performed using the following libraries: limma, lme4, d
    import Pkg;
    Pkg.add("MixedModels")
    Pkg.add("DataFrames")
+   Pkg.add("Suppressor")
+   Pkg.add("RCall")
    ```
 
 ## Troubleshooting Julia Integration with R

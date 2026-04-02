@@ -223,7 +223,9 @@
 
     \code{import Pkg;\cr
         Pkg.add("MixedModels")\cr
-        Pkg.add("DataFrames")
+        Pkg.add("DataFrames")\cr
+        Pkg.add("Suppressor")\cr
+        Pkg.add("RCall")
         \cr\cr
     }
 }

@@ -43,6 +43,8 @@ After installing Julia on your system, you need to install the Julia packages Mi
 import Pkg;
 Pkg.add("MixedModels")
 Pkg.add("DataFrames")
+Pkg.add("Suppressor")
+Pkg.add("RCall")
 ```
 
 ### Troubleshooting Julia Integration with R
