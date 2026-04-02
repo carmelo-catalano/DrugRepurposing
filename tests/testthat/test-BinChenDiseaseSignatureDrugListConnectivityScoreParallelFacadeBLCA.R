@@ -1,4 +1,5 @@
 library(testthat)
+skip_if(is_windows_os(), message = "BinChenDiseaseSignatureDrugListConnectivityScoreParallelFacadeBLCA is not supported on the Windows operating system, test skipped")
 
 library(R6)
 
