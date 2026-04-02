@@ -15,7 +15,7 @@ LMM_output <- lmer(gene_expression ~ pert_iname + (1 | cell_id) + (1 | rna_plate
 expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSLMMLmerToDataFrameMapperNoDrugRenameExpected.Rds")
 
 # when
-result <- sut$map(LMM_output, NA, "pert_iname", "drug")
+result <- sut$map(LMM_output, NA, "pert_iname", "drug", NA)
 
 # then
 test_that("test-LINCSLMMLmerToDataFrameMapperNoDrugRename", {

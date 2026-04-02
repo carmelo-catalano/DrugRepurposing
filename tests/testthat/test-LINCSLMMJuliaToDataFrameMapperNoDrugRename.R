@@ -16,7 +16,7 @@ LMM_output <- julia_call("fit", julia_eval("LinearMixedModel"), gene_expression 
 expected <- absolute_path_readRDS("unit_test_data/LMMDGE/LINCSLMMJuliaToDataFrameMapperNoDrugRenameExpected.Rds")
 
 # when
-result <- sut$map(LMM_output, NA, "pert_iname", "drug")
+result <- sut$map(LMM_output, NA, "pert_iname", "drug", NA)
 
 # then
 test_that("test-LINCSLMMJuliaToDataFrameMapperNoDrugRename", {
