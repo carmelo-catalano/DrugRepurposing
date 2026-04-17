@@ -43,6 +43,9 @@ After installing Julia on your system, you need to install the Julia packages Mi
 import Pkg;
 Pkg.add("MixedModels")
 Pkg.add("DataFrames")
+
+# On Linux operating systems, you may also need:
+
 Pkg.add("Suppressor")
 Pkg.add("RCall")
 ```
