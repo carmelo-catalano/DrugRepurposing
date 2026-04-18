@@ -31,7 +31,7 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_data_filename,
     Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
     The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{character}.
     }

@@ -1,6 +1,6 @@
 \name{GEORNASeqLMMDataLoader}
 \alias{GEORNASeqLMMDataLoader}
-\title{Load RNA-seq data from files sourced from NCBI}
+\title{Load RNA-Seq data from files sourced from NCBI}
 \description{
 Load RNA-Seq metadata from csv file.
 These metadata must be suitable for Linear Mixed Model (LMM) analysis.
@@ -20,19 +20,19 @@ geoRNASeqLMMDataLoader$load(rna_seq_data_filename, rna_seq_metadata)
     Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
     The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    RNA-Seq metadata table associated with the RNA-Seq data table.\cr
     The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
-    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
-    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    For each RNA-Seq sample column in the RNA-Seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-Seq experiments.
     This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
     The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     See example below.
     \itemize{

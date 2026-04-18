@@ -2,7 +2,7 @@
 \alias{LowCountsGeneFilter}
 \title{Filter out non-significant genes based on counts threshold}
 \description{
-Typically, this filter is used for RNA-seq data.
+Typically, this filter is used for RNA-Seq data.
 \cr
 Filters out low count genes.
 \cr

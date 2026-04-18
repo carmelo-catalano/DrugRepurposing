@@ -5,7 +5,7 @@
 Given a disease RNA-Seq data analysis and a list of drug DGEs, \code{LMMVoomDrugRepurpose} computes the
 connectivity score between the disease and the drugs.
 \cr
-\code{LMMVoomDrugRepurpose} calculates differential gene expression from RNA-seq data using a
+\code{LMMVoomDrugRepurpose} calculates differential gene expression from RNA-Seq data using a
 Linear Mixed Model, and then computes the connectivity score between the disease DGE and the drug DGEs.
 \cr
 RNA data must follow a negative binomial distribution, typically data from RNA-Seq-like analyses.
@@ -26,7 +26,7 @@ lmmVoomDrugRepurpose$compute(
     The first column contains the gene ID; the other columns contain the RNA-Seq analysis.
     The first column name is \code{GeneID}, and the rest of the columns are titled according to the RNA analysis identifiers (sample id).
     \cr
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     rna_seq_data_filename can be either a local path or a remote URL (typically hosted by NCBI), example:
     https://www.ncbi.nlm.nih.gov/geo/download/?format=file&type=rnaseq_counts&acc=GSE92592&file=GSE92592_raw_counts_GRCh38.p13_NCBI.tsv.gz\cr
@@ -36,13 +36,13 @@ lmmVoomDrugRepurpose$compute(
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    RNA-Seq metadata table associated with the RNA-Seq data table.\cr
     The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
-    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
-    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    For each RNA-Seq sample column in the RNA-Seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-Seq experiments.
     This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
     The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     See example below.
     \itemize{

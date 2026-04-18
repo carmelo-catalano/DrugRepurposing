@@ -10,7 +10,7 @@ Unlike the dichotomous case, where groups are divided only into "control/altered
 \cr
 RNA data must follow a negative binomial distribution, which is typical for RNA-Seq analyses. For RNA data following a normal distribution, refer to \code{LMMDGEDream}, \code{LMMDGEJulia}, or \code{LMMDGELmer}.
 \cr
-Both \code{tissue_statuses_to_be_tested} and \code{tissue_statuses_map} must have a length of 2. The input RNA-seq data and metadata files are sourced from NCBI (https://www.ncbi.nlm.nih.gov/).
+Both \code{tissue_statuses_to_be_tested} and \code{tissue_statuses_map} must have a length of 2. The input RNA-Seq data and metadata files are sourced from NCBI (https://www.ncbi.nlm.nih.gov/).
 }
 \usage{
 lmmVoomDGE = LMMVoomDGEDream$new()
@@ -35,19 +35,19 @@ geoRNASeqLMMVoomDGECore$compute(
     Each row represents a gene, and each column represents an RNA-Seq sample.
     \cr
     The filename can be a local path (e.g., \file{/user/rna/raw_counts.tsv}) or a URL (e.g., \url{https://www.ncbi.gov/geo/download/raw_counts.tsv.gz}).
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
       \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{
-    RNA-seq metadata table associated with the RNA-seq data table.\cr
+    RNA-Seq metadata table associated with the RNA-Seq data table.\cr
     The metadata contains the control/altered state of the samples, along with additional conditions (e.g., sample origin).\cr
-    For each RNA-seq sample column in the RNA-seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
-    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-seq experiments.
+    For each RNA-Seq sample column in the RNA-Seq data table, there must be a corresponding row in the \code{rna_seq_metadata} table.\cr
+    One column of \code{rna_seq_metadata} must be named \code{"sample_id"} and must contain the sample IDs of the RNA-Seq experiments.
     This column is used to filter \code{rna_seq_data}: \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}.\cr
     The status column must be a factor, and the first level of the factor must correspond to the \code{"control"} state.\cr
-    This package has been tested on Illumina RNA-seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     See example below.
     \itemize{
@@ -55,7 +55,7 @@ geoRNASeqLMMVoomDGECore$compute(
     }
   }
   \item{formula}{
-    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-seq experiments were performed.
+    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-Seq experiments were performed.
     \cr
     Because data and metadata are stored in separate tables, the dependent variable (to the left of the \code{~} operator) must not be specified.
     For example: \code{~ tissue_status + (1 | tissue)}.

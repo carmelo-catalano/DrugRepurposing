@@ -79,19 +79,19 @@
       \item Dichotomic Models for pairwise comparisons (e.g., disease vs. control).
       \item Linear Mixed Models (LMM) for analyses involving additional factors such as tissue origin.
     }
-    Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-seq data requiring a preprocessing step via the voom transformation.
+    Support is provided for data following both normal distributions (e.g., microarray) and negative binomial distributions (e.g., RNA-Seq), with RNA-Seq data requiring a preprocessing step via the voom transformation.
     \cr\cr
 }
 \section{Differential Gene Expression (DGE) analysis}{
     This package provides four types of functions to compute differential gene expression (DGE) for four different types of RNA data:
     \itemize{
-        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-seq data) with a single condition "altered state/control state"}.
+        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-Seq data) with a single condition "altered state/control state"}.
         \cr
         These functions are based on the voom transformation and \code{lmFit} from the \code{limma} package.
         \cr
         They are referred to as Dichotomic voom DGE.
 
-        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-seq data) (typically RNA-seq data) with additional conditions beyond the base "altered state/control state"}.
+        \item \strong{RNA data counts following a "negative binomial distribution" (typically RNA-Seq data) (typically RNA-Seq data) with additional conditions beyond the base "altered state/control state"}.
          \cr
          For example, in a disease analysis, samples may also differ by tissue of origin in addition to the "altered state/control state" condition.
         \cr
@@ -119,7 +119,7 @@
     }
     For further information about voom, see:
     \cr
-    voom: Precision weights unlock linear model analysis tools for RNA-seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014
+    voom: Precision weights unlock linear model analysis tools for RNA-Seq read counts - Charity W Law, Yunshun Chen, Wei Shi, Gordon K Smyth - 2014
     \cr\cr
 }
 

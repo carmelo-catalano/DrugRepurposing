@@ -44,7 +44,7 @@ lmmDrugRepurposeCore$compute(
     }
   }
   \item{formula}{
-    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-seq experiments were performed.
+    The formula used for LMM computation. The formula may include both fixed and random effects to account for the conditions under which the RNA-Seq experiments were performed.
     \cr
     Because data and metadata are stored in separate tables, the dependent variable (to the left of the \code{~} operator) must not be specified.
     For example: \code{~ tissue_status + (1 | tissue)}.

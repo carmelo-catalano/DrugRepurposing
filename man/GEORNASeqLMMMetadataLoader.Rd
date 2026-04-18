@@ -1,8 +1,8 @@
 \name{GEORNASeqLMMMetadataLoader}
 \alias{GEORNASeqLMMMetadataLoader}
-\title{Load RNA-seq data from files sourced from NCBI along with the corresponding metadata}
+\title{Load RNA-Seq data from files sourced from NCBI along with the corresponding metadata}
 \description{
-Load RNA-seq data from files sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}) along with the corresponding metadata.
+Load RNA-Seq data from files sourced from NCBI (\url{https://www.ncbi.nlm.nih.gov/}) along with the corresponding metadata.
 These data and metadata must be suitable for Linear Mixed Model (LMM) analysis.
 }
 \usage{
@@ -12,14 +12,14 @@ geoRNASeqLMMDataLoader$load(rna_seq_metadata_filename, sample_status_column_name
 \arguments{
   \item{rna_seq_metadata_filename}{
     Filename of a CSV file delimited by ";".
-    The file contains metadata for the RNA-seq data in \code{rna_seq_data_filename}.
+    The file contains metadata for the RNA-Seq data in \code{rna_seq_data_filename}.
     One column of the CSV must contain the sample IDs. This column is used to subset the rna_seq_data object:
     (assuming the sample ID column is named "sample_id")
     \code{rna_seq_data <- rna_seq_data[, rna_seq_metadata$sample_id]}
     \cr
     The metadata contain the control/altered status of each sample, along with additional conditions.
     \cr
-    This package has been tested on Illumina RNA-seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
+    This package has been tested on Illumina RNA-Seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \cr
     The status column must be a factor. The first level of the factor must be the "control" state.
     \cr
@@ -53,8 +53,8 @@ geoRNASeqLMMDataLoader$load(rna_seq_metadata_filename, sample_status_column_name
     }
   }
   \item{sample_id_column_name}{
-    Each row in the metadata matrix represents the metadata for a single RNA-seq experiment.
-    \code{sample_id_column_name} is the column name containing the RNA-seq experiment IDs.
+    Each row in the metadata matrix represents the metadata for a single RNA-Seq experiment.
+    \code{sample_id_column_name} is the column name containing the RNA-Seq experiment IDs.
     See example below.
     \itemize{
       \item Type: \code{string}.

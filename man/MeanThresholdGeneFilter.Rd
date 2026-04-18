@@ -2,7 +2,7 @@
 \alias{MeanThresholdGeneFilter}
 \title{Filter out non-significant genes by mean expression threshold}
 \description{
-Typically, this filter is used for RNA-seq data.
+Typically, this filter is used for RNA-Seq data.
 \cr
 Filters out non-significant genes by removing rows where the average expression value is below the specified threshold.
 \cr

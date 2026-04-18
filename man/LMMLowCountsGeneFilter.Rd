@@ -1,8 +1,8 @@
 \name{LMMLowCountsGeneFilter}
 \alias{LMMLowCountsGeneFilter}
-\title{Filters non-significant genes from RNA-seq data and samples associated with low-level grouping variables of a random effect}
+\title{Filters non-significant genes from RNA-Seq data and samples associated with low-level grouping variables of a random effect}
 \description{
-Typically, this filter is used for RNA-seq data.
+Typically, this filter is used for RNA-Seq data.
 \cr
 This class applies two filter:
 1) Filters out non-significant genes by keeping those with at least \code{counts_threshold} counts greater than the specified threshold, where \code{counts_threshold} equals the size of the smallest group.
