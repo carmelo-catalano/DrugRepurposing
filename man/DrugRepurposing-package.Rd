@@ -29,9 +29,17 @@
     The repository accompanying the first article by Karel K. M. Koudijs et al., available at \href{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation}{https://gitlab.com/k.k.m.koudijs/TSR-comprehensive-validation},
     was used as the starting point for the development of DrugRepurposing.
     \cr
-    The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, was extracted from the software accompanying the second article by Chen et al., available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
+    Alternatively to \code{BinChenCMapScoreByDrugRank} is possible to use \code{connectivityScore} from \code{PharmacoGx}.
     \cr
-    The transcriptome reversion system provided in this package implements the same mathematical model described by Karel K. M. Koudijs et al., but with significantly more efficient computational procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia programming language, the new software is up to 70 times faster than the original version developed by Koudijs. However, the support of parallel processing is fully supported only on unix like systems.
+    The core class for drug repurposing, \code{BinChenCMapScoreByDrugRank}, was extracted from the software accompanying the
+    second article by Chen et al., available at \href{https://github.com/Bin-Chen-Lab/RGES}{https://github.com/Bin-Chen-Lab/RGES}.
+    \cr
+    The transcriptome reversion system provided in this package implements the same mathematical model
+    described by Karel K. M. Koudijs et al., but with significantly more efficient computational
+    procedures. Thanks to concurrent programming, optimized algorithms, and the use of the Julia
+    programming language, the new software is up to 70 times faster than the original version
+    developed by Koudijs. However, the support of parallel processing is fully supported only on unix
+    like systems.
     \cr\cr
 }
 \section{Drug repurposing analysis}{
