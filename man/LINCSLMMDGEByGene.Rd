@@ -27,7 +27,7 @@ This class serves as the core component for the following classes:
     \cr
     It is not used for the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -41,7 +41,7 @@ This class serves as the core component for the following classes:
     With this configuration, the DGE is computed for each input drug.
     \code{fixed_effect_new_column_name} specifies the name of the drug column in the output table.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"drug"}.
     }
   }

@@ -28,7 +28,7 @@ lincsExport$export(gene_list, drug_perturbation_times, output_dir, gene_number_b
   \item{output_dir}{
     Directory where the exported gene files are saved.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{gene_number_batch_size}{
@@ -48,7 +48,7 @@ lincsExport$export(gene_list, drug_perturbation_times, output_dir, gene_number_b
   \item{gctx_archive_filename (constructor argument)}{
     The full file path of the GCTX archive.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{metadataSetuper (constructor argument)}{

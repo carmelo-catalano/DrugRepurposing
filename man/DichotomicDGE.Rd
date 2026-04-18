@@ -37,7 +37,7 @@ dichotomicDGE$compute(rna_data, sample_01_map, filter_by_protein_coding)
     0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{filter_by_protein_coding}{

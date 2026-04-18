@@ -48,13 +48,13 @@ lincsRDSLMMDrugDGEJulia$compute(drug_perturbation_times, gene_list, drugs_filter
     Folder containing the RDS files exported from LINCS archive.
     Each file contains RNA data for a specific gene_id, and its name corresponds to the gene_id.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{output_DGE_dir (constructor argument)}{
     The output directory where output DGE files are saved.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{BLAS_num_threads (constructor argument)}{

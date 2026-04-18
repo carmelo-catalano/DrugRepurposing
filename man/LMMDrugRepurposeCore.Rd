@@ -84,7 +84,7 @@ lmmDrugRepurposeCore$compute(
     \cr
     This parameter is optional and is ignored by the computation logic.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

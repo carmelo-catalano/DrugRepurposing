@@ -28,7 +28,7 @@ lmmJuliaToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name, fix
     \cr
     It is not used for the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -36,14 +36,14 @@ lmmJuliaToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name, fix
     The name of the field in \code{LMM_output} that contains the type of RNA analysis sample (e.g., "tissue_type"). This represents the fixed effect.
     It is not necessary when the fixed effect has only two values.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
   \item{fixed_effect_new_column_name}{
     If \code{fixed_effect_column_name} is specified, this argument defines the output column name that contains the values of fixed effect (\code{fixed_effect_column_name} in \code{LMM_output}).
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"sample_type"}.
     }
   }

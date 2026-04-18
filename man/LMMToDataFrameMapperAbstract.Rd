@@ -33,14 +33,14 @@ LMMToDataFrameMapperImpl <- R6Class(
     \cr
     It is not used for the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{fixed_effect_column_name}{
     This field is needed when fixed effect assumes more then two values.
     \code{fixed_effect_column_name} specifies the name of the fixed effect of the LMM.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -55,7 +55,7 @@ LMMToDataFrameMapperImpl <- R6Class(
     \cr
     This field is needed when fixed effect assumes more then two values.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

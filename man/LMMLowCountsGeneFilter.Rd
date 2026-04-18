@@ -49,7 +49,7 @@ lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name,
   \item{random_effect_column_name}{
     This argument specifies the name of the random effect column used to filter out low-level grouping variables.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{sample_status_column_name}{
@@ -57,7 +57,7 @@ lmmLowCountsGeneFilter$filter(rna_data, rna_metadata, random_effect_column_name,
     \cr
     See \code{\link{LowCountsGeneFilter}} for more information.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"sample_status"}
     }
   }

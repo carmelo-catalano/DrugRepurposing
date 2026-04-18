@@ -14,13 +14,13 @@ drugSignatureLoaderByFilename$load(filename)
   \item{filename}{
     Filename of the drug DGE to load. The file must be in RDS format.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{t_value_column_name (constructor argument)}{
     The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the name of the column containing the t-value in the DGE table.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"t.value"}.
     }
   }

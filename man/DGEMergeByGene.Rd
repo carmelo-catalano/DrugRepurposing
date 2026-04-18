@@ -33,25 +33,25 @@ dgeMergeByGene$compute(
   \item{input_dge_dir}{
     Directory containing the DGE gene files. The filenames are described by the \code{dge_filename_pattern} argument and contain the gene_id. The files are in RDS format.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{output_drugs_dge_dir}{
     Output directory. The filenames match the drug names.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{drug_field_name}{
     The column name in the gene DGE table that contains the drug name.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{gene_dge_filename_pattern}{
     The filename pattern of the gene DGE.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: "#id.Rds".
     }
   }

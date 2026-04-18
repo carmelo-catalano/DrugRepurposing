@@ -26,14 +26,14 @@ lincsLMMLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name,
     \cr
     It is not used for the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{fixed_effect_column_name}{
     This field is needed when fixed effect assumes more then two values.
     \code{fixed_effect_column_name} specifies the name of the fixed effect of the LMM.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -48,7 +48,7 @@ lincsLMMLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name,
     \cr
     This field is needed when fixed effect assumes more then two values.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -56,7 +56,7 @@ lincsLMMLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name,
     The drug names in \link{LINCS} are prefixed by the string "pert_iname".
     The default value is "pert_iname", set it to \code{NA} for not removing the prefix or change.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{pert_iname}.
     }
   }

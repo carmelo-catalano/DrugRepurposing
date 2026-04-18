@@ -43,13 +43,13 @@ lincsGCTXLMMDrugDGELmer$compute(drug_perturbation_times, gene_list, drugs_filter
   \item{gctx_archive_filename (constructor argument)}{
     The full file path of the GCTX LINCS archive GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{output_DGE_dir (constructor argument)}{
     The output directory where output DGE files are saved.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{skip_already_computed_genes (constructor argument)}{

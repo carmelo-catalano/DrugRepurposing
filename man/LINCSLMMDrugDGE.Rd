@@ -66,7 +66,7 @@ lincsLMMDrugDGE$compute(drug_perturbation_times, gene_list, drugs_filter)
   \item{output_DGE_dir (constructor argument)}{
     The output directory where output DGE files are saved.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{skip_already_computed_genes (constructor argument)}{

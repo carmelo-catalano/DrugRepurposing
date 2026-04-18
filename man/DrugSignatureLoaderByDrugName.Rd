@@ -16,19 +16,19 @@ drugSignatureLoaderByDrugName$load(drug_name)
   \item{drug_name}{
     Name of the drug signature to load. The file to load is named \code{drug_dge_dir} + \code{drug_name} + ".Rds".
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{drug_dge_dir (constructor argument)}{
     Directory containing the drug \link{DGE} files.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{t_value_column_name (constructor argument)}{
     The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the name of the column containing the t-value in the DGE table.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"t.value"}.
     }
   }

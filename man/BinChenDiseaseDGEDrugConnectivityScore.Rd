@@ -28,7 +28,7 @@ binChenDiseaseDGEDrugConnectivityScore$compute(
   \item{drug_dge_t_value_column_name}{
     The t-value is the drug DGE parameter used for connectivity score computation. This field specifies the column name of the t-value in the \link{DGE} table.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: "t.value".
     }
   }

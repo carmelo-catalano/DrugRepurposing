@@ -14,7 +14,7 @@ lmmVoom$compute(rna_seq_data, rna_seq_metadata)
     \cr
     This package has been tested on Illumina RNA-Seq data downloaded from \url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{rna_seq_metadata}{

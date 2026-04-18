@@ -26,7 +26,7 @@ lmmLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name, fixe
     \cr
     It is not used for the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -34,7 +34,7 @@ lmmLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name, fixe
     This field is needed when fixed effect assumes more then two values.
     \code{fixed_effect_column_name} specifies the name of the fixed effect of the LMM.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
@@ -49,7 +49,7 @@ lmmLmerToDataFrameMapper$map(LMM_output, gene_id, fixed_effect_column_name, fixe
     \cr
     This field is needed when fixed effect assumes more then two values.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

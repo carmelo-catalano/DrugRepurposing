@@ -24,7 +24,7 @@ DrugSignatureLoaderImpl <- R6Class(
   \item{drug_name}{
     Name of the drug signature to be loaded. It may also refer to the filename.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
 }

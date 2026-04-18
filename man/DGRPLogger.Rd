@@ -30,7 +30,7 @@ dgrpLogger$log("Hello world")
   \item{log_file_name (config method)}{
     Name of the file used to store the logs; ignored in CONSOLE mode.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

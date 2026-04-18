@@ -61,14 +61,14 @@ random_distribution_size, disease_name, drug_perturbation_time)
     \cr
     This parameter is optional and is ignored by the computation logic.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }
   \item{disease_signature_type}{
     Specifies the disease signature type. It indicates the technique used to map the DGE to the signature. If provided, it is added to the output table but is not used in the computation.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

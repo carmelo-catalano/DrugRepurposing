@@ -38,7 +38,7 @@ DichotomicDGEImpl <- R6Class(
     \cr
     See \code{DichotomicDGE} or \code{DichotomicVoomDGE} for examples.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{filter_by_protein_coding}{

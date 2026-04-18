@@ -43,7 +43,7 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_data_filename,
     0 = control sample, 1 =  test sample (altered state), X = excluded sample.
     Instead of using 0 and 1, you can label samples as C (control) and T (test).
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{drug_signatures}{
@@ -78,7 +78,7 @@ geoRNASeqDichotomicVoomDrugRepurpose$compute(rna_seq_data_filename,
     \cr
     This parameter is optional and is ignored by the computation logic.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{NA}.
     }
   }

@@ -22,7 +22,7 @@ lincsGCTXDataLoader$load(gene_id, metadata)
   \item{gene_id}{
     Gene id to load.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{metadata}{
@@ -34,7 +34,7 @@ lincsGCTXDataLoader$load(gene_id, metadata)
   \item{gctx_archive_filename (constructor argument)}{
     The full file path of the GCTX archive.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
 }

@@ -40,7 +40,7 @@ lmmGeneFilterByLowLevelRandomEffects$filter(rna_data, rna_metadata, random_effec
   \item{random_effect_column_name}{
     This argument specifies the name of the random effect column used to filter out low-level grouping variables.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{random_effects_level_threshold (constructor parameter)}{

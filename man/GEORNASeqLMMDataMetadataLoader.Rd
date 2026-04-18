@@ -36,19 +36,19 @@ geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_file
     \cr
     This package has been tested on Illumina RNA-Seq data downloaded from url{https://www.ncbi.nlm.nih.gov/}.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{random_effect_column_name}{
     This argument specifies the name of the random effect column used to filter out low-level grouping variables.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{sample_status_column_name}{
     Name of the column containing the sample statuses. The status represents the clinical condition of each sample (e.g., control, disease). Example of column values: "Non-Neurological Control", "ALS Spectrum MND", "ALS Spectrum MND, Other Neurological Disorders", "Other Neurological Disorders".
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
     }
   }
   \item{sample_statuses_to_be_tested}{
@@ -74,7 +74,7 @@ geoRNASeqLMMDataMetadataLoader$load(rna_seq_data_filename, rna_seq_metadata_file
     \code{sample_id_column_name} is the column name containing the RNA-Seq experiment IDs.
     See example below.
     \itemize{
-      \item Type: \code{string}.
+      \item Type: \code{character}.
       \item Default value: \code{"accession"}.
     }
   }
